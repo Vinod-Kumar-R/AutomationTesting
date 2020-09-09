@@ -126,7 +126,7 @@ public class BaseClass {
 			try {
 				
 				er.AttachScreenshot(BrowserInitialize.takeScreenshot());
-				er.flushlog();
+				//er.flushlog();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -147,7 +147,7 @@ public class BaseClass {
 	private void Execute_Keyword(String keyword, String[] StringParam) throws Exception {
 		String status;
 		if(keyword.equalsIgnoreCase("url_open")) {
-			er.WriteInfo("Executing key word "+ keyword);
+			er.WriteInfo("Executing key word --->"+ keyword);
 			logger.info("Opening the URL "+ ConstantVariable.URL);
 			driver = BrowserInitialize.GetWebDriverInstance();
 			ngdriver = BrowserInitialize.GetNgWebDriverInstance();
@@ -159,40 +159,54 @@ public class BaseClass {
 
 		if(keyword.equalsIgnoreCase("WaitForElementVisible")) {
 			logger.info("Waiting for the element visible");
-			er.WriteInfo("Executing key word "+ keyword);
+			er.WriteInfo("Executing key word --->"+ keyword);
 			status = BrowserInitialize.WaitForElementVisible(StringParam);
 			Testresult(status, keyword);
 		}
 		if(keyword.equalsIgnoreCase("WaitForTexttVisible")) {
 			logger.info("Waiting for the Text visible");
-			er.WriteInfo("Executing key word "+ keyword);
+			er.WriteInfo("Executing key word --->"+ keyword);
 			status = BrowserInitialize.WaitForTexttVisible(StringParam);
 			Testresult(status, keyword);
 		}		
 		if(keyword.equalsIgnoreCase("click")) {
-			er.WriteInfo("Executing key word "+ keyword);
+			er.WriteInfo("Executing key word --->"+ keyword);
 			logger.info("clicking  on Element");
 			status = gm.click(driver,StringParam);
 			Testresult(status, keyword);
 
 		}
 		if(keyword.equalsIgnoreCase("QuitBrowser")) {
-			er.WriteInfo("Executing key word "+ keyword);
+			er.WriteInfo("Executing key word --->"+ keyword);
 			status = BrowserInitialize.QuitBrowser();
 			logger.info("QuiteBrowser");
 			Testresult(status, keyword);
 
 		}
 		if(keyword.equalsIgnoreCase("VerifyText")) {
-			er.WriteInfo("Executing key word "+ keyword);
+			er.WriteInfo("Executing key word --->"+ keyword);
 			status = gm.VerifyText(driver, StringParam);
 			logger.info("verifying the text");
 			Testresult(status,keyword);
 		}
 		if(keyword.equalsIgnoreCase("ImplictWait")) {
-			er.WriteInfo("Executing key word "+ keyword);
+			er.WriteInfo("Executing key word --->"+ keyword);
 			logger.info("Manually waiting ");
 			Thread.sleep(Integer.parseInt(StringParam[0]));
+		}
+		if(keyword.equalsIgnoreCase("JishiText")) {
+			er.WriteInfo("Executing key word --->"+ keyword);
+			status = lg.JishiText(driver, StringParam);
+			logger.info("verifying the text");
+			Testresult(status,keyword);
+		}
+		if(keyword.equalsIgnoreCase("takeScreenshot")) {
+			er.WriteInfo("Executing key word --->"+ keyword);
+			//status = BrowserInitialize.takeScreenshot();
+			er.AttachScreenshot(BrowserInitialize.takeScreenshot());
+			status = "pass";
+			logger.info("taken the screen shot");
+			Testresult(status,keyword);
 		}
 
 	}

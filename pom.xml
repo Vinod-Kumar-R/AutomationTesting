@@ -80,13 +80,35 @@
 </dependency>
   -->
 	<!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
-		<dependency>
+	 	<dependency>
 			<groupId>com.aventstack</groupId>
 			<artifactId>extentreports</artifactId>
 			<version>3.0.2</version>
 		</dependency>
-     
+   
+ <!--  <dependency>
+			<groupId>com.relevantcodes</groupId>
+			<artifactId>extentreports</artifactId>
+			<version>2.41.2</version>
+		</dependency>   
   
-  
+  --> 
   </dependencies>
+  
+  <build>
+    <pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+
+    </pluginManagement>
+</build>
 </project>
