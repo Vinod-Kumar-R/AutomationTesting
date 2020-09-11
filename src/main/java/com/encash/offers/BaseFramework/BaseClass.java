@@ -1,7 +1,5 @@
 package com.encash.offers.BaseFramework;
 
-import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 
@@ -20,6 +18,7 @@ public class BaseClass {
 	public static ConstantVariable cv ;
 	public static GenericMethod gm;
 	public static Logic lg;
+	
 	private WebDriver driver;
 	private NgWebDriver ngdriver;
 	ExcelReader TestData;
@@ -49,7 +48,10 @@ public class BaseClass {
 		while(!(TestCase.GetCellData(testcaserownumber, 0).equalsIgnoreCase("End"))) {
 			//Search Testcase in Test Data
 			logger.info("Test Case ID "+ TestCase.GetCellData(testcaserownumber,0));
-			er.CreateTest(TestCase.GetCellData(testcaserownumber,0));
+			logger.info("Test Case Description "+ TestCase.GetCellData(testcaserownumber,1));
+			
+			//er.CreateTest(TestCase.GetCellData(testcaserownumber,0));
+			er.CreateTest(TestCase.GetCellData(testcaserownumber,0),TestCase.GetCellData(testcaserownumber,1));
 			testDatarownumber = SearchTestData(TestCase.GetCellData(testcaserownumber,0));
 			//Execute the Test case ID
 			logger.info("Test Case ID found and started executing "+ TestCase.GetCellData(testcaserownumber,0));
@@ -60,6 +62,8 @@ public class BaseClass {
 		}
 		er.flushlog();
 		TestCase.CloseWorkbook();
+		logger.info("Completed Exeuction of all the Test Case i.e "+ (TestCase.Rowcout(0)-1));
+		
 
 	}
 
@@ -120,14 +124,14 @@ public class BaseClass {
 			
 		}catch (Exception e) {
 			System.out.println("vinod");
-			BrowserInitialize.waitstatus = false;
+			GenericMethod.waitstatus = false;
 			er.WriteLog(Status.FAIL, e.getMessage());
 			logger.info("testscript error message", e);
 			try {
 				
-				er.AttachScreenshot(BrowserInitialize.takeScreenshot());
+				er.AttachScreenshot(gm.takeScreenshot(driver));
 				//er.flushlog();
-			} catch (IOException e1) {
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
@@ -136,12 +140,6 @@ public class BaseClass {
 			//TestData.CloseWorkbook();
 			
 		}
-		
-		
-
-
-
-
 	}
 
 	private void Execute_Keyword(String keyword, String[] StringParam) throws Exception {
@@ -160,19 +158,20 @@ public class BaseClass {
 		if(keyword.equalsIgnoreCase("WaitForElementVisible")) {
 			logger.info("Waiting for the element visible");
 			er.WriteInfo("Executing key word --->"+ keyword);
-			status = BrowserInitialize.WaitForElementVisible(StringParam);
+			status = gm.WaitForElementVisible(driver,StringParam);
 			Testresult(status, keyword);
 		}
 		if(keyword.equalsIgnoreCase("WaitForTexttVisible")) {
 			logger.info("Waiting for the Text visible");
 			er.WriteInfo("Executing key word --->"+ keyword);
-			status = BrowserInitialize.WaitForTexttVisible(StringParam);
+			status = gm.WaitForTexttVisible(driver,StringParam);
 			Testresult(status, keyword);
 		}		
 		if(keyword.equalsIgnoreCase("click")) {
 			er.WriteInfo("Executing key word --->"+ keyword);
 			logger.info("clicking  on Element");
 			status = gm.click(driver,StringParam);
+			logger.info("clicked  on Element");
 			Testresult(status, keyword);
 
 		}
@@ -186,7 +185,7 @@ public class BaseClass {
 		if(keyword.equalsIgnoreCase("VerifyText")) {
 			er.WriteInfo("Executing key word --->"+ keyword);
 			status = gm.VerifyText(driver, StringParam);
-			logger.info("verifying the text");
+			logger.info("verified the text");
 			Testresult(status,keyword);
 		}
 		if(keyword.equalsIgnoreCase("ImplictWait")) {
@@ -197,25 +196,50 @@ public class BaseClass {
 		if(keyword.equalsIgnoreCase("JishiText")) {
 			er.WriteInfo("Executing key word --->"+ keyword);
 			status = lg.JishiText(driver, StringParam);
-			logger.info("verifying the text");
+			logger.info("verified the text");
 			Testresult(status,keyword);
 		}
 		if(keyword.equalsIgnoreCase("takeScreenshot")) {
-			er.WriteInfo("Executing key word --->"+ keyword);
+			er.WriteInfo("Executing key word ---> "+ keyword);
 			//status = BrowserInitialize.takeScreenshot();
-			er.AttachScreenshot(BrowserInitialize.takeScreenshot());
+			er.AttachScreenshot(gm.takeScreenshot(driver));
+			//er.flushlog();
 			status = "pass";
 			logger.info("taken the screen shot");
+			Testresult(status,keyword);
+		}
+		if(keyword.equalsIgnoreCase("WaitForAttributedPrent")) {
+			er.WriteInfo("Executing key word ---> "+ keyword);
+			//status = gm.VerifyText(driver, StringParam);
+			status = gm.WaitForAttributedPrent(driver,StringParam);
+			logger.info("Waited for An Attibuted ");
+			Testresult(status,keyword);
+		}
+		
+		if(keyword.equalsIgnoreCase("verifyAttributedValue")) {
+			er.WriteInfo("Executing key word ---> "+ keyword);
+			//status = gm.VerifyText(driver, StringParam);
+			status = gm.verifyAttributedValue(driver,StringParam);
+			logger.info("verified the attributed Value");
+			Testresult(status,keyword);
+		}
+		
+		if(keyword.equalsIgnoreCase("Banner")) {
+			er.WriteInfo("Executing key word ---> "+ keyword);
+			//status = gm.VerifyText(driver, StringParam);
+			status = lg.Banner(driver,StringParam);
+			logger.info("verifed the Banner");
 			Testresult(status,keyword);
 		}
 
 	}
 
-	public void Testresult(String status,String message) {
+	public void Testresult(String status,String message) throws  Exception {
 		if(status.equalsIgnoreCase("Pass")) {
 			er.WriteLog(Status.PASS, message );
 		}
 		if(status.equalsIgnoreCase("fail")) {
+			er.AttachScreenshot(gm.takeScreenshot(driver));
 			er.WriteLog(Status.FAIL, message );
 		}
 
@@ -236,9 +260,4 @@ public class BaseClass {
 		}
 
 	}
-
-
-
-
-
 }

@@ -1,11 +1,10 @@
 package com.encash.offers.Utility;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.encash.offers.Configuration.ConstantVariable;
@@ -17,7 +16,7 @@ public class ExtentReport {
 	public ExtentTest extenttest;
 
 	public ExtentReport()  {
-		
+
 		this.htmlreporter = new ExtentHtmlReporter(ConstantVariable.ExtentReportsLocation);
 		this.htmlreporter.loadXMLConfig(ConstantVariable.ExtentReportsPropeties);
 		this.extent = new ExtentReports();
@@ -26,13 +25,17 @@ public class ExtentReport {
 		this.extent.setSystemInfo("Operation System ", System.getProperty("os.name"));
 		this.extent.setSystemInfo("OS Version number", System.getProperty("os.version"));
 		this.extent.attachReporter(this.htmlreporter);
-		
+
+
 
 	}
 
 	public void CreateTest(String TestName) {
 		this.extenttest = this.extent.createTest(TestName);
+	}
 
+	public void CreateTest(String TestName, String Description) {
+		this.extenttest = this.extent.createTest(TestName, Description);
 	}
 
 	public void WriteLog(Status status, String details) {
@@ -46,11 +49,13 @@ public class ExtentReport {
 	public void AttachScreenshot(String imagePath) throws IOException {
 		this.extenttest.addScreenCaptureFromPath(imagePath);
 	}
-	
+
 	public void WriteInfo(String details) {
 		this.extenttest.info(details);
 	}
 
-
+	public void WriteLog(Status status,String details, String ImageFilelocation) throws IOException {
+		this.extenttest.log(status, details, MediaEntityBuilder.createScreenCaptureFromPath(ImageFilelocation).build());
+	}
 
 }

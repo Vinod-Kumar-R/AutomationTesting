@@ -19,14 +19,14 @@ public class EventListener extends AbstractWebDriverEventListener {
 	 public void onException(Throwable arg0, WebDriver arg1) {
 		 		
 		logger.info("waiting for the element----> "+ arg0.getMessage()); 
-		 if(!BrowserInitialize.waitstatus && 
+		 if(!BaseClass.gm.waitstatus && 
 				 arg0.getClass().equals("org.openqa.selenium.NoSuchElementException")) {
 		     
 			 logger.info("Waiting for the element "+ arg0.getMessage());
 			//do nothing 
 		 }
 		 
-		 if(BrowserInitialize.waitstatus) {
+		 if(BaseClass.gm.waitstatus) {
 			 logger.info("got an exception--> "+ arg0.getMessage());
 			// BrowserInitialize.takeScreenshot("vinod");
 			 

@@ -33,7 +33,7 @@ public class BrowserInitialize {
 	public static EventFiringWebDriver driver;
 	public static  NgWebDriver ngwebdriver = null;
 	public static JavascriptExecutor jsDriver;
-	public static boolean waitstatus = true;
+	//public static boolean waitstatus = true;
 
 
 	private BrowserInitialize() {
@@ -82,52 +82,9 @@ public class BrowserInitialize {
 		return ngwebdriver;
 	}
 
-	public static String WaitForElementVisible(String[] string) throws Exception {
-		String ObjectName = GenericMethod.GetObjectName(string[0]);
-		waitstatus = false;
-		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-				.withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
-				.pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
-				.ignoring(NoSuchElementException.class);	
-
-		logger.info("Waiting for the Element Visibility "+ ObjectName);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(ObjectName)));
-
-		waitstatus = true;
-		return "pass";
-	}
-
-	public static String WaitForTexttVisible(String[] string) throws Exception {
-		String ObjectName = GenericMethod.GetObjectName(string[0]);
-		waitstatus = false;
-		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-				.withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
-				.pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
-				.ignoring(NoSuchElementException.class);
-		
-		logger.info("Waiting for the Text to be present "+ ObjectName);
-		wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath(ObjectName), string[1]));
-
-		waitstatus = true;
-		return "pass";
-	}
-
-
-
 	public static String QuitBrowser() {
 		driver.quit();
 		driver = null;
 		return "pass";
-	}
-
-	public static String takeScreenshot() throws IOException {
-		long Filename = System.currentTimeMillis();
-		if (driver instanceof TakesScreenshot) {
-			File tempFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-			FileUtils.copyFile(tempFile, new File(ConstantVariable.ScreenShotlocation + "/" +Filename + ".png"));
-
-
-		}
-		return ConstantVariable.ScreenShotlocation + "/" +Filename + ".png";
 	}
 }
