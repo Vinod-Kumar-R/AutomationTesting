@@ -39,7 +39,7 @@ public class BaseClass {
 	 * @throws Exception 
 	 */
 	public void Start_run() throws Exception {
-		int testcaserownumber =0;
+		int testcaserownumber =1;
 		int testDatarownumber =0;
 		//Read the Test case data
 		logger.info("Test Case File name "+ConstantVariable.TestCases);
@@ -64,7 +64,7 @@ public class BaseClass {
 		}
 		er.flushlog();
 		TestCase.CloseWorkbook();
-		logger.info("Completed Exeuction of all the Test Case i.e "+ (TestCase.Rowcout(0)-1));
+		logger.info("Completed Exeuction of all the Test Case i.e "+ (TestCase.Rowcout(0)-2));
 		
 
 	}
@@ -125,7 +125,7 @@ public class BaseClass {
 			TestData.CloseWorkbook();
 			
 		}catch (Exception e) {
-			System.out.println("vinod");
+			
 			GenericMethod.waitstatus = false;
 			er.WriteLog(Status.FAIL, e.getMessage());
 			logger.info("testscript error message", e);

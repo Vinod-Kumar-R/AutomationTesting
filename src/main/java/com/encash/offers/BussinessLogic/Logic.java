@@ -1,7 +1,13 @@
 package com.encash.offers.BussinessLogic;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import com.aventstack.extentreports.Status;
 import com.encash.offers.BaseFramework.BaseClass;
@@ -9,6 +15,8 @@ import com.encash.offers.Utility.GenericMethod;
 
 public class Logic {
 	static Logger logger = Logger.getLogger(GenericMethod.class);
+	
+	
 	public String JishiText(WebDriver driver, String[] StringParam) throws Exception {
 		//String ObjectData = GenericMethod.GetObjectName(StringParam[0]); // GetObjectName(StringParam[0]);
 		for(int i=1;i<= StringParam.length-2;i++) {
@@ -24,36 +32,43 @@ public class Logic {
 		return "pass";
 	}
 	
+	
 	public String Banner(WebDriver driver, String[] StringParam) throws Exception {
 		//create an array of Banner so that in the end order can be verified 
-		String[] Actualbanner = new String[StringParam.length-2];
 		
-		for(int i= 2; i<StringParam.length;i++) {
+		List<String> Acutalbanner = new ArrayList<String>();
+		List<String> Expectedbanner = new ArrayList<String>();
+		List<WebElement> ElementList;
+		
+		//fetch all the Banner name with title and stored the name in list 
+		String object1 = GenericMethod.GetObjectName(StringParam[0]);
+		//Get the list of the banner name 
+		ElementList = driver.findElements(By.xpath(object1));
+		
+		for(WebElement e : ElementList) {
+			Acutalbanner.add(e.getAttribute(StringParam[2]).toString());
+		}
+
+		for(int i= 3; i<StringParam.length;i++) {
 			String[] data = new String[3];
-			data[0] = StringParam[0];
-			data[1] = StringParam[1];
+			data[0] = StringParam[1];
+			data[1] = StringParam[2];
 			data[2] = StringParam[i];
-			Actualbanner[i-2] = StringParam[i];
+			
+			Expectedbanner.add(StringParam[i]);
+			
 			BaseClass.gm.WaitForAttributedPrent(driver, data);
-			//BaseClass.er.AttachScreenshot(BaseClass.gm.takeScreenshot(driver));
 			BaseClass.er.WriteLog(Status.PASS, "capture the Screen shot "+ StringParam[i], BaseClass.gm.takeScreenshot(driver));
 			BaseClass.gm.verifyAttributedValue(driver, data);
 			BaseClass.er.WriteLog(Status.PASS, "verified the image "+ StringParam[i]);
 		}
 		
-		//verify Acutualbanner and expected Banner
-		for(int i=0;i<StringParam.length-2;i++) {
-			if(StringParam[i+2].equals(Actualbanner[i])) {
-				logger.info("Excel Oder Banner -> "+ StringParam[1+2] + 
-						" is matching with Recored -> "+ Actualbanner[i]);
-			}
-			else {
-				logger.info("Excel Oder Banner -> "+ StringParam[1+2] + 
-						" is matching with Recored -> "+ Actualbanner[i]);
-				BaseClass.er.WriteLog(Status.FAIL, "Excel Oder Banner -> "+ StringParam[1+2] + 
-				" is mismatch with Recored -> "+ Actualbanner[i]);
-				return "fail";
-			}
+		
+		//compare both Actual banner and Expected list are in same order
+		if(!Acutalbanner.equals(Expectedbanner)) {
+			logger.info("Excel Order Banner is not matching with Expected order bannber in UI");
+			BaseClass.er.WriteLog(Status.FAIL, "Excel Order Banner is not matching with Expected order bannber in UI");
+			return "fail";
 		}
 		
 		return "Pass";
