@@ -52,6 +52,8 @@ public class BaseClass {
 			
 			//er.CreateTest(TestCase.GetCellData(testcaserownumber,0));
 			er.CreateTest(TestCase.GetCellData(testcaserownumber,0),TestCase.GetCellData(testcaserownumber,1));
+			//er.author("<h5> vinod Kumar R </h5>");
+			er.Categeory(TestCase.GetCellData(testcaserownumber, 2));
 			testDatarownumber = SearchTestData(TestCase.GetCellData(testcaserownumber,0));
 			//Execute the Test case ID
 			logger.info("Test Case ID found and started executing "+ TestCase.GetCellData(testcaserownumber,0));

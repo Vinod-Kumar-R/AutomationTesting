@@ -12,6 +12,9 @@ import com.encash.offers.Configuration.ConstantVariable;
 public class ExtentReport {
 
 	public ExtentHtmlReporter htmlreporter;
+	//public ExtentHtmlReporter htmlreporter;
+	//public ExtentSparkReporter spark ;
+	
 	public ExtentReports extent;
 	public ExtentTest extenttest;
 
@@ -19,19 +22,23 @@ public class ExtentReport {
 
 		this.htmlreporter = new ExtentHtmlReporter(ConstantVariable.ExtentReportsLocation);
 		this.htmlreporter.loadXMLConfig(ConstantVariable.ExtentReportsPropeties);
+		//this.spark = new ExtentSparkReporter(ConstantVariable.ExtentReportsLocation) ;
+		//this.spark.loadXMLConfig(ConstantVariable.ExtentReportsPropeties);
 		this.extent = new ExtentReports();
 		this.extent.setSystemInfo("Organization", "Enchashes");
 		this.extent.setSystemInfo("Browser", ConstantVariable.BrowserName);
 		this.extent.setSystemInfo("Operation System ", System.getProperty("os.name"));
 		this.extent.setSystemInfo("OS Version number", System.getProperty("os.version"));
 		this.extent.attachReporter(this.htmlreporter);
-
-
-
+		
+		
+		
 	}
 
 	public void CreateTest(String TestName) {
 		this.extenttest = this.extent.createTest(TestName);
+		//this.extent.setAnalysisStrategy(strategy);
+		
 	}
 
 	public void CreateTest(String TestName, String Description) {
@@ -57,5 +64,17 @@ public class ExtentReport {
 	public void WriteLog(Status status,String details, String ImageFilelocation) throws IOException {
 		this.extenttest.log(status, details, MediaEntityBuilder.createScreenCaptureFromPath(ImageFilelocation).build());
 	}
+
+	public void Categeory(String category) {
+		this.extenttest.assignCategory(category);
+	}
+
+	public void author(String author) {
+		this.extenttest.assignAuthor(author);
+		
+		
+	}
+	
+	
 
 }
