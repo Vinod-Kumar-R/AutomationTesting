@@ -60,7 +60,7 @@ public class BrowserInitialize {
 		driver = new EventFiringWebDriver(drivere);
 		EventListener ei = new EventListener();
 		driver.register(ei);
-		driver.manage().window().fullscreen();
+		//driver.manage().window().fullscreen();
 		jsDriver = (JavascriptExecutor) driver ;
 		ngwebdriver = new NgWebDriver(jsDriver).withRootSelector("9.1.9");
 

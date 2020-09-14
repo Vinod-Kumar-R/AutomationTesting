@@ -29,10 +29,8 @@ public class ExtentReport {
 		this.extent.setSystemInfo("Browser", ConstantVariable.BrowserName);
 		this.extent.setSystemInfo("Operation System ", System.getProperty("os.name"));
 		this.extent.setSystemInfo("OS Version number", System.getProperty("os.version"));
+		this.extent.setSystemInfo("Build Version No", "Need to fetch the Build Number");
 		this.extent.attachReporter(this.htmlreporter);
-		
-		
-		
 	}
 
 	public void CreateTest(String TestName) {

@@ -19,12 +19,13 @@ public class Logic {
 	
 	public String JishiText(WebDriver driver, String[] StringParam) throws Exception {
 		//String ObjectData = GenericMethod.GetObjectName(StringParam[0]); // GetObjectName(StringParam[0]);
-		for(int i=1;i<= StringParam.length-2;i++) {
+		for(int i=1;i<= StringParam.length-1;i++) {
 			String[] data = new String[2];
 			data[0] = StringParam[0];
 			data[1] = StringParam[i];
 			logger.info("Waiting for test visible "+ data[1]);
 			BaseClass.gm.WaitForTexttVisible(driver,data);
+			BaseClass.er.WriteLog(Status.PASS, "Taken the screenshot", BaseClass.gm.takeScreenshot(driver));
 			BaseClass.gm.VerifyText(driver, data);
 			logger.info("Verified the test "+ data[1]);
 		}

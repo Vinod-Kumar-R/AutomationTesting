@@ -18,6 +18,7 @@ public class BaseClass {
 	public static ConstantVariable cv ;
 	public static GenericMethod gm;
 	public static Logic lg;
+	public static KeywordExecution ke ;
 	
 	private WebDriver driver;
 	private NgWebDriver ngdriver;
@@ -30,8 +31,7 @@ public class BaseClass {
 		gm = new GenericMethod();
 		er = new ExtentReport();
 		lg = new Logic();
-
-
+		ke = new KeywordExecution();
 	}
 
 	/**
@@ -92,12 +92,11 @@ public class BaseClass {
 
 			while(TestData.GetCellData(Current_Row, 0) == null || !TestData.GetCellData(Current_Row, 0).equalsIgnoreCase("End")) {
 				Keyword = TestData.GetCellData(Current_Row, Current_Col);
-
 				logger.info("Got the Key word from excel sheet" + Keyword);
 				
 				//Read the all the parameter for keywork and add delimitor ~
 				int Column =2;
-				String[] parameter = null ;
+				String[] StringParam = null ;
 				String param = "";
 				int incrementarraydata = 0;
 				while(TestData.GetCellData(Current_Row, Column) != null) {
@@ -115,10 +114,12 @@ public class BaseClass {
 				}
 				//copy all the parameter to an array of string
 				if(!param.equals("")) {
-					parameter = param.split("~");
+					StringParam = param.split("~");
 				}
 
-				Execute_Keyword(Keyword, parameter);
+				ke.setvalue(KeywordType.valueOf(Keyword));
+				ke.Executed(StringParam);
+				//KeywordType.
 				Current_Row++;
 
 			}
@@ -144,109 +145,7 @@ public class BaseClass {
 		}
 	}
 
-	private void Execute_Keyword(String keyword, String[] StringParam) throws Exception {
-		String status;
-		if(keyword.equalsIgnoreCase("url_open")) {
-			er.WriteInfo("Executing key word --->"+ keyword);
-			logger.info("Opening the URL "+ ConstantVariable.URL);
-			driver = BrowserInitialize.GetWebDriverInstance();
-			ngdriver = BrowserInitialize.GetNgWebDriverInstance();
-			driver.get(ConstantVariable.URL);
-			driver.manage().window().maximize();
-			status = "pass";
-			Testresult(status, "Browser Open");
-		}
-
-		if(keyword.equalsIgnoreCase("WaitForElementVisible")) {
-			logger.info("Waiting for the element visible");
-			er.WriteInfo("Executing key word --->"+ keyword);
-			status = gm.WaitForElementVisible(driver,StringParam);
-			Testresult(status, keyword);
-		}
-		if(keyword.equalsIgnoreCase("WaitForTexttVisible")) {
-			logger.info("Waiting for the Text visible");
-			er.WriteInfo("Executing key word --->"+ keyword);
-			status = gm.WaitForTexttVisible(driver,StringParam);
-			Testresult(status, keyword);
-		}		
-		if(keyword.equalsIgnoreCase("click")) {
-			er.WriteInfo("Executing key word --->"+ keyword);
-			logger.info("clicking  on Element");
-			status = gm.click(driver,StringParam);
-			logger.info("clicked  on Element");
-			Testresult(status, keyword);
-
-		}
-		if(keyword.equalsIgnoreCase("QuitBrowser")) {
-			er.WriteInfo("Executing key word --->"+ keyword);
-			status = BrowserInitialize.QuitBrowser();
-			logger.info("QuiteBrowser");
-			Testresult(status, keyword);
-
-		}
-		if(keyword.equalsIgnoreCase("VerifyText")) {
-			er.WriteInfo("Executing key word --->"+ keyword);
-			status = gm.VerifyText(driver, StringParam);
-			logger.info("verified the text");
-			Testresult(status,keyword);
-		}
-		if(keyword.equalsIgnoreCase("ImplictWait")) {
-			er.WriteInfo("Executing key word --->"+ keyword);
-			logger.info("Manually waiting ");
-			Thread.sleep(Integer.parseInt(StringParam[0]));
-		}
-		if(keyword.equalsIgnoreCase("JishiText")) {
-			er.WriteInfo("Executing key word --->"+ keyword);
-			status = lg.JishiText(driver, StringParam);
-			logger.info("verified the text");
-			Testresult(status,keyword);
-		}
-		if(keyword.equalsIgnoreCase("takeScreenshot")) {
-			er.WriteInfo("Executing key word ---> "+ keyword);
-			//status = BrowserInitialize.takeScreenshot();
-			er.AttachScreenshot(gm.takeScreenshot(driver));
-			//er.flushlog();
-			status = "pass";
-			logger.info("taken the screen shot");
-			Testresult(status,keyword);
-		}
-		if(keyword.equalsIgnoreCase("WaitForAttributedPrent")) {
-			er.WriteInfo("Executing key word ---> "+ keyword);
-			//status = gm.VerifyText(driver, StringParam);
-			status = gm.WaitForAttributedPrent(driver,StringParam);
-			logger.info("Waited for An Attibuted ");
-			Testresult(status,keyword);
-		}
-		
-		if(keyword.equalsIgnoreCase("verifyAttributedValue")) {
-			er.WriteInfo("Executing key word ---> "+ keyword);
-			//status = gm.VerifyText(driver, StringParam);
-			status = gm.verifyAttributedValue(driver,StringParam);
-			logger.info("verified the attributed Value");
-			Testresult(status,keyword);
-		}
-		
-		if(keyword.equalsIgnoreCase("Banner")) {
-			er.WriteInfo("Executing key word ---> "+ keyword);
-			//status = gm.VerifyText(driver, StringParam);
-			status = lg.Banner(driver,StringParam);
-			logger.info("verifed the Banner");
-			Testresult(status,keyword);
-		}
-
-	}
-
-	public void Testresult(String status,String message) throws  Exception {
-		if(status.equalsIgnoreCase("Pass")) {
-			er.WriteLog(Status.PASS, message );
-		}
-		if(status.equalsIgnoreCase("fail")) {
-			er.AttachScreenshot(gm.takeScreenshot(driver));
-			er.WriteLog(Status.FAIL, message );
-		}
-
-	}
-
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		BaseClass BC = new BaseClass();
