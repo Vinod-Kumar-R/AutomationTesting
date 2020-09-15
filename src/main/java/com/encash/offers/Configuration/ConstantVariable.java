@@ -1,7 +1,11 @@
 package com.encash.offers.Configuration;
 
+import java.util.HashMap;
+
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+
+import com.encash.offers.Utility.ExcelReader;
 
 public class ConstantVariable {
 	static Logger logger = Logger.getLogger(ConstantVariable.class);
@@ -16,9 +20,10 @@ public class ConstantVariable {
 	public static String ScreenShotlocation;
 	public static int ExplictWait;
 	public static int polling;
-    private String Configurationfile = "D:\\Vinod\\encashoffers\\config.properties";
-	
-	public ConstantVariable () {
+	public static HashMap<String,Integer> TestDataRowNumber;
+	private String Configurationfile = "D:\\Vinod\\encashoffers\\config.properties";
+
+	public ConstantVariable ()  {
 		ConfigurationReader cr = new ConfigurationReader();
 		cr.ReadConfig(Configurationfile);
 		LogFile = cr.getConfigurationStringValue("log4j");
@@ -33,7 +38,33 @@ public class ConstantVariable {
 		ExplictWait = cr.getConfigurationIntValue("explictwait");
 		polling = cr.getConfigurationIntValue("polling");
 		ScreenShotlocation = cr.getConfigurationStringValue("screenshotlocation");
-		
 	}
+	
+	
+
+	public void SearchTestData () throws Exception  {
+		ExcelReader STD = null;
+		int index =0;
+		STD = new ExcelReader(ConstantVariable.TestDatas,0);
+
+
+		this.TestDataRowNumber = new HashMap<String,Integer>();
+	
+		for(int i =0;i<STD.Rowcout(0);i++) {
+			logger.info(STD.GetCellData(i,0));
+			if(STD.GetCellData(i,0) != null 
+					&& !STD.GetCellData(i,0).equalsIgnoreCase("End")
+					&& !STD.GetCellData(i,0).equalsIgnoreCase("EndTestCase")) {
+				this.TestDataRowNumber.put(STD.GetCellData(i,0), i);	
+			}
+		}
+
+		STD.CloseWorkbook();
+		logger.info("found the testcase in the TestDatas" + ConstantVariable.TestDatas +
+				"in the row number " +index );
+
+
+	}
+
 
 }

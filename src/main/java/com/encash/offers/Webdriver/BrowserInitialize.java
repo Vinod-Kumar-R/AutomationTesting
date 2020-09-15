@@ -1,27 +1,13 @@
 package com.encash.offers.Webdriver;
 
-import java.io.File;
-import java.io.IOException;
-import java.time.Duration;
-
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
 
-import com.encash.offers.BaseFramework.BaseClass;
 import com.encash.offers.Configuration.ConstantVariable;
-import com.encash.offers.Utility.GenericMethod;
 import com.paulhammant.ngwebdriver.NgWebDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;

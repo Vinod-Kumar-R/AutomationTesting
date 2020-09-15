@@ -1,5 +1,7 @@
 package com.encash.offers.BaseFramework;
 
+import java.util.HashMap;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 
@@ -9,7 +11,6 @@ import com.encash.offers.Configuration.ConstantVariable;
 import com.encash.offers.Utility.ExcelReader;
 import com.encash.offers.Utility.ExtentReport;
 import com.encash.offers.Utility.GenericMethod;
-import com.encash.offers.Webdriver.BrowserInitialize;
 import com.paulhammant.ngwebdriver.NgWebDriver;
 
 public class BaseClass {
@@ -25,13 +26,14 @@ public class BaseClass {
 	ExcelReader TestData;
 	ExcelReader TestCase;
 	public static ExtentReport er;
-
+	
 	public BaseClass() {
 		cv = new ConstantVariable();
 		gm = new GenericMethod();
 		er = new ExtentReport();
 		lg = new Logic();
 		ke = new KeywordExecution();
+		
 	}
 
 	/**
@@ -39,6 +41,10 @@ public class BaseClass {
 	 * @throws Exception 
 	 */
 	public void Start_run() throws Exception {
+		//Initialize the method
+		cv.SearchTestData();
+		
+		
 		int testcaserownumber =1;
 		int testDatarownumber =0;
 		//Read the Test case data
@@ -54,7 +60,11 @@ public class BaseClass {
 			er.CreateTest(TestCase.GetCellData(testcaserownumber,0),TestCase.GetCellData(testcaserownumber,1));
 			//er.author("<h5> vinod Kumar R </h5>");
 			er.Categeory(TestCase.GetCellData(testcaserownumber, 2));
-			testDatarownumber = SearchTestData(TestCase.GetCellData(testcaserownumber,0));
+			
+			//testDatarownumber = SearchTestData(TestCase.GetCellData(testcaserownumber,0));
+			logger.info("Test case found in the test data file at----> "+ ConstantVariable.TestDataRowNumber.get(TestCase.GetCellData(testcaserownumber,0)));
+			testDatarownumber = ConstantVariable.TestDataRowNumber.get(TestCase.GetCellData(testcaserownumber,0));
+			                  
 			//Execute the Test case ID
 			logger.info("Test Case ID found and started executing "+ TestCase.GetCellData(testcaserownumber,0));
 			TestRunId(testDatarownumber);
@@ -70,18 +80,7 @@ public class BaseClass {
 	}
 
 	//Search the TestCase in Test Data
-	public int SearchTestData (String TestData) throws Exception {
-		ExcelReader STD = new ExcelReader(ConstantVariable.TestDatas,0);
-		int index =0;
-		while(STD.GetCellData(index, 0) == null || !STD.GetCellData(index, 0).equalsIgnoreCase(TestData)) {
-			index++;
-		}
-		STD.CloseWorkbook();
-		logger.info("found the testcase in the TestDatas" + ConstantVariable.TestDatas +
-				"in the row number " +index );
-		return index;
-	}
-
+		
 	public void TestRunId(int RowStartfrom)  {
 		int Current_Row = RowStartfrom;
 		int Current_Col = 1;
