@@ -1,6 +1,8 @@
 package com.encash.offers.Utility;
 
 import java.io.File;
+
+
 import java.time.Duration;
 
 import org.apache.commons.io.FileUtils;
@@ -16,25 +18,44 @@ import org.openqa.selenium.support.ui.Wait;
 
 import com.encash.offers.Configuration.ConstantVariable;
 
+/**
+ * This class contain the Generic method which is used during Automation execution Script 
+ * @author Vinod Kumar R
+ *
+ */
 public class GenericMethod {
 	static Logger logger = Logger.getLogger(GenericMethod.class);
 	public static boolean waitstatus = true;
 
+	/**
+	 * This is used to click on the WebElement on current html page
+	 * @param driver
+	 * the driver parameter contain the instance of WebDriver
+	 * @param StringParam
+	 * StringParam is a array of String variable which hold data 
+	 * StringParam[0] contain the Object i.e xpath 
+	 * @return it return the status "pass" if execution success else throw an exception 
+	 * @throws Exception
+	 */
 	public String click(WebDriver driver,String[] StringParam) throws Exception {
-		String ObjectData = GetObjectName(StringParam[0]);
+		
+		String ObjectData = ConstantVariable.GetObject.get(StringParam[0]);
 		driver.findElement(By.xpath(ObjectData)).click();
 		return "pass";
 	}
 
-	public String login(WebDriver driver,String[] StringParam) throws Exception {
-		String ObjectData = GetObjectName("login_xpath");
-		driver.findElement(By.xpath(ObjectData)).sendKeys(StringParam[0]);;
-		return "pass";
-	}
-
-
-	public  String WaitForElementVisible(WebDriver driver,String[] string) throws Exception {
-		String ObjectName = GenericMethod.GetObjectName(string[0]);
+	/**
+	 * This Method is used to Wait for an Element Visible in an web page  
+	 * @param driver
+	 * the driver parameter contain the instance of WebDriver
+	 * @param StringParam
+	 * StringParam is a array of String variable which hold data 
+	 * StringParam[0] contain the Object which need to wait in html page 
+	 * @return it return the status "pass" if execution success else throw an exception
+	 * @throws Exception
+	 */
+	public  String WaitForElementVisible(WebDriver driver,String[] StringParam) throws Exception {
+		String ObjectName = ConstantVariable.GetObject.get(StringParam[0]);
 		waitstatus = false;
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
 				.withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
@@ -47,9 +68,21 @@ public class GenericMethod {
 		waitstatus = true;
 		return "pass";
 	}
+	
+	/**
+	 * This Method is used to Wait for Text Visible in an web page  
+	 * @param driver
+	 * the driver parameter contain the instance of WebDriver
+	 * @param StringParam
+	 * StringParam is a array of String variable which hold data 
+	 * StringParam[0] contain the Object which need to wait in html page 
+	 * @return it return the status "pass" if execution success else throw an exception
+	 * @throws Exception
+	 */
 
-	public  String WaitForTexttVisible(WebDriver driver, String[] string) throws Exception {
-		String ObjectName = GenericMethod.GetObjectName(string[0]);
+	public  String WaitForTexttVisible(WebDriver driver, String[] StringParam) throws Exception {
+		//String ObjectName = GenericMethod.GetObjectName(string[0]);
+		String ObjectName = ConstantVariable.GetObject.get(StringParam[0]);
 		waitstatus = false;
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
 				.withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
@@ -57,14 +90,28 @@ public class GenericMethod {
 				.ignoring(NoSuchElementException.class);
 
 		logger.info("Waiting for the Text to be present "+ ObjectName);
-		wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath(ObjectName), string[1]));
+		wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath(ObjectName), StringParam[1]));
 
 		waitstatus = true;
 		return "pass";
 	}
+	
+	/**
+	 * This method is used wait for an Attributed value present in html page 
+	 * @param driver
+	 * the driver parameter contain the instance of WebDriver
+	 * @param StringParam
+	 * StringParam is a array of String variable which hold data 
+	 * StringParam[0] contain the Object which need to present in html page
+	 * StringParam[1] contain the attribute in an xpath 
+	 * StringParam[2] contain the vaule which need to be present for an attributed  
+	 * @return it return the status "pass" if execution success else throw an exception
+	 * @throws Exception
+	 */
 
 	public  String WaitForAttributedPrent(WebDriver driver,String[] StringParam) throws Exception {
-		String ObjectName = GenericMethod.GetObjectName(StringParam[0]);
+		//String ObjectName = GenericMethod.GetObjectName(StringParam[0]);
+		String ObjectName = ConstantVariable.GetObject.get(StringParam[0]);
 		waitstatus = false;
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
 				.withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
@@ -81,16 +128,37 @@ public class GenericMethod {
 		waitstatus = true;
 		return "pass";
 	}
+	
+	/**
+	 * This method is used to verify the text present for an WebElement
+	 * @param driver
+	 * the driver parameter contain the instance of WebDriver
+	 * @param StringParam
+	 * StringParam is a array of String variable which hold data 
+	 * StringParam[0] contain the Object which need to compare the text  in html page
+	 * StringParam[1] contain the expected text when need to compare with text on html page 
+	 * @return it return the status "pass" if execution success else throw an exception 
+	 * @throws Exception
+	 */
 
 	public String VerifyText(WebDriver driver,String[] StringParam) throws Exception {
 		logger.info("Verifying the text-------> "+StringParam[1]);
-		String ObjectData = GetObjectName(StringParam[0]);
+		//String ObjectData = GetObjectName(StringParam[0]);
+		String ObjectData = ConstantVariable.GetObject.get(StringParam[0]);
 		if(driver.findElement(By.xpath(ObjectData)).getText().equalsIgnoreCase(StringParam[1])) {
 			return "pass";
 		}
 		return "pass";
 	}
 
+	
+	/**
+	 * This Method is used to take an WebBrowser Screenshot
+	 * @param driver
+	 * the driver parameter contain the instance of WebDriver
+	 * @return the file location in the String format
+	 * @throws Exception
+	 */
 	public  String takeScreenshot(WebDriver driver) throws Exception {
 		long Filename = System.currentTimeMillis();
 		if (driver instanceof TakesScreenshot) {
@@ -102,8 +170,21 @@ public class GenericMethod {
 		return ConstantVariable.ScreenShotlocation + "/" +Filename + ".png";
 	}
 
+	/**
+	 * This Method is used to verify the Attributed Value contain
+	 * @param driver
+	 * the driver parameter contain the instance of WebDriver
+	 * @param StringParam
+	 * StringParam is a array of String variable which hold data 
+	 * StringParam[0] contain the Object which need to compare the text  for an attribute value
+	 * StringParam[1] contain the expected text when need to compare with text with attribute value 
+	 * @return it return the status "pass" if execution success else throw an exception 
+	 * @throws Exception
+	 *
+	 */
 	public String verifyAttributedValue (WebDriver driver, String[] StringParam) throws Exception {
-		String ObjectData = GetObjectName(StringParam[0]);
+		//String ObjectData = GetObjectName(StringParam[0]);
+		String ObjectData = ConstantVariable.GetObject.get(StringParam[0]);
 		if(driver.findElement(By.xpath(ObjectData)).getAttribute(StringParam[1]).equalsIgnoreCase(StringParam[2])) {
 			return "pass";
 		}
@@ -111,25 +192,5 @@ public class GenericMethod {
 			return "false";
 		}
 	}
-	public static String GetObjectName(String ObjectName) throws Exception  {
-		ExcelReader ob;
-		String ObjectData = null;
-		logger.info("Getting the object Name ----->"+ObjectName);
-		ob = new ExcelReader(ConstantVariable.TestObjects, 0);
-		int Row =0;
-		while(!ob.GetCellData(Row, 0).equalsIgnoreCase("End")) {
-			if(ob.GetCellData(Row, 0).equalsIgnoreCase(ObjectName)) {
-				break;
-			}
-			Row++;
-		}
-		ObjectData = ob.GetCellData(Row, 1);
-
-		logger.info("Return object Name ----->"+ObjectData);
-		ob.CloseWorkbook();
-		return ObjectData;
-	}
-
-
-
+	
 }

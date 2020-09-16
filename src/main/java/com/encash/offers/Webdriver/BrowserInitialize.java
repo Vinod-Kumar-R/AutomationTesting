@@ -12,6 +12,11 @@ import com.paulhammant.ngwebdriver.NgWebDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
+/**
+ * This class is used to configuration Browser releated data
+ * @author Vinod Kumar R
+ *
+ */
 public class BrowserInitialize {
 
 	static Logger logger = Logger.getLogger(BrowserInitialize.class);

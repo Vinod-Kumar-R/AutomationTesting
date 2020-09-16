@@ -7,6 +7,11 @@ import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.log4j.Logger;
 
+/**
+ * This Class is used to read the Configuration file 
+ * @author Vinod Kumar R
+ *
+ */
 public class ConfigurationReader {
 	static Logger logger = Logger.getLogger(ConfigurationReader.class);
 	Configurations configs = new Configurations();

@@ -8,6 +8,11 @@ import com.encash.offers.Configuration.ConstantVariable;
 import com.encash.offers.Webdriver.BrowserInitialize;
 import com.paulhammant.ngwebdriver.NgWebDriver;
 
+/**
+ * This class contain the keyword which need to executed after reading from the test script file
+ * @author Vinod Kumar R
+ *
+ */
 public class KeywordExecution {
 	static Logger logger = Logger.getLogger(KeywordExecution.class);
 	private WebDriver driver;
@@ -15,7 +20,9 @@ public class KeywordExecution {
 	String status;
 	KeywordType keyword;
 	
-	
+	/**
+	 * This the default contractor which will initialize the WebDriver variable
+	 */
 
 	public KeywordExecution () {
 		
@@ -28,6 +35,13 @@ public class KeywordExecution {
 		
 	}
 
+	/**
+	 * This method is used to executed the keyword which is read from Test Script file
+	 * <p> the 2nd column in the Test script file is called Keyword 
+	 * @param StringParam 
+	 * contain the array of string data which is required executed particular keyword (nothing but Method)
+	 * @throws Exception
+	 */
 	public void Executed(String[] StringParam) throws Exception {
 
 		switch(keyword) {
@@ -152,6 +166,15 @@ public class KeywordExecution {
 		}
 	}
 
+	/**
+	 * This method capture the status of each keyword by saying pass or fail
+	 * 
+	 * @param status 
+	 * it contain pass or fail 
+	 * @param message
+	 * Message contain information of the keyword 
+	 * @throws Exception
+	 */
 	public void Testresult(String status,String message) throws  Exception {
 		if(status.equalsIgnoreCase("Pass")) {
 			BaseClass.er.WriteLog(Status.PASS, message );

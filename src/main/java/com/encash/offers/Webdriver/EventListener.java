@@ -8,6 +8,11 @@ import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
 import com.aventstack.extentreports.Status;
 import com.encash.offers.BaseFramework.BaseClass;
 
+/**
+ * This Class is used for WebDriver Event Listener 
+ * @author Vinod Kumar R
+ *
+ */
 public class EventListener extends AbstractWebDriverEventListener {
 	
 	static Logger logger = Logger.getLogger(EventListener.class);

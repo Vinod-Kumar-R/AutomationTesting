@@ -11,12 +11,28 @@ import org.openqa.selenium.WebElement;
 
 import com.aventstack.extentreports.Status;
 import com.encash.offers.BaseFramework.BaseClass;
+import com.encash.offers.Configuration.ConstantVariable;
 import com.encash.offers.Utility.GenericMethod;
 
+/**
+ * This class contain all the Business logic for Automation 
+ * @author Vinod Kumar R
+ *
+ */
 public class Logic {
 	static Logger logger = Logger.getLogger(GenericMethod.class);
 	
-	
+	/**
+	 * This Method is use to verify the Jishi text when user click on explore 
+	 * @param driver
+	 * the driver parameter contain the instance of WebDriver
+	 * @param StringParam
+	 * StringParam is a array of String variable which hold data 
+	 * StringParam[0] contain the Object i.e xpath 
+	 * rest of the data are text which need to verify in jishi page
+	 * @return it return the status "pass" if execution success else  throw an exception 
+	 * @throws Exception
+	 */
 	public String JishiText(WebDriver driver, String[] StringParam) throws Exception {
 		//String ObjectData = GenericMethod.GetObjectName(StringParam[0]); // GetObjectName(StringParam[0]);
 		for(int i=1;i<= StringParam.length-1;i++) {
@@ -33,16 +49,31 @@ public class Logic {
 		return "pass";
 	}
 	
-	
+	/**
+	 * This method is used to verify Banner page when user login to encashoffer page 
+	 * and take the screen shot of each banner when it is active 
+	 * @param driver
+	 * the driver parameter contain the instance of WebDriver
+	 * @param StringParam
+	 * StringParam is array of String which contain 
+	 * StringParam[0] contain the Object i.e xpath 
+	 * rest of the parameter the Banner name which need to verify 
+	 *
+	 * This verified the order of banner displayed by comparing the data from excel sheet
+	 * and order in the enchashoffer page
+	 *
+	 * @return the status as "pass" if script executed success else through an exception 
+	 * @throws Exception
+	 */
 	public String Banner(WebDriver driver, String[] StringParam) throws Exception {
-		//create an array of Banner so that in the end order can be verified 
+		//create an List which contain Banner name so that in the end order can be verified 
 		
 		List<String> Acutalbanner = new ArrayList<String>();
 		List<String> Expectedbanner = new ArrayList<String>();
 		List<WebElement> ElementList;
 		
 		//fetch all the Banner name with title and stored the name in list 
-		String object1 = GenericMethod.GetObjectName(StringParam[0]);
+		String object1 = ConstantVariable.GetObject.get(StringParam[0]);
 		//Get the list of the banner name 
 		ElementList = driver.findElements(By.xpath(object1));
 		

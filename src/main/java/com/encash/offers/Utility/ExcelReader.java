@@ -15,7 +15,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 /**
- * Hello world!
+ * This Class the generic method for Read an excel file 
  *
  */
 public class ExcelReader 
@@ -49,6 +49,16 @@ public class ExcelReader
 		
 		
 	}
+	
+	/**
+	 * This method is used to fetch the data from particular row and column
+	 * @param Row
+	 * Row contain the integer number from which row data need to fetch 
+	 * @param Column
+	 * Column contain the integer number from which column data need to fetch
+	 * @return the cell contain data as String type
+	 * 
+	 */
 	public String GetCellData(int Row, int Column) {
 
 

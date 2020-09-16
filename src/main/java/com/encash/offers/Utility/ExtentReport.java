@@ -9,6 +9,11 @@ import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.encash.offers.Configuration.ConstantVariable;
 
+/**
+ * This class is used to Generated the Extent report
+ * @author Vinod Kumar R
+ *
+ */
 public class ExtentReport {
 
 	public ExtentHtmlReporter htmlreporter;
