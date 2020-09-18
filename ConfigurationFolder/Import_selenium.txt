@@ -1,0 +1,29 @@
+https://www.youtube.com/watch?v=3iPOIt2ooUg
+
+prons and crons
+https://chercher.tech/protractor/pros-cons-protractor
+
+ngwebdriver official website
+https://github.com/paul-hammant/ngWebDriver
+
+https://www.bountysource.com/teams/ngwebdriver/issues
+
+https://qavalidation.com/2017/10/ngwebdriver-way-automate-angular-apps-selenium-using-java.html/
+
+
+https://gist.github.com/alvinlau/32490fe7334a10647322
+
+pageFactory using ngwebdriver
+https://medium.com/@prasannajyothi/testing-angular-applications-using-selenium-beb85090706a
+
+ngwebdrier example
+https://hello-angularjs.appspot.com/sorttablecolumn
+
+ngwebdriver example
+https://advancedtestautomation.blogspot.com/2017/05/selenium-for-angular-js-pages.html
+
+angaulre webpage using selenium 
+https://blog.vsoftconsulting.com/blog/testing-angular-applications-using-selenium
+
+//head less browser
+https://www.infoq.com/articles/headless-selenium-browsers/
