@@ -1,0 +1,4 @@
+to execute from maven command line use below code 
+
+mvn compile
+mvn exec:java
