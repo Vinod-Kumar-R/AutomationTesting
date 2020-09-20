@@ -52,7 +52,7 @@ public class KeywordExecution {
 			driver = BrowserInitialize.GetWebDriverInstance();
 			ngdriver = BrowserInitialize.GetNgWebDriverInstance();
 			driver.get(ConstantVariable.URL);
-			driver.manage().window().maximize();
+			//driver.manage().window().maximize();
 			status = "pass";
 			Testresult(status, "Browser Open");
 			break;

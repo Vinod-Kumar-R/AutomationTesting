@@ -35,8 +35,8 @@ public class ConstantVariable {
 	 * This variable contain test case file (test case ID) which which need to executed 
 	 */
 	public static String TestCases;
-
-	public static String TestObjects;
+	public static String TestObjectsWeb;
+	public static String TestObjectsMobile;
 	public static String ExtentReportsLocation;
 	public static String ExtentReportsPropeties;
 	public static String ScreenShotlocation;
@@ -44,6 +44,10 @@ public class ConstantVariable {
 	public static int polling;
 	public static HashMap<String,Integer> TestDataRowNumber;
 	public static HashMap<String,String> GetObject;
+	public static boolean HeadlessBrowser;
+	public static String MobileEmulation;
+	public static String Environment;
+	
 	private String Configurationfile = "D:\\Vinod\\encashoffers\\config.properties";
 
 	/**
@@ -58,12 +62,16 @@ public class ConstantVariable {
 		URL = cr.getConfigurationStringValue("url");
 		TestDatas = cr.getConfigurationStringValue("testData");
 		TestCases = cr.getConfigurationStringValue("testcase");
-		TestObjects = cr.getConfigurationStringValue("testObject");
+		TestObjectsWeb = cr.getConfigurationStringValue("testobjectweb");
+		TestObjectsMobile = cr.getConfigurationStringValue("testobjectweb");
 		ExtentReportsLocation = cr.getConfigurationStringValue("ResultFileLocation");
 		ExtentReportsPropeties = cr.getConfigurationStringValue("extentreportconfiguration");
 		ExplictWait = cr.getConfigurationIntValue("explictwait");
 		polling = cr.getConfigurationIntValue("polling");
+		HeadlessBrowser = cr.getConfigurationBooleanValue("headlessbrowser");
 		ScreenShotlocation = cr.getConfigurationStringValue("screenshotlocation");
+		MobileEmulation = cr.getConfigurationStringValue("mobileemulation");
+		Environment = cr.getConfigurationStringValue("environment");
 	}
 
 	/**
@@ -109,7 +117,21 @@ public class ConstantVariable {
 
 		String Key, Value;
 		this.GetObject = new HashMap<String,String>();
-		FileReader file = new FileReader(TestObjects);
+		FileReader file = null;
+		
+		if(Environment.equalsIgnoreCase("webbrowser")) {
+			file = new FileReader(TestObjectsWeb);
+			logger.info("Environment valuse :- "+ Environment);
+			logger.info("Reading the TestObject file :- "+TestObjectsWeb );
+		}
+		
+		if(Environment.equalsIgnoreCase("mobilebrowser")) {
+			file = new FileReader(TestObjectsMobile);
+			logger.info("Environment valuse :- "+ Environment);
+			logger.info("Reading the TestObject file :- "+TestObjectsMobile );
+		}
+		
+		
 		List<RepositoryBean> repositoryobject = new CsvToBeanBuilder<RepositoryBean>(file)
 				.withType(RepositoryBean.class).build().parse();
 

@@ -91,6 +91,14 @@
 			<version>5.2</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/io.appium/java-client -->
+		<dependency>
+			<groupId>io.appium</groupId>
+			<artifactId>java-client</artifactId>
+			<version>7.3.0</version>
+		</dependency>
+
+
 
 	</dependencies>
 
@@ -101,11 +109,11 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>3.2.0</version>
 				<configuration>
-					
+
 				</configuration>
 			</plugin>
 		</plugins>
-		
+
 	</reporting>
 
 	<build>

@@ -2,14 +2,17 @@ package com.encash.offers.BaseFramework;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-
+//import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import com.aventstack.extentreports.Status;
 import com.encash.offers.BussinessLogic.Logic;
 import com.encash.offers.Configuration.ConstantVariable;
 import com.encash.offers.Utility.ExcelReader;
 import com.encash.offers.Utility.ExtentReport;
 import com.encash.offers.Utility.GenericMethod;
+import com.encash.offers.Webdriver.BrowserInitialize;
 import com.paulhammant.ngwebdriver.NgWebDriver;
+
 
 /**
  * <h1> This is Main class in which execution Start </h1>
@@ -64,7 +67,7 @@ public class BaseClass {
 		//Initialize the method
 		cv.SearchTestData();
 		cv.ObjectRepository();
-
+		BrowserInitialize.BrowserInfo();
 
 		int testcaserownumber =1;
 		int testDatarownumber =0;
