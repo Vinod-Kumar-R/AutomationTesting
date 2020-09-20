@@ -44,7 +44,7 @@ public class ConstantVariable {
 	public static int polling;
 	public static HashMap<String,Integer> TestDataRowNumber;
 	public static HashMap<String,String> GetObject;
-	private String Configurationfile = "D:\\Vinod\\encashoffers\\config.properties";
+	private String Configurationfile = "C:\\Vinod\\configfolder\\config.properties";
 
 	/**
 	 * This is the Constructor which is used to initialized the static variable
