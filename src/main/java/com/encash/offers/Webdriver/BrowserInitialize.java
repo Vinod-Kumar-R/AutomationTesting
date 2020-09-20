@@ -8,10 +8,13 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
+import com.encash.offers.BaseFramework.BaseClass;
 import com.encash.offers.Configuration.ConstantVariable;
 import com.paulhammant.ngwebdriver.NgWebDriver;
 
@@ -21,6 +24,7 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileBrowserType;
 import io.appium.java_client.remote.MobileCapabilityType;
+import io.appium.java_client.android.AndroidDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 /**
@@ -35,27 +39,32 @@ public class BrowserInitialize {
 	public static EventFiringWebDriver driver;
 	public static  NgWebDriver ngwebdriver = null;
 	public static JavascriptExecutor jsDriver;
+	private static Desired desired;
 	//public static boolean waitstatus = true;
 
 
 	private BrowserInitialize() {
 
+
 	}
 
 	private static void ConfigureWebDriver() {
 
-
+		desired = new Desired();
 
 		if(ConstantVariable.BrowserName.equalsIgnoreCase("Chrome")){
 			WebDriverManager.chromedriver().setup();
-			drivere = new ChromeDriver();
 
-
+			ChromeOptions op =  desired.ChromeDesired();
+			// ChromeDriver driver = new ChromeDriver(de);
+			drivere = new ChromeDriver(op);
 		}
 
 		if(ConstantVariable.BrowserName.equalsIgnoreCase("firefox")){
 			WebDriverManager.firefoxdriver().setup();
-			drivere = new FirefoxDriver();
+			Desired d = new Desired();
+			FirefoxOptions fo = d.FirefoxDesired();
+			drivere = new FirefoxDriver(fo);
 		}
 		
 		if(ConstantVariable.BrowserName.equalsIgnoreCase("Android")){
@@ -93,14 +102,15 @@ public class BrowserInitialize {
 			//drivere = new FirefoxDriver();
 		}
 
-
 		driver = new EventFiringWebDriver(drivere);
 		EventListener ei = new EventListener();
 		driver.register(ei);
+
+
+
 		//driver.manage().window().fullscreen();
 		jsDriver = (JavascriptExecutor) driver ;
 		ngwebdriver = new NgWebDriver(jsDriver).withRootSelector("9.1.9");
-
 
 	}
 
@@ -123,5 +133,11 @@ public class BrowserInitialize {
 		driver.quit();
 		driver = null;
 		return "pass";
+	}
+
+	public static void BrowserInfo() {
+		BaseClass.er.SetSystemInfo("Browser Name", driver.getCapabilities().getBrowserName());
+		BaseClass.er.SetSystemInfo("Browser Version", driver.getCapabilities().getVersion());
+		BaseClass.er.SetSystemInfo("Platform", driver.getCapabilities().getPlatform().toString());
 	}
 }

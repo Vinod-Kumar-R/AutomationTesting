@@ -31,10 +31,9 @@ public class ExtentReport {
 		//this.spark.loadXMLConfig(ConstantVariable.ExtentReportsPropeties);
 		this.extent = new ExtentReports();
 		this.extent.setSystemInfo("Organization", "Enchashes");
-		this.extent.setSystemInfo("Browser", ConstantVariable.BrowserName);
-		this.extent.setSystemInfo("Operation System ", System.getProperty("os.name"));
 		this.extent.setSystemInfo("OS Version number", System.getProperty("os.version"));
-		this.extent.setSystemInfo("Build Version No", "Need to fetch the Build Number");
+		this.extent.setSystemInfo("Build Number", "Need to fetch the Build Number");
+		this.extent.setSystemInfo("Testing URL", ConstantVariable.URL);
 		this.extent.attachReporter(this.htmlreporter);
 	}
 
@@ -75,8 +74,13 @@ public class ExtentReport {
 	public void author(String author) {
 		this.extenttest.assignAuthor(author);
 		
-		
 	}
+	
+	public void SetSystemInfo(String Key, String Value) {
+		this.extent.setSystemInfo(Key, Value);
+	}
+	
+	
 	
 	
 

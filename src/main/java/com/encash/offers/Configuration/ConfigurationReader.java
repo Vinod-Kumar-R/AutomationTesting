@@ -31,9 +31,15 @@ public class ConfigurationReader {
 		return config.getString(key);
 		
 	}
+	
 	public Integer getConfigurationIntValue(String key) {
 		logger.info(key + "configuration file");
 		return config.getInt(key);
+	}
+	
+	public Boolean getConfigurationBooleanValue(String key) {
+		logger.info(key + "configuration file");
+		return config.getBoolean(key);
 	}
 
 }
