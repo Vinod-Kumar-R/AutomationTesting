@@ -1,6 +1,7 @@
 package com.encash.offers.Configuration;
 
 import java.io.File;
+import java.util.Iterator;
 
 import org.apache.commons.configuration2.Configuration;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
@@ -40,6 +41,10 @@ public class ConfigurationReader {
 	public Boolean getConfigurationBooleanValue(String key) {
 		logger.info(key + "configuration file");
 		return config.getBoolean(key);
+	}
+	
+	public Iterator<String> getAllKeys() {
+		return config.getKeys();
 	}
 
 }

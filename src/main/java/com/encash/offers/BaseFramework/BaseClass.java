@@ -164,12 +164,12 @@ public class BaseClass {
 			TestData.CloseWorkbook();
 
 		}catch (Exception e) {
-
+			
 			GenericMethod.waitstatus = false;
 			er.WriteLog(Status.FAIL, e.getMessage());
 			logger.info("testscript error message", e);
 			try {
-
+				TestData.CloseWorkbook();
 				er.AttachScreenshot(gm.takeScreenshot(driver));
 				//er.flushlog();
 			} catch (Exception e1) {

@@ -6,7 +6,6 @@ import java.net.URL;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -19,12 +18,7 @@ import com.encash.offers.Configuration.ConstantVariable;
 import com.paulhammant.ngwebdriver.NgWebDriver;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileCommand;
-import io.appium.java_client.MobileElement;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.remote.MobileBrowserType;
 import io.appium.java_client.remote.MobileCapabilityType;
-import io.appium.java_client.android.AndroidDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 /**
@@ -66,40 +60,17 @@ public class BrowserInitialize {
 			FirefoxOptions fo = d.FirefoxDesired();
 			drivere = new FirefoxDriver(fo);
 		}
-		
+
 		if(ConstantVariable.BrowserName.equalsIgnoreCase("Android")){
-			
-			DesiredCapabilities ca = new DesiredCapabilities();
-			//ca.setCapability("platformName", "Android");
-			//ca.setCapability("deviceName", "Android");
-			//ca.setCapability("browserName", "Chrome");
-			
-			
-			
-			
-			
-			//ca.setCapability("uiautomator2ServerLaunchTimeout", "100000");
-			ca.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
-			ca.setCapability(MobileCapabilityType.APPIUM_VERSION, "10");
-			ca.setCapability(MobileCapabilityType.DEVICE_NAME, "Nexus 5");
-			ca.setCapability(MobileCapabilityType.BROWSER_NAME, "Chrome");
-			ca.setCapability(MobileCapabilityType.UDID, "04895b1943876a3e");
-			ca.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 180);
-			ca.setCapability("uiautomator2ServerLaunchTimeout", "50000");
-			ca.setCapability("chromedriverExecutable", "C:\\Users\\HP\\Downloads\\chromedriver\\chromedriver.exe");
-			//ca.setCapability(MobileCapabilityType.BROWSER_VERSION, "Android");
-			
-			
+			DesiredCapabilities ca = desired.AndroidDesired();
+
 			try {
-				//AndroidDriver<WebElement> drivere = new AndroidDriver<>(new URL("http://localhost:4723/wd/hub"),ca);
-				drivere = new AppiumDriver(new URL("http://localhost:4723/wd/hub"),ca);
+				drivere = new AppiumDriver(new URL(ConstantVariable.AppiumURL),ca);
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			//WebDriverManager.firefoxdriver().setup();
-			//drivere = new FirefoxDriver();
+
 		}
 
 		driver = new EventFiringWebDriver(drivere);

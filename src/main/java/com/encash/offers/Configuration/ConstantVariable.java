@@ -47,8 +47,10 @@ public class ConstantVariable {
 	public static boolean HeadlessBrowser;
 	public static String MobileEmulation;
 	public static String Environment;
+	public static String DesiredAndroidCapability;
+	public static String AppiumURL;
 	
-	private String Configurationfile = "D:\\Vinod\\encashoffers\\config.properties";
+	private String Configurationfile = "C:\\Vinod\\configfolder\\config.properties";
 
 	/**
 	 * This is the Constructor which is used to initialized the static variable
@@ -63,7 +65,7 @@ public class ConstantVariable {
 		TestDatas = cr.getConfigurationStringValue("testData");
 		TestCases = cr.getConfigurationStringValue("testcase");
 		TestObjectsWeb = cr.getConfigurationStringValue("testobjectweb");
-		TestObjectsMobile = cr.getConfigurationStringValue("testobjectweb");
+		TestObjectsMobile = cr.getConfigurationStringValue("testobjectmobile");
 		ExtentReportsLocation = cr.getConfigurationStringValue("ResultFileLocation");
 		ExtentReportsPropeties = cr.getConfigurationStringValue("extentreportconfiguration");
 		ExplictWait = cr.getConfigurationIntValue("explictwait");
@@ -72,6 +74,8 @@ public class ConstantVariable {
 		ScreenShotlocation = cr.getConfigurationStringValue("screenshotlocation");
 		MobileEmulation = cr.getConfigurationStringValue("mobileemulation");
 		Environment = cr.getConfigurationStringValue("environment");
+		DesiredAndroidCapability = cr.getConfigurationStringValue("androidedesiredcapability");
+		AppiumURL = cr.getConfigurationStringValue("appiumServerurl");
 	}
 
 	/**
@@ -121,14 +125,12 @@ public class ConstantVariable {
 		
 		if(Environment.equalsIgnoreCase("webbrowser")) {
 			file = new FileReader(TestObjectsWeb);
-			logger.info("Environment valuse :- "+ Environment);
-			logger.info("Reading the TestObject file :- "+TestObjectsWeb );
+			
 		}
 		
 		if(Environment.equalsIgnoreCase("mobilebrowser")) {
 			file = new FileReader(TestObjectsMobile);
-			logger.info("Environment valuse :- "+ Environment);
-			logger.info("Reading the TestObject file :- "+TestObjectsMobile );
+			
 		}
 		
 		
