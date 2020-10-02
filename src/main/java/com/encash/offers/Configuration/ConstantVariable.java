@@ -123,12 +123,12 @@ public class ConstantVariable {
 		this.GetObject = new HashMap<String,String>();
 		FileReader file = null;
 		
-		if(Environment.equalsIgnoreCase("webbrowser")) {
+		if(!BrowserName.equalsIgnoreCase("Android")|Environment.equalsIgnoreCase("webbrowser")) {
 			file = new FileReader(TestObjectsWeb);
 			
 		}
 		
-		if(Environment.equalsIgnoreCase("mobilebrowser")) {
+		if(Environment.equalsIgnoreCase("mobilebrowser")| BrowserName.equalsIgnoreCase("Android")) {
 			file = new FileReader(TestObjectsMobile);
 			
 		}

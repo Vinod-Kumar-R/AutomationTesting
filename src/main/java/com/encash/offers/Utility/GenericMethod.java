@@ -167,7 +167,14 @@ public class GenericMethod {
 
 
 		}
-		return ConstantVariable.ScreenShotlocation + "/" +Filename + ".png";
+		String absolutepath = ConstantVariable.ScreenShotlocation + "/" + Filename + ".png";
+		System.out.println(absolutepath);
+		logger.info("absolutepath "+ absolutepath);
+		String relative[] = absolutepath.split("/");
+		String relativepath = "../" +relative[relative.length-2]+"/" +relative[relative.length-1];
+		logger.info(" relative path "+ relativepath);
+		//return ConstantVariable.ScreenShotlocation + "/" +Filename + ".png";
+		return relativepath;
 	}
 
 	/**
@@ -191,6 +198,18 @@ public class GenericMethod {
 		else {
 			return "false";
 		}
+	}
+	
+	/**
+	 * This Method is used to enter the text in the text filed
+	 * @param driver
+	 * @param StringParam
+	 * @return
+	 */
+	public String entertext(WebDriver driver, String[] StringParam) {
+		String ObjectData = ConstantVariable.GetObject.get(StringParam[0]);
+		driver.findElement(By.xpath(ObjectData)).sendKeys(StringParam[1]);
+		return "pass";
 	}
 	
 }

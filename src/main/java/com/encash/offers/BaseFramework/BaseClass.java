@@ -76,7 +76,8 @@ public class BaseClass {
 		TestCase = new ExcelReader(ConstantVariable.TestCases,0);
 		//is not of end of testcase row
 		while(!(TestCase.GetCellData(testcaserownumber, 0).equalsIgnoreCase("End"))) {
-			
+			//if Executed column is yes then executed else skip test skip
+			if((TestCase.GetCellData(testcaserownumber, 3).equalsIgnoreCase("yes"))) {
 			String Test_Case_ID = TestCase.GetCellData(testcaserownumber,0);
 			String Test_Case_Description = TestCase.GetCellData(testcaserownumber,1);
 			String Test_Case_Categeory = TestCase.GetCellData(testcaserownumber, 2);
@@ -97,6 +98,8 @@ public class BaseClass {
 			TestRunId(testDatarownumber);
 			er.flushlog();
 
+			
+			}
 			testcaserownumber++;
 		}
 
@@ -171,6 +174,7 @@ public class BaseClass {
 			try {
 				TestData.CloseWorkbook();
 				er.AttachScreenshot(gm.takeScreenshot(driver));
+				BrowserInitialize.QuitBrowser();
 				//er.flushlog();
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block

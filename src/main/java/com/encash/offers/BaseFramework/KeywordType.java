@@ -19,6 +19,7 @@ public enum KeywordType {
 	waitforattributedprent,
 	verifyattributedvalue,
 	banner,
-	comment
+	comment,
+	entertext
 
 }

@@ -6,7 +6,8 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
-import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+//import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.encash.offers.Configuration.ConstantVariable;
 
 /**
@@ -16,25 +17,33 @@ import com.encash.offers.Configuration.ConstantVariable;
  */
 public class ExtentReport {
 
-	public ExtentHtmlReporter htmlreporter;
 	//public ExtentHtmlReporter htmlreporter;
-	//public ExtentSparkReporter spark ;
+	//public ExtentHtmlReporter htmlreporter;
+	public ExtentSparkReporter spark ;
 	
 	public ExtentReports extent;
 	public ExtentTest extenttest;
 
 	public ExtentReport()  {
 
-		this.htmlreporter = new ExtentHtmlReporter(ConstantVariable.ExtentReportsLocation);
-		this.htmlreporter.loadXMLConfig(ConstantVariable.ExtentReportsPropeties);
-		//this.spark = new ExtentSparkReporter(ConstantVariable.ExtentReportsLocation) ;
-		//this.spark.loadXMLConfig(ConstantVariable.ExtentReportsPropeties);
+		//this.htmlreporter = new ExtentHtmlReporter(ConstantVariable.ExtentReportsLocation);
+		//this.htmlreporter.loadXMLConfig(ConstantVariable.ExtentReportsPropeties);
+		this.spark = new ExtentSparkReporter(ConstantVariable.ExtentReportsLocation) ;
+		try {
+			this.spark.loadXMLConfig(ConstantVariable.ExtentReportsPropeties);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.extent = new ExtentReports();
 		this.extent.setSystemInfo("Organization", "Enchashes");
 		this.extent.setSystemInfo("OS Version number", System.getProperty("os.version"));
 		this.extent.setSystemInfo("Build Number", "Need to fetch the Build Number");
 		this.extent.setSystemInfo("Testing URL", ConstantVariable.URL);
-		this.extent.attachReporter(this.htmlreporter);
+		//this.extent.attachReporter(this.htmlreporter);
+		
+		this.extent.attachReporter(this.spark);
+		
 	}
 
 	public void CreateTest(String TestName) {
@@ -73,6 +82,9 @@ public class ExtentReport {
 
 	public void author(String author) {
 		this.extenttest.assignAuthor(author);
+		
+		
+		
 		
 	}
 	

@@ -20,7 +20,7 @@ import com.encash.offers.Utility.GenericMethod;
  *
  */
 public class Logic {
-	static Logger logger = Logger.getLogger(GenericMethod.class);
+	static Logger logger = Logger.getLogger(Logic.class);
 	
 	/**
 	 * This Method is use to verify the Jishi text when user click on explore 
@@ -35,11 +35,11 @@ public class Logic {
 	 */
 	public String JishiText(WebDriver driver, String[] StringParam) throws Exception {
 		//String ObjectData = GenericMethod.GetObjectName(StringParam[0]); // GetObjectName(StringParam[0]);
-		for(int i=1;i<= StringParam.length-1;i++) {
+		for(int i=1;i< StringParam.length;i++) {
 			String[] data = new String[2];
 			data[0] = StringParam[0];
 			data[1] = StringParam[i];
-			logger.info("Waiting for test visible "+ data[1]);
+			logger.info("Waiting for test visible "+ data[1] + "Row data number "+ i);
 			BaseClass.gm.WaitForTexttVisible(driver,data);
 			BaseClass.er.WriteLog(Status.PASS, "Taken the screenshot", BaseClass.gm.takeScreenshot(driver));
 			BaseClass.gm.VerifyText(driver, data);

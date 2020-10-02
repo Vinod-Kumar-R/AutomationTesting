@@ -81,7 +81,8 @@
 		<dependency>
 			<groupId>com.aventstack</groupId>
 			<artifactId>extentreports</artifactId>
-			<version>3.1.5</version>
+			<!--  <version>3.1.5</version> -->
+			<version>5.0.1</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
@@ -92,12 +93,12 @@
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/io.appium/java-client -->
-		<dependency>
+<!--  		<dependency>
 			<groupId>io.appium</groupId>
 			<artifactId>java-client</artifactId>
 			<version>7.3.0</version>
 		</dependency>
-
+-->
 	</dependencies>
 
 	<reporting>

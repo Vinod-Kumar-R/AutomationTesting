@@ -160,6 +160,14 @@ public class KeywordExecution {
 			
 			break;
 			
+		case entertext:
+			
+			BaseClass.er.WriteInfo("Executing key word ---> "+ keyword);
+			//status = gm.VerifyText(driver, StringParam);
+			status = BaseClass.gm.entertext(driver,StringParam);
+			logger.info("Enter the text");
+			Testresult(status,keyword.toString());
+			
 		case comment :
 			 break;
 

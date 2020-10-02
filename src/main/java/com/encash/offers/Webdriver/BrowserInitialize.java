@@ -6,6 +6,7 @@ import java.net.URL;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -17,8 +18,7 @@ import com.encash.offers.BaseFramework.BaseClass;
 import com.encash.offers.Configuration.ConstantVariable;
 import com.paulhammant.ngwebdriver.NgWebDriver;
 
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.remote.MobileCapabilityType;
+//import io.appium.java_client.AppiumDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 /**
@@ -31,6 +31,7 @@ public class BrowserInitialize {
 	static Logger logger = Logger.getLogger(BrowserInitialize.class);
 	public static  WebDriver drivere = null;
 	public static EventFiringWebDriver driver;
+	
 	public static  NgWebDriver ngwebdriver = null;
 	public static JavascriptExecutor jsDriver;
 	private static Desired desired;
@@ -48,29 +49,49 @@ public class BrowserInitialize {
 
 		if(ConstantVariable.BrowserName.equalsIgnoreCase("Chrome")){
 			WebDriverManager.chromedriver().setup();
-
+             logger.info("Chrome initialized method is called");
 			ChromeOptions op =  desired.ChromeDesired();
 			// ChromeDriver driver = new ChromeDriver(de);
 			drivere = new ChromeDriver(op);
+		/**	driver = new EventFiringWebDriver(drivere);
+			EventListener ei = new EventListener();
+			driver.register(ei);
+			*/
 		}
 
 		if(ConstantVariable.BrowserName.equalsIgnoreCase("firefox")){
 			WebDriverManager.firefoxdriver().setup();
-			Desired d = new Desired();
-			FirefoxOptions fo = d.FirefoxDesired();
+			FirefoxOptions fo = desired.FirefoxDesired();
 			drivere = new FirefoxDriver(fo);
+	/**		driver = new EventFiringWebDriver(drivere);
+			EventListener ei = new EventListener();
+			driver.register(ei);
+	*/		
 		}
 
 		if(ConstantVariable.BrowserName.equalsIgnoreCase("Android")){
 			DesiredCapabilities ca = desired.AndroidDesired();
-
+/**
 			try {
-				drivere = new AppiumDriver(new URL(ConstantVariable.AppiumURL),ca);
+				//AppiumDriv
+				drivere = new AppiumDriver<WebElement>(new URL(ConstantVariable.AppiumURL),ca);
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+**/
+		}
+		
+		if(ConstantVariable.BrowserName.equalsIgnoreCase("MobileChrome")){
+			// WebDriverManager.globalConfig().getChromeDriverVersion();
+			//WebDriverManager.chromedriver().setup();
+			//WebDriverManager.chromedriver().browserVersion("83.0.4103.106").setup();
+			
+			//System.setProperty("webdriver.chrome.driver", "C:\\Users\\HP\\Downloads\\chromedriver\\chromedriver.exe");
+			//emulator
+			System.setProperty("webdriver.chrome.driver", "C:\\Users\\HP\\Downloads\\chromedriver83\\chromedriver.exe");
+			drivere = new ChromeDriver(desired.MobileChromedriver());
+			
 		}
 
 		driver = new EventFiringWebDriver(drivere);
@@ -89,6 +110,7 @@ public class BrowserInitialize {
 		if(driver == null) {
 			ConfigureWebDriver();
 		}
+	
 		return driver;
 
 	}
