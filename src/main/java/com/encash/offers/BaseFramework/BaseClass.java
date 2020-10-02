@@ -1,9 +1,10 @@
 package com.encash.offers.BaseFramework;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-//import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
+
 import com.aventstack.extentreports.Status;
 import com.encash.offers.BussinessLogic.Logic;
 import com.encash.offers.Configuration.ConstantVariable;
@@ -27,7 +28,8 @@ import com.paulhammant.ngwebdriver.NgWebDriver;
  */
 
 public class BaseClass {
-	static Logger logger = Logger.getLogger(BaseClass.class);
+	//static Logger logger = Logger.getLogger(BaseClass.class);
+	static Logger logger = LogManager.getLogger(BaseClass.class);
 	public static int throwincrment =0;
 	public static ConstantVariable cv ;
 	public static GenericMethod gm;
@@ -64,6 +66,7 @@ public class BaseClass {
 	 * <p> this is the main which accept all the Exception </p>
 	 */
 	public void Start_run() throws Exception {
+		
 		//Initialize the method
 		cv.SearchTestData();
 		cv.ObjectRepository();
@@ -72,7 +75,7 @@ public class BaseClass {
 		int testcaserownumber =1;
 		int testDatarownumber =0;
 		//Read the Test case data
-		logger.info("Test Case File name "+ConstantVariable.TestCases);
+		logger.debug("Test Case File name "+ConstantVariable.TestCases);
 		TestCase = new ExcelReader(ConstantVariable.TestCases,0);
 		//is not of end of testcase row
 		while(!(TestCase.GetCellData(testcaserownumber, 0).equalsIgnoreCase("End"))) {
@@ -80,20 +83,20 @@ public class BaseClass {
 			String Test_Case_ID = TestCase.GetCellData(testcaserownumber,0);
 			String Test_Case_Description = TestCase.GetCellData(testcaserownumber,1);
 			String Test_Case_Categeory = TestCase.GetCellData(testcaserownumber, 2);
-
-			logger.info("Test Case ID "+ Test_Case_ID);
-			logger.info("Test Case Description "+ Test_Case_Description);
-			logger.info("Test Case Categeory "+ Test_Case_Categeory);
+            logger.info("Started Executing Test Case ID " + Test_Case_ID);
+			logger.debug("Test Case ID "+ Test_Case_ID);
+			logger.debug("Test Case Description "+ Test_Case_Description);
+			logger.debug("Test Case Categeory "+ Test_Case_Categeory);
 
 
 			er.CreateTest(Test_Case_ID,Test_Case_Description);
 			er.Categeory(Test_Case_Categeory);
 
-			logger.info("Test case found in the test data file at----> "+ ConstantVariable.TestDataRowNumber.get(Test_Case_ID));
+			logger.debug("Test case found in the test data file at----> "+ ConstantVariable.TestDataRowNumber.get(Test_Case_ID));
 			testDatarownumber = ConstantVariable.TestDataRowNumber.get(Test_Case_ID);
 
 			//Execute the Test case ID
-			logger.info("Test Case ID found and started executing "+ Test_Case_ID);
+			logger.debug("Test Case ID found and started executing "+ Test_Case_ID);
 			TestRunId(testDatarownumber);
 			er.flushlog();
 
@@ -102,6 +105,7 @@ public class BaseClass {
 
 		er.flushlog();
 		TestCase.CloseWorkbook();
+		logger.debug("Completed Exeuction of all the Test Case i.e "+ (TestCase.Rowcout(0)-2));
 		logger.info("Completed Exeuction of all the Test Case i.e "+ (TestCase.Rowcout(0)-2));
 	}
 
@@ -130,7 +134,7 @@ public class BaseClass {
 
 			while(TestData.GetCellData(Current_Row, 0) == null || !TestData.GetCellData(Current_Row, 0).equalsIgnoreCase("End")) {
 				Keyword = TestData.GetCellData(Current_Row, Current_Col);
-				logger.info("Got the Key word from excel sheet" + Keyword);
+				logger.debug("Got the Key word from excel sheet " + Keyword);
 
 				//Read the all the parameter for keywork and add delimitor ~
 				int Column =2;
@@ -138,9 +142,9 @@ public class BaseClass {
 				String param = "";
 				int incrementarraydata = 0;
 				while(TestData.GetCellData(Current_Row, Column) != null) {
-					logger.info("current row number "+ Current_Row + "Column number "+Column);
-					logger.info("Data got from Cell "+TestData.GetCellData(Current_Row, Column));
-					logger.info("value of incrementarraydata "+incrementarraydata);
+					logger.debug("current row number "+ Current_Row + "Column number "+Column);
+					logger.debug("Data got from Cell "+TestData.GetCellData(Current_Row, Column));
+					logger.debug("value of incrementarraydata "+incrementarraydata);
 					if(param.equals("")) {
 						param = TestData.GetCellData(Current_Row, Column);
 					}
@@ -156,6 +160,7 @@ public class BaseClass {
 				}
 
 				ke.setvalue(KeywordType.valueOf(Keyword));
+				logger.info("Executing the Keyword " +Keyword);
 				ke.Executed(StringParam);
 				//KeywordType.
 				Current_Row++;
@@ -167,14 +172,14 @@ public class BaseClass {
 			
 			GenericMethod.waitstatus = false;
 			er.WriteLog(Status.FAIL, e.getMessage());
-			logger.info("testscript error message", e);
+			logger.error("testscript error message", e);
 			try {
 				TestData.CloseWorkbook();
 				er.AttachScreenshot(gm.takeScreenshot(driver));
 				//er.flushlog();
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				logger.error("exception message", e1);
 			}
 			er.flushlog();
 

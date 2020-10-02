@@ -1,11 +1,15 @@
 package com.encash.offers.Configuration;
 
+import java.io.File;
 import java.io.FileReader;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
+//import org.apache.log4j.Logger;
+//import org.apache.log4j.PropertyConfigurator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.LoggerContext;
 
 import com.encash.offers.BeanClass.RepositoryBean;
 import com.encash.offers.Utility.ExcelReader;
@@ -17,7 +21,8 @@ import com.opencsv.bean.CsvToBeanBuilder;
  *
  */
 public class ConstantVariable {
-	static Logger logger = Logger.getLogger(ConstantVariable.class);
+	//static Logger logger = Logger.getLogger(ConstantVariable.class.getName());
+	static Logger logger = LogManager.getLogger(ConstantVariable.class.getName());
 	/**
 	 * This variable contain the Browser name in which test script need to execute
 	 */
@@ -50,7 +55,7 @@ public class ConstantVariable {
 	public static String DesiredAndroidCapability;
 	public static String AppiumURL;
 	
-	private String Configurationfile = "C:\\Vinod\\configfolder\\config.properties";
+	private String Configurationfile = "D:\\Vinod\\encashoffers\\config.properties";
 
 	/**
 	 * This is the Constructor which is used to initialized the static variable
@@ -59,7 +64,13 @@ public class ConstantVariable {
 		ConfigurationReader cr = new ConfigurationReader();
 		cr.ReadConfig(Configurationfile);
 		LogFile = cr.getConfigurationStringValue("log4j");
-		PropertyConfigurator.configure(LogFile);
+		//PropertyConfigurator.configure(LogFile);
+		LoggerContext context = (org.apache.logging.log4j.core.LoggerContext) LogManager.getContext(false);
+		File file = new File(LogFile);
+		context.setConfigLocation(file.toURI());
+		
+		
+		
 		BrowserName = cr.getConfigurationStringValue("browsername");
 		URL = cr.getConfigurationStringValue("url");
 		TestDatas = cr.getConfigurationStringValue("testData");
@@ -97,12 +108,12 @@ public class ConstantVariable {
 					&& !STD.GetCellData(i,0).equalsIgnoreCase("End")
 					&& !STD.GetCellData(i,0).equalsIgnoreCase("EndTestCase")) {
 				this.TestDataRowNumber.put(STD.GetCellData(i,0), i);	
-				logger.info(STD.GetCellData(i,0));
+				logger.debug(STD.GetCellData(i,0));
 			}
 		}
 
 		STD.CloseWorkbook();
-		logger.info("found the testcase in the TestDatas" + ConstantVariable.TestDatas +
+		logger.debug("found the testcase in the TestDatas" + ConstantVariable.TestDatas +
 				"in the row number " +index );
 	}
 
@@ -140,7 +151,7 @@ public class ConstantVariable {
 		for(RepositoryBean ro : repositoryobject ) {
 			Key = ro.getObjectName();
 			Value = ro.getObjectValue();
-			logger.info("Key ---> "+ Key +"  Value ----> "+Value);
+			logger.debug("Key ---> "+ Key +"  Value ----> "+Value);
 			GetObject.put(Key, Value);
 		}
 

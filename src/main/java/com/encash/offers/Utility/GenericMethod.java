@@ -6,7 +6,9 @@ import java.io.File;
 import java.time.Duration;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
@@ -24,7 +26,8 @@ import com.encash.offers.Configuration.ConstantVariable;
  *
  */
 public class GenericMethod {
-	static Logger logger = Logger.getLogger(GenericMethod.class);
+	//static Logger logger = Logger.getLogger(GenericMethod.class.getName());
+	static Logger logger = LogManager.getLogger(GenericMethod.class.getName());
 	public static boolean waitstatus = true;
 
 	/**
@@ -62,7 +65,7 @@ public class GenericMethod {
 				.pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
 				.ignoring(NoSuchElementException.class);	
 
-		logger.info("Waiting for the Element Visibility "+ ObjectName);
+		logger.debug("Waiting for the Element Visibility "+ ObjectName);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(ObjectName)));
 
 		waitstatus = true;
@@ -89,7 +92,7 @@ public class GenericMethod {
 				.pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
 				.ignoring(NoSuchElementException.class);
 
-		logger.info("Waiting for the Text to be present "+ ObjectName);
+		logger.debug("Waiting for the Text to be present "+ ObjectName);
 		wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath(ObjectName), StringParam[1]));
 
 		waitstatus = true;
@@ -118,9 +121,9 @@ public class GenericMethod {
 				.pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
 				.ignoring(NoSuchElementException.class);
 
-		logger.info("Waiting for the attributed presnt and value "+ ObjectName);
-		logger.info("attribute --------->" +StringParam[1]);
-		logger.info("Value --------->" +StringParam[2]);
+		logger.debug("Waiting for the attributed presnt and value "+ ObjectName);
+		logger.debug("attribute --------->" +StringParam[1]);
+		logger.debug("Value --------->" +StringParam[2]);
 		//wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath(ObjectName), string[1]));
 
 		wait.until(ExpectedConditions.attributeContains(By.xpath(ObjectName), StringParam[1], StringParam[2]));
@@ -142,7 +145,7 @@ public class GenericMethod {
 	 */
 
 	public String VerifyText(WebDriver driver,String[] StringParam) throws Exception {
-		logger.info("Verifying the text-------> "+StringParam[1]);
+		logger.debug("Verifying the text-------> "+StringParam[1]);
 		//String ObjectData = GetObjectName(StringParam[0]);
 		String ObjectData = ConstantVariable.GetObject.get(StringParam[0]);
 		if(driver.findElement(By.xpath(ObjectData)).getText().equalsIgnoreCase(StringParam[1])) {
