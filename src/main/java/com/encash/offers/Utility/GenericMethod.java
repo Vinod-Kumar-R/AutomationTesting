@@ -1,14 +1,15 @@
 package com.encash.offers.Utility;
 
 import java.io.File;
-
-
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
 //import org.apache.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.poi.poifs.filesystem.DirectoryEntry;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
@@ -166,18 +167,16 @@ public class GenericMethod {
 		long Filename = System.currentTimeMillis();
 		if (driver instanceof TakesScreenshot) {
 			File tempFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-			FileUtils.copyFile(tempFile, new File(ConstantVariable.ScreenShotlocation + "/" +Filename + ".png"));
-
-
+			FileUtils.copyFile(tempFile, new File(ConstantVariable.ScreenShotlocation + File.separator +Filename + ".png"));
 		}
-		String absolutepath = ConstantVariable.ScreenShotlocation + "/" + Filename + ".png";
-		System.out.println(absolutepath);
-		logger.info("absolutepath "+ absolutepath);
-		String relative[] = absolutepath.split("/");
-		String relativepath = "../" +relative[relative.length-2]+"/" +relative[relative.length-1];
-		logger.info(" relative path "+ relativepath);
+		String absolutepath = ConstantVariable.ScreenShotlocation +  File.separator  + Filename + ".png";
+		logger.debug("absolutepath "+ absolutepath);
+		//String relative[] = absolutepath.split( File.separator.toString() );
+		//String relativepath = "../" +relative[relative.length-2]+ File.separator  +relative[relative.length-1];
+		String relativepath = new File(ConstantVariable.ResultDatelocaton).toURI().relativize(new File(absolutepath).toURI()).getPath();
+		logger.debug(" relative path "+ relativepath);
 		//return ConstantVariable.ScreenShotlocation + "/" +Filename + ".png";
-		return relativepath;
+		return ".."+File.separator+relativepath;
 	}
 
 	/**
@@ -212,6 +211,8 @@ public class GenericMethod {
 	public String entertext(WebDriver driver, String[] StringParam) {
 		String ObjectData = ConstantVariable.GetObject.get(StringParam[0]);
 		driver.findElement(By.xpath(ObjectData)).sendKeys(StringParam[1]);
+		
+		
 		return "pass";
 	}
 	

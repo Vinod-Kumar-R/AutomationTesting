@@ -82,10 +82,6 @@ public class ExtentReport {
 
 	public void author(String author) {
 		this.extenttest.assignAuthor(author);
-		
-		
-		
-		
 	}
 	
 	public void SetSystemInfo(String Key, String Value) {

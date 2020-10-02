@@ -2,9 +2,13 @@ package com.encash.offers.Configuration;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 //import org.apache.log4j.Logger;
 //import org.apache.log4j.PropertyConfigurator;
 import org.apache.logging.log4j.LogManager;
@@ -54,6 +58,11 @@ public class ConstantVariable {
 	public static String Environment;
 	public static String DesiredAndroidCapability;
 	public static String AppiumURL;
+	private String dateformat = "dd_MMM_yyyy";
+	private String timeformat = "HH_mm_ss";
+	public static String ResultBaseLocation;
+	public static String ResultLocation;
+	public static String ResultDatelocaton;
 	
 	private String Configurationfile = "D:\\Vinod\\encashoffers\\config.properties";
 
@@ -68,21 +77,22 @@ public class ConstantVariable {
 		LoggerContext context = (org.apache.logging.log4j.core.LoggerContext) LogManager.getContext(false);
 		File file = new File(LogFile);
 		context.setConfigLocation(file.toURI());
+		ResultBaseLocation = cr.getConfigurationStringValue("ResultFileLocation");
 		
-		
-		
+		ResultDatelocaton = DateTime(dateformat,ResultBaseLocation);
+		 ResultLocation = DateTime(timeformat,ResultDatelocaton);
+		ExtentReportsLocation = ResultLocation+File.separator+"encashoffer.html";
+		ScreenShotlocation = folderCreation(ResultLocation, "ScreenShot");
 		BrowserName = cr.getConfigurationStringValue("browsername");
 		URL = cr.getConfigurationStringValue("url");
 		TestDatas = cr.getConfigurationStringValue("testData");
 		TestCases = cr.getConfigurationStringValue("testcase");
 		TestObjectsWeb = cr.getConfigurationStringValue("testobjectweb");
 		TestObjectsMobile = cr.getConfigurationStringValue("testobjectmobile");
-		ExtentReportsLocation = cr.getConfigurationStringValue("ResultFileLocation");
 		ExtentReportsPropeties = cr.getConfigurationStringValue("extentreportconfiguration");
 		ExplictWait = cr.getConfigurationIntValue("explictwait");
 		polling = cr.getConfigurationIntValue("polling");
 		HeadlessBrowser = cr.getConfigurationBooleanValue("headlessbrowser");
-		ScreenShotlocation = cr.getConfigurationStringValue("screenshotlocation");
 		MobileEmulation = cr.getConfigurationStringValue("mobileemulation");
 		Environment = cr.getConfigurationStringValue("environment");
 		DesiredAndroidCapability = cr.getConfigurationStringValue("androidedesiredcapability");
@@ -155,6 +165,41 @@ public class ConstantVariable {
 			GetObject.put(Key, Value);
 		}
 
+	}
+	
+	public String DateTime(String timeformat, String BaseLocation) {
+		SimpleDateFormat formatter = new SimpleDateFormat(timeformat); 
+		//formatter.getDateInstance();
+	
+		Date date = new Date();
+		
+		System.out.println(formatter.format(date));
+		File file = new File(BaseLocation+File.separator+formatter.format(date));
+		try {
+			FileUtils.forceMkdir(file);
+			logger.debug("Folder created at location "+file.getAbsolutePath());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			
+			logger.error("Folder cann't be created", e);
+		}
+		
+		return file.getAbsolutePath();
+	}
+	
+	
+	public String folderCreation (String BaseLocation, String foldername) {
+		
+		File file = new File(BaseLocation+File.separator+foldername);
+		try {
+			FileUtils.forceMkdir(file);
+			logger.debug("Folder created at location "+file.getAbsolutePath());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			logger.error("Folder cann't be created", e);
+		}
+		
+		return file.getAbsolutePath();
 	}
 
 }
