@@ -3,7 +3,9 @@ package com.encash.offers.Webdriver;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -28,7 +30,8 @@ import io.github.bonigarcia.wdm.WebDriverManager;
  */
 public class BrowserInitialize {
 
-	static Logger logger = Logger.getLogger(BrowserInitialize.class);
+	//static Logger logger = Logger.getLogger(BrowserInitialize.class);
+	static Logger logger = LogManager.getLogger(BrowserInitialize.class);
 	public static  WebDriver drivere = null;
 	public static EventFiringWebDriver driver;
 	

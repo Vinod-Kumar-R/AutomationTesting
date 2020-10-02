@@ -3,8 +3,10 @@ package com.encash.offers.BussinessLogic;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+//import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -20,7 +22,8 @@ import com.encash.offers.Utility.GenericMethod;
  *
  */
 public class Logic {
-	static Logger logger = Logger.getLogger(Logic.class);
+	//static Logger logger = Logger.getLogger(GenericMethod.class.getName());
+	static Logger logger = LogManager.getLogger(Logic.class.getName());
 	
 	/**
 	 * This Method is use to verify the Jishi text when user click on explore 
@@ -39,11 +42,10 @@ public class Logic {
 			String[] data = new String[2];
 			data[0] = StringParam[0];
 			data[1] = StringParam[i];
-			logger.info("Waiting for test visible "+ data[1] + "Row data number "+ i);
 			BaseClass.gm.WaitForTexttVisible(driver,data);
 			BaseClass.er.WriteLog(Status.PASS, "Taken the screenshot", BaseClass.gm.takeScreenshot(driver));
 			BaseClass.gm.VerifyText(driver, data);
-			logger.info("Verified the test "+ data[1]);
+			logger.debug("Verified the test "+ data[1]);
 		}
 		
 		return "pass";
@@ -98,7 +100,7 @@ public class Logic {
 		
 		//compare both Actual banner and Expected list are in same order
 		if(!Acutalbanner.equals(Expectedbanner)) {
-			logger.info("Excel Order Banner is not matching with Expected order bannber in UI");
+			logger.debug("Excel Order Banner is not matching with Expected order bannber in UI");
 			BaseClass.er.WriteLog(Status.FAIL, "Excel Order Banner is not matching with Expected order bannber in UI");
 			return "fail";
 		}

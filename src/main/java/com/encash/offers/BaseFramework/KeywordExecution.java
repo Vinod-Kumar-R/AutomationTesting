@@ -1,8 +1,10 @@
 package com.encash.offers.BaseFramework;
 
-import org.apache.log4j.Logger;
-import org.openqa.selenium.WebDriver;
 
+import org.openqa.selenium.WebDriver;
+//import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import com.aventstack.extentreports.Status;
 import com.encash.offers.Configuration.ConstantVariable;
 import com.encash.offers.Webdriver.BrowserInitialize;
@@ -14,7 +16,8 @@ import com.paulhammant.ngwebdriver.NgWebDriver;
  *
  */
 public class KeywordExecution {
-	static Logger logger = Logger.getLogger(KeywordExecution.class);
+	//static Logger logger = Logger.getLogger(KeywordExecution.class.getName());
+	static Logger logger = LogManager.getLogger(KeywordExecution.class.getName());
 	private WebDriver driver;
 	private NgWebDriver ngdriver;
 	String status;
@@ -48,7 +51,7 @@ public class KeywordExecution {
 
 		case url_open : 
 			BaseClass.er.WriteInfo("Executing key word --->"+ keyword);
-			logger.info("Opening the URL "+ ConstantVariable.URL);
+			logger.debug("Opening the URL "+ ConstantVariable.URL);
 			driver = BrowserInitialize.GetWebDriverInstance();
 			ngdriver = BrowserInitialize.GetNgWebDriverInstance();
 			driver.get(ConstantVariable.URL);
@@ -59,7 +62,7 @@ public class KeywordExecution {
 
 		case waitforelementvisible :
 
-			logger.info("Waiting for the element visible");
+			logger.debug("Waiting for the element visible");
 			BaseClass.er.WriteInfo("Executing key word --->"+ keyword);
 			status = BaseClass.gm.WaitForElementVisible(driver,StringParam);
 			Testresult(status, keyword.toString());
@@ -67,7 +70,7 @@ public class KeywordExecution {
 			
 		case waitfortexttvisible :
 			
-			logger.info("Waiting for the Text visible");
+			logger.debug("Waiting for the Text visible");
 			BaseClass.er.WriteInfo("Executing key word --->"+ keyword);
 			status = BaseClass.gm.WaitForTexttVisible(driver,StringParam);
 			Testresult(status, keyword.toString());
@@ -77,9 +80,9 @@ public class KeywordExecution {
 		case click :
 			
 			BaseClass.er.WriteInfo("Executing key word --->"+ keyword);
-			logger.info("clicking  on Element");
+			logger.debug("clicking  on Element");
 			status = BaseClass.gm.click(driver,StringParam);
-			logger.info("clicked  on Element");
+			logger.debug("clicked  on Element");
 			Testresult(status, keyword.toString());
 			break;
 		
@@ -87,7 +90,7 @@ public class KeywordExecution {
 			
 			BaseClass.er.WriteInfo("Executing key word --->"+ keyword);
 			status = BrowserInitialize.QuitBrowser();
-			logger.info("QuiteBrowser");
+			logger.debug("QuiteBrowser");
 			Testresult(status, keyword.toString());
 			
 			break;
@@ -96,7 +99,7 @@ public class KeywordExecution {
 			
 			BaseClass.er.WriteInfo("Executing key word --->"+ keyword);
 			status = BaseClass.gm.VerifyText(driver, StringParam);
-			logger.info("verified the text");
+			logger.debug("verified the text");
 			Testresult(status,keyword.toString());
 			
 			break;
@@ -104,7 +107,7 @@ public class KeywordExecution {
 		case implictwait :
 			
 			BaseClass.er.WriteInfo("Executing key word --->"+ keyword);
-			logger.info("Manually waiting ");
+			logger.debug("Manually waiting ");
 			Thread.sleep(Integer.parseInt(StringParam[0]));
 			
 			break;
@@ -113,7 +116,7 @@ public class KeywordExecution {
 			
 			BaseClass.er.WriteInfo("Executing key word --->"+ keyword);
 			status = BaseClass.lg.JishiText(driver, StringParam);
-			logger.info("verified the text");
+			logger.debug("verified the text");
 			Testresult(status,keyword.toString());
 			
 			break;
@@ -125,7 +128,7 @@ public class KeywordExecution {
 			BaseClass.er.AttachScreenshot(BaseClass.gm.takeScreenshot(driver));
 			//er.flushlog();
 			status = "pass";
-			logger.info("taken the screen shot");
+			logger.debug("taken the screen shot");
 			Testresult(status,keyword.toString());
 			
 			break;
@@ -135,7 +138,7 @@ public class KeywordExecution {
 			BaseClass.er.WriteInfo("Executing key word ---> "+ keyword);
 			//status = gm.VerifyText(driver, StringParam);
 			status = BaseClass.gm.WaitForAttributedPrent(driver,StringParam);
-			logger.info("Waited for An Attibuted ");
+			logger.debug("Waited for An Attibuted ");
 			Testresult(status,keyword.toString());
 			
 			break;
@@ -145,7 +148,7 @@ public class KeywordExecution {
 			BaseClass.er.WriteInfo("Executing key word ---> "+ keyword);
 			//status = gm.VerifyText(driver, StringParam);
 			status = BaseClass.gm.verifyAttributedValue(driver,StringParam);
-			logger.info("verified the attributed Value");
+			logger.debug("verified the attributed Value");
 			Testresult(status,keyword.toString());
 			
 			break;
@@ -155,7 +158,7 @@ public class KeywordExecution {
 			BaseClass.er.WriteInfo("Executing key word ---> "+ keyword);
 			//status = gm.VerifyText(driver, StringParam);
 			status = BaseClass.lg.Banner(driver,StringParam);
-			logger.info("verifed the Banner");
+			logger.debug("verifed the Banner");
 			Testresult(status,keyword.toString());
 			
 			break;
