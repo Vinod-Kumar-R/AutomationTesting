@@ -5,8 +5,12 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.ie.InternetExplorerOptions;
+import org.openqa.selenium.opera.OperaOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.safari.SafariOptions;
 
 import com.encash.offers.Configuration.ConfigurationReader;
 import com.encash.offers.Configuration.ConstantVariable;
@@ -90,6 +94,36 @@ public class Desired {
 	    chromeOptions.setExperimentalOption("androidDeviceSerial", "emulator-5554");
 	   
 	    return chromeOptions;
+	}
+	
+	public OperaOptions OperaDesired() {
+		OperaOptions oo = new OperaOptions();
+		oo.setCapability("headless", ConstantVariable.HeadlessBrowser);
+		return oo;
+	}
+	
+	public EdgeOptions EdgeDesired() {
+		DesiredCapabilities Dc = new DesiredCapabilities();
+		Dc.setCapability("headless", ConstantVariable.HeadlessBrowser);
+		
+		EdgeOptions eo = new EdgeOptions();
+		eo.merge(Dc);
+		
+		return eo;
+		
+	}
+	
+	public InternetExplorerOptions InternetExploreDesired() {
+		InternetExplorerOptions ieo = new InternetExplorerOptions();
+		//ieo.setCapability("headless", ConstantVariable.HeadlessBrowser);
+		
+		return ieo;
+	}
+	
+	public SafariOptions SafariDesired() {
+		SafariOptions so = new SafariOptions();
+		so.setCapability("headless", ConstantVariable.HeadlessBrowser);
+		return so;
 	}
 
 }

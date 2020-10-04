@@ -167,13 +167,20 @@ public class ConstantVariable {
 
 	}
 	
+	/**
+	 * This method is used to created the folder structure based on the 
+	 * date and time format 
+	 * @param timeformat
+	 * @param BaseLocation
+	 * @return  AbsolutePath of folder is return back  
+	 */
+	
 	public String DateTime(String timeformat, String BaseLocation) {
 		SimpleDateFormat formatter = new SimpleDateFormat(timeformat); 
 		//formatter.getDateInstance();
 	
 		Date date = new Date();
 		
-		System.out.println(formatter.format(date));
 		File file = new File(BaseLocation+File.separator+formatter.format(date));
 		try {
 			FileUtils.forceMkdir(file);
@@ -188,6 +195,12 @@ public class ConstantVariable {
 	}
 	
 	
+	/**
+	 * This method is used folder based on the given base folder location 
+	 * @param BaseLocation
+	 * @param foldername
+	 * @return AbsolutePath of folder is return back
+	 */
 	public String folderCreation (String BaseLocation, String foldername) {
 		
 		File file = new File(BaseLocation+File.separator+foldername);
