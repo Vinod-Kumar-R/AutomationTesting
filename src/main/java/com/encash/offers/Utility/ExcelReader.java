@@ -35,7 +35,7 @@ public class ExcelReader
 	}
 
 	public int Rowcout(int sheetindex) {
-		//sheet = this.workbook.getSheetAt(sheetindex);
+		
 		return sheet.getPhysicalNumberOfRows();
 	}
 

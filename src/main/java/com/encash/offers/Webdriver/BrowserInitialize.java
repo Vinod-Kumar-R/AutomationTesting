@@ -10,7 +10,6 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
-import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
@@ -29,7 +28,7 @@ import io.github.bonigarcia.wdm.config.DriverManagerType;
  */
 public class BrowserInitialize {
 
-	//static Logger logger = Logger.getLogger(BrowserInitialize.class);
+	
 	static Logger logger = LogManager.getLogger(BrowserInitialize.class);
 	public static  WebDriver drivere = null;
 	public static EventFiringWebDriver driver;
@@ -37,8 +36,10 @@ public class BrowserInitialize {
 	public static  NgWebDriver ngwebdriver = null;
 	public static JavascriptExecutor jsDriver;
 	private static Desired desired;
-	//public static boolean waitstatus = true;
-
+	
+/**
+ * Private constructor is made because to maintain the single browser instance
+ */
 
 	private BrowserInitialize() {
 		
@@ -47,43 +48,51 @@ public class BrowserInitialize {
 	
 	
 
-	public static void createInstance() {
+	private static void createInstance() {
 
 		Desired de = new Desired();
-		DriverManagerType driverManagerType = DriverManagerType.valueOf(ConstantVariable.BrowserName.toUpperCase());
+		DriverManagerType driverManagerType = DriverManagerType.valueOf(ConstantVariable.Browser_Binary_Name.toUpperCase());
 		WebDriverManager.getInstance(driverManagerType).setup();
 
-		BrowserExecutionType Bt = BrowserExecutionType.valueOf(ConstantVariable.BrowserName); 
+		BrowserExecutionType Bt = BrowserExecutionType.valueOf(ConstantVariable.Test_Execution); 
 		
 		switch(Bt) {
-			case CHROME:
+			case SYSTEM_CHROME:
 				
 				drivere = new ChromeDriver(de.ChromeDesired());
 				break;
 		
-			case FIREFOX:
+			case SYSTEM_FIREFOX:
 				
 				drivere = new FirefoxDriver(de.FirefoxDesired());
 				break;
 
-			case OPERA:
+			case SYSTEM_OPERA:
 				
 				drivere = new OperaDriver(de.OperaDesired());
 				break;
 			
-			case EDGE:
+			case SYSTEM_EDGE:
 				
 				drivere = new EdgeDriver(de.EdgeDesired());
 				break;
 			
-			case IEXPLORER:
+			case SYSTEM_IEXPLORER:
 				
 				drivere = new InternetExplorerDriver(de.InternetExploreDesired());
 				break;
 			
-			case SAFARI:
+			case SYSTEM_SAFARI:
 				
 				drivere = new SafariDriver(de.SafariDesired());
+				break;
+				
+			case ANDROID_CHROME :
+				break;
+			case IOS_SAFARI:
+				break;
+			case SYSTEM_MOBILE_EMULATION:
+				drivere = new ChromeDriver();
 				break;
 				
 			default : 
@@ -94,10 +103,7 @@ public class BrowserInitialize {
 			driver = new EventFiringWebDriver(drivere);
 			EventListener ei = new EventListener();
 			driver.register(ei);
-
-
-
-			//driver.manage().window().fullscreen();
+			
 			jsDriver = (JavascriptExecutor) driver ;
 			ngwebdriver = new NgWebDriver(jsDriver).withRootSelector("9.1.9");
 	}
@@ -105,7 +111,6 @@ public class BrowserInitialize {
 
 	public static WebDriver GetWebDriverInstance() {
 		if(driver == null) {
-			//ConfigureWebDriver();
 			createInstance();
 		}
 	
@@ -115,7 +120,6 @@ public class BrowserInitialize {
 
 	public static NgWebDriver GetNgWebDriverInstance() {
 		if(driver == null) {
-			//ConfigureWebDriver();
 			createInstance();
 		}
 		return ngwebdriver;
@@ -124,6 +128,7 @@ public class BrowserInitialize {
 	public static String QuitBrowser() {
 		driver.quit();
 		driver = null;
+		ngwebdriver = null;
 		return "pass";
 	}
 

@@ -16,7 +16,6 @@ import org.apache.logging.log4j.Logger;
  *
  */
 public class ConfigurationReader {
-	//static Logger logger = Logger.getLogger(ConfigurationReader.class.getName());
 	static Logger logger = LogManager.getLogger(ConfigurationReader.class.getName());
 	Configurations configs = new Configurations();
 	Configuration config;

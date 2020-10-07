@@ -28,7 +28,6 @@ import com.paulhammant.ngwebdriver.NgWebDriver;
  */
 
 public class BaseClass {
-	//static Logger logger = Logger.getLogger(BaseClass.class);
 	static Logger logger = LogManager.getLogger(BaseClass.class);
 	public static int throwincrment =0;
 	public static ConstantVariable cv ;
@@ -67,7 +66,7 @@ public class BaseClass {
 	 */
 	public void Start_run() throws Exception {
 		
-		//Initialize the method
+		
 		cv.SearchTestData();
 		cv.ObjectRepository();
 		BrowserInitialize.BrowserInfo();
@@ -180,7 +179,7 @@ public class BaseClass {
 				TestData.CloseWorkbook();
 				er.AttachScreenshot(gm.takeScreenshot(driver));
 				BrowserInitialize.QuitBrowser();
-				//er.flushlog();
+				er.flushlog();
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				logger.error("exception message", e1);

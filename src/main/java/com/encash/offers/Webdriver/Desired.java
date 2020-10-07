@@ -54,12 +54,6 @@ public class Desired {
 
 		FirefoxOptions options = new FirefoxOptions();
 		options.setHeadless(ConstantVariable.HeadlessBrowser);
-
-		//Map<String,String> mobileemulation = new HashMap<String,String>();
-		//mobileemulation.put("deviceName", "Nexus 5");
-
-
-
 		return options;
 	}
 
@@ -70,7 +64,7 @@ public class Desired {
 	public  DesiredCapabilities AndroidDesired() {
 		DesiredCapabilities dc = new DesiredCapabilities();
 
-		if(ConstantVariable.BrowserName.equalsIgnoreCase("Android")) {
+		if(ConstantVariable.Test_Execution.equalsIgnoreCase("ANDROID_CHROME")) {
 			ConfigurationReader cr = new ConfigurationReader();
 			cr.ReadConfig(ConstantVariable.DesiredAndroidCapability);
 

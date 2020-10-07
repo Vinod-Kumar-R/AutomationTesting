@@ -20,7 +20,7 @@ public class ExtentReport {
 	//public ExtentHtmlReporter htmlreporter;
 	//public ExtentHtmlReporter htmlreporter;
 	public ExtentSparkReporter spark ;
-	
+
 	public ExtentReports extent;
 	public ExtentTest extenttest;
 
@@ -39,17 +39,16 @@ public class ExtentReport {
 		this.extent.setSystemInfo("Organization", "Enchashes");
 		this.extent.setSystemInfo("OS Version number", System.getProperty("os.version"));
 		this.extent.setSystemInfo("Build Number", "Need to fetch the Build Number");
-		this.extent.setSystemInfo("Testing URL", ConstantVariable.URL);
+		this.extent.setSystemInfo("Encash URL", ConstantVariable.EncashURL);
+		this.extent.setSystemInfo("Admin URL", ConstantVariable.AdminURL);
 		//this.extent.attachReporter(this.htmlreporter);
-		
+
 		this.extent.attachReporter(this.spark);
-		
+
 	}
 
 	public void CreateTest(String TestName) {
 		this.extenttest = this.extent.createTest(TestName);
-		//this.extent.setAnalysisStrategy(strategy);
-		
 	}
 
 	public void CreateTest(String TestName, String Description) {
@@ -83,13 +82,13 @@ public class ExtentReport {
 	public void author(String author) {
 		this.extenttest.assignAuthor(author);
 	}
-	
+
 	public void SetSystemInfo(String Key, String Value) {
 		this.extent.setSystemInfo(Key, Value);
 	}
-	
-	
-	
-	
+
+
+
+
 
 }

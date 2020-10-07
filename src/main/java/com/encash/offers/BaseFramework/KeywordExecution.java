@@ -16,7 +16,6 @@ import com.paulhammant.ngwebdriver.NgWebDriver;
  *
  */
 public class KeywordExecution {
-	//static Logger logger = Logger.getLogger(KeywordExecution.class.getName());
 	static Logger logger = LogManager.getLogger(KeywordExecution.class.getName());
 	private WebDriver driver;
 	private NgWebDriver ngdriver;
@@ -49,13 +48,22 @@ public class KeywordExecution {
 
 		switch(keyword) {
 
-		case url_open : 
+		case openencashurl : 
 			BaseClass.er.WriteInfo("Executing key word --->"+ keyword);
-			logger.debug("Opening the URL "+ ConstantVariable.URL);
+			logger.debug("Opening the URL "+ ConstantVariable.EncashURL);
 			driver = BrowserInitialize.GetWebDriverInstance();
 			ngdriver = BrowserInitialize.GetNgWebDriverInstance();
-			driver.get(ConstantVariable.URL);
-			//driver.manage().window().maximize();
+			driver.get(ConstantVariable.EncashURL);
+			status = "pass";
+			Testresult(status, "Browser Open");
+			break;
+			
+		case openadminurl : 
+			BaseClass.er.WriteInfo("Executing key word --->"+ keyword);
+			logger.debug("Opening the URL "+ ConstantVariable.AdminURL);
+			driver = BrowserInitialize.GetWebDriverInstance();
+			ngdriver = BrowserInitialize.GetNgWebDriverInstance();
+			driver.get(ConstantVariable.AdminURL);
 			status = "pass";
 			Testresult(status, "Browser Open");
 			break;
@@ -92,7 +100,6 @@ public class KeywordExecution {
 			status = BrowserInitialize.QuitBrowser();
 			logger.debug("QuiteBrowser");
 			Testresult(status, keyword.toString());
-			
 			break;
 			
 		case verifytext :
@@ -101,7 +108,6 @@ public class KeywordExecution {
 			status = BaseClass.gm.VerifyText(driver, StringParam);
 			logger.debug("verified the text");
 			Testresult(status,keyword.toString());
-			
 			break;
 			
 		case implictwait :
@@ -109,7 +115,6 @@ public class KeywordExecution {
 			BaseClass.er.WriteInfo("Executing key word --->"+ keyword);
 			logger.debug("Manually waiting ");
 			Thread.sleep(Integer.parseInt(StringParam[0]));
-			
 			break;
 			
 		case jishitext :
@@ -118,55 +123,44 @@ public class KeywordExecution {
 			status = BaseClass.lg.JishiText(driver, StringParam);
 			logger.debug("verified the text");
 			Testresult(status,keyword.toString());
-			
 			break;
 			
 		case takescreenshot :
 			
 			BaseClass.er.WriteInfo("Executing key word ---> "+ keyword);
-			//status = BrowserInitialize.takeScreenshot();
 			BaseClass.er.AttachScreenshot(BaseClass.gm.takeScreenshot(driver));
-			//er.flushlog();
 			status = "pass";
 			logger.debug("taken the screen shot");
 			Testresult(status,keyword.toString());
-			
 			break;
 		
 		case waitforattributedprent :
 			
 			BaseClass.er.WriteInfo("Executing key word ---> "+ keyword);
-			//status = gm.VerifyText(driver, StringParam);
 			status = BaseClass.gm.WaitForAttributedPrent(driver,StringParam);
 			logger.debug("Waited for An Attibuted ");
 			Testresult(status,keyword.toString());
-			
 			break;
 			
 		case verifyattributedvalue :
 			
 			BaseClass.er.WriteInfo("Executing key word ---> "+ keyword);
-			//status = gm.VerifyText(driver, StringParam);
 			status = BaseClass.gm.verifyAttributedValue(driver,StringParam);
 			logger.debug("verified the attributed Value");
 			Testresult(status,keyword.toString());
-			
 			break;
 		
 		case banner :
 			
 			BaseClass.er.WriteInfo("Executing key word ---> "+ keyword);
-			//status = gm.VerifyText(driver, StringParam);
 			status = BaseClass.lg.Banner(driver,StringParam);
 			logger.debug("verifed the Banner");
 			Testresult(status,keyword.toString());
-			
 			break;
 			
 		case entertext:
 			
 			BaseClass.er.WriteInfo("Executing key word ---> "+ keyword);
-			//status = gm.VerifyText(driver, StringParam);
 			status = BaseClass.gm.entertext(driver,StringParam);
 			logger.info("Enter the text");
 			Testresult(status,keyword.toString());

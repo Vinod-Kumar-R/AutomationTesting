@@ -27,7 +27,6 @@ import com.encash.offers.Configuration.ConstantVariable;
  *
  */
 public class GenericMethod {
-	//static Logger logger = Logger.getLogger(GenericMethod.class.getName());
 	static Logger logger = LogManager.getLogger(GenericMethod.class.getName());
 	public static boolean waitstatus = true;
 
@@ -125,8 +124,7 @@ public class GenericMethod {
 		logger.debug("Waiting for the attributed presnt and value "+ ObjectName);
 		logger.debug("attribute --------->" +StringParam[1]);
 		logger.debug("Value --------->" +StringParam[2]);
-		//wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath(ObjectName), string[1]));
-
+		
 		wait.until(ExpectedConditions.attributeContains(By.xpath(ObjectName), StringParam[1], StringParam[2]));
 
 		waitstatus = true;
@@ -171,11 +169,8 @@ public class GenericMethod {
 		}
 		String absolutepath = ConstantVariable.ScreenShotlocation +  File.separator  + Filename + ".png";
 		logger.debug("absolutepath "+ absolutepath);
-		//String relative[] = absolutepath.split( File.separator.toString() );
-		//String relativepath = "../" +relative[relative.length-2]+ File.separator  +relative[relative.length-1];
 		String relativepath = new File(ConstantVariable.ResultDatelocaton).toURI().relativize(new File(absolutepath).toURI()).getPath();
 		logger.debug(" relative path "+ relativepath);
-		//return ConstantVariable.ScreenShotlocation + "/" +Filename + ".png";
 		return ".."+File.separator+relativepath;
 	}
 
@@ -192,7 +187,6 @@ public class GenericMethod {
 	 *
 	 */
 	public String verifyAttributedValue (WebDriver driver, String[] StringParam) throws Exception {
-		//String ObjectData = GetObjectName(StringParam[0]);
 		String ObjectData = ConstantVariable.GetObject.get(StringParam[0]);
 		if(driver.findElement(By.xpath(ObjectData)).getAttribute(StringParam[1]).equalsIgnoreCase(StringParam[2])) {
 			return "pass";

@@ -22,7 +22,6 @@ import com.encash.offers.Utility.GenericMethod;
  *
  */
 public class Logic {
-	//static Logger logger = Logger.getLogger(GenericMethod.class.getName());
 	static Logger logger = LogManager.getLogger(Logic.class.getName());
 	
 	/**
@@ -37,7 +36,7 @@ public class Logic {
 	 * @throws Exception
 	 */
 	public String JishiText(WebDriver driver, String[] StringParam) throws Exception {
-		//String ObjectData = GenericMethod.GetObjectName(StringParam[0]); // GetObjectName(StringParam[0]);
+		
 		for(int i=1;i< StringParam.length;i++) {
 			String[] data = new String[2];
 			data[0] = StringParam[0];

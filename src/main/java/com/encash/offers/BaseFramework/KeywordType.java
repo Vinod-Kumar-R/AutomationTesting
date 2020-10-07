@@ -7,7 +7,6 @@ package com.encash.offers.BaseFramework;
  */
 public enum KeywordType {
 	
-	url_open,
 	waitforelementvisible,
 	waitfortexttvisible,
 	click,
@@ -20,6 +19,8 @@ public enum KeywordType {
 	verifyattributedvalue,
 	banner,
 	comment,
-	entertext
+	entertext,
+	openencashurl,
+	openadminurl
 
 }

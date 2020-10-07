@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
-//import org.apache.log4j.Logger;
-//import org.apache.log4j.PropertyConfigurator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
@@ -25,17 +23,18 @@ import com.opencsv.bean.CsvToBeanBuilder;
  *
  */
 public class ConstantVariable {
-	//static Logger logger = Logger.getLogger(ConstantVariable.class.getName());
 	static Logger logger = LogManager.getLogger(ConstantVariable.class.getName());
 	/**
 	 * This variable contain the Browser name in which test script need to execute
 	 */
-	public static String BrowserName;
+	public static String Browser_Binary_Name;
 	/**
 	 * This variable the contain application URL in which test script need to executed 
 	 */
-	public static String URL;
+	public static String EncashURL;
+	public static String AdminURL;
 	public static String LogFile;
+	public static String Test_Execution;
 	/**
 	 * This variable contain the Test Script file which need to executed
 	 */
@@ -63,39 +62,42 @@ public class ConstantVariable {
 	public static String ResultBaseLocation;
 	public static String ResultLocation;
 	public static String ResultDatelocaton;
+	public static String Configlocation;
 	
-	private String Configurationfile = "D:\\Vinod\\encashoffers\\config.properties";
+	
 
 	/**
 	 * This is the Constructor which is used to initialized the static variable
 	 */
 	public ConstantVariable ()  {
+		Configlocation =ReadEnvironmnetVariable("encashoffers");
+		//Read the properties file
 		ConfigurationReader cr = new ConfigurationReader();
-		cr.ReadConfig(Configurationfile);
-		LogFile = cr.getConfigurationStringValue("log4j");
-		//PropertyConfigurator.configure(LogFile);
-		LoggerContext context = (org.apache.logging.log4j.core.LoggerContext) LogManager.getContext(false);
-		File file = new File(LogFile);
-		context.setConfigLocation(file.toURI());
-		ResultBaseLocation = cr.getConfigurationStringValue("ResultFileLocation");
+		cr.ReadConfig(Configlocation+File.separator+"config.properties");
 		
+		//Setting the logger context
+		LoggerContext context = (org.apache.logging.log4j.core.LoggerContext) LogManager.getContext(false);
+		File file = new File(Configlocation+File.separator+"log4j2.xml");
+		context.setConfigLocation(file.toURI());
+		
+		//setting the properties value 
+		ResultBaseLocation = Configlocation+File.separator+"Result";
+		Test_Execution = cr.getConfigurationStringValue("test_execution");
 		ResultDatelocaton = DateTime(dateformat,ResultBaseLocation);
 		 ResultLocation = DateTime(timeformat,ResultDatelocaton);
 		ExtentReportsLocation = ResultLocation+File.separator+"encashoffer.html";
 		ScreenShotlocation = folderCreation(ResultLocation, "ScreenShot");
-		BrowserName = cr.getConfigurationStringValue("browsername");
-		URL = cr.getConfigurationStringValue("url");
+		Browser_Binary_Name = cr.getConfigurationStringValue("browser_Binary_file");
+		EncashURL = cr.getConfigurationStringValue("encashurl");
+		AdminURL = cr.getConfigurationStringValue("adminurl");
 		TestDatas = cr.getConfigurationStringValue("testData");
 		TestCases = cr.getConfigurationStringValue("testcase");
 		TestObjectsWeb = cr.getConfigurationStringValue("testobjectweb");
 		TestObjectsMobile = cr.getConfigurationStringValue("testobjectmobile");
-		ExtentReportsPropeties = cr.getConfigurationStringValue("extentreportconfiguration");
+		ExtentReportsPropeties = Configlocation+File.separator+"extentreportpropertes.xml";
 		ExplictWait = cr.getConfigurationIntValue("explictwait");
 		polling = cr.getConfigurationIntValue("polling");
 		HeadlessBrowser = cr.getConfigurationBooleanValue("headlessbrowser");
-		MobileEmulation = cr.getConfigurationStringValue("mobileemulation");
-		Environment = cr.getConfigurationStringValue("environment");
-		DesiredAndroidCapability = cr.getConfigurationStringValue("androidedesiredcapability");
 		AppiumURL = cr.getConfigurationStringValue("appiumServerurl");
 	}
 
@@ -144,17 +146,14 @@ public class ConstantVariable {
 		this.GetObject = new HashMap<String,String>();
 		FileReader file = null;
 		
-		if(!BrowserName.equalsIgnoreCase("Android")|Environment.equalsIgnoreCase("webbrowser")) {
-			file = new FileReader(TestObjectsWeb);
-			
-		}
-		
-		if(Environment.equalsIgnoreCase("mobilebrowser")| BrowserName.equalsIgnoreCase("Android")) {
+		if(Test_Execution.equalsIgnoreCase("ANDROID_CHROME")|
+				Test_Execution.equalsIgnoreCase("IOS_SAFARI")) {
 			file = new FileReader(TestObjectsMobile);
-			
 		}
-		
-		
+		else {
+			file = new FileReader(TestObjectsWeb);
+		}
+				
 		List<RepositoryBean> repositoryobject = new CsvToBeanBuilder<RepositoryBean>(file)
 				.withType(RepositoryBean.class).build().parse();
 
@@ -177,8 +176,7 @@ public class ConstantVariable {
 	
 	public String DateTime(String timeformat, String BaseLocation) {
 		SimpleDateFormat formatter = new SimpleDateFormat(timeformat); 
-		//formatter.getDateInstance();
-	
+			
 		Date date = new Date();
 		
 		File file = new File(BaseLocation+File.separator+formatter.format(date));
@@ -213,6 +211,16 @@ public class ConstantVariable {
 		}
 		
 		return file.getAbsolutePath();
+	}
+	
+	/**
+	 * This method is used to read the environment variable
+	 * @return
+	 */
+	public String  ReadEnvironmnetVariable(String Key) {
+		String configuration;
+		configuration = System.getenv(Key);
+		return configuration;
 	}
 
 }
