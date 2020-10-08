@@ -79,11 +79,11 @@ public class BaseClass {
 		//is not of end of testcase row
 		while(!(TestCase.GetCellData(testcaserownumber, 0).equalsIgnoreCase("End"))) {
 			//if Executed column is yes then executed else skip test skip
-			if((TestCase.GetCellData(testcaserownumber, 3).equalsIgnoreCase("yes"))) {
 			String Test_Case_ID = TestCase.GetCellData(testcaserownumber,0);
 			String Test_Case_Description = TestCase.GetCellData(testcaserownumber,1);
 			String Test_Case_Categeory = TestCase.GetCellData(testcaserownumber, 2);
-            logger.info("Started Executing Test Case ID " + Test_Case_ID);
+			if((TestCase.GetCellData(testcaserownumber, 3).equalsIgnoreCase("yes"))) {
+			logger.info("Started Executing Test Case ID " + Test_Case_ID);
 			logger.debug("Test Case ID "+ Test_Case_ID);
 			logger.debug("Test Case Description "+ Test_Case_Description);
 			logger.debug("Test Case Categeory "+ Test_Case_Categeory);
@@ -101,6 +101,11 @@ public class BaseClass {
 			er.flushlog();
 
 			
+			}
+			else {
+				logger.info("Skiped the Test case "+ Test_Case_ID);
+				er.SkipTest(Test_Case_ID,Test_Case_Description);
+				er.Categeory(Test_Case_Categeory);
 			}
 			testcaserownumber++;
 		}

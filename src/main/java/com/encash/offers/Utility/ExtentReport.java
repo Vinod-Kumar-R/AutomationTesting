@@ -17,8 +17,6 @@ import com.encash.offers.Configuration.ConstantVariable;
  */
 public class ExtentReport {
 
-	//public ExtentHtmlReporter htmlreporter;
-	//public ExtentHtmlReporter htmlreporter;
 	public ExtentSparkReporter spark ;
 
 	public ExtentReports extent;
@@ -26,8 +24,6 @@ public class ExtentReport {
 
 	public ExtentReport()  {
 
-		//this.htmlreporter = new ExtentHtmlReporter(ConstantVariable.ExtentReportsLocation);
-		//this.htmlreporter.loadXMLConfig(ConstantVariable.ExtentReportsPropeties);
 		this.spark = new ExtentSparkReporter(ConstantVariable.ExtentReportsLocation) ;
 		try {
 			this.spark.loadXMLConfig(ConstantVariable.ExtentReportsPropeties);
@@ -41,8 +37,6 @@ public class ExtentReport {
 		this.extent.setSystemInfo("Build Number", "Need to fetch the Build Number");
 		this.extent.setSystemInfo("Encash URL", ConstantVariable.EncashURL);
 		this.extent.setSystemInfo("Admin URL", ConstantVariable.AdminURL);
-		//this.extent.attachReporter(this.htmlreporter);
-
 		this.extent.attachReporter(this.spark);
 
 	}
@@ -85,6 +79,10 @@ public class ExtentReport {
 
 	public void SetSystemInfo(String Key, String Value) {
 		this.extent.setSystemInfo(Key, Value);
+	}
+	public void SkipTest(String TestName,String Description) {
+		CreateTest(TestName, Description);
+		this.extenttest.log(Status.SKIP, "Skipped the Test Case");
 	}
 
 

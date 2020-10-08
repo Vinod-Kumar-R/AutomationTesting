@@ -53,8 +53,6 @@ public class ConstantVariable {
 	public static HashMap<String,Integer> TestDataRowNumber;
 	public static HashMap<String,String> GetObject;
 	public static boolean HeadlessBrowser;
-	public static String MobileEmulation;
-	public static String Environment;
 	public static String DesiredAndroidCapability;
 	public static String AppiumURL;
 	private String dateformat = "dd_MMM_yyyy";

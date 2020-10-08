@@ -29,10 +29,10 @@ public class Desired {
 
 		ChromeOptions chrome = new ChromeOptions();
 
-		if(!ConstantVariable.MobileEmulation.equalsIgnoreCase("null") && !ConstantVariable.Environment.equalsIgnoreCase("WebBrowser")) {
+		/**if(!ConstantVariable.MobileEmulation.equalsIgnoreCase("null") && !ConstantVariable.Environment.equalsIgnoreCase("WebBrowser")) {
 			mobileemulation.put("deviceName", ConstantVariable.MobileEmulation);
 			chrome.setExperimentalOption("mobileEmulation", mobileemulation);
-		}
+		}**/
 
 		chrome.setHeadless(ConstantVariable.HeadlessBrowser);
 		chrome.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
