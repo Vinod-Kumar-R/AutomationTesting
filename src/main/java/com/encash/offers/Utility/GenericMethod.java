@@ -28,7 +28,7 @@ import com.encash.offers.Configuration.ConstantVariable;
  */
 public class GenericMethod {
 	static Logger logger = LogManager.getLogger(GenericMethod.class.getName());
-	public static boolean waitstatus = true;
+	
 
 	/**
 	 * This is used to click on the WebElement on current html page
@@ -47,89 +47,11 @@ public class GenericMethod {
 		return "pass";
 	}
 
-	/**
-	 * This Method is used to Wait for an Element Visible in an web page  
-	 * @param driver
-	 * the driver parameter contain the instance of WebDriver
-	 * @param StringParam
-	 * StringParam is a array of String variable which hold data 
-	 * StringParam[0] contain the Object which need to wait in html page 
-	 * @return it return the status "pass" if execution success else throw an exception
-	 * @throws Exception
-	 */
-	public  String WaitForElementVisible(WebDriver driver,String[] StringParam) throws Exception {
-		String ObjectName = ConstantVariable.GetObject.get(StringParam[0]);
-		waitstatus = false;
-		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-				.withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
-				.pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
-				.ignoring(NoSuchElementException.class);	
 
-		logger.debug("Waiting for the Element Visibility "+ ObjectName);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(ObjectName)));
-
-		waitstatus = true;
-		return "pass";
-	}
 	
-	/**
-	 * This Method is used to Wait for Text Visible in an web page  
-	 * @param driver
-	 * the driver parameter contain the instance of WebDriver
-	 * @param StringParam
-	 * StringParam is a array of String variable which hold data 
-	 * StringParam[0] contain the Object which need to wait in html page 
-	 * @return it return the status "pass" if execution success else throw an exception
-	 * @throws Exception
-	 */
 
-	public  String WaitForTexttVisible(WebDriver driver, String[] StringParam) throws Exception {
-		//String ObjectName = GenericMethod.GetObjectName(string[0]);
-		String ObjectName = ConstantVariable.GetObject.get(StringParam[0]);
-		waitstatus = false;
-		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-				.withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
-				.pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
-				.ignoring(NoSuchElementException.class);
-
-		logger.debug("Waiting for the Text to be present "+ ObjectName);
-		wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath(ObjectName), StringParam[1]));
-
-		waitstatus = true;
-		return "pass";
-	}
 	
-	/**
-	 * This method is used wait for an Attributed value present in html page 
-	 * @param driver
-	 * the driver parameter contain the instance of WebDriver
-	 * @param StringParam
-	 * StringParam is a array of String variable which hold data 
-	 * StringParam[0] contain the Object which need to present in html page
-	 * StringParam[1] contain the attribute in an xpath 
-	 * StringParam[2] contain the vaule which need to be present for an attributed  
-	 * @return it return the status "pass" if execution success else throw an exception
-	 * @throws Exception
-	 */
 
-	public  String WaitForAttributedPrent(WebDriver driver,String[] StringParam) throws Exception {
-		//String ObjectName = GenericMethod.GetObjectName(StringParam[0]);
-		String ObjectName = ConstantVariable.GetObject.get(StringParam[0]);
-		waitstatus = false;
-		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-				.withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
-				.pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
-				.ignoring(NoSuchElementException.class);
-
-		logger.debug("Waiting for the attributed presnt and value "+ ObjectName);
-		logger.debug("attribute --------->" +StringParam[1]);
-		logger.debug("Value --------->" +StringParam[2]);
-		
-		wait.until(ExpectedConditions.attributeContains(By.xpath(ObjectName), StringParam[1], StringParam[2]));
-
-		waitstatus = true;
-		return "pass";
-	}
 	
 	/**
 	 * This method is used to verify the text present for an WebElement

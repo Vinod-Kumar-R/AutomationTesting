@@ -2,7 +2,6 @@ package com.encash.offers.BaseFramework;
 
 
 import org.openqa.selenium.WebDriver;
-//import org.apache.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.aventstack.extentreports.Status;
@@ -72,7 +71,7 @@ public class KeywordExecution {
 
 			logger.debug("Waiting for the element visible");
 			BaseClass.er.WriteInfo("Executing key word --->"+ keyword);
-			status = BaseClass.gm.WaitForElementVisible(driver,StringParam);
+			status = BaseClass.wm.WaitForElementVisible(driver,StringParam);
 			Testresult(status, keyword.toString());
 			break;
 			
@@ -80,7 +79,7 @@ public class KeywordExecution {
 			
 			logger.debug("Waiting for the Text visible");
 			BaseClass.er.WriteInfo("Executing key word --->"+ keyword);
-			status = BaseClass.gm.WaitForTexttVisible(driver,StringParam);
+			status = BaseClass.wm.WaitForTexttVisible(driver,StringParam);
 			Testresult(status, keyword.toString());
 			
 			break;
@@ -120,7 +119,7 @@ public class KeywordExecution {
 		case jishitext :
 			
 			BaseClass.er.WriteInfo("Executing key word --->"+ keyword);
-			status = BaseClass.lg.JishiText(driver, StringParam);
+			status = BaseClass.en.JishiText(driver, StringParam);
 			logger.debug("verified the text");
 			Testresult(status,keyword.toString());
 			break;
@@ -137,7 +136,7 @@ public class KeywordExecution {
 		case waitforattributedprent :
 			
 			BaseClass.er.WriteInfo("Executing key word ---> "+ keyword);
-			status = BaseClass.gm.WaitForAttributedPrent(driver,StringParam);
+			status = BaseClass.wm.WaitForAttributedPrent(driver,StringParam);
 			logger.debug("Waited for An Attibuted ");
 			Testresult(status,keyword.toString());
 			break;
@@ -153,7 +152,7 @@ public class KeywordExecution {
 		case banner :
 			
 			BaseClass.er.WriteInfo("Executing key word ---> "+ keyword);
-			status = BaseClass.lg.Banner(driver,StringParam);
+			status = BaseClass.en.Banner(driver,StringParam);
 			logger.debug("verifed the Banner");
 			Testresult(status,keyword.toString());
 			break;

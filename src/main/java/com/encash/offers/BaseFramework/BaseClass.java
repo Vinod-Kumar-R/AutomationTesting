@@ -2,15 +2,15 @@ package com.encash.offers.BaseFramework;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-//import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 
 import com.aventstack.extentreports.Status;
-import com.encash.offers.BussinessLogic.Logic;
+import com.encash.offers.BussinessLogic.Encash.encash;
 import com.encash.offers.Configuration.ConstantVariable;
 import com.encash.offers.Utility.ExcelReader;
 import com.encash.offers.Utility.ExtentReport;
 import com.encash.offers.Utility.GenericMethod;
+import com.encash.offers.Utility.WaitMethod;
 import com.encash.offers.Webdriver.BrowserInitialize;
 import com.paulhammant.ngwebdriver.NgWebDriver;
 
@@ -32,10 +32,11 @@ public class BaseClass {
 	public static int throwincrment =0;
 	public static ConstantVariable cv ;
 	public static GenericMethod gm;
-	public static Logic lg;
+	public static WaitMethod wm;
+	public static encash en;
 	public static KeywordExecution ke ;
 
-	private WebDriver driver;
+	private static WebDriver driver;
 	private NgWebDriver ngdriver;
 	ExcelReader TestData;
 	ExcelReader TestCase;
@@ -45,8 +46,9 @@ public class BaseClass {
 		cv = new ConstantVariable();
 		gm = new GenericMethod();
 		er = new ExtentReport();
-		lg = new Logic();
+		en = new encash();
 		ke = new KeywordExecution();
+		wm = new WaitMethod();
 
 	}
 
@@ -177,11 +179,12 @@ public class BaseClass {
 
 		}catch (Exception e) {
 			
-			GenericMethod.waitstatus = false;
+			WaitMethod.waitstatus = false;
 			er.WriteLog(Status.FAIL, e.getMessage());
 			logger.error("testscript error message", e);
 			try {
 				TestData.CloseWorkbook();
+				driver = BrowserInitialize.GetWebDriverInstance();
 				er.AttachScreenshot(gm.takeScreenshot(driver));
 				BrowserInitialize.QuitBrowser();
 				er.flushlog();
@@ -209,6 +212,9 @@ public class BaseClass {
 			er.flushlog();
 			logger.error(e.getStackTrace().toString());
 			e.printStackTrace();
+		}
+		finally {
+		
 		}
 
 	}

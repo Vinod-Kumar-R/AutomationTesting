@@ -1,12 +1,11 @@
-package com.encash.offers.BussinessLogic;
+package com.encash.offers.BussinessLogic.Encash;
+
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-//import org.apache.log4j.Logger;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,15 +13,14 @@ import org.openqa.selenium.WebElement;
 import com.aventstack.extentreports.Status;
 import com.encash.offers.BaseFramework.BaseClass;
 import com.encash.offers.Configuration.ConstantVariable;
-import com.encash.offers.Utility.GenericMethod;
 
 /**
  * This class contain all the Business logic for Automation 
  * @author Vinod Kumar R
  *
  */
-public class Logic {
-	static Logger logger = LogManager.getLogger(Logic.class.getName());
+public class encash {
+	static Logger logger = LogManager.getLogger(encash.class.getName());
 	
 	/**
 	 * This Method is use to verify the Jishi text when user click on explore 
@@ -41,7 +39,7 @@ public class Logic {
 			String[] data = new String[2];
 			data[0] = StringParam[0];
 			data[1] = StringParam[i];
-			BaseClass.gm.WaitForTexttVisible(driver,data);
+			BaseClass.wm.WaitForTexttVisible(driver,data);
 			BaseClass.er.WriteLog(Status.PASS, "Taken the screenshot", BaseClass.gm.takeScreenshot(driver));
 			BaseClass.gm.VerifyText(driver, data);
 			logger.debug("Verified the test "+ data[1]);
@@ -90,7 +88,7 @@ public class Logic {
 			
 			Expectedbanner.add(StringParam[i]);
 			
-			BaseClass.gm.WaitForAttributedPrent(driver, data);
+			BaseClass.wm.WaitForAttributedPrent(driver, data);
 			BaseClass.er.WriteLog(Status.PASS, "capture the Screen shot "+ StringParam[i], BaseClass.gm.takeScreenshot(driver));
 			BaseClass.gm.verifyAttributedValue(driver, data);
 			BaseClass.er.WriteLog(Status.PASS, "verified the image "+ StringParam[i]);

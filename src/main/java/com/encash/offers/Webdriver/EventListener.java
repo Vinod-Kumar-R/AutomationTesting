@@ -3,7 +3,7 @@ package com.encash.offers.Webdriver;
 //import org.apache.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
 
@@ -26,17 +26,20 @@ public class EventListener extends AbstractWebDriverEventListener {
 	public void onException(Throwable arg0, WebDriver arg1) {
 
 		logger.debug("waiting for the element----> "+ arg0.getMessage()); 
-		if(!BaseClass.gm.waitstatus && 
+		if(!BaseClass.wm.waitstatus && 
 				arg0.getClass().equals("org.openqa.selenium.NoSuchElementException")) {
 
 			logger.debug("Waiting for the element "+ arg0.getMessage());
 			//do nothing 
 		}
 
-		if(BaseClass.gm.waitstatus) {
+		if(BaseClass.wm.waitstatus) {
 			logger.debug("got an exception--> "+ arg0.getMessage());
 		}
-
+		
+		
+		
+		
 	}
 
 }

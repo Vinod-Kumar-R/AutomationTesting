@@ -26,9 +26,9 @@ public class Desired {
 
 		Map<String,String> mobileemulation = new HashMap<String,String>();
 
-
 		ChromeOptions chrome = new ChromeOptions();
 
+		
 		/**if(!ConstantVariable.MobileEmulation.equalsIgnoreCase("null") && !ConstantVariable.Environment.equalsIgnoreCase("WebBrowser")) {
 			mobileemulation.put("deviceName", ConstantVariable.MobileEmulation);
 			chrome.setExperimentalOption("mobileEmulation", mobileemulation);
