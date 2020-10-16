@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.Wait;
 
 import com.encash.offers.BaseFramework.BaseClass;
 import com.encash.offers.Configuration.ConstantVariable;
+import com.encash.offers.Webdriver.BrowserInitialize;
 
 public class WaitMethod {
 	static Logger logger = LogManager.getLogger(WaitMethod.class.getName());
@@ -28,7 +29,8 @@ public class WaitMethod {
 	 * @return it return the status "pass" if execution success else throw an exception
 	 * @throws Exception
 	 */
-	public  String WaitForElementVisible(WebDriver driver,String[] StringParam) throws Exception {
+	public  String WaitForElementVisible(String[] StringParam) throws Exception {
+		WebDriver driver = BrowserInitialize.GetWebDriverInstance();
 		By ObjectName = BaseClass.gm.ByType(StringParam[0]);
 		waitstatus = false;
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
@@ -54,7 +56,8 @@ public class WaitMethod {
 	 * @throws Exception
 	 */
 
-	public  String WaitForTexttVisible(WebDriver driver, String[] StringParam) throws Exception {
+	public  String WaitForTexttVisible(String[] StringParam) throws Exception {
+		WebDriver driver = BrowserInitialize.GetWebDriverInstance();
 		By ObjectName = BaseClass.gm.ByType(StringParam[0]); 
 		waitstatus = false;
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
@@ -82,8 +85,8 @@ public class WaitMethod {
 	 * @throws Exception
 	 */
 
-	public  String WaitForAttributedPrent(WebDriver driver,String[] StringParam) throws Exception {
-		
+	public  String WaitForAttributedPrent(String[] StringParam) throws Exception {
+		WebDriver driver = BrowserInitialize.GetWebDriverInstance();
 		By ObjectName = BaseClass.gm.ByType(StringParam[0]);
 		waitstatus = false;
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    

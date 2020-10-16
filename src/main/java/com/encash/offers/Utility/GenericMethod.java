@@ -14,6 +14,7 @@ import org.openqa.selenium.WebElement;
 
 import com.encash.offers.BaseFramework.BaseClass;
 import com.encash.offers.Configuration.ConstantVariable;
+import com.encash.offers.Webdriver.BrowserInitialize;
 
 /**
  * This class contain the Generic method which is used during Automation execution Script 
@@ -34,9 +35,9 @@ public class GenericMethod {
 	 * @return it return the status "pass" if execution success else throw an exception 
 	 * @throws Exception
 	 */
-	public String click(WebDriver driver,String[] StringParam) throws Exception {
+	public String click(String[] StringParam) throws Exception {
 		
-		WebElement clicktype = getElement(driver, StringParam[0]);
+		WebElement clicktype = getElement(StringParam[0]);
 		clicktype.click();
 		return "pass";
 	}
@@ -53,9 +54,9 @@ public class GenericMethod {
 	 * @throws Exception
 	 */
 
-	public String VerifyText(WebDriver driver,String[] StringParam) throws Exception {
+	public String VerifyText(String[] StringParam) throws Exception {
 		logger.debug("Verifying the text-------> "+StringParam[1]);
-		WebElement ObjectData = BaseClass.gm.getElement(driver, StringParam[0]);
+		WebElement ObjectData = BaseClass.gm.getElement(StringParam[0]);
 		if(ObjectData.getText().equalsIgnoreCase(StringParam[1])) {
 			return "pass";
 		}
@@ -70,7 +71,8 @@ public class GenericMethod {
 	 * @return the file location in the String format
 	 * @throws Exception
 	 */
-	public  String takeScreenshot(WebDriver driver) throws Exception {
+	public  String takeScreenshot() throws Exception {
+		WebDriver driver = BrowserInitialize.GetWebDriverInstance();
 		long Filename = System.currentTimeMillis();
 		if (driver instanceof TakesScreenshot) {
 			File tempFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
@@ -95,9 +97,9 @@ public class GenericMethod {
 	 * @throws Exception
 	 *
 	 */
-	public String verifyAttributedValue (WebDriver driver, String[] StringParam) throws Exception {
+	public String verifyAttributedValue (String[] StringParam) throws Exception {
 		
-		WebElement ObjectData = BaseClass.gm.getElement(driver, StringParam[0]);
+		WebElement ObjectData = BaseClass.gm.getElement(StringParam[0]);
 		if(ObjectData.getAttribute(StringParam[1]).equalsIgnoreCase(StringParam[2])) {
 			return "pass";
 		}
@@ -112,9 +114,9 @@ public class GenericMethod {
 	 * @param StringParam
 	 * @return
 	 */
-	public String entertext(WebDriver driver, String[] StringParam) {
+	public String entertext(String[] StringParam) {
 
-		WebElement ObjectData = BaseClass.gm.getElement(driver, StringParam[0]);
+		WebElement ObjectData = BaseClass.gm.getElement(StringParam[0]);
 		ObjectData.sendKeys(StringParam[1]);
 		return "pass";
 	}
@@ -126,8 +128,8 @@ public class GenericMethod {
 	 * @param Object
 	 * @return
 	 */
-	public WebElement getElement(WebDriver driver,String Object) {
-
+	public WebElement getElement(String Object) {
+		WebDriver driver = BrowserInitialize.GetWebDriverInstance();
 		By byElement = ByType(Object);
 		WebElement element = driver.findElement(byElement);
 		return element;
@@ -139,8 +141,8 @@ public class GenericMethod {
 	 * @param Object
 	 * @return
 	 */
-	public List<WebElement> getElements(WebDriver driver,String Object){
-		
+	public List<WebElement> getElements(String Object){
+		WebDriver driver = BrowserInitialize.GetWebDriverInstance();
 		By byElement = ByType(Object);
 		List<WebElement> element = driver.findElements(byElement);
 		return element;

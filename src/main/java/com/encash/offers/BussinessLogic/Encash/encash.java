@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.aventstack.extentreports.Status;
@@ -31,15 +30,15 @@ public class encash {
 	 * @return it return the status "pass" if execution success else  throw an exception 
 	 * @throws Exception
 	 */
-	public String JishiText(WebDriver driver, String[] StringParam) throws Exception {
+	public String JishiText(String[] StringParam) throws Exception {
 		
 		for(int i=1;i< StringParam.length;i++) {
 			String[] data = new String[2];
 			data[0] = StringParam[0];
 			data[1] = StringParam[i];
-			BaseClass.wm.WaitForTexttVisible(driver,data);
-			BaseClass.er.WriteLog(Status.PASS, "Taken the screenshot", BaseClass.gm.takeScreenshot(driver));
-			BaseClass.gm.VerifyText(driver, data);
+			BaseClass.wm.WaitForTexttVisible(data);
+			BaseClass.er.WriteLog(Status.PASS, "Taken the screenshot", BaseClass.gm.takeScreenshot());
+			BaseClass.gm.VerifyText(data);
 			logger.debug("Verified the test "+ data[1]);
 		}
 		
@@ -62,7 +61,7 @@ public class encash {
 	 * @return the status as "pass" if script executed success else through an exception 
 	 * @throws Exception
 	 */
-	public String Banner(WebDriver driver, String[] StringParam) throws Exception {
+	public String Banner(String[] StringParam) throws Exception {
 		//create an List which contain Banner name so that in the end order can be verified 
 		
 		List<String> Acutalbanner = new ArrayList<String>();
@@ -70,7 +69,7 @@ public class encash {
 		List<WebElement> ElementList;
 		
 		//fetch all the Banner name with title and stored the name in list 
-		ElementList = BaseClass.gm.getElements(driver, StringParam[0]);
+		ElementList = BaseClass.gm.getElements(StringParam[0]);
 		
 		
 		for(WebElement e : ElementList) {
@@ -85,9 +84,9 @@ public class encash {
 			
 			Expectedbanner.add(StringParam[i]);
 			
-			BaseClass.wm.WaitForAttributedPrent(driver, data);
-			BaseClass.er.WriteLog(Status.PASS, "capture the Screen shot "+ StringParam[i], BaseClass.gm.takeScreenshot(driver));
-			BaseClass.gm.verifyAttributedValue(driver, data);
+			BaseClass.wm.WaitForAttributedPrent(data);
+			BaseClass.er.WriteLog(Status.PASS, "capture the Screen shot "+ StringParam[i], BaseClass.gm.takeScreenshot());
+			BaseClass.gm.verifyAttributedValue(data);
 			BaseClass.er.WriteLog(Status.PASS, "verified the image "+ StringParam[i]);
 		}
 		

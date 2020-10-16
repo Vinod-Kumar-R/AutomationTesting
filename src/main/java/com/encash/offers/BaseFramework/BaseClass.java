@@ -2,7 +2,6 @@ package com.encash.offers.BaseFramework;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.WebDriver;
 
 import com.aventstack.extentreports.Status;
 import com.encash.offers.BussinessLogic.Encash.encash;
@@ -12,7 +11,6 @@ import com.encash.offers.Utility.ExtentReport;
 import com.encash.offers.Utility.GenericMethod;
 import com.encash.offers.Utility.WaitMethod;
 import com.encash.offers.Webdriver.BrowserInitialize;
-import com.paulhammant.ngwebdriver.NgWebDriver;
 
 
 /**
@@ -36,8 +34,6 @@ public class BaseClass {
 	public static encash en;
 	public static KeywordExecution ke ;
 
-	private static WebDriver driver;
-	private NgWebDriver ngdriver;
 	ExcelReader TestData;
 	ExcelReader TestCase;
 	public static ExtentReport er;
@@ -184,8 +180,7 @@ public class BaseClass {
 			logger.error("testscript error message", e);
 			try {
 				TestData.CloseWorkbook();
-				driver = BrowserInitialize.GetWebDriverInstance();
-				er.AttachScreenshot(gm.takeScreenshot(driver));
+				er.AttachScreenshot(gm.takeScreenshot());
 				BrowserInitialize.QuitBrowser();
 				er.flushlog();
 			} catch (Exception e1) {
