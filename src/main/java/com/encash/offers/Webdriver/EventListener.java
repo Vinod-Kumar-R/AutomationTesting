@@ -3,11 +3,9 @@ package com.encash.offers.Webdriver;
 //import org.apache.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
 
-import com.aventstack.extentreports.Status;
 import com.encash.offers.BaseFramework.BaseClass;
 
 /**

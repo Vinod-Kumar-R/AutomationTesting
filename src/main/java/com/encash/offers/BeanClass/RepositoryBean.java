@@ -14,6 +14,9 @@ public class RepositoryBean {
 	@CsvBindByName(column = "ObjectValue", required = true)
 	private String ObjectValue;
 	
+	@CsvBindByName(column = "ObjectType",required = true)
+	private String ObjectType;
+	
 	public String getObjectName() {
 		return ObjectName;
 	}
@@ -26,6 +29,13 @@ public class RepositoryBean {
 	public void setObjectValue(String objectValue) {
 		ObjectValue = objectValue;
 	}
+	public String getObjectType() {
+		return ObjectType;
+	}
+	public void setObjectType(String objectType) {
+		ObjectType = objectType;
+	}
+	
 	
 
 }

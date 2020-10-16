@@ -1,8 +1,6 @@
 package com.encash.offers.Webdriver;
 
-import java.io.File;
 
-//import org.apache.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
@@ -59,7 +57,7 @@ public class BrowserInitialize {
 		switch(Bt) {
 		case SYSTEM_CHROME:
 
-			System.setProperty("webdriver.chrome.logfile",ConstantVariable.Configlocation+File.separator+"log"+File.separator+"chromelog.log");
+			//System.setProperty("webdriver.chrome.logfile",ConstantVariable.Configlocation+File.separator+"log"+File.separator+"chromelog.log");
 			drivere = new ChromeDriver(de.ChromeDesired());
 			break;
 

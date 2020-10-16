@@ -1,24 +1,18 @@
 package com.encash.offers.Utility;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
-//import org.apache.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.poi.poifs.filesystem.DirectoryEntry;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.WebElement;
 
+import com.encash.offers.BaseFramework.BaseClass;
 import com.encash.offers.Configuration.ConstantVariable;
 
 /**
@@ -42,16 +36,10 @@ public class GenericMethod {
 	 */
 	public String click(WebDriver driver,String[] StringParam) throws Exception {
 		
-		String ObjectData = ConstantVariable.GetObject.get(StringParam[0]);
-		driver.findElement(By.xpath(ObjectData)).click();
+		WebElement clicktype = getElement(driver, StringParam[0]);
+		clicktype.click();
 		return "pass";
 	}
-
-
-	
-
-	
-
 	
 	/**
 	 * This method is used to verify the text present for an WebElement
@@ -67,9 +55,8 @@ public class GenericMethod {
 
 	public String VerifyText(WebDriver driver,String[] StringParam) throws Exception {
 		logger.debug("Verifying the text-------> "+StringParam[1]);
-		//String ObjectData = GetObjectName(StringParam[0]);
-		String ObjectData = ConstantVariable.GetObject.get(StringParam[0]);
-		if(driver.findElement(By.xpath(ObjectData)).getText().equalsIgnoreCase(StringParam[1])) {
+		WebElement ObjectData = BaseClass.gm.getElement(driver, StringParam[0]);
+		if(ObjectData.getText().equalsIgnoreCase(StringParam[1])) {
 			return "pass";
 		}
 		return "pass";
@@ -109,8 +96,9 @@ public class GenericMethod {
 	 *
 	 */
 	public String verifyAttributedValue (WebDriver driver, String[] StringParam) throws Exception {
-		String ObjectData = ConstantVariable.GetObject.get(StringParam[0]);
-		if(driver.findElement(By.xpath(ObjectData)).getAttribute(StringParam[1]).equalsIgnoreCase(StringParam[2])) {
+		
+		WebElement ObjectData = BaseClass.gm.getElement(driver, StringParam[0]);
+		if(ObjectData.getAttribute(StringParam[1]).equalsIgnoreCase(StringParam[2])) {
 			return "pass";
 		}
 		else {
@@ -125,11 +113,87 @@ public class GenericMethod {
 	 * @return
 	 */
 	public String entertext(WebDriver driver, String[] StringParam) {
-		String ObjectData = ConstantVariable.GetObject.get(StringParam[0]);
-		driver.findElement(By.xpath(ObjectData)).sendKeys(StringParam[1]);
-		
-		
+
+		WebElement ObjectData = BaseClass.gm.getElement(driver, StringParam[0]);
+		ObjectData.sendKeys(StringParam[1]);
 		return "pass";
+	}
+	
+
+	/**
+	 * This Element is used to get the WebElement for and element 
+	 * @param driver
+	 * @param Object
+	 * @return
+	 */
+	public WebElement getElement(WebDriver driver,String Object) {
+
+		By byElement = ByType(Object);
+		WebElement element = driver.findElement(byElement);
+		return element;
+	}
+	
+	/**
+	 * This Method is used to get the WebElements from an element
+	 * @param driver
+	 * @param Object
+	 * @return
+	 */
+	public List<WebElement> getElements(WebDriver driver,String Object){
+		
+		By byElement = ByType(Object);
+		List<WebElement> element = driver.findElements(byElement);
+		return element;
+	}
+
+
+	/**
+	 * This method is used for generic way of getting By class type
+	 * i.e. id, xpath,css,name etc
+	 * @param Object
+	 * @return
+	 */
+	public By ByType(String Object) {
+
+		List<String> data = ConstantVariable.GetObject.get(Object);
+
+		//get the locator value type
+	ByMethod locator = ByMethod.valueOf(data.get(0));
+		String expression = data.get(1);
+
+		By byElement = null;
+		switch (locator) {
+		case xpath: {
+			byElement = By.xpath(expression);
+			break;
+		}
+		case id: {
+			byElement = By.id(expression);
+			break;
+		}
+		case name: {
+			byElement = By.name(expression);
+			break;
+		}
+		case classname: {
+			byElement = By.className(expression);
+			break;
+		}
+		case linktext: {
+			byElement = By.linkText(expression);
+			break;
+		}
+		case paritallinktext: {
+			byElement = By.partialLinkText(expression);
+			break;
+		}
+		case tagname: {
+			byElement = By.tagName(expression);
+			break;
+		}
+	}
+		return byElement;
+
 	}
 	
 }

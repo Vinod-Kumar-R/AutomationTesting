@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +52,7 @@ public class ConstantVariable {
 	public static int ExplictWait;
 	public static int polling;
 	public static HashMap<String,Integer> TestDataRowNumber;
-	public static HashMap<String,String> GetObject;
+	public static HashMap<String,List<String>>GetObject;
 	public static boolean HeadlessBrowser;
 	public static String DesiredAndroidCapability;
 	public static String AppiumURL;
@@ -140,8 +141,9 @@ public class ConstantVariable {
 	 */
 	public void ObjectRepository() throws Exception {
 
-		String Key, Value;
-		this.GetObject = new HashMap<String,String>();
+		String Key;
+		
+		this.GetObject = new HashMap<String,List<String>>();
 		FileReader file = null;
 		
 		if(Test_Execution.equalsIgnoreCase("ANDROID_CHROME")|
@@ -156,10 +158,13 @@ public class ConstantVariable {
 				.withType(RepositoryBean.class).build().parse();
 
 		for(RepositoryBean ro : repositoryobject ) {
+			List<String> Object = new ArrayList<String>();
 			Key = ro.getObjectName();
-			Value = ro.getObjectValue();
-			logger.debug("Key ---> "+ Key +"  Value ----> "+Value);
-			GetObject.put(Key, Value);
+			Object.add(ro.getObjectType());
+			Object.add(ro.getObjectValue());
+			//Value = ro.getObjectValue();
+			logger.debug("Key ---> "+ Key +"  Type ----> "+ro.getObjectType()+ "  Value-----> "+ro.getObjectValue());
+			GetObject.put(Key, Object);
 		}
 
 	}

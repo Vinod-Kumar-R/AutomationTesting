@@ -27,3 +27,6 @@ https://blog.vsoftconsulting.com/blog/testing-angular-applications-using-seleniu
 
 //head less browser
 https://www.infoq.com/articles/headless-selenium-browsers/
+
+// generic way of reading locator
+https://stackoverflow.com/questions/21973971/how-can-i-handle-the-element-locator-selection-typexpath-or-tag-or-id-or-class

@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 
+import com.encash.offers.BaseFramework.BaseClass;
 import com.encash.offers.Configuration.ConstantVariable;
 
 public class WaitMethod {
@@ -28,7 +29,7 @@ public class WaitMethod {
 	 * @throws Exception
 	 */
 	public  String WaitForElementVisible(WebDriver driver,String[] StringParam) throws Exception {
-		String ObjectName = ConstantVariable.GetObject.get(StringParam[0]);
+		By ObjectName = BaseClass.gm.ByType(StringParam[0]);
 		waitstatus = false;
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
 				.withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
@@ -36,7 +37,7 @@ public class WaitMethod {
 				.ignoring(NoSuchElementException.class);	
 
 		logger.debug("Waiting for the Element Visibility "+ ObjectName);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(ObjectName)));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(ObjectName));
 
 		waitstatus = true;
 		return "pass";
@@ -54,8 +55,7 @@ public class WaitMethod {
 	 */
 
 	public  String WaitForTexttVisible(WebDriver driver, String[] StringParam) throws Exception {
-		//String ObjectName = GenericMethod.GetObjectName(string[0]);
-		String ObjectName = ConstantVariable.GetObject.get(StringParam[0]);
+		By ObjectName = BaseClass.gm.ByType(StringParam[0]); 
 		waitstatus = false;
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
 				.withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
@@ -63,7 +63,7 @@ public class WaitMethod {
 				.ignoring(NoSuchElementException.class);
 
 		logger.debug("Waiting for the Text to be present "+ ObjectName);
-		wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath(ObjectName), StringParam[1]));
+		wait.until(ExpectedConditions.textToBePresentInElementLocated(ObjectName, StringParam[1]));
 
 		waitstatus = true;
 		return "pass";
@@ -83,8 +83,8 @@ public class WaitMethod {
 	 */
 
 	public  String WaitForAttributedPrent(WebDriver driver,String[] StringParam) throws Exception {
-		//String ObjectName = GenericMethod.GetObjectName(StringParam[0]);
-		String ObjectName = ConstantVariable.GetObject.get(StringParam[0]);
+		
+		By ObjectName = BaseClass.gm.ByType(StringParam[0]);
 		waitstatus = false;
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
 				.withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
@@ -95,7 +95,7 @@ public class WaitMethod {
 		logger.debug("attribute --------->" +StringParam[1]);
 		logger.debug("Value --------->" +StringParam[2]);
 		
-		wait.until(ExpectedConditions.attributeContains(By.xpath(ObjectName), StringParam[1], StringParam[2]));
+		wait.until(ExpectedConditions.attributeContains(ObjectName, StringParam[1], StringParam[2]));
 
 		waitstatus = true;
 		return "pass";

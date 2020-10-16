@@ -6,13 +6,11 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.aventstack.extentreports.Status;
 import com.encash.offers.BaseFramework.BaseClass;
-import com.encash.offers.Configuration.ConstantVariable;
 
 /**
  * This class contain all the Business logic for Automation 
@@ -72,9 +70,8 @@ public class encash {
 		List<WebElement> ElementList;
 		
 		//fetch all the Banner name with title and stored the name in list 
-		String object1 = ConstantVariable.GetObject.get(StringParam[0]);
-		//Get the list of the banner name 
-		ElementList = driver.findElements(By.xpath(object1));
+		ElementList = BaseClass.gm.getElements(driver, StringParam[0]);
+		
 		
 		for(WebElement e : ElementList) {
 			Acutalbanner.add(e.getAttribute(StringParam[2]).toString());
