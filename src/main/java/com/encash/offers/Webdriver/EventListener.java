@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
 
 import com.encash.offers.BaseFramework.BaseClass;
+import com.encash.offers.Utility.WaitMethod;
 
 /**
  * This Class is used for WebDriver Event Listener 
@@ -16,6 +17,10 @@ import com.encash.offers.BaseFramework.BaseClass;
 public class EventListener extends AbstractWebDriverEventListener {
 
 	static Logger logger = LogManager.getLogger(EventListener.class);
+	private WaitMethod wm;
+	public EventListener() {
+		wm = new WaitMethod();
+	}
 
 	/**
 	 * wait scenario throw an exception on polling time until time out exception
@@ -24,14 +29,14 @@ public class EventListener extends AbstractWebDriverEventListener {
 	public void onException(Throwable arg0, WebDriver arg1) {
 
 		logger.debug("waiting for the element----> "+ arg0.getMessage()); 
-		if(!BaseClass.wm.waitstatus && 
+		if(!wm.waitstatus && 
 				arg0.getClass().equals("org.openqa.selenium.NoSuchElementException")) {
 
 			logger.debug("Waiting for the element "+ arg0.getMessage());
 			//do nothing 
 		}
 
-		if(BaseClass.wm.waitstatus) {
+		if(wm.waitstatus) {
 			logger.debug("got an exception--> "+ arg0.getMessage());
 		}
 		

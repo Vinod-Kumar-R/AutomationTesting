@@ -56,11 +56,11 @@ public class GenericMethod {
 
 	public String VerifyText(String[] StringParam) throws Exception {
 		logger.debug("Verifying the text-------> "+StringParam[1]);
-		WebElement ObjectData = BaseClass.gm.getElement(StringParam[0]);
+		WebElement ObjectData = getElement(StringParam[0]);
 		if(ObjectData.getText().equalsIgnoreCase(StringParam[1])) {
 			return "pass";
 		}
-		return "pass";
+		return "fail";
 	}
 
 	
@@ -99,7 +99,7 @@ public class GenericMethod {
 	 */
 	public String verifyAttributedValue (String[] StringParam) throws Exception {
 		
-		WebElement ObjectData = BaseClass.gm.getElement(StringParam[0]);
+		WebElement ObjectData = getElement(StringParam[0]);
 		if(ObjectData.getAttribute(StringParam[1]).equalsIgnoreCase(StringParam[2])) {
 			return "pass";
 		}
@@ -116,7 +116,7 @@ public class GenericMethod {
 	 */
 	public String entertext(String[] StringParam) {
 
-		WebElement ObjectData = BaseClass.gm.getElement(StringParam[0]);
+		WebElement ObjectData = getElement(StringParam[0]);
 		ObjectData.sendKeys(StringParam[1]);
 		return "pass";
 	}

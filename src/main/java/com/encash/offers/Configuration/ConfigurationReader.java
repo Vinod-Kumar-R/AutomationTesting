@@ -31,7 +31,7 @@ public class ConfigurationReader {
 	}
 	
 	public String getConfigurationStringValue(String key) {
-		logger.debug(key+"configuratino file");
+		logger.debug(key+" configuration file");
 		return config.getString(key);
 		
 	}

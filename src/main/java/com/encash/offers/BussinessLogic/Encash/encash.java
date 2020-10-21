@@ -10,6 +10,8 @@ import org.openqa.selenium.WebElement;
 
 import com.aventstack.extentreports.Status;
 import com.encash.offers.BaseFramework.BaseClass;
+import com.encash.offers.Utility.GenericMethod;
+import com.encash.offers.Utility.WaitMethod;
 
 /**
  * This class contain all the Business logic for Automation 
@@ -18,6 +20,13 @@ import com.encash.offers.BaseFramework.BaseClass;
  */
 public class encash {
 	static Logger logger = LogManager.getLogger(encash.class.getName());
+	private WaitMethod wm;
+	private GenericMethod gm;
+	
+	public encash() {
+		wm = new WaitMethod();
+		gm = new GenericMethod();
+	}
 	
 	/**
 	 * This Method is use to verify the Jishi text when user click on explore 
@@ -36,9 +45,9 @@ public class encash {
 			String[] data = new String[2];
 			data[0] = StringParam[0];
 			data[1] = StringParam[i];
-			BaseClass.wm.WaitForTexttVisible(data);
-			BaseClass.er.WriteLog(Status.PASS, "Taken the screenshot", BaseClass.gm.takeScreenshot());
-			BaseClass.gm.VerifyText(data);
+			wm.WaitForTexttVisible(data);
+			BaseClass.er.WriteLog(Status.PASS, "Taken the screenshot", gm.takeScreenshot());
+			gm.VerifyText(data);
 			logger.debug("Verified the test "+ data[1]);
 		}
 		
@@ -69,7 +78,7 @@ public class encash {
 		List<WebElement> ElementList;
 		
 		//fetch all the Banner name with title and stored the name in list 
-		ElementList = BaseClass.gm.getElements(StringParam[0]);
+		ElementList = gm.getElements(StringParam[0]);
 		
 		
 		for(WebElement e : ElementList) {
@@ -84,9 +93,9 @@ public class encash {
 			
 			Expectedbanner.add(StringParam[i]);
 			
-			BaseClass.wm.WaitForAttributedPrent(data);
-			BaseClass.er.WriteLog(Status.PASS, "capture the Screen shot "+ StringParam[i], BaseClass.gm.takeScreenshot());
-			BaseClass.gm.verifyAttributedValue(data);
+		    wm.WaitForAttributedPrent(data);
+			BaseClass.er.WriteLog(Status.PASS, "capture the Screen shot "+ StringParam[i], gm.takeScreenshot());
+			gm.verifyAttributedValue(data);
 			BaseClass.er.WriteLog(Status.PASS, "verified the image "+ StringParam[i]);
 		}
 		

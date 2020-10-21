@@ -31,7 +31,7 @@ public class BrowserInitialize {
 	private static EventFiringWebDriver driver;
 	private static  NgWebDriver ngwebdriver = null;
 	private static JavascriptExecutor jsDriver;
-	private static Desired desired;
+	
 
 	/**
 	 * Private constructor is made because to maintain the single browser instance
@@ -43,7 +43,9 @@ public class BrowserInitialize {
 
 
 
-
+/**
+ * This method is used to created the Web driver instance 
+ */
 	private static void createInstance() {
 
 		Desired de = new Desired();
@@ -102,11 +104,14 @@ public class BrowserInitialize {
 		driver.register(ei);
 
 		jsDriver = (JavascriptExecutor) driver ;
-		//ngwebdriver = new NgWebDriver(jsDriver).withRootSelector("10.1.3");
 		ngwebdriver = new NgWebDriver(jsDriver);
 	}
 
 
+	/**
+	 * this method is used to reuses the same instance of Web driver 
+	 * @return
+	 */
 	public static WebDriver GetWebDriverInstance() {
 		if(driver == null) {
 			createInstance();
@@ -115,7 +120,10 @@ public class BrowserInitialize {
 		return driver;
 
 	}
-
+/**
+ * this method is used to ngwebdriver instance 
+ * @return
+ */
 	public static NgWebDriver GetNgWebDriverInstance() {
 		if(driver == null) {
 			createInstance();
@@ -123,14 +131,21 @@ public class BrowserInitialize {
 		return ngwebdriver;
 	}
 
+	/**
+	 * This method is used to quit the browser instance 
+	 * @return
+	 */
 	public static String QuitBrowser() {
 
-		//driver.quit();
+		driver.quit();
 		driver = null;
 		ngwebdriver = null;
 		return "pass";
 	}
 
+	/**
+	 * this method is used the extend report for updating the browser instance used for testing
+	 */
 	public static void BrowserInfo() {
 		BaseClass.er.SetSystemInfo("Browser Name", driver.getCapabilities().getBrowserName());
 		BaseClass.er.SetSystemInfo("Browser Version", driver.getCapabilities().getVersion());

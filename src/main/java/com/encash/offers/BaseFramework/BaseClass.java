@@ -2,9 +2,8 @@ package com.encash.offers.BaseFramework;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import com.aventstack.extentreports.Status;
-import com.encash.offers.BussinessLogic.Admin.admin;
-import com.encash.offers.BussinessLogic.Encash.encash;
 import com.encash.offers.Configuration.ConstantVariable;
 import com.encash.offers.Utility.ExcelReader;
 import com.encash.offers.Utility.ExtentReport;
@@ -27,26 +26,19 @@ import com.encash.offers.Webdriver.BrowserInitialize;
 
 public class BaseClass {
 	static Logger logger = LogManager.getLogger(BaseClass.class);
-	public static int throwincrment =0;
-	public static ConstantVariable cv ;
-	public static GenericMethod gm;
-	public static WaitMethod wm;
-	public static encash en;
-	public static KeywordExecution ke ;
-	public static admin ad;
-
+	//private static int throwincrment =0;
+	private ConstantVariable cv ;
+	private GenericMethod gm;
+	private KeywordExecution ke ;
 	private ExcelReader TestData;
 	private ExcelReader TestCase;
 	public static ExtentReport er;
 
 	public BaseClass() {
 		cv = new ConstantVariable();
-		gm = new GenericMethod();
 		er = new ExtentReport();
-		en = new encash();
 		ke = new KeywordExecution();
-		wm = new WaitMethod();
-		ad = new admin();
+		gm = new GenericMethod();
 	}
 
 	/**

@@ -19,6 +19,11 @@ import com.paulhammant.ngwebdriver.NgWebDriver;
 public class WaitMethod {
 	static Logger logger = LogManager.getLogger(WaitMethod.class.getName());
 	public static boolean waitstatus = true;
+	private GenericMethod gm;
+	
+	public WaitMethod() {
+		gm = new GenericMethod();
+	}
 	
 	/**
 	 * This Method is used to Wait for an Element Visible in an web page  
@@ -32,7 +37,7 @@ public class WaitMethod {
 	 */
 	public  String WaitForElementVisible(String[] StringParam) throws Exception {
 		WebDriver driver = BrowserInitialize.GetWebDriverInstance();
-		By ObjectName = BaseClass.gm.ByType(StringParam[0]);
+		By ObjectName = gm.ByType(StringParam[0]);
 		waitstatus = false;
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
 				.withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
@@ -59,7 +64,7 @@ public class WaitMethod {
 
 	public  String WaitForTexttVisible(String[] StringParam) throws Exception {
 		WebDriver driver = BrowserInitialize.GetWebDriverInstance();
-		By ObjectName = BaseClass.gm.ByType(StringParam[0]); 
+		By ObjectName = gm.ByType(StringParam[0]); 
 		waitstatus = false;
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
 				.withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
@@ -88,7 +93,7 @@ public class WaitMethod {
 
 	public  String WaitForAttributedPrent(String[] StringParam) throws Exception {
 		WebDriver driver = BrowserInitialize.GetWebDriverInstance();
-		By ObjectName = BaseClass.gm.ByType(StringParam[0]);
+		By ObjectName = gm.ByType(StringParam[0]);
 		waitstatus = false;
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
 				.withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
