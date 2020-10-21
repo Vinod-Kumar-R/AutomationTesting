@@ -14,6 +14,7 @@ import org.openqa.selenium.support.ui.Wait;
 import com.encash.offers.BaseFramework.BaseClass;
 import com.encash.offers.Configuration.ConstantVariable;
 import com.encash.offers.Webdriver.BrowserInitialize;
+import com.paulhammant.ngwebdriver.NgWebDriver;
 
 public class WaitMethod {
 	static Logger logger = LogManager.getLogger(WaitMethod.class.getName());
@@ -101,6 +102,12 @@ public class WaitMethod {
 		wait.until(ExpectedConditions.attributeContains(ObjectName, StringParam[1], StringParam[2]));
 
 		waitstatus = true;
+		return "pass";
+	}
+	
+	public String AngularWait() {
+		NgWebDriver ngwebdriver = BrowserInitialize.GetNgWebDriverInstance();
+		ngwebdriver.waitForAngularRequestsToFinish();
 		return "pass";
 	}
 

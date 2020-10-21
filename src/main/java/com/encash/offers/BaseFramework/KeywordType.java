@@ -21,6 +21,7 @@ public enum KeywordType {
 	comment,
 	entertext,
 	openencashurl,
-	openadminurl
+	openadminurl,
+	createcompetation
 
 }

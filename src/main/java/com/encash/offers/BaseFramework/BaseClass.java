@@ -2,8 +2,8 @@ package com.encash.offers.BaseFramework;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import com.aventstack.extentreports.Status;
+import com.encash.offers.BussinessLogic.Admin.admin;
 import com.encash.offers.BussinessLogic.Encash.encash;
 import com.encash.offers.Configuration.ConstantVariable;
 import com.encash.offers.Utility.ExcelReader;
@@ -33,9 +33,10 @@ public class BaseClass {
 	public static WaitMethod wm;
 	public static encash en;
 	public static KeywordExecution ke ;
+	public static admin ad;
 
-	ExcelReader TestData;
-	ExcelReader TestCase;
+	private ExcelReader TestData;
+	private ExcelReader TestCase;
 	public static ExtentReport er;
 
 	public BaseClass() {
@@ -45,7 +46,7 @@ public class BaseClass {
 		en = new encash();
 		ke = new KeywordExecution();
 		wm = new WaitMethod();
-
+		ad = new admin();
 	}
 
 	/**
@@ -67,6 +68,7 @@ public class BaseClass {
 		
 		cv.SearchTestData();
 		cv.ObjectRepository();
+		BrowserInitialize.GetWebDriverInstance();
 		BrowserInitialize.BrowserInfo();
 
 		int testcaserownumber =1;
@@ -110,8 +112,8 @@ public class BaseClass {
 
 		er.flushlog();
 		TestCase.CloseWorkbook();
-		logger.debug("Completed Exeuction of all the Test Case i.e "+ (TestCase.Rowcout(0)-2));
 		logger.info("Completed Exeuction of all the Test Case i.e "+ (TestCase.Rowcout(0)-2));
+		logger.info("Result file are located in :- " +ConstantVariable.ExtentReportsLocation);
 	}
 
 	/**
@@ -188,9 +190,6 @@ public class BaseClass {
 				logger.error("exception message", e1);
 			}
 			er.flushlog();
-
-			//TestData.CloseWorkbook();
-
 		}
 	}
 

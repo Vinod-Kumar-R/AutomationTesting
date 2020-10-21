@@ -15,6 +15,7 @@ import org.openqa.selenium.WebElement;
 import com.encash.offers.BaseFramework.BaseClass;
 import com.encash.offers.Configuration.ConstantVariable;
 import com.encash.offers.Webdriver.BrowserInitialize;
+import com.paulhammant.ngwebdriver.ByAngular;
 
 /**
  * This class contain the Generic method which is used during Automation execution Script 
@@ -35,9 +36,8 @@ public class GenericMethod {
 	 * @return it return the status "pass" if execution success else throw an exception 
 	 * @throws Exception
 	 */
-	public String click(String[] StringParam) throws Exception {
-		
-		WebElement clicktype = getElement(StringParam[0]);
+	public String click(String StringParam) throws Exception {
+		WebElement clicktype = getElement(StringParam);
 		clicktype.click();
 		return "pass";
 	}
@@ -191,6 +191,42 @@ public class GenericMethod {
 		}
 		case tagname: {
 			byElement = By.tagName(expression);
+			break;
+		}
+		case angularbuttontext: {
+			byElement = ByAngular.buttonText(expression);
+			break;
+		}
+		case repeater: {
+			byElement = ByAngular.repeater(expression);
+			break;
+		}
+		case exactrepeater : {
+			byElement = ByAngular.exactRepeater(expression);
+			break;
+		}
+		case binding: {
+			byElement = ByAngular.binding(expression);
+			break;
+		}
+		case exactbinding: {
+			byElement = ByAngular.exactBinding(expression);
+			break;
+		}
+		case model: {
+			byElement = ByAngular.model(expression);
+			break;
+		}
+		case options: {
+			byElement = ByAngular.options(expression);
+			break;
+		}
+		case partialbuttontext: {
+			byElement = ByAngular.partialButtonText(expression);
+			break;
+		}
+		case csscontainingtext: {
+			byElement = ByAngular.cssContainingText(expression, "searchText");
 			break;
 		}
 	}

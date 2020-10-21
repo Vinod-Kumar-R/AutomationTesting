@@ -28,7 +28,6 @@ public class Desired {
 
 		ChromeOptions chrome = new ChromeOptions();
 
-		
 		/**if(!ConstantVariable.MobileEmulation.equalsIgnoreCase("null") && !ConstantVariable.Environment.equalsIgnoreCase("WebBrowser")) {
 			mobileemulation.put("deviceName", ConstantVariable.MobileEmulation);
 			chrome.setExperimentalOption("mobileEmulation", mobileemulation);
@@ -41,8 +40,12 @@ public class Desired {
 		chrome.addArguments("enable-javascript");
 		//chrome.addArguments("user-data-dir=C:\\Users\\HP\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 1");
 		//chrome.addArguments("--profile-directory=Profile 2");
+		
+		Map<String, Object> prefs = new HashMap<String, Object>();
+		prefs.put("credentials_enable_service", false);
+		prefs.put("profile.password_manager_enabled", false);
 
-
+		chrome.setExperimentalOption("prefs", prefs);
 		return chrome;
 	}
 	

@@ -30,3 +30,6 @@ https://www.infoq.com/articles/headless-selenium-browsers/
 
 // generic way of reading locator
 https://stackoverflow.com/questions/21973971/how-can-i-handle-the-element-locator-selection-typexpath-or-tag-or-id-or-class
+
+//matselect and matoptions
+https://stackoverflow.com/questions/50941761/how-do-i-find-mat-select-using-selenium-webdriver/56369343

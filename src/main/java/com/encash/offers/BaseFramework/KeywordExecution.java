@@ -17,7 +17,6 @@ import com.paulhammant.ngwebdriver.NgWebDriver;
 public class KeywordExecution {
 	static Logger logger = LogManager.getLogger(KeywordExecution.class.getName());
 	private WebDriver driver;
-	private NgWebDriver ngdriver;
 	String status;
 	KeywordType keyword;
 	
@@ -27,8 +26,8 @@ public class KeywordExecution {
 
 	public KeywordExecution () {
 		
-		driver = BrowserInitialize.GetWebDriverInstance();
-		ngdriver = BrowserInitialize.GetNgWebDriverInstance();
+		
+		
 	}
 	
 	public void setvalue (KeywordType keyword) {
@@ -51,7 +50,6 @@ public class KeywordExecution {
 			BaseClass.er.WriteInfo("Executing key word --->"+ keyword);
 			logger.debug("Opening the URL "+ ConstantVariable.EncashURL);
 			driver = BrowserInitialize.GetWebDriverInstance();
-			ngdriver = BrowserInitialize.GetNgWebDriverInstance();
 			driver.get(ConstantVariable.EncashURL);
 			status = "pass";
 			Testresult(status, "Browser Open");
@@ -61,9 +59,8 @@ public class KeywordExecution {
 			BaseClass.er.WriteInfo("Executing key word --->"+ keyword);
 			logger.debug("Opening the URL "+ ConstantVariable.AdminURL);
 			driver = BrowserInitialize.GetWebDriverInstance();
-			ngdriver = BrowserInitialize.GetNgWebDriverInstance();
 			driver.get(ConstantVariable.AdminURL);
-			status = "pass";
+			status = BaseClass.ad.adminurlopen(driver, StringParam);
 			Testresult(status, "Browser Open");
 			break;
 
@@ -88,7 +85,7 @@ public class KeywordExecution {
 			
 			BaseClass.er.WriteInfo("Executing key word --->"+ keyword);
 			logger.debug("clicking  on Element");
-			status = BaseClass.gm.click(StringParam);
+			status = BaseClass.gm.click(StringParam[0]);
 			logger.debug("clicked  on Element");
 			Testresult(status, keyword.toString());
 			break;
@@ -163,6 +160,14 @@ public class KeywordExecution {
 			status = BaseClass.gm.entertext(StringParam);
 			logger.info("Enter the text");
 			Testresult(status,keyword.toString());
+			break;
+		
+		case createcompetation:
+			BaseClass.er.WriteInfo("Executing key word ---> "+ keyword);
+			status = BaseClass.ad.CreateCompetation(driver, StringParam);
+			logger.info("Enter the text");
+			Testresult(status,keyword.toString());
+			break;
 			
 		case comment :
 			 break;

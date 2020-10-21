@@ -12,11 +12,9 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-
 import com.encash.offers.BaseFramework.BaseClass;
 import com.encash.offers.Configuration.ConstantVariable;
 import com.paulhammant.ngwebdriver.NgWebDriver;
-
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 
@@ -29,11 +27,10 @@ public class BrowserInitialize {
 
 
 	static Logger logger = LogManager.getLogger(BrowserInitialize.class);
-	public static  WebDriver drivere = null;
-	public static EventFiringWebDriver driver;
-
-	public static  NgWebDriver ngwebdriver = null;
-	public static JavascriptExecutor jsDriver;
+	private static  WebDriver drivere = null;
+	private static EventFiringWebDriver driver;
+	private static  NgWebDriver ngwebdriver = null;
+	private static JavascriptExecutor jsDriver;
 	private static Desired desired;
 
 	/**
@@ -105,7 +102,8 @@ public class BrowserInitialize {
 		driver.register(ei);
 
 		jsDriver = (JavascriptExecutor) driver ;
-		ngwebdriver = new NgWebDriver(jsDriver).withRootSelector("9.1.9");
+		//ngwebdriver = new NgWebDriver(jsDriver).withRootSelector("10.1.3");
+		ngwebdriver = new NgWebDriver(jsDriver);
 	}
 
 
@@ -127,7 +125,7 @@ public class BrowserInitialize {
 
 	public static String QuitBrowser() {
 
-		driver.quit();
+		//driver.quit();
 		driver = null;
 		ngwebdriver = null;
 		return "pass";
