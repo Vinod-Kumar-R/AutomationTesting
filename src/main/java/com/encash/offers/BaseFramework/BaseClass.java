@@ -2,7 +2,6 @@ package com.encash.offers.BaseFramework;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import com.aventstack.extentreports.Status;
 import com.encash.offers.Configuration.ConstantVariable;
 import com.encash.offers.Utility.ExcelReader;
@@ -32,11 +31,11 @@ public class BaseClass {
 	private KeywordExecution ke ;
 	private ExcelReader TestData;
 	private ExcelReader TestCase;
-	public static ExtentReport er;
+	private static ExtentReport er;
 
 	public BaseClass() {
 		cv = new ConstantVariable();
-		er = new ExtentReport();
+		er = BrowserInitialize.getExtentReportInstance();
 		ke = new KeywordExecution();
 		gm = new GenericMethod();
 	}
@@ -56,8 +55,8 @@ public class BaseClass {
 	 * <p> this is the main which accept all the Exception </p>
 	 */
 	public void Start_run() throws Exception {
-		
-		
+
+
 		cv.SearchTestData();
 		cv.ObjectRepository();
 		BrowserInitialize.GetWebDriverInstance();
@@ -75,24 +74,24 @@ public class BaseClass {
 			String Test_Case_Description = TestCase.GetCellData(testcaserownumber,1);
 			String Test_Case_Categeory = TestCase.GetCellData(testcaserownumber, 2);
 			if((TestCase.GetCellData(testcaserownumber, 3).equalsIgnoreCase("yes"))) {
-			logger.info("Started Executing Test Case ID " + Test_Case_ID);
-			logger.debug("Test Case ID "+ Test_Case_ID);
-			logger.debug("Test Case Description "+ Test_Case_Description);
-			logger.debug("Test Case Categeory "+ Test_Case_Categeory);
+				logger.info("Started Executing Test Case ID " + Test_Case_ID);
+				logger.debug("Test Case ID "+ Test_Case_ID);
+				logger.debug("Test Case Description "+ Test_Case_Description);
+				logger.debug("Test Case Categeory "+ Test_Case_Categeory);
 
 
-			er.CreateTest(Test_Case_ID,Test_Case_Description);
-			er.Categeory(Test_Case_Categeory);
+				er.CreateTest(Test_Case_ID,Test_Case_Description);
+				er.Categeory(Test_Case_Categeory);
 
-			logger.debug("Test case found in the test data file at----> "+ ConstantVariable.TestDataRowNumber.get(Test_Case_ID));
-			testDatarownumber = ConstantVariable.TestDataRowNumber.get(Test_Case_ID);
+				logger.debug("Test case found in the test data file at----> "+ ConstantVariable.TestDataRowNumber.get(Test_Case_ID));
+				testDatarownumber = ConstantVariable.TestDataRowNumber.get(Test_Case_ID);
 
-			//Execute the Test case ID
-			logger.debug("Test Case ID found and started executing "+ Test_Case_ID);
-			TestRunId(testDatarownumber);
-			er.flushlog();
+				//Execute the Test case ID
+				logger.debug("Test Case ID found and started executing "+ Test_Case_ID);
+				TestRunId(testDatarownumber);
+				er.flushlog();
 
-			
+
 			}
 			else {
 				logger.info("Skiped the Test case "+ Test_Case_ID);
@@ -168,7 +167,7 @@ public class BaseClass {
 			TestData.CloseWorkbook();
 
 		}catch (Exception e) {
-			
+
 			WaitMethod.waitstatus = false;
 			er.WriteLog(Status.FAIL, e.getMessage());
 			logger.error("testscript error message", e);
@@ -199,9 +198,5 @@ public class BaseClass {
 			logger.error(e.getStackTrace().toString());
 			e.printStackTrace();
 		}
-		finally {
-		
-		}
-
 	}
 }

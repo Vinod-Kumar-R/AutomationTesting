@@ -2,7 +2,6 @@ package com.encash.offers.Utility;
 
 import java.io.File;
 import java.util.List;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,8 +10,6 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import com.encash.offers.BaseFramework.BaseClass;
 import com.encash.offers.Configuration.ConstantVariable;
 import com.encash.offers.Webdriver.BrowserInitialize;
 import com.paulhammant.ngwebdriver.ByAngular;

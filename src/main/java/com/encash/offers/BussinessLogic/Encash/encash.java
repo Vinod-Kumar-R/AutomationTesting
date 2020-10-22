@@ -3,15 +3,14 @@ package com.encash.offers.BussinessLogic.Encash;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebElement;
-
 import com.aventstack.extentreports.Status;
-import com.encash.offers.BaseFramework.BaseClass;
+import com.encash.offers.Utility.ExtentReport;
 import com.encash.offers.Utility.GenericMethod;
 import com.encash.offers.Utility.WaitMethod;
+import com.encash.offers.Webdriver.BrowserInitialize;
 
 /**
  * This class contain all the Business logic for Automation 
@@ -22,10 +21,12 @@ public class encash {
 	static Logger logger = LogManager.getLogger(encash.class.getName());
 	private WaitMethod wm;
 	private GenericMethod gm;
+	private ExtentReport er;
 	
 	public encash() {
 		wm = new WaitMethod();
 		gm = new GenericMethod();
+		er = BrowserInitialize.getExtentReportInstance();
 	}
 	
 	/**
@@ -46,7 +47,7 @@ public class encash {
 			data[0] = StringParam[0];
 			data[1] = StringParam[i];
 			wm.WaitForTexttVisible(data);
-			BaseClass.er.WriteLog(Status.PASS, "Taken the screenshot", gm.takeScreenshot());
+			er.WriteLog(Status.PASS, "Taken the screenshot", gm.takeScreenshot());
 			gm.VerifyText(data);
 			logger.debug("Verified the test "+ data[1]);
 		}
@@ -94,16 +95,16 @@ public class encash {
 			Expectedbanner.add(StringParam[i]);
 			
 		    wm.WaitForAttributedPrent(data);
-			BaseClass.er.WriteLog(Status.PASS, "capture the Screen shot "+ StringParam[i], gm.takeScreenshot());
+			er.WriteLog(Status.PASS, "capture the Screen shot "+ StringParam[i], gm.takeScreenshot());
 			gm.verifyAttributedValue(data);
-			BaseClass.er.WriteLog(Status.PASS, "verified the image "+ StringParam[i]);
+			er.WriteLog(Status.PASS, "verified the image "+ StringParam[i]);
 		}
 		
 		
 		//compare both Actual banner and Expected list are in same order
 		if(!Acutalbanner.equals(Expectedbanner)) {
 			logger.debug("Excel Order Banner is not matching with Expected order bannber in UI");
-			BaseClass.er.WriteLog(Status.FAIL, "Excel Order Banner is not matching with Expected order bannber in UI");
+			er.WriteLog(Status.FAIL, "Excel Order Banner is not matching with Expected order bannber in UI");
 			return "fail";
 		}
 		

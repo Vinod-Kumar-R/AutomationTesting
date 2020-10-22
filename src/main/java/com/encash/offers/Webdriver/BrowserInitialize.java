@@ -12,8 +12,8 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-import com.encash.offers.BaseFramework.BaseClass;
 import com.encash.offers.Configuration.ConstantVariable;
+import com.encash.offers.Utility.ExtentReport;
 import com.paulhammant.ngwebdriver.NgWebDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
@@ -31,6 +31,7 @@ public class BrowserInitialize {
 	private static EventFiringWebDriver driver;
 	private static  NgWebDriver ngwebdriver = null;
 	private static JavascriptExecutor jsDriver;
+	private static ExtentReport extentreport = null;
 	
 
 	/**
@@ -132,6 +133,18 @@ public class BrowserInitialize {
 	}
 
 	/**
+	 * This method is used to get the ExtenReport instance 
+	 * @return
+	 */
+	public  static ExtentReport getExtentReportInstance() {
+		
+		if(extentreport == null) {
+			extentreport = new ExtentReport();
+		}
+		return extentreport;
+		
+	}
+	/**
 	 * This method is used to quit the browser instance 
 	 * @return
 	 */
@@ -147,9 +160,9 @@ public class BrowserInitialize {
 	 * this method is used the extend report for updating the browser instance used for testing
 	 */
 	public static void BrowserInfo() {
-		BaseClass.er.SetSystemInfo("Browser Name", driver.getCapabilities().getBrowserName());
-		BaseClass.er.SetSystemInfo("Browser Version", driver.getCapabilities().getVersion());
-		BaseClass.er.SetSystemInfo("Platform", driver.getCapabilities().getPlatform().toString());
+		extentreport.SetSystemInfo("Browser Name", driver.getCapabilities().getBrowserName());
+		extentreport.SetSystemInfo("Browser Version", driver.getCapabilities().getVersion());
+		extentreport.SetSystemInfo("Platform", driver.getCapabilities().getPlatform().toString());
 	}
 
 

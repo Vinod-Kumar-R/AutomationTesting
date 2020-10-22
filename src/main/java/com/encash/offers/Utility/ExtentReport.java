@@ -17,13 +17,16 @@ import com.encash.offers.Configuration.ConstantVariable;
 public class ExtentReport {
 
 	public ExtentSparkReporter spark ;
-
 	public ExtentReports extent;
 	public ExtentTest extenttest;
+	private String css1 = ".col-md-4 { -webkit-box-flex: 0; -ms-flex: 0 0 33.333333%; flex: 0 0 33.333333%; max-width: 100%;} .table td, .table th {vertical-align: middle; white-space: nowrap; }";
+	
 
 	public ExtentReport()  {
 
-		this.spark = new ExtentSparkReporter(ConstantVariable.ExtentReportsLocation) ;
+		this.spark = new ExtentSparkReporter(ConstantVariable.ExtentReportsLocation);
+		this.spark.config().setCss(css1);
+			
 		try {
 			this.spark.loadXMLConfig(ConstantVariable.ExtentReportsPropeties);
 		} catch (IOException e) {
@@ -83,9 +86,4 @@ public class ExtentReport {
 		CreateTest(TestName, Description);
 		this.extenttest.log(Status.SKIP, "Skipped the Test Case");
 	}
-
-
-
-
-
 }
