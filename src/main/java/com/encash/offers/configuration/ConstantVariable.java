@@ -22,11 +22,11 @@ import org.apache.logging.log4j.core.LoggerContext;
  *
  */
 public class ConstantVariable {
-  static Logger logger = LogManager.getLogger(ConstantVariable.class.getName());
+
   /**
    * This variable contain the Browser name in which test script need to execute.
    */
-  public static String Browser_Binary_Name;
+  public static String browserBinaryName;
   /**
    * This variable the contain application URL in which test script need to executed. 
    */
@@ -54,12 +54,14 @@ public class ConstantVariable {
   public static boolean HeadlessBrowser;
   public static String DesiredAndroidCapability;
   public static String AppiumURL;
-  private String dateformat = "dd_MMM_yyyy";
-  private String timeformat = "HH_mm_ss";
   public static String ResultBaseLocation;
   public static String ResultLocation;
   public static String ResultDatelocaton;
   public static String Configlocation;
+  private static Logger logger = LogManager.getLogger(ConstantVariable.class.getName());
+  private String dateformat = "dd_MMM_yyyy";
+  private String timeformat = "HH_mm_ss";
+
 
 
 
@@ -85,7 +87,7 @@ public class ConstantVariable {
     ResultLocation = dateTime(timeformat, ResultDatelocaton);
     ExtentReportsLocation = ResultLocation + File.separator + "encashoffer.html";
     ScreenShotlocation = folderCreation(ResultLocation, "ScreenShot");
-    Browser_Binary_Name = cr.getConfigurationStringValue("browser_Binary_file");
+    browserBinaryName = cr.getConfigurationStringValue("browser_Binary_file");
     EncashURL = cr.getConfigurationStringValue("encashurl");
     AdminURL = cr.getConfigurationStringValue("adminurl");
     TestDatas = cr.getConfigurationStringValue("testData");
@@ -162,7 +164,7 @@ public class ConstantVariable {
       object.add(ro.getObjectValue());
       //Value = ro.getObjectValue();
       logger.debug("Key ---> " + key + "  Type ----> " + ro.getObjectType() 
-            + "  Value-----> " + ro.getObjectValue());
+          + "  Value-----> " + ro.getObjectValue());
       GetObject.put(key, object);
     }
 
@@ -216,7 +218,8 @@ public class ConstantVariable {
 
   /**
    * This method is used to read the environment variable.
-   * @return
+   * @param key take the environment key value
+   * @return method return the environment value for specified key
    */
   public String  readEnvironmnetVariable(String key) {
     String configuration;

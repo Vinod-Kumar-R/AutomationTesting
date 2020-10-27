@@ -19,7 +19,7 @@ import org.openqa.selenium.WebElement;
  */
 
 public class Encash {
-  static Logger logger = LogManager.getLogger(Encash.class.getName());
+  private static Logger logger = LogManager.getLogger(Encash.class.getName());
   private WaitMethod wm;
   private GenericMethod gm;
   private ExtentReport er;
@@ -94,8 +94,9 @@ public class Encash {
 
       expectedBanner.add(stringParam[i]);
 
-      wm.waitForAttributedPrent(data);
-      er.writeLog(Status.PASS, "capture the Screen shot " + stringParam[i], gm.takeScreenshot());
+      wm.waitForAttributedContain(data);
+      er.writeLog(Status.PASS, "capture the Screen shot " + stringParam[i],
+                      gm.takeScreenshot());
       gm.verifyAttributedValue(data);
       er.writeLog(Status.PASS, "verified the image " + stringParam[i]);
     }
@@ -110,6 +111,109 @@ public class Encash {
     }
 
     return "Pass";
+  }
+  
+  /**
+   * This method is used to create a new Registration in encash page.
+   * @param stringParam contain all the required data for registration
+   * @return
+   */
+  public String newRegistration(String[] stringParam) {
+    logger.debug("waiting for loder class request complete");
+    wm.waitForElementInvisible("loderclass");
+    
+    logger.debug("Wait for element presnet");
+    wm.waitForElementVisible("persondetail_title");
+    
+    logger.debug("seleting the title from dorp down");
+    String[] title = new String[]{"persondetail_title", stringParam[0]};
+    gm.selectByVisibleText(title);
+   
+    logger.debug("enter the frist Name");
+    WebElement element = gm.getElement("persondetail_firstname");
+    element.sendKeys(stringParam[1]);
+    
+    logger.debug("enter the last Name");
+    element = gm.getElement("personaldetail_lastname");
+    element.sendKeys(stringParam[2]);
+
+    logger.debug("Enter the Email address");
+    element = gm.getElement("personaldetail_email");
+    element.sendKeys(stringParam[3]);
+    
+    logger.debug("Select the Geneder");
+    
+    if (stringParam[4].equalsIgnoreCase("male")) {
+      element = gm.getElement("personaldetail_male");
+      element.click();
+    } else if (stringParam[4].equalsIgnoreCase("female")) {
+      element = gm.getElement("personaldetail_female");
+      element.click();
+    }
+    
+    logger.debug("Select date from BirthDate");
+    String[] date = new String[] {"personaldetail_date", stringParam[5]};
+    gm.selectByVisibleText(date);
+    
+    logger.debug("Select Month from BirthDate");
+    String[] month = new String[] {"personaldetail_month", stringParam[6]};
+    gm.selectByVisibleText(month);
+    
+    logger.debug("Select Year from BirthDate");
+    String[] year = new String[] {"personaldetail_year", stringParam[7]};
+    gm.selectByVisibleText(year);
+    
+    logger.debug("Enter the Password");
+    element = gm.getElement("personaldetail_password");
+    element.sendKeys(stringParam[8]);
+    
+    logger.debug("Enter the confirm password");
+    element = gm.getElement("personaldetail_cofirmpassword");
+    element.sendKeys(stringParam[9]);
+    
+    logger.debug("Enter the Display name");
+    element = gm.getElement("personaldetail_displayname");
+    element.sendKeys(stringParam[10]);
+    
+    logger.debug("Enter the Postal code");
+    element = gm.getElement("personaldetail_postalcode");
+    element.sendKeys(stringParam[11]);
+    
+    logger.debug("click on the find address");
+    element = gm.getElement("personaldetail_findadress");
+    element.click();
+    
+    logger.debug("wait for load all the address");
+    String[] notpresent = new String[] {"personaldetail_findadress", "disabled"};
+    wm.waitForElementAttributeNotPresent(notpresent);
+    
+    logger.debug("select the address from visible text");
+    String[] address = new String[] {"personaldetail_address", stringParam[12]};
+    gm.selectByVisibleText(address);
+  
+    return "pass";
+  }
+  
+  
+  /**
+   * This method is used to enter the OTP password. 
+   * @param stringParam contain the OTP data
+   * @return
+   */
+  public String enterOtp(String[] stringParam) {
+    
+    logger.debug("waiting for class loder request complete");
+    wm.waitForElementInvisible("loderclass");
+    List<WebElement> otp = gm.getElements("otp");
+    
+    int index = 0;
+    for (WebElement element : otp) {
+      logger.debug("Entering the OPT for element " + stringParam[index]);
+      element.sendKeys(stringParam[index]);
+      index++;
+    }
+    
+    return "pass";
   }
 
 }

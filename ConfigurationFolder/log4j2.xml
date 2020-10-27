@@ -47,14 +47,14 @@
     <Loggers>
      
         <Logger name="com.encash.offers" additivity="false">
-            <AppenderRef ref="debugLog" />
+            <AppenderRef ref="debugLog" /> 
             <AppenderRef ref="infoLog"  />
             <AppenderRef ref="errorLog" />
-           <!-- <AppenderRef ref="Console"  /> -->
+            <AppenderRef ref="Console"  />
         </Logger>
 
         <Root level="all">
-            <AppenderRef ref="Console"/> 
+         <!--   <AppenderRef ref="Console"/> -->
         </Root>
  
     </Loggers>

@@ -15,13 +15,15 @@ public enum KeywordType {
   implictwait,
   jishitext,
   takescreenshot,
-  waitforattributedprent,
+  waitforattributedcontain,
   verifyattributedvalue,
   banner,
   comment,
   entertext,
   openencashurl,
   openadminurl,
-  createcompetation
+  createcompetation,
+  enterotp,
+  newregistration
 
 }

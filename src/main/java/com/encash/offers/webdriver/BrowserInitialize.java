@@ -3,6 +3,7 @@ package com.encash.offers.webdriver;
 
 import com.encash.offers.configuration.ConstantVariable;
 import com.encash.offers.utility.ExtentReport;
+import com.encash.offers.utility.JsWaiter;
 import com.paulhammant.ngwebdriver.NgWebDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
@@ -24,15 +25,15 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
  * @author Vinod Kumar R
  *
  */
-public class BrowserInitialize {
+public final class BrowserInitialize {
 
 
-  static Logger logger = LogManager.getLogger(BrowserInitialize.class);
-  private static  WebDriver drivere = null;
+  private static Logger logger = LogManager.getLogger(BrowserInitialize.class);
+  private static  WebDriver drivere;
   private static EventFiringWebDriver driver;
-  private static  NgWebDriver ngwebdriver = null;
+  private static  NgWebDriver ngwebdriver;
   private static JavascriptExecutor jsDriver;
-  private static ExtentReport extentreport = null;
+  private static ExtentReport extentreport;
 
 
   /**
@@ -52,7 +53,7 @@ public class BrowserInitialize {
 
     Desired de = new Desired();
     DriverManagerType driverManagerType = DriverManagerType.valueOf(ConstantVariable
-                    .Browser_Binary_Name.toUpperCase());
+                    .browserBinaryName.toUpperCase());
     WebDriverManager.getInstance(driverManagerType).setup();
     BrowserExecutionType bt = BrowserExecutionType.valueOf(ConstantVariable.Test_Execution); 
 
@@ -114,12 +115,13 @@ public class BrowserInitialize {
 
 
   /**
-   * this method is used to reuses the same instance of Web driver. 
-   * @return
+   * this method is used to reuses the same instance of Web driver.
+   * @return WebDriver instance
    */
   public static WebDriver getWebDriverInstance() {
     if (driver == null) {
       createInstance();
+      JsWaiter.setDriver(driver);
     }
 
     return driver;
@@ -128,7 +130,7 @@ public class BrowserInitialize {
 
   /**
    * this method is used to ngwebdriver instance. 
-   * @return
+   * @return ngWebDriver instance
    */
   public static NgWebDriver getNgWebDriverInstance() {
     if (driver == null) {
@@ -139,7 +141,7 @@ public class BrowserInitialize {
 
   /**
    * This method is used to get the ExtenReport instance.  
-   * @return
+   * @return ExtentReport instance 
    */
   public  static ExtentReport getExtentReportInstance() {
 
@@ -149,10 +151,10 @@ public class BrowserInitialize {
     return extentreport;
 
   }
-  
+
   /**
    * This method is used to quit the browser instance. 
-   * @return
+   * @return status as "Pass" if execution completed 
    */
   public static String quitBrowser() {
 

@@ -14,9 +14,16 @@ import org.apache.logging.log4j.Logger;
  *
  */
 public class ConfigurationReader {
-  static Logger logger = LogManager.getLogger(ConfigurationReader.class.getName());
-  Configurations configs = new Configurations();
-  Configuration config;
+  private static Logger logger = LogManager.getLogger(ConfigurationReader.class.getName());
+  private Configurations configs = new Configurations();
+  private Configuration config;
+
+  /**
+   * Constructor.
+   */
+  public ConfigurationReader() {
+
+  }
 
   /**
    * This method is used to read the configuration properties file.
@@ -35,7 +42,7 @@ public class ConfigurationReader {
   /**
    * This method is used the value for key in the string format.
    * @param key in the properties file
-   * @return
+   * @return the value for the specified key
    */
   public String getConfigurationStringValue(String key) {
     logger.debug("Value for the key " + key + " ------> " + config.getString(key));
@@ -43,16 +50,30 @@ public class ConfigurationReader {
 
   }
 
+  /**
+   * This method is used the value for key in the Integer format.
+   * @param key in the properties file
+   * @return the value for the specified key
+   */
   public Integer getConfigurationIntValue(String key) {
     logger.debug("Value for the key " + key + " ------> " + config.getInt(key));
     return config.getInt(key);
   }
 
+  /**
+   * This method is used the value for key in the Boolean format.
+   * @param key in the properties file
+   * @return the value for the specified key
+   */
   public Boolean getConfigurationBooleanValue(String key) {
     logger.debug("Value for the key " + key + " ------> " + config.getBoolean(key));
     return config.getBoolean(key);
   }
 
+  /**
+   * This method is used to read all the key in the configuration file.
+   * @return all the key in file
+   */
   public Iterator<String> getAllKeys() {
     return config.getKeys();
   }

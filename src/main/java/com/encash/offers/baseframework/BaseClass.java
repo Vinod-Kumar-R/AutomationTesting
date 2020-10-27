@@ -13,25 +13,22 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * <h1> This is Main class in which execution Start. </h1>
- * <p> Main call the constructor and initial all the variable required such as 
+ * <p> Main call the constructor and initial all the variable required such as
  * URL, test case file, Log properties files and Result file  </p>
- * 
  * {@docRoot}
  * @serial 16-09-2020
  * @author Vinod Kumar R
  * @version 1.0
- * 
  */
 
 public class BaseClass {
-  static Logger logger = LogManager.getLogger(BaseClass.class);
-  //private static int throwincrment =0;
+  private static Logger logger = LogManager.getLogger(BaseClass.class);
   private ConstantVariable cv;
   private GenericMethod gm;
   private KeywordExecution ke;
   private ExcelReader testData;
   private ExcelReader testCase;
-  private static ExtentReport er;
+  private ExtentReport er;
 
   /**
    * In Constructor, initializing the required class.
@@ -58,7 +55,7 @@ public class BaseClass {
    * @throws Exception 
    * <p> this is the main which accept all the Exception </p>
    */
-  public void start_Run() throws Exception {
+  public void startRun() throws Exception {
 
     cv.searchTestData();
     cv.objectRepository();
@@ -67,16 +64,20 @@ public class BaseClass {
 
     int testcaserownumber = 1;
     int testDatarownumber = 0;
+    int firstColumn = 0;
+    int secondColumn = 1;
+    int thirdColumn = 2;
+    int fourthCoumn = 3;
     //Read the Test case data
     logger.debug("Test Case File name " + ConstantVariable.TestCases);
     testCase = new ExcelReader(ConstantVariable.TestCases, 0);
     //is not of end of testcase row
-    while (!(testCase.getCellData(testcaserownumber, 0).equalsIgnoreCase("End"))) {
+    while (!(testCase.getCellData(testcaserownumber, firstColumn).equalsIgnoreCase("end"))) {
       //if Executed column is yes then executed else skip test skip
-      String testCaseID = testCase.getCellData(testcaserownumber, 0);
-      String testCaseDescription = testCase.getCellData(testcaserownumber, 1);
-      String testCaseCategeory = testCase.getCellData(testcaserownumber, 2);
-      if ((testCase.getCellData(testcaserownumber, 3).equalsIgnoreCase("yes"))) {
+      String testCaseID = testCase.getCellData(testcaserownumber, firstColumn);
+      String testCaseDescription = testCase.getCellData(testcaserownumber, secondColumn);
+      String testCaseCategeory = testCase.getCellData(testcaserownumber, thirdColumn);
+      if (testCase.getCellData(testcaserownumber, fourthCoumn).equalsIgnoreCase("yes")) {
         logger.info("Started Executing Test Case ID " + testCaseID);
         logger.debug("Test Case ID " + testCaseID);
         logger.debug("Test Case Description " + testCaseDescription);
@@ -85,7 +86,7 @@ public class BaseClass {
         er.createTest(testCaseID, testCaseDescription);
         er.categeory(testCaseCategeory);
 
-        logger.debug("Test case found in the test data file at----> " 
+        logger.debug("Test case found in the test data file at----> "
                         + ConstantVariable.TestDataRowNumber.get(testCaseID));
         testDatarownumber = ConstantVariable.TestDataRowNumber.get(testCaseID);
 
@@ -110,42 +111,41 @@ public class BaseClass {
 
   /**
    * This method read the Test script excel file i.e. Test Data
-   * which contain few column 
+   * which contain few column
    * <tr>
    * <td> Test case ID </td>
    * <td> Keyword which need to executed </td>
-   * <td> rest of the column are parameter to the keyword method which is required
-   * data for execution </td>
+   * <td> rest of the column are parameter to the keyword method which is
+   * required data for execution </td>
    * 
-   * <p>Test Script start from the Test Case ID and end when particular row 
+   * <p>Test Script start from the Test Case ID and end when particular row
    * and  column contain text as "END"
-   * 
-   * @param rowStartfrom This parameter take the integer number , 
-   *     which indicate from which row test script has to executed  
+   * @param rowStartfrom This parameter take the integer number ,
+   *     which indicate from which row test script has to executed
    */
 
-  public void testRunId(int rowStartfrom)  {
+  public void testRunId(int rowStartfrom) {
     int currentRow = rowStartfrom;
     int currentCol = 1;
-    String keyword;
+    String keyword = null;
 
     try {
       testData = new ExcelReader(ConstantVariable.TestDatas, 0);
 
-      while (testData.getCellData(currentRow, 0) == null 
+      while (testData.getCellData(currentRow, 0) == null
                       || !testData.getCellData(currentRow, 0).equalsIgnoreCase("End")) {
         keyword = testData.getCellData(currentRow, currentCol);
         logger.debug("Got the Key word from excel sheet " + keyword);
 
-        //Read the all the parameter for keywork and add delimitor ~
+        //Read the all the parameter for keyword and add delimiter ~
         int column = 2;
         String[] stringParam = null;
         String param = "";
-        int incrementarraydata = 0;
+        
         while (testData.getCellData(currentRow, column) != null) {
-          logger.debug("current row number " + currentRow + "Column number " + column);
-          logger.debug("Data got from Cell " + testData.getCellData(currentRow, column));
-          logger.debug("value of incrementarraydata " + incrementarraydata);
+          logger.debug("current row number " + currentRow + " Column number " + column);
+          logger.debug("Data from Cell " + testData.getCellData(currentRow, column));
+          
           if (param.equals("")) {
             param = testData.getCellData(currentRow, column);
           } else {
@@ -171,7 +171,8 @@ public class BaseClass {
     } catch (Exception e) {
 
       WaitMethod.waitstatus = false;
-      er.writeLog(Status.FAIL, e.getMessage());
+      er.writeLog(Status.FAIL, "Failed executing Keyword ---> " + keyword);
+      er.writeLog(Status.FAIL, e);
       logger.error("testscript error message", e);
       try {
         testData.closeWorkbook();
@@ -190,14 +191,14 @@ public class BaseClass {
    * This is the Main method and execution start from here.
    * @param args is used
    */
-  public static void main(String[] args) {
+  public static void main(final String[] args) {
     // TODO Auto-generated method stub
     BaseClass bc = new BaseClass();
     try {
-      bc.start_Run();
-      er.flushlog();
+      bc.startRun();
+      bc.er.flushlog();
     } catch (Exception e) {
-      er.flushlog();
+      bc.er.flushlog();
       logger.error(e.getStackTrace().toString());
       e.printStackTrace();
     }

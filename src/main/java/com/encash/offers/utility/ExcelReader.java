@@ -35,11 +35,21 @@ public class ExcelReader {
     this.sheet = this.workbook.getSheetAt(sheetIndex);
   }
 
+  /**
+   * This method is used to get the number of row count in an sheet.
+   * @param sheetindex read the integer value of sheet
+   * @return the total number of row are used 
+   */
   public int rowCout(int sheetindex) {
 
     return sheet.getPhysicalNumberOfRows();
   }
 
+  /**
+   * This method is used to get the number of column are used in particular row.
+   * @param rownum
+   * @return total number of column used in particular row
+   */
   public int columnCout(int rownum) {
     row = this.sheet.getRow(rownum);
     return row.getPhysicalNumberOfCells();
@@ -67,6 +77,10 @@ public class ExcelReader {
     return cellvalue;
   }
 
+  /**
+   * This method is used to close the workbook.
+   * @throws IOException ioException
+   */
   public void closeWorkbook() throws IOException {
     this.workbook.close();
   }

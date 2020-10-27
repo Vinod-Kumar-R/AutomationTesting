@@ -1,6 +1,7 @@
 package com.encash.offers.bussiness.admin;
 
 import com.encash.offers.utility.GenericMethod;
+import com.encash.offers.utility.JsWaiter;
 import com.encash.offers.utility.WaitMethod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,18 +9,18 @@ import org.openqa.selenium.WebElement;
 
 public class Admin {
 
-  static Logger logger = LogManager.getLogger(Admin.class);
-  private GenericMethod gm;
-  private WaitMethod wm;
-  
+  private static Logger logger = LogManager.getLogger(Admin.class);
+  private GenericMethod gemericMethod;
+  private WaitMethod waitMethod;
+
 
   /**
    * In constructor variable are initialized.
    */
   public Admin() {
-    gm = new GenericMethod();
-    wm = new WaitMethod();
-    
+    gemericMethod = new GenericMethod();
+    waitMethod = new WaitMethod();
+
 
   }
   /**
@@ -32,13 +33,13 @@ public class Admin {
   public String adminurlopen(String[] stringParam) throws Exception {
     //enter username and password 
     logger.debug("Enter the User name ");
-    WebElement username = gm.getElement("admin_username");
+    WebElement username = gemericMethod.getElement("admin_username");
     username.sendKeys(stringParam[0]);
     logger.debug("Enter the User Password ");
-    WebElement password = gm.getElement("admin_password");
+    WebElement password = gemericMethod.getElement("admin_password");
     password.sendKeys(stringParam[1]);
     logger.debug("click on login button");
-    WebElement login = gm.getElement("admin_login");
+    WebElement login = gemericMethod.getElement("admin_login");
     login.click();
     return "pass";
   }
@@ -53,7 +54,7 @@ public class Admin {
     //WebElement element;
 
     gotoCompetation();
-    wm.angularWait();
+    waitMethod.angularWait();
     //element = gm.getElement(StringParam[4]);
     //element.click();
 
@@ -67,33 +68,38 @@ public class Admin {
   public String gotoCompetation() {
 
     logger.debug("Waiting for the Angular request completed");
-    wm.angularWait();
+    waitMethod.angularWait();
+    //JsWaiter.waitUntilAngularReady();
+    //JsWaiter.waitJQueryAngular();
 
     WebElement element = null;  
     logger.debug("click on the Encash button");
-    element = gm.getElement("expand_encash");
+    element = gemericMethod.getElement("expand_encash");
     element.click();
 
     logger.debug("Waiting for the Angular request completed");
-    wm.angularWait();
+    waitMethod.angularWait();
+    // JsWaiter.waitForAngularLoad();
 
     logger.debug("click on the Encash button");
-    element = gm.getElement("competitions");
+    element = gemericMethod.getElement("competitions");
     element.click();
 
     logger.debug("Waiting for the Angular request completed");
-    wm.angularWait();
+    waitMethod.angularWait();
+    //JsWaiter.waitForAngularLoad();
 
 
     logger.debug("click on the three dot  new competations");
-    element = gm.getElement("threedot");
+    element = gemericMethod.getElement("threedot");
     element.click();
 
     logger.debug("waiting for the Angular request completed");
-    wm.angularWait();
+    waitMethod.angularWait();
+    //JsWaiter.waitForAngularLoad();
 
     logger.debug("clicking on the Add to queue button");
-    element = gm.getElement("competitions_queue");
+    element = gemericMethod.getElement("competitions_queue");
     element.click();
 
     return "Pass";

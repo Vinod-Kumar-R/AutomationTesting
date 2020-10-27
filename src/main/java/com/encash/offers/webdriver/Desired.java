@@ -16,17 +16,27 @@ import org.openqa.selenium.safari.SafariOptions;
 
 public class Desired {
 
+  private String headless = "headless";
+
+
+  /**
+   * Constractor.
+   */
+  public Desired() {
+
+  }
+
 
   /**
    * This Method is used to configured the Chrome Options before execution.
-   * @return
+   * @return the choreOptions setting for Chrome borwser
    */
   public ChromeOptions chromeDesired() {
 
     Map<String, String> mobileemulation = new HashMap<String, String>();
 
     ChromeOptions chrome = new ChromeOptions();
-    
+
     /*
     if(!ConstantVariable.MobileEmulation.equalsIgnoreCase("null") 
     && !ConstantVariable.Environment.equalsIgnoreCase("WebBrowser")) {
@@ -44,7 +54,7 @@ public class Desired {
     chrome.addArguments("user-data-dir=C:\\Users\\HP\\AppData\\Local"
                     + "\\Google\\Chrome\\User Data\\Profile 1");
     chrome.addArguments("--profile-directory=Profile 2");
-    */
+     */
     Map<String, Object> prefs = new HashMap<String, Object>();
     prefs.put("credentials_enable_service", false);
     prefs.put("profile.password_manager_enabled", false);
@@ -55,7 +65,7 @@ public class Desired {
 
   /**
    * This method is used configured the Firefox options before executing firefox.
-   * @return
+   * @return the firefoxOptions for Firefox browser
    */
   public FirefoxOptions firefoxDesired() {
 
@@ -67,7 +77,7 @@ public class Desired {
   /**
    * This method is used to set the Desired Capabilities for Android Devices 
    * before execution of test.
-   * @return
+   * @return the Desired Capabilities for Android devices
    */
   public  DesiredCapabilities androidDesired() {
     DesiredCapabilities dc = new DesiredCapabilities();
@@ -90,7 +100,7 @@ public class Desired {
 
   /**
    * This method is used to set the desired capability for Mobile Chrome driver.
-   * @return
+   * @return chromeOptions for Mobile Chrome driver
    */
   public  ChromeOptions mobileChromedriver() {
     ChromeOptions chromeOptions = new ChromeOptions();
@@ -104,21 +114,21 @@ public class Desired {
 
   /**
    * This method is used to set Opera capability.
-   * @return
+   * @return the Operation Options for Opera browser
    */
   public OperaOptions operaDesired() {
     OperaOptions oo = new OperaOptions();
-    oo.setCapability("headless", ConstantVariable.HeadlessBrowser);
+    oo.setCapability(headless, ConstantVariable.HeadlessBrowser);
     return oo;
   }
 
   /**
    * This method is used to set Edge capability.
-   * @return
+   * @return EdgeOptions for edge browser
    */
   public EdgeOptions edgeDesired() {
     DesiredCapabilities dc = new DesiredCapabilities();
-    dc.setCapability("headless", ConstantVariable.HeadlessBrowser);
+    dc.setCapability(headless, ConstantVariable.HeadlessBrowser);
 
     EdgeOptions eo = new EdgeOptions();
     eo.merge(dc);
@@ -129,22 +139,22 @@ public class Desired {
 
   /**
    * This method is used set to Internet explore capability.
-   * @return
+   * @return the InternetExploreOptions for Internet Explore Browser
    */
   public InternetExplorerOptions internetExploreDesired() {
     InternetExplorerOptions ieo = new InternetExplorerOptions();
-    //ieo.setCapability("headless", ConstantVariable.HeadlessBrowser);
+    //ieo.setCapability(headless, ConstantVariable.HeadlessBrowser);
 
     return ieo;
   }
 
   /**
    * This method is used to set Safari capability.
-   * @return
+   * @return the safariOptions for Safari browser
    */
   public SafariOptions safariDesired() {
     SafariOptions so = new SafariOptions();
-    so.setCapability("headless", ConstantVariable.HeadlessBrowser);
+    so.setCapability(headless, ConstantVariable.HeadlessBrowser);
     return so;
   }
 

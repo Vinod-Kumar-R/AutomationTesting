@@ -8,6 +8,7 @@ import com.opencsv.bean.CsvBindByName;
  */
 
 public class RepositoryBean {
+
   @CsvBindByName(column = "ObjectName", required = true)
   private String objectName;
 
@@ -17,6 +18,17 @@ public class RepositoryBean {
   @CsvBindByName(column = "ObjectType", required = true)
   private String objectType;
 
+  /**
+   * Constructor.
+   */
+  public RepositoryBean() {
+
+  }
+
+  /**
+   * Get the ObjectName.
+   * @return objectName
+   */
   public String getObjectName() {
     return objectName;
   }
@@ -40,9 +52,4 @@ public class RepositoryBean {
   public void setObjectType(String objectType) {
     this.objectType = objectType;
   }
-
-  
-
-
-
 }

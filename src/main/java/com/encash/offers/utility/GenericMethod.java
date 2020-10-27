@@ -13,6 +13,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 
 /**
@@ -104,12 +105,27 @@ public class GenericMethod {
   /**
    * This Method is used to enter the text in the text filed.
    * @param stringParam contain the text to enter in webpage
-   * @return
+   * @return the status as "Pass" if entertext in web page
    */
   public String entertext(String[] stringParam) {
 
     WebElement objectData = getElement(stringParam[0]);
     objectData.sendKeys(stringParam[1]);
+    return "pass";
+  }
+  
+  /**
+   * This method is used to select the option from drop down list.
+   * @param stringParam contain the WebElement of Dropdown and text to be form option
+   * @return
+   */
+  public String selectByVisibleText(String[] stringParam) {
+    WebElement objectData = getElement(stringParam[0]);
+    logger.debug("Selecting the text from drop down list " + stringParam[1]);
+    
+    Select select = new Select(objectData);
+    select.selectByVisibleText(stringParam[1]);
+
     return "pass";
   }
 
@@ -122,6 +138,17 @@ public class GenericMethod {
   public WebElement getElement(String object) {
     WebDriver driver = BrowserInitialize.getWebDriverInstance();
     By byElement = byType(object);
+    WebElement element = driver.findElement(byElement);
+    return element;
+  }
+  
+  /**
+   * This method accept the By element type and return webElement
+   * @param byElement
+   * @return
+   */
+  public WebElement getElement(By byElement) {
+    WebDriver driver = BrowserInitialize.getWebDriverInstance();
     WebElement element = driver.findElement(byElement);
     return element;
   }

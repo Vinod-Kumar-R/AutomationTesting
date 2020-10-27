@@ -18,15 +18,15 @@ import org.openqa.selenium.WebDriver;
  *
  */
 public class KeywordExecution {
-  static Logger logger = LogManager.getLogger(KeywordExecution.class.getName());
+  private static Logger logger = LogManager.getLogger(KeywordExecution.class.getName());
   private WebDriver driver;
   private GenericMethod gm;
   private Admin ad;
   private WaitMethod wm;
   private Encash en;
   private ExtentReport er;
-  String status;
-  KeywordType keyword;
+  private String status;
+  private KeywordType keyword;
 
   /**
    * This the default contractor which will initialize the required class variable.
@@ -41,6 +41,10 @@ public class KeywordExecution {
 
   }
 
+  /**
+   * This method is used to set the value for keyword.
+   * @param keyword
+   */
   public void setvalue(KeywordType keyword) {
     this.keyword = keyword;
 
@@ -59,7 +63,6 @@ public class KeywordExecution {
     switch (keyword) {
 
       case openencashurl : 
-        er.writeInfo("Executing key word --->" + keyword);
         logger.debug("Opening the URL " + ConstantVariable.EncashURL);
         driver = BrowserInitialize.getWebDriverInstance();
         driver.get(ConstantVariable.EncashURL);
@@ -68,7 +71,6 @@ public class KeywordExecution {
         break;
 
       case openadminurl : 
-        er.writeInfo("Executing key word --->" + keyword);
         logger.debug("Opening the URL " + ConstantVariable.AdminURL);
         driver = BrowserInitialize.getWebDriverInstance();
         driver.get(ConstantVariable.AdminURL);
@@ -77,24 +79,18 @@ public class KeywordExecution {
         break;
 
       case waitforelementvisible :
-
         logger.debug("Waiting for the element visible");
-        er.writeInfo("Executing key word --->" + keyword);
-        status = wm.waitForElementVisible(stringParam);
+        status = wm.waitForElementVisible(stringParam[0]);
         testResult(status, keyword.toString());
         break;
 
       case waitfortexttvisible :
-
         logger.debug("Waiting for the Text visible");
-        er.writeInfo("Executing key word --->" + keyword);
         status = wm.waitForTexttVisible(stringParam);
         testResult(status, keyword.toString());
         break;
 
       case click :
-
-        er.writeInfo("Executing key word --->" + keyword);
         logger.debug("clicking  on Element");
         status = gm.click(stringParam[0]);
         logger.debug("clicked  on Element");
@@ -102,85 +98,78 @@ public class KeywordExecution {
         break;
 
       case quitbrowser :
-
-        er.writeInfo("Executing key word --->" + keyword);
         status = BrowserInitialize.quitBrowser();
         logger.debug("QuiteBrowser");
         testResult(status, keyword.toString());
         break;
 
       case verifytext :
-
-        er.writeInfo("Executing key word --->" + keyword);
         status = gm.verifyText(stringParam);
         logger.debug("verified the text");
         testResult(status, keyword.toString());
         break;
 
       case implictwait :
-
-        er.writeInfo("Executing key word --->" + keyword);
         logger.debug("Manually waiting ");
         Thread.sleep(Integer.parseInt(stringParam[0]));
         break;
 
       case jishitext :
-
-        er.writeInfo("Executing key word --->" + keyword);
         status = en.jishitext(stringParam);
         logger.debug("verified the text");
         testResult(status, keyword.toString());
         break;
 
       case takescreenshot :
-
-        er.writeInfo("Executing key word ---> " + keyword);
         er.attachScreenshot(gm.takeScreenshot());
         status = "pass";
         logger.debug("taken the screen shot");
         testResult(status, keyword.toString());
         break;
 
-      case waitforattributedprent :
-
-        er.writeInfo("Executing key word ---> " + keyword);
-        status = wm.waitForAttributedPrent(stringParam);
+      case waitforattributedcontain :
+        status = wm.waitForAttributedContain(stringParam);
         logger.debug("Waited for An Attibuted ");
         testResult(status, keyword.toString());
         break;
 
       case verifyattributedvalue :
-
-        er.writeInfo("Executing key word ---> " + keyword);
         status = gm.verifyAttributedValue(stringParam);
         logger.debug("verified the attributed Value");
         testResult(status, keyword.toString());
         break;
 
       case banner :
-
-        er.writeInfo("Executing key word ---> " + keyword);
         status = en.banner(stringParam);
         logger.debug("verifed the Banner");
         testResult(status, keyword.toString());
         break;
 
       case entertext:
-
-        er.writeInfo("Executing key word ---> " + keyword);
         status = gm.entertext(stringParam);
         logger.info("Enter the text");
         testResult(status, keyword.toString());
         break;
 
       case createcompetation:
-        er.writeInfo("Executing key word ---> " + keyword);
         status = ad.createCompetation(stringParam);
-        logger.info("Enter the text");
+        logger.info("complete create competation");
         testResult(status, keyword.toString());
         break;
 
       case comment :
+        break;
+       
+      case enterotp :
+        status = en.enterOtp(stringParam);
+        logger.info("completed entering OTP");
+        testResult(status, keyword.toString());
+        break;
+        
+      case newregistration :
+        status = en.newRegistration(stringParam);
+        logger.info("completed entering all detail for New Registration");
+        testResult(status, keyword.toString());
         break;
 
       default: logger.info("Invalid Keyword");

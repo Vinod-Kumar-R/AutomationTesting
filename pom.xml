@@ -86,7 +86,7 @@
 		<dependency>
 			<groupId>com.aventstack</groupId>
 			<artifactId>extentreports</artifactId>
-			<!--  <version>3.1.5</version> -->
+			<!-- <version>3.1.5</version> -->
 			<version>5.0.1</version>
 		</dependency>
 
@@ -98,12 +98,8 @@
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/io.appium/java-client -->
-<!--  		<dependency>
-			<groupId>io.appium</groupId>
-			<artifactId>java-client</artifactId>
-			<version>7.3.0</version>
-		</dependency>
--->
+		<!-- <dependency> <groupId>io.appium</groupId> <artifactId>java-client</artifactId> 
+			<version>7.3.0</version> </dependency> -->
 	</dependencies>
 
 	<reporting>
@@ -126,10 +122,10 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.1</version>
+					<version>3.8.1</version>
 					<configuration>
-						<source>1.7</source>
-						<target>1.7</target>
+						<source>1.8</source>
+						<target>1.8</target>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -137,7 +133,8 @@
 					<artifactId>exec-maven-plugin</artifactId>
 					<version>1.6.0</version>
 					<configuration>
-						<mainClass>com.encash.offers.BaseFramework.BaseClass</mainClass>
+						<mainClass>com.encash.offers.baseframework.BaseClass</mainClass>
+						<cleanupDaemonThreads>false</cleanupDaemonThreads>
 					</configuration>
 				</plugin>
 			</plugins>

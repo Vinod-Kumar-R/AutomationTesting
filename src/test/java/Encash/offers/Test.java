@@ -1,5 +1,5 @@
 package Encash.offers;
 
-public class test {
+public class Test {
 
 }

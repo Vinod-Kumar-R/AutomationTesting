@@ -47,47 +47,107 @@ public class ExtentReport {
 
   }
 
+  /**
+   * This method is used when test execution start.
+   * @param testName 
+   */
   public void createTest(String testName) {
     this.extenttest = this.extent.createTest(testName);
   }
 
+  /**
+   * This method is used when test execution start.
+   * @param testName
+   * @param description
+   */
   public void createTest(String testName, String description) {
     this.extenttest = this.extent.createTest(testName, description);
   }
-
+  /**
+   * This method is used to write log during execution.
+   * @param status
+   * @param details
+   */
+  
   public void writeLog(Status status, String details) {
     this.extenttest.log(status, details);
   }
-  
+
+  /**
+   * This method is used to write log during execution with extra detail.
+   * @param status
+   * @param details
+   * @param imageFilelocation
+   * @throws IOException
+   */
   public void writeLog(Status status, String details, String imageFilelocation) throws IOException {
     this.extenttest.log(status, details, 
                     MediaEntityBuilder.createScreenCaptureFromPath(imageFilelocation).build());
   }
+  
+  /**
+   * 
+   * @param status
+   * @param t
+   */
+  public void writeLog(Status status, Throwable t) {
+    this.extenttest.log(status, t);
+  }
 
+  /**
+   * This method is at the end of each test execution so that result write to file
+   */
   public void flushlog() {
     this.extent.flush();
   }
-
+  /**
+   * This method is used to attach the screen shot for execution test case.
+   * @param imagePath
+   * @throws IOException
+   */
+  
   public void attachScreenshot(String imagePath) throws IOException {
     this.extenttest.addScreenCaptureFromPath(imagePath);
   }
 
+  /**
+   * This method is used to write log in info 
+   * @param details
+   */
   public void writeInfo(String details) {
     this.extenttest.info(details);
   }
 
+  /**
+   * This method is used to set the categeory for the test case
+   * @param category
+   */
   public void categeory(String category) {
     this.extenttest.assignCategory(category);
   }
 
+  /**
+   * This method is used to set the author for test case.
+   * @param author
+   */
   public void author(String author) {
     this.extenttest.assignAuthor(author);
   }
 
+  /**
+   * This method is used to set the system information in extent report.
+   * @param key
+   * @param value
+   */
   public void setSystemInfo(String key, String value) {
     this.extent.setSystemInfo(key, value);
   }
-  
+
+  /**
+   * this method is used to when test case are skiped.
+   * @param testName
+   * @param description
+   */
   public void skipTest(String testName, String description) {
     createTest(testName, description);
     this.extenttest.log(Status.SKIP, "Skipped the Test Case");

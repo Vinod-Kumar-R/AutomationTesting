@@ -1,6 +1,7 @@
 package com.encash.offers.utility;
 
 import com.encash.offers.configuration.ConstantVariable;
+import com.encash.offers.custom.wait.CustomWait;
 import com.encash.offers.webdriver.BrowserInitialize;
 import com.paulhammant.ngwebdriver.NgWebDriver;
 import java.time.Duration;
@@ -15,7 +16,7 @@ import org.openqa.selenium.support.ui.Wait;
 
 
 public class WaitMethod {
-  static Logger logger = LogManager.getLogger(WaitMethod.class.getName());
+  private static Logger logger = LogManager.getLogger(WaitMethod.class.getName());
   public static boolean waitstatus = true;
   private GenericMethod gm;
 
@@ -31,9 +32,9 @@ public class WaitMethod {
    * @return it return the status "pass" if execution success else throw an exception
    * @throws Exception throw an generic exception
    */
-  public  String waitForElementVisible(String[] stringParam) throws Exception {
+  public  String waitForElementVisible(String stringParam) {
     WebDriver driver = BrowserInitialize.getWebDriverInstance();
-    By objectName = gm.byType(stringParam[0]);
+    By objectName = gm.byType(stringParam);
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
                     .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
@@ -56,7 +57,7 @@ public class WaitMethod {
    * @throws Exception throw an generic exception
    */
 
-  public  String waitForTexttVisible(String[] stringParam) throws Exception {
+  public  String waitForTexttVisible(String[] stringParam)  {
     WebDriver driver = BrowserInitialize.getWebDriverInstance();
     By objectName = gm.byType(stringParam[0]); 
     waitstatus = false;
@@ -83,16 +84,16 @@ public class WaitMethod {
    * @throws Exception throw an generic exception
    */
 
-  public  String waitForAttributedPrent(String[] stringParam) throws Exception {
+  public  String waitForAttributedContain(String[] stringParam) {
     By objectName = gm.byType(stringParam[0]);
     waitstatus = false;
-    
+
     logger.debug("Waiting for the attributed presnt and value " + objectName);
     logger.debug("attribute --------->" + stringParam[1]);
     logger.debug("Value --------->" + stringParam[2]);
-    
+
     WebDriver driver = BrowserInitialize.getWebDriverInstance();
-    
+
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
                     .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
                     .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
@@ -106,12 +107,82 @@ public class WaitMethod {
 
   /**
    * This method is used to wait for angular request completed.
-   * @return
+   * @return the status as "pass" if wait for angular request complete
    */
   public String angularWait() {
     NgWebDriver ngwebdriver = BrowserInitialize.getNgWebDriverInstance();
     ngwebdriver.waitForAngularRequestsToFinish();
     return "pass";
   }
+
+  /**
+   * This method is used to wait until required element is present in DOM.
+   * @param stringParam Object
+   * @return
+   */
+  public String waitForElementPresent(String stringParam) {
+
+    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    By objectName = gm.byType(stringParam); 
+    waitstatus = false;
+    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
+                    .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
+                    .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
+                    .ignoring(NoSuchElementException.class);
+
+    logger.debug("Waiting for the Text to be present " + objectName);
+    wait.until(ExpectedConditions.presenceOfElementLocated(objectName));
+
+    waitstatus = true;
+    return "pass";
+
+  }
+
+  /**
+   * This method is used to wait for Element is not present.
+   * @param stringParam contain the objectName
+   * @return
+   */
+  public String waitForElementInvisible(String stringParam) {
+
+    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    By objectName = gm.byType(stringParam); 
+    waitstatus = false;
+    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
+                    .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
+                    .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
+                    .ignoring(NoSuchElementException.class);
+
+    logger.debug("Waiting element invisible " + objectName);
+    wait.until(ExpectedConditions.invisibilityOfElementLocated(objectName));
+
+    waitstatus = true;
+    return "pass";
+
+  }
+
+  /**
+   *   
+   * @param stringParam
+   * @return
+   */
+  public String waitForElementAttributeNotPresent(String[] stringParam) {
+
+    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    By objectName = gm.byType(stringParam[0]); 
+    waitstatus = false;
+    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
+                    .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
+                    .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
+                    .ignoring(NoSuchElementException.class);
+
+    logger.debug("Waiting element attribute not present " + objectName);
+    wait.until(CustomWait.attributedNotPresent(objectName, stringParam[1]));
+
+    waitstatus = true;
+    return "pass";
+
+  }
+
 
 }
