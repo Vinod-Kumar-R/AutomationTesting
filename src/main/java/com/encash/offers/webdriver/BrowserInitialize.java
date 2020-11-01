@@ -44,18 +44,17 @@ public final class BrowserInitialize {
 
   }
 
-
-
   /**
-   * This method is used to created the Web driver instance. 
+   * This method is used to created the Web driver instance.
+   * @param browserType contain which browser need to open for execution
    */
-  private static void createInstance() {
+  private static void createInstance(String browserType) {
 
     Desired de = new Desired();
     DriverManagerType driverManagerType = DriverManagerType.valueOf(ConstantVariable
                     .browserBinaryName.toUpperCase());
     WebDriverManager.getInstance(driverManagerType).setup();
-    BrowserExecutionType bt = BrowserExecutionType.valueOf(ConstantVariable.Test_Execution); 
+    BrowserExecutionType bt = BrowserExecutionType.valueOf(browserType); 
 
     switch (bt) {
       case SYSTEM_CHROME:
@@ -95,7 +94,7 @@ public final class BrowserInitialize {
       case IOS_SAFARI:
         break;
       case SYSTEM_MOBILE_EMULATION:
-        drivere = new ChromeDriver();
+        drivere = new ChromeDriver(de.mobileSystembrowser());
         break;
 
       default : 
@@ -113,19 +112,32 @@ public final class BrowserInitialize {
     ngwebdriver = new NgWebDriver(jsDriver);
   }
 
-
   /**
    * this method is used to reuses the same instance of Web driver.
    * @return WebDriver instance
    */
   public static WebDriver getWebDriverInstance() {
     if (driver == null) {
-      createInstance();
+      createInstance(ConstantVariable.Test_Execution);
       JsWaiter.setDriver(driver);
     }
 
     return driver;
 
+  }
+  
+  /**
+   * This method is used to override the Browser type during execution time.
+   * @param browserType contain which browser has to executed
+   */
+  public static void setWebDriverInstance(String browserType) {
+    if (driver != null) {
+      quitBrowser();
+    }
+    if (driver == null) {
+      createInstance(browserType);
+      JsWaiter.setDriver(driver);
+    }
   }
 
   /**
@@ -134,7 +146,7 @@ public final class BrowserInitialize {
    */
   public static NgWebDriver getNgWebDriverInstance() {
     if (driver == null) {
-      createInstance();
+      createInstance(ConstantVariable.Test_Execution);
     }
     return ngwebdriver;
   }

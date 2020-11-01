@@ -27,20 +27,23 @@ public class Admin {
    * This method is used to open the Admin URL page.
    * @param stringParam contain the parameter value
    * @return the status of execution i.e. pass or fail
-   * @throws Exception throw an generic exception
+   *
    */
 
-  public String adminurlopen(String[] stringParam) throws Exception {
+  public String adminurlopen(String[] stringParam)  {
     //enter username and password 
     logger.debug("Enter the User name ");
     WebElement username = gemericMethod.getElement("admin_username");
     username.sendKeys(stringParam[0]);
+    
     logger.debug("Enter the User Password ");
     WebElement password = gemericMethod.getElement("admin_password");
     password.sendKeys(stringParam[1]);
+    
     logger.debug("click on login button");
     WebElement login = gemericMethod.getElement("admin_login");
     login.click();
+    
     return "pass";
   }
 
@@ -48,9 +51,9 @@ public class Admin {
    * This method is used to create a new competition in admin page. 
    * @param stringParam contain the parameter value
    * @return  the status of execution i.e. pass or fail
-   * @throws Exception throw an generic exception
+   * 
    */
-  public String createCompetation(String[] stringParam) throws Exception {
+  public String createCompetation(String[] stringParam)  {
     //WebElement element;
 
     gotoCompetation();

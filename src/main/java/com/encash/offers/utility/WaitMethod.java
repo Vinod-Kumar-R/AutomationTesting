@@ -29,8 +29,8 @@ public class WaitMethod {
    * @param stringParam
    *     StringParam is a array of String variable which hold data 
    *     StringParam[0] contain the Object which need to wait in html page 
-   * @return it return the status "pass" if execution success else throw an exception
-   * @throws Exception throw an generic exception
+   * @return it return the status "pass" if execution success else fail
+   *
    */
   public  String waitForElementVisible(String stringParam) {
     WebDriver driver = BrowserInitialize.getWebDriverInstance();
@@ -54,7 +54,7 @@ public class WaitMethod {
    *     StringParam is a array of String variable which hold data 
    *     StringParam[0] contain the Object which need to wait in html page 
    * @return it return the status "pass" if execution success else throw an exception
-   * @throws Exception throw an generic exception
+   * 
    */
 
   public  String waitForTexttVisible(String[] stringParam)  {
@@ -81,7 +81,7 @@ public class WaitMethod {
    *     StringParam[1] contain the attribute in an xpath 
    *     StringParam[2] contain the vaule which need to be present for an attributed  
    * @return it return the status "pass" if execution success else throw an exception
-   * @throws Exception throw an generic exception
+   * 
    */
 
   public  String waitForAttributedContain(String[] stringParam) {
@@ -117,8 +117,8 @@ public class WaitMethod {
 
   /**
    * This method is used to wait until required element is present in DOM.
-   * @param stringParam Object
-   * @return
+   * @param stringParam contain Object location in DOM
+   * @return it return the status "pass" if execution success else fail
    */
   public String waitForElementPresent(String stringParam) {
 
@@ -140,8 +140,8 @@ public class WaitMethod {
 
   /**
    * This method is used to wait for Element is not present.
-   * @param stringParam contain the objectName
-   * @return
+   * @param stringParam contain the objectName which should not be present in DOM 
+   * @return it return the status "pass" if execution success else fail
    */
   public String waitForElementInvisible(String stringParam) {
 
@@ -162,9 +162,11 @@ public class WaitMethod {
   }
 
   /**
-   *   
-   * @param stringParam
-   * @return
+   * This method is used to wait for attributed not present in particular DOM.
+   * @param stringParam 
+   *     stringParam[0] contain location of DOM in which attributed to check
+   *     stringParam[1] contain attributed name which should not present in DOM
+   * @return it return the status "pass" if execution success else fail
    */
   public String waitForElementAttributeNotPresent(String[] stringParam) {
 
@@ -182,6 +184,30 @@ public class WaitMethod {
     waitstatus = true;
     return "pass";
 
+  }
+  
+  /**
+   * This method is used to wait until element is click able.
+   * @param stringParam
+   *     stringParam[0] contain element location 
+   * @return it return the status "pass" if execution success else fail
+   */
+  public String waitForElementClickable(String stringParam) {
+    
+    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    By objectName = gm.byType(stringParam); 
+    waitstatus = false;
+    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
+                    .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
+                    .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
+                    .ignoring(NoSuchElementException.class);
+
+    logger.debug("Waiting element attribute not present " + objectName);
+    wait.until(ExpectedConditions.elementToBeClickable(objectName));
+
+    waitstatus = true;
+    
+    return "pass";
   }
 
 

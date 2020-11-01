@@ -38,3 +38,16 @@ personaldetail_postalcode,id,postalCode
 personaldetail_address,id,address
 personaldetail_consent,id,customCheck
 personaldetail_findadress,xpath,//*[@id='postalCode']/following-sibling::div/button
+consent_table,xpath,//div[@class='ExpansionContent ng-star-inserted']
+consent_partners,linktext,"partners,"
+consent_child,xpath,mat-accordion/mat-expansion-panel/div/div/div
+consent_child_type,xpath,div[2]/div/div/div
+consent_child_status,xpath,mat-checkbox/label/div/input
+accept_consent,xpath,//*[@id='customCheck']/label
+consent_cancel,xpath,//button[@class='btn cancel-btn']
+personaldetail_continue,xpath,//button[@type='button'][@class='btn btn-success btn-continue mb-3 ladda-button']
+skip_email,xpath,//button[@type='button'][@class='btn btn-link skip-btn']
+competitions,linktext,Competitions
+navibar,xpath,//a[@class='navbar-toggler']
+m_register,xpath,"//div[@class='check-login']/div/button[contains(string(),'Register')]"
+competition_search,xpath,//*[@id='product-category-list']/div[1]

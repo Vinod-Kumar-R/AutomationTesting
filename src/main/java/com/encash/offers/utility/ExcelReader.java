@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.DateUtil;
@@ -26,9 +27,12 @@ public class ExcelReader {
    * In the constructor we are reading the excel file.
    * @param file it contain the location of the file which need to read
    * @param sheetIndex in excel it will specific which sheet row has to read
-   * @throws Exception throw an generic exception
+   * @throws IOException if excel is not able to read then IOException are thrown
+   * @throws EncryptedDocumentException if excel file is encrypted then 
+   *     EncryptedDocumentException are throw
+   * 
    */
-  public ExcelReader(String file, int sheetIndex) throws Exception {
+  public ExcelReader(String file, int sheetIndex) throws EncryptedDocumentException, IOException  {
 
     this.filename = new File(file);
     this.workbook = WorkbookFactory.create(this.filename);
@@ -47,7 +51,7 @@ public class ExcelReader {
 
   /**
    * This method is used to get the number of column are used in particular row.
-   * @param rownum
+   * @param rownum is integer number 
    * @return total number of column used in particular row
    */
   public int columnCout(int rownum) {

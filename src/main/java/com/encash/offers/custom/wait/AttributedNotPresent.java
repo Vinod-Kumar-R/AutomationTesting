@@ -23,21 +23,16 @@ public class AttributedNotPresent implements ExpectedCondition<Boolean> {
   @Override
   public Boolean apply(WebDriver driver) {
 
-
-    // TODO Auto-generated method stub
-    //String status = driver.findElement(this.byType).getAttribute(this.attributeName);
     WebElement element = driver.findElement(this.byType);
 
     String status = element.getAttribute(this.attributeName);
     logger.debug("xpath " + this.byType);
-    logger.debug("customer wait implated by " + status);
+    logger.debug("custom wait implated by " + status);
     if (null == status) {
       return true;
-
     }
     return false;
   }
-
 
 
 

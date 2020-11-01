@@ -4,10 +4,12 @@ import com.aventstack.extentreports.Status;
 import com.encash.offers.bussiness.admin.Admin;
 import com.encash.offers.bussiness.encash.Encash;
 import com.encash.offers.configuration.ConstantVariable;
+import com.encash.offers.mobile.encash.MobileEncash;
 import com.encash.offers.utility.ExtentReport;
 import com.encash.offers.utility.GenericMethod;
 import com.encash.offers.utility.WaitMethod;
 import com.encash.offers.webdriver.BrowserInitialize;
+import java.io.IOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -25,6 +27,7 @@ public class KeywordExecution {
   private WaitMethod wm;
   private Encash en;
   private ExtentReport er;
+  private MobileEncash men;
   private String status;
   private KeywordType keyword;
 
@@ -37,13 +40,14 @@ public class KeywordExecution {
     wm = new WaitMethod();
     en = new Encash();
     gm = new GenericMethod();
+    men = new MobileEncash();
     er = BrowserInitialize.getExtentReportInstance();
 
   }
 
   /**
    * This method is used to set the value for keyword.
-   * @param keyword
+   * @param keyword which will be read from Test Data file and executed method
    */
   public void setvalue(KeywordType keyword) {
     this.keyword = keyword;
@@ -56,9 +60,9 @@ public class KeywordExecution {
    * <p>the 2nd column in the Test script file is called Keyword 
    * @param stringParam contain the array of string data which is required executed particular
    *     keyword (nothing but Method)
-   * @throws Exception generic exception are throw
+   * 
    */
-  public void executed(String[] stringParam) throws Exception {
+  public void executed(String[] stringParam)  {
 
     switch (keyword) {
 
@@ -109,11 +113,6 @@ public class KeywordExecution {
         testResult(status, keyword.toString());
         break;
 
-      case implictwait :
-        logger.debug("Manually waiting ");
-        Thread.sleep(Integer.parseInt(stringParam[0]));
-        break;
-
       case jishitext :
         status = en.jishitext(stringParam);
         logger.debug("verified the text");
@@ -159,19 +158,44 @@ public class KeywordExecution {
 
       case comment :
         break;
-       
-      case enterotp :
-        status = en.enterOtp(stringParam);
-        logger.info("completed entering OTP");
-        testResult(status, keyword.toString());
-        break;
-        
-      case newregistration :
-        status = en.newRegistration(stringParam);
+
+      case registrationform :
+        status = en.registrationForm(stringParam);
         logger.info("completed entering all detail for New Registration");
         testResult(status, keyword.toString());
         break;
 
+      case registerUsingMobileNumber:
+        status = en.registerUsingMobileNumber(stringParam);
+        logger.info("complete entering registration");
+        testResult(status, keyword.toString());
+        break;
+
+      case consent:
+        status = en.consent(stringParam);
+        logger.info("Expand all consent");
+        testResult(status, keyword.toString());
+        break;
+        
+      case waitForElementInvisible:
+        status = wm.waitForElementInvisible(stringParam[0]);
+        logger.info("waiting for Element invisible");
+        testResult(status, keyword.toString());
+        break;
+
+      case browsertype:
+        status = gm.browsertype(stringParam);
+        logger.info("Opening the browser");
+        testResult(status, keyword.toString());
+        break;
+        
+      case mobileregisterUsingMobileNumber:
+        status = men.registerUsingMobileNumber(stringParam);
+        logger.info("complete entering registration");
+        testResult(status, keyword.toString());
+        break;
+        
+        
       default: logger.info("Invalid Keyword");
 
     }
@@ -181,10 +205,9 @@ public class KeywordExecution {
    * This method capture the status of each keyword by saying pass or fail.
    * 
    * @param status it contain pass or fail 
-   * @param message Message contain information of the keyword 
-   * @throws Exception throw an generic exception
+   * @param message Message contain information of the keyword executed
    */
-  public void testResult(String status, String message) throws  Exception {
+  public void testResult(String status, String message)   {
     if (status.equalsIgnoreCase("Pass")) {
       er.writeLog(Status.PASS, message);
     }

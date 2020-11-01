@@ -8,8 +8,10 @@ import com.encash.offers.utility.ExtentReport;
 import com.encash.offers.utility.GenericMethod;
 import com.encash.offers.utility.WaitMethod;
 import com.encash.offers.webdriver.BrowserInitialize;
+import java.io.IOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.poi.EncryptedDocumentException;
 
 /**
  * <h1> This is Main class in which execution Start. </h1>
@@ -42,20 +44,29 @@ public class BaseClass {
 
   /**
    * This Method start reading the Test case xlsx file  row by row.
-   * <p> Test case file contain column header i.e. </p>
+   * 
+   * <pre> Test case file contain column header i.e. </pre>
+   * <table>
+   * <caption>Test Case file format</caption>
    * <tr>
    * <th> Test case ID </th>
    * <th> Test Case Description </th>
    * <th> Test Category </th>
    * </tr>
+   * <tr>
+   * <td> Test case ID </td>
+   * <td> Test Case Description </td>
+   * <td> Test Category </td>
+   * </tr>
    * 
-   * <p>and last row of first column should contain the text as "END" to indicate
-   * that there is no more test case to executed  
-   *  
-   * @throws Exception 
-   * <p> this is the main which accept all the Exception </p>
+   * </table>
+   * <pre>and last row of first column should contain the text as "END" to indicate
+   * that there is no more test case to executed </pre> 
+   * @throws IOException  File not found exception 
+   * @throws EncryptedDocumentException file has been excypted  
+   * <pre> this is the main which accept all the Exception </pre>
    */
-  public void startRun() throws Exception {
+  public void startRun() throws EncryptedDocumentException, IOException  {
 
     cv.searchTestData();
     cv.objectRepository();
@@ -112,11 +123,14 @@ public class BaseClass {
   /**
    * This method read the Test script excel file i.e. Test Data
    * which contain few column
+   * <table>
+   * <caption>Test Case data format</caption>
    * <tr>
    * <td> Test case ID </td>
    * <td> Keyword which need to executed </td>
    * <td> rest of the column are parameter to the keyword method which is
    * required data for execution </td>
+   * </table>
    * 
    * <p>Test Script start from the Test Case ID and end when particular row
    * and  column contain text as "END"
@@ -129,8 +143,10 @@ public class BaseClass {
     int currentCol = 1;
     String keyword = null;
 
+
     try {
       testData = new ExcelReader(ConstantVariable.TestDatas, 0);
+
 
       while (testData.getCellData(currentRow, 0) == null
                       || !testData.getCellData(currentRow, 0).equalsIgnoreCase("End")) {
@@ -141,11 +157,11 @@ public class BaseClass {
         int column = 2;
         String[] stringParam = null;
         String param = "";
-        
+
         while (testData.getCellData(currentRow, column) != null) {
           logger.debug("current row number " + currentRow + " Column number " + column);
           logger.debug("Data from Cell " + testData.getCellData(currentRow, column));
-          
+
           if (param.equals("")) {
             param = testData.getCellData(currentRow, column);
           } else {
@@ -167,24 +183,22 @@ public class BaseClass {
 
       }
       testData.closeWorkbook();
+    } catch (EncryptedDocumentException e) {
+
+    } catch (IOException e) {
 
     } catch (Exception e) {
 
+      logger.error("Got an exception while executing keyword --> " + keyword, e);
+      e.printStackTrace();
       WaitMethod.waitstatus = false;
       er.writeLog(Status.FAIL, "Failed executing Keyword ---> " + keyword);
       er.writeLog(Status.FAIL, e);
-      logger.error("testscript error message", e);
-      try {
-        testData.closeWorkbook();
-        er.attachScreenshot(gm.takeScreenshot());
-        BrowserInitialize.quitBrowser();
-        er.flushlog();
-      } catch (Exception e1) {
-        // TODO Auto-generated catch block
-        logger.error("exception message", e1);
-      }
+      // BrowserInitialize.quitBrowser();
       er.flushlog();
     }
+
+
   }
 
   /**
@@ -199,7 +213,7 @@ public class BaseClass {
       bc.er.flushlog();
     } catch (Exception e) {
       bc.er.flushlog();
-      logger.error(e.getStackTrace().toString());
+      logger.error("got an error", e);
       e.printStackTrace();
     }
   }

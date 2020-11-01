@@ -2,6 +2,8 @@ package com.encash.offers.webdriver;
 
 import com.encash.offers.configuration.ConfigurationReader;
 import com.encash.offers.configuration.ConstantVariable;
+
+import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -33,20 +35,18 @@ public class Desired {
    */
   public ChromeOptions chromeDesired() {
 
-    Map<String, String> mobileemulation = new HashMap<String, String>();
-
     ChromeOptions chrome = new ChromeOptions();
 
-    /*
-    if(!ConstantVariable.MobileEmulation.equalsIgnoreCase("null") 
-    && !ConstantVariable.Environment.equalsIgnoreCase("WebBrowser")) {
-        mobileemulation.put("deviceName", ConstantVariable.MobileEmulation);
-        chrome.setExperimentalOption("mobileEmulation", mobileemulation);
-       }
-     */
+  
 
     chrome.setHeadless(ConstantVariable.HeadlessBrowser);
     chrome.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+    
+    File chromeextion = new File(ConstantVariable.Configlocation 
+                    + File.separator + "extension" 
+                    + File.separator + "chrompath.crx");
+    chrome.addExtensions(chromeextion);
+    
     //chrome.add_argument("--enable-javascript");
     chrome.addArguments("--start-maximized");
     chrome.addArguments("enable-javascript");
@@ -156,6 +156,25 @@ public class Desired {
     SafariOptions so = new SafariOptions();
     so.setCapability(headless, ConstantVariable.HeadlessBrowser);
     return so;
+  }
+
+  /**
+   * This Method is used to set the system browser compatible to Mobile.
+   * @return ChromeOptions
+   */
+  public ChromeOptions mobileSystembrowser() {
+    ChromeOptions chromeOptions = new ChromeOptions();
+
+    Map<String, String> mobileemulation = new HashMap<String, String>();
+    mobileemulation.put("deviceName", "Nexus 5");
+    chromeOptions.setExperimentalOption("mobileEmulation", mobileemulation);
+    
+    File chromeextion = new File(ConstantVariable.Configlocation 
+                    + File.separator + "extension" 
+                    + File.separator + "chrompath.crx");
+    
+    chromeOptions.addExtensions(chromeextion);
+    return chromeOptions;
   }
 
 }

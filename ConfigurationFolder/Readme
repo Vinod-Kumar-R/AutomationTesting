@@ -2,3 +2,9 @@ to execute from maven command line use below code
 
 mvn compile
 mvn exec:java
+
+to generated java doc for framework
+
+mvn javadoc:javadoc
+
+file are generated in the target/apidocs/index.html

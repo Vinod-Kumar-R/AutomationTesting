@@ -4,6 +4,7 @@ import com.encash.offers.beanclass.RepositoryBean;
 import com.encash.offers.utility.ExcelReader;
 import com.opencsv.bean.CsvToBeanBuilder;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -15,6 +16,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.poi.EncryptedDocumentException;
 
 /**
  * This class the constant variable data which is used during execution of script. 
@@ -104,11 +106,12 @@ public class ConstantVariable {
   /**
    * This method read the Test case Excel sheet and store the data of test case ID. 
    * starting number in an HashMap so that search can be faster
-   * 
-   * @throws Exception throw an generic exception
+   * @throws IOException  if excel file is already open then it throw IOException
+   * @throws EncryptedDocumentException if excel file is encrypted then it
+   *                 throw EncryptedDocumentException
    */
 
-  public void searchTestData() throws Exception  {
+  public void searchTestData() throws EncryptedDocumentException, IOException   {
 
     ExcelReader std = new ExcelReader(ConstantVariable.TestDatas, 0);
     this.TestDataRowNumber = new HashMap<String, Integer>();
@@ -137,10 +140,10 @@ public class ConstantVariable {
    *
    *<p>csv file are read the stored in the HashMap&lt;String,String&gt; so that during execution
    * we will get the xpath for an element 
-   *
-   * @throws Exception throw an generic exception
+   * @throws FileNotFoundException , if excel file is not found in specified location 
+   *  then it throw FileNotFoundException 
    */
-  public void objectRepository() throws Exception {
+  public void objectRepository() throws FileNotFoundException  {
 
     String key;
 

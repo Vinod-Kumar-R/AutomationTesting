@@ -4,6 +4,7 @@ import com.encash.offers.configuration.ConstantVariable;
 import com.encash.offers.webdriver.BrowserInitialize;
 import com.paulhammant.ngwebdriver.ByAngular;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
@@ -31,11 +32,10 @@ public class GenericMethod {
    *     StringParam is a array of String variable which hold data 
    *     StringParam[0] contain the Object i.e xpath 
    * @return it return the status "pass" if execution success else throw an exception 
-   * @throws Exception throw an generic exception
    */
-  public String click(String stringParam) throws Exception {
-    WebElement clicktype = getElement(stringParam);
-    clicktype.click();
+  public String click(String stringParam)  {
+    WebElement element = getElement(stringParam);
+    element.click();
     return "pass";
   }
 
@@ -46,13 +46,12 @@ public class GenericMethod {
    *     StringParam[0] contain the Object which need to compare the text  in html page
    *     StringParam[1] contain the expected text when need to compare with text on html page 
    * @return it return the status "pass" if execution success else throw an exception 
-   * @throws Exception throw an generic exception
    */
 
-  public String verifyText(String[] stringParam) throws Exception {
+  public String verifyText(String[] stringParam)  {
     logger.debug("Verifying the text-------> " + stringParam[1]);
-    WebElement objectData = getElement(stringParam[0]);
-    if (objectData.getText().equalsIgnoreCase(stringParam[1])) {
+    WebElement element = getElement(stringParam[0]);
+    if (element.getText().equalsIgnoreCase(stringParam[1])) {
       return "pass";
     }
     return "fail";
@@ -62,15 +61,20 @@ public class GenericMethod {
   /**
    * This Method is used to take an WebBrowser Screenshot.
    * @return the file location in the String format
-   * @throws Exception throw an generic exception
    */
-  public  String takeScreenshot() throws Exception {
+  public  String takeScreenshot()   {
     WebDriver driver = BrowserInitialize.getWebDriverInstance();
     long filename = System.currentTimeMillis();
     if (driver instanceof TakesScreenshot) {
       File tempFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-      FileUtils.copyFile(tempFile, new File(ConstantVariable.ScreenShotlocation 
-                      + File.separator + filename + ".png"));
+      try {
+        FileUtils.copyFile(tempFile, new File(ConstantVariable.ScreenShotlocation 
+                        + File.separator + filename + ".png"));
+      } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+        logger.error(e.getStackTrace());
+      }
     }
     String absolutePath = ConstantVariable.ScreenShotlocation +  File.separator
                     + filename + ".png";
@@ -89,10 +93,9 @@ public class GenericMethod {
    *     StringParam[1] contain the expected text when need to compare with text with 
    *     attribute value 
    * @return it return the status "pass" if execution success else throw an exception 
-   * @throws Exception throw an generic exception
    *
    */
-  public String verifyAttributedValue(String[] stringParam) throws Exception {
+  public String verifyAttributedValue(String[] stringParam)  {
 
     WebElement objectData = getElement(stringParam[0]);
     if (objectData.getAttribute(stringParam[1]).equalsIgnoreCase(stringParam[2])) {
@@ -116,8 +119,8 @@ public class GenericMethod {
   
   /**
    * This method is used to select the option from drop down list.
-   * @param stringParam contain the WebElement of Dropdown and text to be form option
-   * @return
+   * @param stringParam contain the WebElement of Drop down and text to be form option
+   * @return the status as "Pass" if execution success else fail
    */
   public String selectByVisibleText(String[] stringParam) {
     WebElement objectData = getElement(stringParam[0]);
@@ -126,6 +129,11 @@ public class GenericMethod {
     Select select = new Select(objectData);
     select.selectByVisibleText(stringParam[1]);
 
+    return "pass";
+  }
+  
+  public String browsertype(String[] stringParam) {
+    BrowserInitialize.setWebDriverInstance(stringParam[0]);
     return "pass";
   }
 
@@ -143,9 +151,9 @@ public class GenericMethod {
   }
   
   /**
-   * This method accept the By element type and return webElement
-   * @param byElement
-   * @return
+   * This method accept the By element type and return webElement.
+   * @param byElement contain the DOM location 
+   * @return WebElement
    */
   public WebElement getElement(By byElement) {
     WebDriver driver = BrowserInitialize.getWebDriverInstance();
@@ -156,13 +164,37 @@ public class GenericMethod {
   /**
    * This Method is used to get the WebElements from an element.
    * @param object this contain the object value of web page
-   * @return webelement
+   * @return WebElement
    */
   public List<WebElement> getElements(String object) {
     WebDriver driver = BrowserInitialize.getWebDriverInstance();
     By byElement = byType(object);
     List<WebElement> element = driver.findElements(byElement);
     return element;
+  }
+  
+  /**
+   * This method is used to child WebElement.
+   * @param element contain parent WebElement
+   * @param object contain child WebElement location
+   * @return WebElement
+   */
+  public WebElement getWebElement(WebElement element, String object) {
+    By byElement = byType(object);
+    return element.findElement(byElement);
+  }
+  
+  /**
+   * This method is used to get all the child WebElement list of parent Element.
+   * @param element contain the parent WebElement
+   * @param object contain the child WebElement location 
+   * @return List&lt;WebElement&gt;
+   */
+  public List<WebElement> getWebElements(WebElement element, String object) {
+    
+    By byElement = byType(object);
+    List<WebElement> elements = element.findElements(byElement);
+    return elements;
   }
 
 

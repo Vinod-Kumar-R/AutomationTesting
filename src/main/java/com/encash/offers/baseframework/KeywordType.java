@@ -12,7 +12,6 @@ public enum KeywordType {
   click,
   quitbrowser,
   verifytext,
-  implictwait,
   jishitext,
   takescreenshot,
   waitforattributedcontain,
@@ -23,7 +22,11 @@ public enum KeywordType {
   openencashurl,
   openadminurl,
   createcompetation,
-  enterotp,
-  newregistration
+  registrationform,
+  registerUsingMobileNumber,
+  consent,
+  waitForElementInvisible,
+  browsertype,
+  mobileregisterUsingMobileNumber
 
 }
