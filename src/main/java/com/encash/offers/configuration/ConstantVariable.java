@@ -1,6 +1,7 @@
 package com.encash.offers.configuration;
 
 import com.encash.offers.beanclass.RepositoryBean;
+import com.encash.offers.custom.exception.DuplicateValueException;
 import com.encash.offers.utility.ExcelReader;
 import com.opencsv.bean.CsvToBeanBuilder;
 import java.io.File;
@@ -11,7 +12,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -74,12 +77,14 @@ public class ConstantVariable {
     Configlocation = readEnvironmnetVariable("encashoffers");
     //Read the properties file
     ConfigurationReader cr = new ConfigurationReader();
-    cr.readConfig(Configlocation + File.separator + "config.properties");
+    cr.readConfig(Configlocation + File.separator + "properties" 
+                    + File.separator + "config.properties");
 
     //Setting the logger context
     LoggerContext context = (org.apache.logging.log4j.core.LoggerContext) 
                     LogManager.getContext(false);
-    File file = new File(Configlocation + File.separator + "log4j2.xml");
+    File file = new File(Configlocation + File.separator + "properties" 
+                    + File.separator + "log4j2.xml");
     context.setConfigLocation(file.toURI());
 
     //setting the properties value 
@@ -96,7 +101,8 @@ public class ConstantVariable {
     TestCases = cr.getConfigurationStringValue("testcase");
     TestObjectsWeb = cr.getConfigurationStringValue("testobjectweb");
     TestObjectsMobile = cr.getConfigurationStringValue("testobjectmobile");
-    ExtentReportsPropeties = Configlocation + File.separator + "extentreportpropertes.xml";
+    ExtentReportsPropeties = Configlocation + File.separator + "properties" 
+                    + File.separator + "extentreportpropertes.xml";
     ExplictWait = cr.getConfigurationIntValue("explictwait");
     polling = cr.getConfigurationIntValue("polling");
     HeadlessBrowser = cr.getConfigurationBooleanValue("headlessbrowser");
@@ -114,14 +120,14 @@ public class ConstantVariable {
   public void searchTestData() throws EncryptedDocumentException, IOException   {
 
     ExcelReader std = new ExcelReader(ConstantVariable.TestDatas, 0);
-    this.TestDataRowNumber = new HashMap<String, Integer>();
+    ConstantVariable.TestDataRowNumber = new HashMap<String, Integer>();
     // int index = 0;
 
     for (int i = 0; i < std.rowCout(0); i++) {
       if (std.getCellData(i, 0) != null 
                       && !std.getCellData(i, 0).equalsIgnoreCase("End")
                       && !std.getCellData(i, 0).equalsIgnoreCase("EndTestCase")) {
-        this.TestDataRowNumber.put(std.getCellData(i, 0), i);
+        ConstantVariable.TestDataRowNumber.put(std.getCellData(i, 0), i);
         logger.debug(std.getCellData(i, 0));
       }
     }
@@ -141,13 +147,14 @@ public class ConstantVariable {
    *<p>csv file are read the stored in the HashMap&lt;String,String&gt; so that during execution
    * we will get the xpath for an element 
    * @throws FileNotFoundException , if excel file is not found in specified location 
-   *  then it throw FileNotFoundException 
+   *     then it throw FileNotFoundException 
+   * @throws DuplicateValueException duplicate value are found in the Repository file
    */
-  public void objectRepository() throws FileNotFoundException  {
+  public void objectRepository() throws FileNotFoundException, DuplicateValueException  {
 
     String key;
-
-    this.GetObject = new HashMap<String, List<String>>();
+    Set<String> duplicateValue = new HashSet<String>();
+    ConstantVariable.GetObject = new HashMap<String, List<String>>();
     FileReader file = null;
 
     if (Test_Execution.equalsIgnoreCase("ANDROID_CHROME") 
@@ -165,10 +172,17 @@ public class ConstantVariable {
       key = ro.getObjectName();
       object.add(ro.getObjectType());
       object.add(ro.getObjectValue());
-      //Value = ro.getObjectValue();
+      
       logger.debug("Key ---> " + key + "  Type ----> " + ro.getObjectType() 
           + "  Value-----> " + ro.getObjectValue());
-      GetObject.put(key, object);
+      
+      if (!duplicateValue.contains(key)) {
+        duplicateValue.add(key);
+        GetObject.put(key, object);
+      } else {
+        throw new DuplicateValueException("Duplicate name in column "
+                        + "'ObjectName' file Object Repository file  ---> " + key);
+      }
     }
 
   }
@@ -190,8 +204,6 @@ public class ConstantVariable {
       FileUtils.forceMkdir(file);
       logger.debug("Folder created at location " + file.getAbsolutePath());
     } catch (IOException e) {
-      // TODO Auto-generated catch block
-
       logger.error("Folder cann't be created", e);
     }
 
@@ -212,7 +224,7 @@ public class ConstantVariable {
       FileUtils.forceMkdir(file);
       logger.debug("Folder created at location " + file.getAbsolutePath());
     } catch (IOException e) {
-      // TODO Auto-generated catch block
+     
       logger.error("Folder cann't be created", e);
     }
 

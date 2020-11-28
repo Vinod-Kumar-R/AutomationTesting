@@ -1,7 +1,6 @@
 package com.encash.offers.bussiness.admin;
 
 import com.encash.offers.utility.GenericMethod;
-import com.encash.offers.utility.JsWaiter;
 import com.encash.offers.utility.WaitMethod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

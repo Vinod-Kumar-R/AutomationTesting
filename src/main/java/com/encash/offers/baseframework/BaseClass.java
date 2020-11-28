@@ -3,6 +3,7 @@ package com.encash.offers.baseframework;
 
 import com.aventstack.extentreports.Status;
 import com.encash.offers.configuration.ConstantVariable;
+import com.encash.offers.custom.exception.DuplicateValueException;
 import com.encash.offers.utility.ExcelReader;
 import com.encash.offers.utility.ExtentReport;
 import com.encash.offers.utility.GenericMethod;
@@ -25,21 +26,22 @@ import org.apache.poi.EncryptedDocumentException;
 
 public class BaseClass {
   private static Logger logger = LogManager.getLogger(BaseClass.class);
-  private ConstantVariable cv;
-  private GenericMethod gm;
-  private KeywordExecution ke;
+  private ConstantVariable constantVariable;
+  private KeywordExecution keywordExecution;
+  private GenericMethod genericMethod;
   private ExcelReader testData;
   private ExcelReader testCase;
-  private ExtentReport er;
+  private ExtentReport extentReport;
 
   /**
    * In Constructor, initializing the required class.
    */
   public BaseClass() {
-    cv = new ConstantVariable();
-    er = BrowserInitialize.getExtentReportInstance();
-    ke = new KeywordExecution();
-    gm = new GenericMethod();
+    constantVariable = new ConstantVariable();
+    extentReport = BrowserInitialize.getExtentReportInstance();
+    keywordExecution = new KeywordExecution();
+    genericMethod = new GenericMethod();
+    
   }
 
   /**
@@ -65,11 +67,12 @@ public class BaseClass {
    * @throws IOException  File not found exception 
    * @throws EncryptedDocumentException file has been excypted  
    * <pre> this is the main which accept all the Exception </pre>
+   * @throws DuplicateValueException duplicate key are found in ObjectRepository file
    */
-  public void startRun() throws EncryptedDocumentException, IOException  {
+  public void startRun() throws DuplicateValueException, EncryptedDocumentException, IOException  {
 
-    cv.searchTestData();
-    cv.objectRepository();
+    constantVariable.searchTestData();
+    constantVariable.objectRepository();
     BrowserInitialize.getWebDriverInstance();
     BrowserInitialize.browserInfo();
 
@@ -94,8 +97,8 @@ public class BaseClass {
         logger.debug("Test Case Description " + testCaseDescription);
         logger.debug("Test Case Categeory " + testCaseCategeory);
 
-        er.createTest(testCaseID, testCaseDescription);
-        er.categeory(testCaseCategeory);
+        extentReport.createTest(testCaseID, testCaseDescription);
+        extentReport.categeory(testCaseCategeory);
 
         logger.debug("Test case found in the test data file at----> "
                         + ConstantVariable.TestDataRowNumber.get(testCaseID));
@@ -104,17 +107,17 @@ public class BaseClass {
         //Execute the Test case ID
         logger.debug("Test Case ID found and started executing " + testCaseID);
         testRunId(testDatarownumber);
-        er.flushlog();
+        extentReport.flushlog();
 
       } else {
         logger.info("Skiped the Test case " + testCaseID);
-        er.skipTest(testCaseID, testCaseDescription);
-        er.categeory(testCaseCategeory);
+        extentReport.skipTest(testCaseID, testCaseDescription);
+        extentReport.categeory(testCaseCategeory);
       }
       testcaserownumber++;
     }
 
-    er.flushlog();
+    extentReport.flushlog();
     testCase.closeWorkbook();
     logger.info("Completed Exeuction of all the Test Case i.e " + (testCase.rowCout(0) - 2));
     logger.info("Result file are located in :- " + ConstantVariable.ExtentReportsLocation);
@@ -175,9 +178,9 @@ public class BaseClass {
           stringParam = param.split("~");
         }
 
-        ke.setvalue(KeywordType.valueOf(keyword));
+        keywordExecution.setvalue(KeywordType.valueOf(keyword));
         logger.info("Executing the Keyword " + keyword);
-        ke.executed(stringParam);
+        keywordExecution.executed(stringParam);
         //KeywordType.
         currentRow++;
 
@@ -192,10 +195,11 @@ public class BaseClass {
       logger.error("Got an exception while executing keyword --> " + keyword, e);
       e.printStackTrace();
       WaitMethod.waitstatus = false;
-      er.writeLog(Status.FAIL, "Failed executing Keyword ---> " + keyword);
-      er.writeLog(Status.FAIL, e);
+      extentReport.writeLog(Status.FAIL, "Failed executing Keyword ---> " + keyword);
+      extentReport.writeLog(Status.FAIL, e);
+      extentReport.attachScreenshot(genericMethod.takeScreenshot());
       // BrowserInitialize.quitBrowser();
-      er.flushlog();
+      extentReport.flushlog();
     }
 
 
@@ -210,9 +214,14 @@ public class BaseClass {
     BaseClass bc = new BaseClass();
     try {
       bc.startRun();
-      bc.er.flushlog();
+      bc.extentReport.flushlog();
+      
+    } catch (DuplicateValueException e) {
+      logger.error("Found duplicate value ", e);
+      
     } catch (Exception e) {
-      bc.er.flushlog();
+      bc.extentReport.attachScreenshot(bc.genericMethod.takeScreenshot());
+      bc.extentReport.flushlog();
       logger.error("got an error", e);
       e.printStackTrace();
     }

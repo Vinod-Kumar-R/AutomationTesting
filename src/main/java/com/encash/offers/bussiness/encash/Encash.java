@@ -6,8 +6,8 @@ import com.encash.offers.utility.ExtentReport;
 import com.encash.offers.utility.GenericMethod;
 import com.encash.offers.utility.WaitMethod;
 import com.encash.offers.webdriver.BrowserInitialize;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,17 +21,17 @@ import org.openqa.selenium.WebElement;
 
 public class Encash {
   private static Logger logger = LogManager.getLogger(Encash.class.getName());
-  private WaitMethod wm;
-  private GenericMethod gm;
-  private ExtentReport er;
+  private WaitMethod waitMethod;
+  private GenericMethod genericMethod;
+  private ExtentReport extentReport;
 
   /**
    * In constructor variable are initialize.
    */
   public Encash() {
-    wm = new WaitMethod();
-    gm = new GenericMethod();
-    er = BrowserInitialize.getExtentReportInstance();
+    waitMethod = new WaitMethod();
+    genericMethod = new GenericMethod();
+    extentReport = BrowserInitialize.getExtentReportInstance();
   }
 
   /**
@@ -49,9 +49,9 @@ public class Encash {
       String[] data = new String[2];
       data[0] = stringParam[0];
       data[1] = stringParam[i];
-      wm.waitForTexttVisible(data);
-      er.writeLog(Status.PASS, "Taken the screenshot", gm.takeScreenshot());
-      gm.verifyText(data);
+      waitMethod.waitForTexttVisible(data);
+      extentReport.writeLog(Status.PASS, "Taken the screenshot", genericMethod.takeScreenshot());
+      genericMethod.verifyText(data);
       logger.debug("Verified the test " + data[1]);
     }
 
@@ -79,7 +79,7 @@ public class Encash {
     List<WebElement> elementList;
 
     //fetch all the Banner name with title and stored the name in list 
-    elementList = gm.getElements(stringParam[0]);
+    elementList = genericMethod.getElements(stringParam[0]);
 
 
     for (WebElement e : elementList) {
@@ -94,18 +94,18 @@ public class Encash {
 
       expectedBanner.add(stringParam[i]);
 
-      wm.waitForAttributedContain(data);
-      er.writeLog(Status.PASS, "capture the Screen shot " + stringParam[i],
-                      gm.takeScreenshot());
-      gm.verifyAttributedValue(data);
-      er.writeLog(Status.PASS, "verified the image " + stringParam[i]);
+      waitMethod.waitForAttributedContain(data);
+      extentReport.writeLog(Status.PASS, "capture the Screen shot " + stringParam[i],
+                      genericMethod.takeScreenshot());
+      genericMethod.verifyAttributedValue(data);
+      extentReport.writeLog(Status.PASS, "verified the image " + stringParam[i]);
     }
 
 
     //compare both Actual banner and Expected list are in same order
     if (!acutalBanner.equals(expectedBanner)) {
       logger.debug("Excel Order Banner is not matching with Expected order bannber in UI");
-      er.writeLog(Status.FAIL, "Excel Order Banner is not matching with "
+      extentReport.writeLog(Status.FAIL, "Excel Order Banner is not matching with "
                       + "Expected order bannber in UI");
       return "fail";
     }
@@ -120,76 +120,75 @@ public class Encash {
    */
   public String registrationForm(String[] stringParam) {
     logger.debug("waiting for loder class request complete");
-    wm.waitForElementInvisible("loderclass");
+    waitMethod.waitForElementInvisible("loderclass");
 
     logger.debug("Wait for element presnet");
-    wm.waitForElementVisible("persondetail_title");
+    waitMethod.waitForElementVisible("persondetail_title");
 
     logger.debug("seleting the title from dorp down");
     String[] title = new String[]{"persondetail_title", stringParam[0]};
-    gm.selectByVisibleText(title);
+    genericMethod.selectByVisibleText(title);
 
     logger.debug("enter the frist Name");
-    WebElement element = gm.getElement("persondetail_firstname");
+    WebElement element = genericMethod.getElement("persondetail_firstname");
     element.sendKeys(stringParam[1]);
 
     logger.debug("enter the last Name");
-    element = gm.getElement("personaldetail_lastname");
+    element = genericMethod.getElement("personaldetail_lastname");
     element.sendKeys(stringParam[2]);
 
     logger.debug("Enter the Email address");
-    element = gm.getElement("personaldetail_email");
+    element = genericMethod.getElement("personaldetail_email");
     element.sendKeys(stringParam[3]);
 
     logger.debug("Select the Geneder");
 
     if (stringParam[4].equalsIgnoreCase("male")) {
-      element = gm.getElement("personaldetail_male");
+      element = genericMethod.getElement("personaldetail_male");
       element.click();
     } else if (stringParam[4].equalsIgnoreCase("female")) {
-      element = gm.getElement("personaldetail_female");
+      element = genericMethod.getElement("personaldetail_female");
       element.click();
     }
 
     logger.debug("Select date from BirthDate");
     String[] date = new String[] {"personaldetail_date", stringParam[5]};
-    gm.selectByVisibleText(date);
+    genericMethod.selectByVisibleText(date);
 
     logger.debug("Select Month from BirthDate");
     String[] month = new String[] {"personaldetail_month", stringParam[6]};
-    gm.selectByVisibleText(month);
+    genericMethod.selectByVisibleText(month);
 
     logger.debug("Select Year from BirthDate");
     String[] year = new String[] {"personaldetail_year", stringParam[7]};
-    gm.selectByVisibleText(year);
+    genericMethod.selectByVisibleText(year);
 
     logger.debug("Enter the Password");
-    element = gm.getElement("personaldetail_password");
+    element = genericMethod.getElement("personaldetail_password");
     element.sendKeys(stringParam[8]);
 
     logger.debug("Enter the confirm password");
-    element = gm.getElement("personaldetail_cofirmpassword");
+    element = genericMethod.getElement("personaldetail_cofirmpassword");
     element.sendKeys(stringParam[9]);
 
     logger.debug("Enter the Display name");
-    element = gm.getElement("personaldetail_displayname");
+    element = genericMethod.getElement("personaldetail_displayname");
     element.sendKeys(stringParam[10]);
 
     logger.debug("Enter the Postal code");
-    element = gm.getElement("personaldetail_postalcode");
+    element = genericMethod.getElement("personaldetail_postalcode");
     element.sendKeys(stringParam[11]);
 
     logger.debug("click on the find address");
-    element = gm.getElement("personaldetail_findadress");
+    element = genericMethod.getElement("personaldetail_findadress");
     element.click();
 
     logger.debug("wait for load all the address");
-    String[] notpresent = new String[] {"personaldetail_findadress", "disabled"};
-    wm.waitForElementAttributeNotPresent(notpresent);
+    waitMethod.waitForElementAttributeNotPresent("personaldetail_findadress", "disabled");
 
     logger.debug("select the address from visible text");
     String[] address = new String[] {"personaldetail_address", stringParam[12]};
-    gm.selectByVisibleText(address);
+    genericMethod.selectByVisibleText(address);
 
     return "pass";
   }
@@ -202,31 +201,31 @@ public class Encash {
   public String registerUsingMobileNumber(String[] stringParam) {
 
     logger.debug("waiting for register button enable");
-    wm.waitForElementClickable("register");
+    waitMethod.waitForElementClickable("register");
 
     logger.debug("clicking on the Register button");
-    WebElement element = gm.getElement("register");
+    WebElement element = genericMethod.getElement("register");
     element.click();
 
 
     logger.debug("waiting for mobile number visiable");
-    wm.waitForElementVisible("mobilenumber");
+    waitMethod.waitForElementVisible("mobilenumber");
 
     logger.debug("Entering the mobile number");
-    element = gm.getElement("mobilenumber");
+    element = genericMethod.getElement("mobilenumber");
     element.sendKeys(stringParam[0]);
 
 
     logger.debug("clicking on the continue button");
-    element = gm.getElement("continue");
+    element = genericMethod.getElement("continue");
     element.click();
 
     logger.debug("waiting for loder class request complete");
-    wm.waitForElementInvisible("loderclass");
+    waitMethod.waitForElementInvisible("loderclass");
 
     char[] otp = stringParam[1].toCharArray();
 
-    List<WebElement> elements = gm.getElements("otp");
+    List<WebElement> elements = genericMethod.getElements("otp");
     int index = 0;
     for (WebElement otpElement : elements) {
       logger.debug("Entering the OPT for element " + otp[index]);
@@ -235,11 +234,11 @@ public class Encash {
     }
 
     logger.debug("click on the continue Button");
-    element = gm.getElement("otpcontinue");
+    element = genericMethod.getElement("otpcontinue");
     element.click();
 
     logger.debug("waiting for loder class request complete");
-    wm.waitForElementInvisible("loderclass");
+    waitMethod.waitForElementInvisible("loderclass");
 
     return "pass";
 
@@ -252,22 +251,23 @@ public class Encash {
    */
   public String consent(String[] stringParam) {
     logger.debug("wait for Consent table visible");
-    wm.waitForElementPresent("consent_table");
+    waitMethod.waitForElementPresent("consent_table");
 
-    List<WebElement> elements = gm.getElements("consent_table");
+    List<WebElement> elements = genericMethod.getElements("consent_table");
     //Get the number of row in the parent consent table
     for (WebElement element: elements) {
       element.click();
-      List<WebElement> child = gm.getWebElements(element, "consent_child");
+      List<WebElement> child = genericMethod.getWebElements(element, "consent_child");
       logger.debug("no of child row " + child.size());
       //each row has number of client information 
       for (WebElement ele :child) {
-        List<WebElement> childconsent = gm.getWebElements(ele, "consent_child_type");
+        List<WebElement> childconsent = genericMethod.getWebElements(ele, "consent_child_type");
         logger.debug("child consent type count " + childconsent.size());
         //each client information has different consent
         for (WebElement consentchild :childconsent) {
           logger.debug(consentchild.getText());
-          WebElement childstatus = gm.getWebElement(consentchild, "consent_child_status");
+          WebElement childstatus = genericMethod.getWebElement(consentchild, 
+                          "consent_child_status");
           logger.debug(childstatus.getAttribute("aria-checked"));
           String status = childstatus.getAttribute("aria-checked");
           if (!stringParam[0].equalsIgnoreCase(status)) {
@@ -276,20 +276,188 @@ public class Encash {
         }
       }
     }
-    
+
     //consent save or cancel
     WebElement element;
-    
+
     if (stringParam[1].equalsIgnoreCase("save")) {
-      element = gm.getElement("");
+      element = genericMethod.getElement("");
       element.click();
-      
-      
+
+
     } else if (stringParam[1].equalsIgnoreCase("cancel")) {
-      element = gm.getElement("consent_cancel");
+      element = genericMethod.getElement("consent_cancel");
       element.click();
     }
-    
+
     return "pass";
   }
+
+
+  /**
+   * This method is used to click on the competition page, 
+   * where user searched for competition and then click matched text competition. 
+   * @param stringParam 
+   * <br> stringParam[0] contain the text which need to enter in the search box in competition page
+   *     in which user can enter a partial text in search box
+   * <br> stringParam[1] contain the text which need to click on search result competition 
+   * @return the status as "pass" if script executed success else "fail" 
+   */
+  public String searchcompetation(String[] stringParam) {
+
+    // wait for competition page load
+    waitMethod.waitForElementInvisible("home_page");
+    waitMethod.waitForElementVisible("competition_search");
+
+    WebElement element = genericMethod.getElement("competition_search");
+    element.sendKeys(stringParam[0]);
+
+    //wait for search result to update in result
+    waitMethod.waitForElementInvisible("search_competation_wait");
+
+    List<WebElement> elements = genericMethod.getElements("competiton_search_result");
+    for (WebElement competations :elements) {
+      List<WebElement> competation = genericMethod.getWebElements(competations, 
+                      "competition_search_data");
+
+      genericMethod.scrolltoelement(competations);
+
+      for (WebElement competate : competation) {
+
+        // wm.waitForElementVisible(competate);
+        waitMethod.waitForSomeTextPresent(competate);
+
+        logger.debug("Feached text ----> " + competate.getText());
+        if (competate.getText().equals(stringParam[1])) {
+          logger.debug("found matching and clicking on");
+          waitMethod.waitForElementClickable(competate);
+          competate.click();
+        }
+
+      }
+    }
+
+    return "pass";
+
+  }
+
+  /**
+   * This method is used to answer Mandatory question based on the given answer.
+   * <br>By default there are 10 Mandatory question in which first question is drop down 
+   * and rest 9 question single choice answer
+   * @param stringParam
+   * <br> stringParam[0] by default second answer options is choice
+   * <br> stringParam[1] to stringParam[9] contain the answer option to select
+   * @return the status as "pass" if script executed success else "fail" 
+   */
+  public String mandatoryquestion(String[] stringParam) {
+
+    //First question is drop down
+    waitMethod.waitForElementClickable("mandatorydropdown");
+    WebElement element = genericMethod.getElement("mandatorydropdown");
+    element.click();
+
+    element = genericMethod.getElement("mandatorydropdownvalue");
+    element.click();
+
+    element = genericMethod.getElement("next");
+    element.click();
+
+    waitMethod.waitForElementAttributeNotPresent("waitnextquestion", "data-loading");
+
+    for (int i = 0; i < 9; i++) {
+
+      logger.debug("wait for next question load");
+      waitMethod.waitForElementAttributeNotPresent("waitnextquestion", "data-loading");
+
+      List<WebElement> elements = genericMethod.getElements("answeroption");
+      for (WebElement answer : elements) {
+        logger.debug("Answer options is " + answer.getText());
+        if (answer.getText().equalsIgnoreCase(stringParam[i + 1])) {
+
+          logger.debug("clicked on the Answer Options");
+          answer.click();
+
+          logger.debug("click on Next button");
+          element = genericMethod.getElement("next");
+          element.click();
+
+          break;
+
+        }
+      }
+
+    }
+
+    return "pass";
+  }
+
+
+  /**
+   * This method is used to answer the competition question and answer, 
+   * also verified the score after answer.
+   * @param stringParam is an array of data contain the question type, question,answer and marks 
+   * @return all the competition questions are answered then return 'pass' else 'fail'
+   */
+  public String competationquestion(String[] stringParam) {
+
+    logger.debug("wait for next question to load");
+    waitMethod.waitForElementInvisible("competition_next_question_wait");
+
+    //Single choice question and answer
+    if (stringParam[0].equalsIgnoreCase("SingleChoice")) {
+      logger.debug("Single Choice question and answer");
+      WebElement element = genericMethod.getElement("competition_single_choice_question");
+      waitMethod.waitForElementVisible(element);
+      logger.debug("question is -------> " + element.getText());
+      if (stringParam[1].equals(element.getText())) {
+        //Answer options
+        List<WebElement> elements = genericMethod.getElements("competition_single_choice_answer");
+        for (WebElement answer : elements) {
+          logger.debug("Answer choice are -----> " + answer.getText());
+          if (answer.getText().equals(stringParam[2])) {
+            logger.debug("clicked on answer options --------> " + answer.getText());
+            answer.click();
+            break;
+          }
+        }
+      } else {
+        return "fail";
+      }
+
+
+    }
+
+    if (stringParam[0].equalsIgnoreCase("MultipleChoice")) {
+      logger.debug("Multiple Choice question and answer");
+      waitMethod.waitForElementPresent("competition_multiple_choice_question");
+      WebElement element = genericMethod.getElement("competition_multiple_choice_question");
+      logger.debug("question is -------> " + element.getText());
+      if (stringParam[1].equals(element.getText())) {
+        //Answer options
+        List<WebElement> elements = genericMethod.getElements("competition_multiple_choice_answer");
+        for (WebElement answer : elements) {
+          logger.debug("Answer choice are -----> " + answer.getText());
+          List<String> answerselect = Arrays.asList(stringParam[2].split("`"));
+
+          for (String answerse : answerselect) {
+            if (answer.getText().equals(answerse)) {
+              logger.debug("clicked on answer options --------> " + answer.getText());
+              answer.click();
+            }
+          }
+        }
+      } else {
+        return "fail";
+      } 
+    }
+
+    // click on next button
+    logger.debug("click on the next button");
+    WebElement element = genericMethod.getElement("competition_next_question");
+    element.click();
+
+    return "pass";
+  }
+
 }

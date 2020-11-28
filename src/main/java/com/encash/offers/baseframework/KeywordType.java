@@ -9,12 +9,15 @@ public enum KeywordType {
 
   waitforelementvisible,
   waitfortexttvisible,
+  waitforattributedcontain,
+  waitForElementInvisible,
+  waitForElementPresent,
+  angularWait,
   click,
   quitbrowser,
   verifytext,
   jishitext,
   takescreenshot,
-  waitforattributedcontain,
   verifyattributedvalue,
   banner,
   comment,
@@ -25,8 +28,10 @@ public enum KeywordType {
   registrationform,
   registerUsingMobileNumber,
   consent,
-  waitForElementInvisible,
   browsertype,
-  mobileregisterUsingMobileNumber
+  mobileregisterUsingMobileNumber,
+  searchcompetation,
+  mandatoryquestion,
+  competationquestion
 
 }

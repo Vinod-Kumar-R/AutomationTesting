@@ -10,6 +10,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -107,7 +108,9 @@ public class GenericMethod {
 
   /**
    * This Method is used to enter the text in the text filed.
-   * @param stringParam contain the text to enter in webpage
+   * @param stringParam contain the text to enter in webpage <br>
+   *     stringParam[0] contain the Object Name<br>
+   *     stringparam[1] contain the text to enter.<br>
    * @return the status as "Pass" if entertext in web page
    */
   public String entertext(String[] stringParam) {
@@ -116,7 +119,7 @@ public class GenericMethod {
     objectData.sendKeys(stringParam[1]);
     return "pass";
   }
-  
+
   /**
    * This method is used to select the option from drop down list.
    * @param stringParam contain the WebElement of Drop down and text to be form option
@@ -125,31 +128,50 @@ public class GenericMethod {
   public String selectByVisibleText(String[] stringParam) {
     WebElement objectData = getElement(stringParam[0]);
     logger.debug("Selecting the text from drop down list " + stringParam[1]);
-    
+
     Select select = new Select(objectData);
     select.selectByVisibleText(stringParam[1]);
 
     return "pass";
   }
+  /**
+   * This method is used to override test execution script browser.
+   * @param stringParam contain which browser need to switch
+   * @return if success then return "pass" else "fail"
+   */
   
-  public String browsertype(String[] stringParam) {
-    BrowserInitialize.setWebDriverInstance(stringParam[0]);
+  public String browsertype(String stringParam) {
+    BrowserInitialize.setWebDriverInstance(stringParam);
+    return "pass";
+  }
+
+  /**
+   * This method is used to scroll until WebElement is view in web page.
+   * @param element is a WebElement of web page
+   * @return
+   */
+  public String scrolltoelement(WebElement element) {
+    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+
+    JavascriptExecutor je = (JavascriptExecutor) driver;
+    je.executeScript("arguments[0].scrollIntoView(true);", element);
+
     return "pass";
   }
 
 
   /**
    * This Element is used to get the WebElement for and element.
-   * @param object this contain the object value of web page
+   * @param objectName this contain the object value of web page
    * @return the webelement
    */
-  public WebElement getElement(String object) {
+  public WebElement getElement(String objectName) {
     WebDriver driver = BrowserInitialize.getWebDriverInstance();
-    By byElement = byType(object);
+    By byElement = byType(objectName);
     WebElement element = driver.findElement(byElement);
     return element;
   }
-  
+
   /**
    * This method accept the By element type and return webElement.
    * @param byElement contain the DOM location 
@@ -172,7 +194,7 @@ public class GenericMethod {
     List<WebElement> element = driver.findElements(byElement);
     return element;
   }
-  
+
   /**
    * This method is used to child WebElement.
    * @param element contain parent WebElement
@@ -183,7 +205,7 @@ public class GenericMethod {
     By byElement = byType(object);
     return element.findElement(byElement);
   }
-  
+
   /**
    * This method is used to get all the child WebElement list of parent Element.
    * @param element contain the parent WebElement
@@ -191,7 +213,7 @@ public class GenericMethod {
    * @return List&lt;WebElement&gt;
    */
   public List<WebElement> getWebElements(WebElement element, String object) {
-    
+
     By byElement = byType(object);
     List<WebElement> elements = element.findElements(byElement);
     return elements;

@@ -1,11 +1,11 @@
 package com.encash.offers.webdriver;
 
-import com.encash.offers.utility.WaitMethod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
+import com.encash.offers.utility.WaitMethod;
 
 
 /**
@@ -51,6 +51,10 @@ public class EventListener extends AbstractWebDriverEventListener {
   /**public void onException(Throwable arg0, WebDriver arg1) {
 
     logger.debug("waiting for the element----> " + arg0.getMessage()); 
+    logger.debug("waiting for specific element1 --------> " + arg0.getLocalizedMessage());
+    logger.debug("waiting for specific element2 --------> " + arg0.getCause());
+    logger.debug("waiting for specific element3 --------> " + arg1.getClass().getTypeName());
+    
     if (!WaitMethod.waitstatus 
                     && arg0.getClass().equals("org.openqa.selenium.NoSuchElementException")) {
 
@@ -60,7 +64,10 @@ public class EventListener extends AbstractWebDriverEventListener {
 
     if (WaitMethod.waitstatus) {
       logger.debug("got an exception--> " + arg0.getMessage());
+      arg0.getMessage();
     }
+    
+    
   } **/
 
 }

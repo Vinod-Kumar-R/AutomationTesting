@@ -9,7 +9,6 @@ import com.encash.offers.utility.ExtentReport;
 import com.encash.offers.utility.GenericMethod;
 import com.encash.offers.utility.WaitMethod;
 import com.encash.offers.webdriver.BrowserInitialize;
-import java.io.IOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -22,12 +21,12 @@ import org.openqa.selenium.WebDriver;
 public class KeywordExecution {
   private static Logger logger = LogManager.getLogger(KeywordExecution.class.getName());
   private WebDriver driver;
-  private GenericMethod gm;
-  private Admin ad;
-  private WaitMethod wm;
-  private Encash en;
-  private ExtentReport er;
-  private MobileEncash men;
+  private GenericMethod genericMethod;
+  private Admin admin;
+  private WaitMethod waitMethod;
+  private Encash encash;
+  private ExtentReport extentReport;
+  private MobileEncash mobileEncash;
   private String status;
   private KeywordType keyword;
 
@@ -36,12 +35,12 @@ public class KeywordExecution {
    */
 
   public KeywordExecution() {
-    ad = new Admin();
-    wm = new WaitMethod();
-    en = new Encash();
-    gm = new GenericMethod();
-    men = new MobileEncash();
-    er = BrowserInitialize.getExtentReportInstance();
+    admin = new Admin();
+    waitMethod = new WaitMethod();
+    encash = new Encash();
+    genericMethod = new GenericMethod();
+    mobileEncash = new MobileEncash();
+    extentReport = BrowserInitialize.getExtentReportInstance();
 
   }
 
@@ -78,25 +77,25 @@ public class KeywordExecution {
         logger.debug("Opening the URL " + ConstantVariable.AdminURL);
         driver = BrowserInitialize.getWebDriverInstance();
         driver.get(ConstantVariable.AdminURL);
-        status = ad.adminurlopen(stringParam);
+        status = admin.adminurlopen(stringParam);
         testResult(status, "Browser Open");
         break;
 
       case waitforelementvisible :
         logger.debug("Waiting for the element visible");
-        status = wm.waitForElementVisible(stringParam[0]);
+        status = waitMethod.waitForElementVisible(stringParam[0]);
         testResult(status, keyword.toString());
         break;
 
       case waitfortexttvisible :
         logger.debug("Waiting for the Text visible");
-        status = wm.waitForTexttVisible(stringParam);
+        status = waitMethod.waitForTexttVisible(stringParam);
         testResult(status, keyword.toString());
         break;
 
       case click :
         logger.debug("clicking  on Element");
-        status = gm.click(stringParam[0]);
+        status = genericMethod.click(stringParam[0]);
         logger.debug("clicked  on Element");
         testResult(status, keyword.toString());
         break;
@@ -108,50 +107,50 @@ public class KeywordExecution {
         break;
 
       case verifytext :
-        status = gm.verifyText(stringParam);
+        status = genericMethod.verifyText(stringParam);
         logger.debug("verified the text");
         testResult(status, keyword.toString());
         break;
 
       case jishitext :
-        status = en.jishitext(stringParam);
+        status = encash.jishitext(stringParam);
         logger.debug("verified the text");
         testResult(status, keyword.toString());
         break;
 
       case takescreenshot :
-        er.attachScreenshot(gm.takeScreenshot());
+        extentReport.attachScreenshot(genericMethod.takeScreenshot());
         status = "pass";
         logger.debug("taken the screen shot");
         testResult(status, keyword.toString());
         break;
 
       case waitforattributedcontain :
-        status = wm.waitForAttributedContain(stringParam);
+        status = waitMethod.waitForAttributedContain(stringParam);
         logger.debug("Waited for An Attibuted ");
         testResult(status, keyword.toString());
         break;
 
       case verifyattributedvalue :
-        status = gm.verifyAttributedValue(stringParam);
+        status = genericMethod.verifyAttributedValue(stringParam);
         logger.debug("verified the attributed Value");
         testResult(status, keyword.toString());
         break;
 
       case banner :
-        status = en.banner(stringParam);
+        status = encash.banner(stringParam);
         logger.debug("verifed the Banner");
         testResult(status, keyword.toString());
         break;
 
       case entertext:
-        status = gm.entertext(stringParam);
+        status = genericMethod.entertext(stringParam);
         logger.info("Enter the text");
         testResult(status, keyword.toString());
         break;
 
       case createcompetation:
-        status = ad.createCompetation(stringParam);
+        status = admin.createCompetation(stringParam);
         logger.info("complete create competation");
         testResult(status, keyword.toString());
         break;
@@ -160,42 +159,71 @@ public class KeywordExecution {
         break;
 
       case registrationform :
-        status = en.registrationForm(stringParam);
+        status = encash.registrationForm(stringParam);
         logger.info("completed entering all detail for New Registration");
         testResult(status, keyword.toString());
         break;
 
       case registerUsingMobileNumber:
-        status = en.registerUsingMobileNumber(stringParam);
+        status = encash.registerUsingMobileNumber(stringParam);
         logger.info("complete entering registration");
         testResult(status, keyword.toString());
         break;
 
       case consent:
-        status = en.consent(stringParam);
+        status = encash.consent(stringParam);
         logger.info("Expand all consent");
         testResult(status, keyword.toString());
         break;
         
       case waitForElementInvisible:
-        status = wm.waitForElementInvisible(stringParam[0]);
+        status = waitMethod.waitForElementInvisible(stringParam[0]);
         logger.info("waiting for Element invisible");
         testResult(status, keyword.toString());
         break;
 
       case browsertype:
-        status = gm.browsertype(stringParam);
+        status = genericMethod.browsertype(stringParam[0]);
         logger.info("Opening the browser");
         testResult(status, keyword.toString());
         break;
         
       case mobileregisterUsingMobileNumber:
-        status = men.registerUsingMobileNumber(stringParam);
+        status = mobileEncash.registerUsingMobileNumber(stringParam);
         logger.info("complete entering registration");
         testResult(status, keyword.toString());
         break;
         
+      case waitForElementPresent:
+        status = waitMethod.waitForElementPresent(stringParam[0]);
+        logger.info("waiting for Element Present");
+        testResult(status, keyword.toString());
+        break;
         
+      case angularWait:
+        status = waitMethod.angularWait();
+        logger.info("angularWait");
+        testResult(status, keyword.toString());
+        break;
+        
+      case searchcompetation:
+        status = encash.searchcompetation(stringParam);
+        logger.info("searching for competition and click on it");
+        testResult(status, keyword.toString());
+        break;
+        
+      case mandatoryquestion:
+        status = encash.mandatoryquestion(stringParam);
+        logger.info("searching for competition and click on it");
+        testResult(status, keyword.toString());
+        break;
+        
+      case competationquestion:
+        status = encash.competationquestion(stringParam);
+        logger.info("Verifying the question and answer for competitions");
+        testResult(status, keyword.toString());
+        break;
+
       default: logger.info("Invalid Keyword");
 
     }
@@ -209,11 +237,11 @@ public class KeywordExecution {
    */
   public void testResult(String status, String message)   {
     if (status.equalsIgnoreCase("Pass")) {
-      er.writeLog(Status.PASS, message);
+      extentReport.writeLog(Status.PASS, message);
     }
     if (status.equalsIgnoreCase("fail")) {
-      er.attachScreenshot(gm.takeScreenshot());
-      er.writeLog(Status.FAIL, message);
+      extentReport.attachScreenshot(genericMethod.takeScreenshot());
+      extentReport.writeLog(Status.FAIL, message);
     }
 
   }

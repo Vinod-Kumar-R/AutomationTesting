@@ -13,17 +13,17 @@ import org.openqa.selenium.WebElement;
 public class MobileEncash {
   
   private static Logger logger = LogManager.getLogger(MobileEncash.class.getName());
-  private WaitMethod wm;
-  private GenericMethod gm;
-  private ExtentReport er;
+  private WaitMethod waitMethod;
+  private GenericMethod genericMethod;
+  private ExtentReport extentReport;
 
   /**
    * This method is constructor used to initialize variable.
    */
   public MobileEncash() {
-    wm = new WaitMethod();
-    gm = new GenericMethod();
-    er = BrowserInitialize.getExtentReportInstance();
+    waitMethod = new WaitMethod();
+    genericMethod = new GenericMethod();
+    extentReport = BrowserInitialize.getExtentReportInstance();
   }
   
   /**
@@ -35,31 +35,31 @@ public class MobileEncash {
   public String registerUsingMobileNumber(String[] stringParam) {
 
     logger.debug("waiting for register button enable");
-    wm.waitForElementClickable("m_register");
+    waitMethod.waitForElementClickable("m_register");
 
     logger.debug("clicking on the Register button");
-    WebElement element = gm.getElement("m_register");
+    WebElement element = genericMethod.getElement("m_register");
     element.click();
 
 
     logger.debug("waiting for mobile number visiable");
-    wm.waitForElementVisible("mobilenumber");
+    waitMethod.waitForElementVisible("mobilenumber");
 
     logger.debug("Entering the mobile number");
-    element = gm.getElement("mobilenumber");
+    element = genericMethod.getElement("mobilenumber");
     element.sendKeys(stringParam[0]);
 
 
     logger.debug("clicking on the continue button");
-    element = gm.getElement("continue");
+    element = genericMethod.getElement("continue");
     element.click();
 
     logger.debug("waiting for loder class request complete");
-    wm.waitForElementInvisible("loderclass");
+    waitMethod.waitForElementInvisible("loderclass");
 
     char[] otp = stringParam[1].toCharArray();
 
-    List<WebElement> elements = gm.getElements("otp");
+    List<WebElement> elements = genericMethod.getElements("otp");
     int index = 0;
     for (WebElement otpElement : elements) {
       logger.debug("Entering the OPT for element " + otp[index]);
@@ -68,11 +68,11 @@ public class MobileEncash {
     }
 
     logger.debug("click on the continue Button");
-    element = gm.getElement("otpcontinue");
+    element = genericMethod.getElement("otpcontinue");
     element.click();
 
     logger.debug("waiting for loder class request complete");
-    wm.waitForElementInvisible("loderclass");
+    waitMethod.waitForElementInvisible("loderclass");
 
     return "pass";
 
