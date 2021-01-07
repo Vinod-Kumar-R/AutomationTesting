@@ -3,36 +3,31 @@ package com.encash.offers.mobile.encash;
 import com.encash.offers.utility.ExtentReport;
 import com.encash.offers.utility.GenericMethod;
 import com.encash.offers.utility.WaitMethod;
-import com.encash.offers.webdriver.BrowserInitialize;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebElement;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 public class MobileEncash {
   
   private static Logger logger = LogManager.getLogger(MobileEncash.class.getName());
+  @Autowired
   private WaitMethod waitMethod;
+  @Autowired
   private GenericMethod genericMethod;
+  @Autowired
   private ExtentReport extentReport;
 
-  /**
-   * This method is constructor used to initialize variable.
-   */
-  public MobileEncash() {
-    waitMethod = new WaitMethod();
-    genericMethod = new GenericMethod();
-    extentReport = BrowserInitialize.getExtentReportInstance();
-  }
-  
+
   /**
    * This method is used to register new user. 
-   * @param stringParam StringParam[0] contain the Mobile number 
-   *     StringParam[1] contain the OTP
+   * @param dataParam dataParam[0] contain the Mobile number 
+   *     dataParam[1] contain the OTP
    * @return the status as "pass" if script executed success else "fail"
    */
-  public String registerUsingMobileNumber(String[] stringParam) {
+  public String registerUsingMobileNumber(List<String> dataParam) {
 
     logger.debug("waiting for register button enable");
     waitMethod.waitForElementClickable("m_register");
@@ -47,7 +42,7 @@ public class MobileEncash {
 
     logger.debug("Entering the mobile number");
     element = genericMethod.getElement("mobilenumber");
-    element.sendKeys(stringParam[0]);
+    element.sendKeys(dataParam.get(0));
 
 
     logger.debug("clicking on the continue button");
@@ -57,7 +52,7 @@ public class MobileEncash {
     logger.debug("waiting for loder class request complete");
     waitMethod.waitForElementInvisible("loderclass");
 
-    char[] otp = stringParam[1].toCharArray();
+    char[] otp = dataParam.get(1).toCharArray();
 
     List<WebElement> elements = genericMethod.getElements("otp");
     int index = 0;

@@ -19,13 +19,6 @@ public class ConfigurationReader {
   private Configuration config;
 
   /**
-   * Constructor.
-   */
-  public ConfigurationReader() {
-
-  }
-
-  /**
    * This method is used to read the configuration properties file.
    * @param filename is the configuration file in .properties format
    */

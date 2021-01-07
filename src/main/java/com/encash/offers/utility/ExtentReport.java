@@ -8,13 +8,16 @@ import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.encash.offers.configuration.ConstantVariable;
 import java.io.IOException;
 
+
 /**
  * This class is used to Generated the Extent report.
  * @author Vinod Kumar R
  *
  */
+
 public class ExtentReport {
 
+  
   public ExtentSparkReporter spark;
   public ExtentReports extent;
   public ExtentTest extenttest;
@@ -26,8 +29,8 @@ public class ExtentReport {
   /**
    * In constructor initialization the extent report configuration.
    */
-  public ExtentReport()  {
-
+  private ExtentReport()  {
+     
     this.spark = new ExtentSparkReporter(ConstantVariable.ExtentReportsLocation);
     this.spark.config().setCss(css1);
 
@@ -44,6 +47,7 @@ public class ExtentReport {
     this.extent.setSystemInfo("Encash URL", ConstantVariable.EncashURL);
     this.extent.setSystemInfo("Admin URL", ConstantVariable.AdminURL);
     this.extent.attachReporter(this.spark);
+    
 
   }
 

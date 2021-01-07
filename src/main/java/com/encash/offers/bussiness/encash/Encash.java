@@ -2,16 +2,18 @@ package com.encash.offers.bussiness.encash;
 
 
 import com.aventstack.extentreports.Status;
+import com.encash.offers.configuration.ApplicationStoreValue;
 import com.encash.offers.utility.ExtentReport;
 import com.encash.offers.utility.GenericMethod;
 import com.encash.offers.utility.WaitMethod;
-import com.encash.offers.webdriver.BrowserInitialize;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebElement;
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 /**
  * This class contain all the Business logic for Automation. 
@@ -21,38 +23,35 @@ import org.openqa.selenium.WebElement;
 
 public class Encash {
   private static Logger logger = LogManager.getLogger(Encash.class.getName());
+  @Autowired
   private WaitMethod waitMethod;
+  @Autowired
   private GenericMethod genericMethod;
+  @Autowired
   private ExtentReport extentReport;
+  @Autowired
+  private ApplicationStoreValue storevalue;
 
-  /**
-   * In constructor variable are initialize.
-   */
-  public Encash() {
-    waitMethod = new WaitMethod();
-    genericMethod = new GenericMethod();
-    extentReport = BrowserInitialize.getExtentReportInstance();
-  }
 
   /**
    * This Method is use to verify the Jishi text when user click on explore. 
-   * @param stringParam 
-   *     StringParam is a array of String variable which hold data 
-   *     StringParam[0] contain the Object i.e xpath rest of the data 
+   * @param dataParam 
+   *     dataParam is a list of String variable which hold data 
+   *     dataParam[0] contain the Object i.e xpath rest of the data 
    *     are text which need to verify in jishi page 
    * @return it return the status "pass" if execution success else  "fail" 
    *
    */
-  public String jishitext(String[] stringParam)  {
+  public String jishitext(List<String> dataParam)  {
 
-    for (int i = 1; i < stringParam.length; i++) {
-      String[] data = new String[2];
-      data[0] = stringParam[0];
-      data[1] = stringParam[i];
+    for (int i = 1; i < dataParam.size(); i++) {
+      List<String> data = new ArrayList<String>();
+      data.add(dataParam.get(0));
+      data.add(dataParam.get(i));
       waitMethod.waitForTexttVisible(data);
       extentReport.writeLog(Status.PASS, "Taken the screenshot", genericMethod.takeScreenshot());
       genericMethod.verifyText(data);
-      logger.debug("Verified the test " + data[1]);
+      logger.debug("Verified the test " + data.get(1));
     }
 
     return "pass";
@@ -61,9 +60,9 @@ public class Encash {
   /**
    * This method is used to verify Banner page when user login to encashoffer page. 
    * and take the screen shot of each banner when it is active 
-   * @param stringParam
-   *     StringParam is array of String which contain 
-   *     StringParam[0] contain the Object i.e xpath 
+   * @param dataParam
+   *     dataParam is list of String array  which contain 
+   *     dataParam[0] contain the Object i.e xpath 
    *     rest of the parameter the Banner name which need to verify
    *     
    *     This verified the order of banner displayed by comparing the data from excel sheet
@@ -71,7 +70,7 @@ public class Encash {
    *
    * @return the status as "pass" if script executed success else "fail"
    */
-  public String banner(String[] stringParam)  {
+  public String banner(List<String> dataParam)  {
     //create an List which contain Banner name so that in the end order can be verified 
 
     List<String> acutalBanner = new ArrayList<String>();
@@ -79,26 +78,26 @@ public class Encash {
     List<WebElement> elementList;
 
     //fetch all the Banner name with title and stored the name in list 
-    elementList = genericMethod.getElements(stringParam[0]);
+    elementList = genericMethod.getElements(dataParam.get(0));
 
 
     for (WebElement e : elementList) {
-      acutalBanner.add(e.getAttribute(stringParam[2]).toString());
+      acutalBanner.add(e.getAttribute(dataParam.get(2)).toString());
     }
 
-    for (int i = 3; i < stringParam.length; i++) {
-      String[] data = new String[3];
-      data[0] = stringParam[1];
-      data[1] = stringParam[2];
-      data[2] = stringParam[i];
+    for (int i = 3; i < dataParam.size(); i++) {
+      List<String> data = new ArrayList<String>();
+      data.add(dataParam.get(1));
+      data.add(dataParam.get(2));
+      data.add(dataParam.get(i));
 
-      expectedBanner.add(stringParam[i]);
+      expectedBanner.add(dataParam.get(i));
 
       waitMethod.waitForAttributedContain(data);
-      extentReport.writeLog(Status.PASS, "capture the Screen shot " + stringParam[i],
+      extentReport.writeLog(Status.PASS, "capture the Screen shot " + dataParam.get(i),
                       genericMethod.takeScreenshot());
       genericMethod.verifyAttributedValue(data);
-      extentReport.writeLog(Status.PASS, "verified the image " + stringParam[i]);
+      extentReport.writeLog(Status.PASS, "verified the image " + dataParam.get(i));
     }
 
 
@@ -115,10 +114,10 @@ public class Encash {
 
   /**
    * This method is used to create a new Registration in encash page.
-   * @param stringParam contain all the required data for registration
+   * @param dataParam contain all the required data for registration
    * @return the status as "pass" if script executed success else "fail" 
    */
-  public String registrationForm(String[] stringParam) {
+  public String registrationForm(List<String> dataParam) {
     logger.debug("waiting for loder class request complete");
     waitMethod.waitForElementInvisible("loderclass");
 
@@ -126,58 +125,73 @@ public class Encash {
     waitMethod.waitForElementVisible("persondetail_title");
 
     logger.debug("seleting the title from dorp down");
-    String[] title = new String[]{"persondetail_title", stringParam[0]};
+    
+    List<String> title = new ArrayList<String>();
+    title.add("persondetail_title");
+    title.add(dataParam.get(0));
+    
     genericMethod.selectByVisibleText(title);
 
     logger.debug("enter the frist Name");
     WebElement element = genericMethod.getElement("persondetail_firstname");
-    element.sendKeys(stringParam[1]);
+    element.sendKeys(dataParam.get(1));
 
     logger.debug("enter the last Name");
     element = genericMethod.getElement("personaldetail_lastname");
-    element.sendKeys(stringParam[2]);
+    element.sendKeys(dataParam.get(2));
 
     logger.debug("Enter the Email address");
     element = genericMethod.getElement("personaldetail_email");
-    element.sendKeys(stringParam[3]);
+    element.sendKeys(dataParam.get(3));
 
     logger.debug("Select the Geneder");
 
-    if (stringParam[4].equalsIgnoreCase("male")) {
+    if (dataParam.get(4).equalsIgnoreCase("male")) {
       element = genericMethod.getElement("personaldetail_male");
       element.click();
-    } else if (stringParam[4].equalsIgnoreCase("female")) {
+    } else if (dataParam.get(4).equalsIgnoreCase("female")) {
       element = genericMethod.getElement("personaldetail_female");
       element.click();
     }
 
     logger.debug("Select date from BirthDate");
-    String[] date = new String[] {"personaldetail_date", stringParam[5]};
+    
+    List<String> date = new ArrayList<String>();
+    date.add("personaldetail_date");
+    date.add(dataParam.get(5));
+    
     genericMethod.selectByVisibleText(date);
 
     logger.debug("Select Month from BirthDate");
-    String[] month = new String[] {"personaldetail_month", stringParam[6]};
+    
+    List<String> month = new ArrayList<String>();
+    month.add("personaldetail_month");
+    month.add(dataParam.get(6));
+    
     genericMethod.selectByVisibleText(month);
 
     logger.debug("Select Year from BirthDate");
-    String[] year = new String[] {"personaldetail_year", stringParam[7]};
+    List<String> year = new ArrayList<String>();
+    year.add("personaldetail_year");
+    year.add(dataParam.get(7));
+    
     genericMethod.selectByVisibleText(year);
 
     logger.debug("Enter the Password");
     element = genericMethod.getElement("personaldetail_password");
-    element.sendKeys(stringParam[8]);
+    element.sendKeys(dataParam.get(8));
 
     logger.debug("Enter the confirm password");
     element = genericMethod.getElement("personaldetail_cofirmpassword");
-    element.sendKeys(stringParam[9]);
+    element.sendKeys(dataParam.get(9));
 
     logger.debug("Enter the Display name");
     element = genericMethod.getElement("personaldetail_displayname");
-    element.sendKeys(stringParam[10]);
+    element.sendKeys(dataParam.get(10));
 
     logger.debug("Enter the Postal code");
     element = genericMethod.getElement("personaldetail_postalcode");
-    element.sendKeys(stringParam[11]);
+    element.sendKeys(dataParam.get(11));
 
     logger.debug("click on the find address");
     element = genericMethod.getElement("personaldetail_findadress");
@@ -187,7 +201,11 @@ public class Encash {
     waitMethod.waitForElementAttributeNotPresent("personaldetail_findadress", "disabled");
 
     logger.debug("select the address from visible text");
-    String[] address = new String[] {"personaldetail_address", stringParam[12]};
+   
+    List<String> address = new ArrayList<String>();
+    address.add("personaldetail_address");
+    address.add(dataParam.get(12));
+   
     genericMethod.selectByVisibleText(address);
 
     return "pass";
@@ -195,10 +213,10 @@ public class Encash {
 
   /**
    * This method is used to register the new user through Mobile number.
-   * @param stringParam contain the Mobile number and OTP
+   * @param dataParam contain the Mobile number and OTP
    * @return the status as "pass" if script executed success else "fail"
    */
-  public String registerUsingMobileNumber(String[] stringParam) {
+  public String registerUsingMobileNumber(List<String> dataParam) {
 
     logger.debug("waiting for register button enable");
     waitMethod.waitForElementClickable("register");
@@ -213,7 +231,7 @@ public class Encash {
 
     logger.debug("Entering the mobile number");
     element = genericMethod.getElement("mobilenumber");
-    element.sendKeys(stringParam[0]);
+    element.sendKeys(dataParam.get(0));
 
 
     logger.debug("clicking on the continue button");
@@ -223,9 +241,13 @@ public class Encash {
     logger.debug("waiting for loder class request complete");
     waitMethod.waitForElementInvisible("loderclass");
 
-    char[] otp = stringParam[1].toCharArray();
-
+    char[] otp = dataParam.get(1).toCharArray();
+    
     List<WebElement> elements = genericMethod.getElements("otp");
+    
+    //logger.debug("wait for OTP element present");
+    //waitMethod.waitForAllElementVisible(elements);
+ 
     int index = 0;
     for (WebElement otpElement : elements) {
       logger.debug("Entering the OPT for element " + otp[index]);
@@ -246,10 +268,10 @@ public class Encash {
 
   /**
    * This method is used to check for consent for particular user.
-   * @param stringParam contain true or false to check all the consent are checked or unchecked
+   * @param dataParam contain true or false to check all the consent are checked or unchecked
    * @return the status as "pass" if script executed success else "fail" 
    */
-  public String consent(String[] stringParam) {
+  public String consent(List<String> dataParam) {
     logger.debug("wait for Consent table visible");
     waitMethod.waitForElementPresent("consent_table");
 
@@ -270,7 +292,7 @@ public class Encash {
                           "consent_child_status");
           logger.debug(childstatus.getAttribute("aria-checked"));
           String status = childstatus.getAttribute("aria-checked");
-          if (!stringParam[0].equalsIgnoreCase(status)) {
+          if (!dataParam.get(0).equalsIgnoreCase(status)) {
             return "fail"; 
           }
         }
@@ -280,12 +302,12 @@ public class Encash {
     //consent save or cancel
     WebElement element;
 
-    if (stringParam[1].equalsIgnoreCase("save")) {
+    if (dataParam.get(1).equalsIgnoreCase("save")) {
       element = genericMethod.getElement("");
       element.click();
 
 
-    } else if (stringParam[1].equalsIgnoreCase("cancel")) {
+    } else if (dataParam.get(1).equalsIgnoreCase("cancel")) {
       element = genericMethod.getElement("consent_cancel");
       element.click();
     }
@@ -297,20 +319,20 @@ public class Encash {
   /**
    * This method is used to click on the competition page, 
    * where user searched for competition and then click matched text competition. 
-   * @param stringParam 
-   * <br> stringParam[0] contain the text which need to enter in the search box in competition page
+   * @param dataParam 
+   * <br> dataParam[0] contain the text which need to enter in the search box in competition page
    *     in which user can enter a partial text in search box
-   * <br> stringParam[1] contain the text which need to click on search result competition 
+   * <br> dataParam[1] contain the text which need to click on search result competition 
    * @return the status as "pass" if script executed success else "fail" 
    */
-  public String searchcompetation(String[] stringParam) {
+  public String searchcompetation(List<String> dataParam) {
 
     // wait for competition page load
     waitMethod.waitForElementInvisible("home_page");
     waitMethod.waitForElementVisible("competition_search");
 
     WebElement element = genericMethod.getElement("competition_search");
-    element.sendKeys(stringParam[0]);
+    element.sendKeys(dataParam.get(0));
 
     //wait for search result to update in result
     waitMethod.waitForElementInvisible("search_competation_wait");
@@ -328,7 +350,7 @@ public class Encash {
         waitMethod.waitForSomeTextPresent(competate);
 
         logger.debug("Feached text ----> " + competate.getText());
-        if (competate.getText().equals(stringParam[1])) {
+        if (competate.getText().equals(dataParam.get(1))) {
           logger.debug("found matching and clicking on");
           waitMethod.waitForElementClickable(competate);
           competate.click();
@@ -345,12 +367,12 @@ public class Encash {
    * This method is used to answer Mandatory question based on the given answer.
    * <br>By default there are 10 Mandatory question in which first question is drop down 
    * and rest 9 question single choice answer
-   * @param stringParam
-   * <br> stringParam[0] by default second answer options is choice
-   * <br> stringParam[1] to stringParam[9] contain the answer option to select
+   * @param dataParam
+   * <br> dataParam[0] by default second answer options is choice
+   * <br> dataParam[1] to dataParam[9] contain the answer option to select
    * @return the status as "pass" if script executed success else "fail" 
    */
-  public String mandatoryquestion(String[] stringParam) {
+  public String mandatoryquestion(List<String> dataParam) {
 
     //First question is drop down
     waitMethod.waitForElementClickable("mandatorydropdown");
@@ -373,7 +395,7 @@ public class Encash {
       List<WebElement> elements = genericMethod.getElements("answeroption");
       for (WebElement answer : elements) {
         logger.debug("Answer options is " + answer.getText());
-        if (answer.getText().equalsIgnoreCase(stringParam[i + 1])) {
+        if (answer.getText().equalsIgnoreCase(dataParam.get(i + 1))) {
 
           logger.debug("clicked on the Answer Options");
           answer.click();
@@ -396,26 +418,26 @@ public class Encash {
   /**
    * This method is used to answer the competition question and answer, 
    * also verified the score after answer.
-   * @param stringParam is an array of data contain the question type, question,answer and marks 
+   * @param dataParam is an array of data contain the question type, question,answer and marks 
    * @return all the competition questions are answered then return 'pass' else 'fail'
    */
-  public String competationquestion(String[] stringParam) {
+  public String competationquestion(List<String> dataParam) {
 
     logger.debug("wait for next question to load");
     waitMethod.waitForElementInvisible("competition_next_question_wait");
 
     //Single choice question and answer
-    if (stringParam[0].equalsIgnoreCase("SingleChoice")) {
+    if (dataParam.get(0).equalsIgnoreCase("SingleChoice")) {
       logger.debug("Single Choice question and answer");
       WebElement element = genericMethod.getElement("competition_single_choice_question");
       waitMethod.waitForElementVisible(element);
       logger.debug("question is -------> " + element.getText());
-      if (stringParam[1].equals(element.getText())) {
+      if (dataParam.get(1).equals(element.getText())) {
         //Answer options
         List<WebElement> elements = genericMethod.getElements("competition_single_choice_answer");
         for (WebElement answer : elements) {
           logger.debug("Answer choice are -----> " + answer.getText());
-          if (answer.getText().equals(stringParam[2])) {
+          if (answer.getText().equals(dataParam.get(2))) {
             logger.debug("clicked on answer options --------> " + answer.getText());
             answer.click();
             break;
@@ -428,17 +450,17 @@ public class Encash {
 
     }
 
-    if (stringParam[0].equalsIgnoreCase("MultipleChoice")) {
+    if (dataParam.get(0).equalsIgnoreCase("MultipleChoice")) {
       logger.debug("Multiple Choice question and answer");
       waitMethod.waitForElementPresent("competition_multiple_choice_question");
       WebElement element = genericMethod.getElement("competition_multiple_choice_question");
       logger.debug("question is -------> " + element.getText());
-      if (stringParam[1].equals(element.getText())) {
+      if (dataParam.get(1).equals(element.getText())) {
         //Answer options
         List<WebElement> elements = genericMethod.getElements("competition_multiple_choice_answer");
         for (WebElement answer : elements) {
           logger.debug("Answer choice are -----> " + answer.getText());
-          List<String> answerselect = Arrays.asList(stringParam[2].split("`"));
+          List<String> answerselect = Arrays.asList(dataParam.get(2).split("`"));
 
           for (String answerse : answerselect) {
             if (answer.getText().equals(answerse)) {
@@ -457,6 +479,30 @@ public class Encash {
     WebElement element = genericMethod.getElement("competition_next_question");
     element.click();
 
+    return "pass";
+  }
+  
+  /**
+   * This method is used to enter OTP which read from mailinator to encash UI.
+   * @return after successful it send "pass"
+   */
+  public String enterEmailOtp() {
+    
+    //stored OTP which is read in mailinator
+    char[] storedotp = storevalue.storedOtp.toCharArray();
+       
+    logger.debug("wait for the Email OTP box");
+    waitMethod.waitForElementPresent("encash_email_otp");
+    
+    List<WebElement> otps = genericMethod.getElements("encash_email_otp");
+    int index = 0;
+    logger.debug("Enter all the OTP");
+    
+    for (WebElement otp : otps) {
+      String stringotp = Character.toString(storedotp[index]);
+      otp.sendKeys(stringotp);
+      index++;
+    }
     return "pass";
   }
 

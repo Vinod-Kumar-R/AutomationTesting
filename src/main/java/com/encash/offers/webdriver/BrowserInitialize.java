@@ -18,6 +18,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 /**
@@ -33,7 +34,8 @@ public final class BrowserInitialize {
   private static EventFiringWebDriver driver;
   private static  NgWebDriver ngwebdriver;
   private static JavascriptExecutor jsDriver;
-  private static ExtentReport extentreport;
+  @Autowired
+  private  ExtentReport extentreport;
 
 
   /**
@@ -51,10 +53,11 @@ public final class BrowserInitialize {
   private static void createInstance(String browserType) {
 
     Desired de = new Desired();
-    DriverManagerType driverManagerType = DriverManagerType.valueOf(ConstantVariable
-                    .browserBinaryName.toUpperCase());
+    
+    BrowserExecutionType bt = BrowserExecutionType.valueOf(browserType);
+    DriverManagerType driverManagerType = DriverManagerType.valueOf(bt.binaryBrower.toUpperCase());
     WebDriverManager.getInstance(driverManagerType).setup();
-    BrowserExecutionType bt = BrowserExecutionType.valueOf(browserType); 
+     
 
     switch (bt) {
       case SYSTEM_CHROME:
@@ -116,6 +119,7 @@ public final class BrowserInitialize {
    * this method is used to reuses the same instance of Web driver.
    * @return WebDriver instance
    */
+  
   public static WebDriver getWebDriverInstance() {
     if (driver == null) {
       createInstance(ConstantVariable.Test_Execution);
@@ -152,19 +156,6 @@ public final class BrowserInitialize {
   }
 
   /**
-   * This method is used to get the ExtenReport instance.  
-   * @return ExtentReport instance 
-   */
-  public  static ExtentReport getExtentReportInstance() {
-
-    if (extentreport == null) {
-      extentreport = new ExtentReport();
-    }
-    return extentreport;
-
-  }
-
-  /**
    * This method is used to quit the browser instance. 
    * @return status as "Pass" if execution completed 
    */
@@ -179,7 +170,7 @@ public final class BrowserInitialize {
   /**
    * this method is used the extend report for updating the browser instance used for testing.
    */
-  public static void browserInfo() {
+  public void browserInfo() {
     extentreport.setSystemInfo("Browser Name", driver.getCapabilities().getBrowserName());
     extentreport.setSystemInfo("Browser Version", driver.getCapabilities().getVersion());
     extentreport.setSystemInfo("Platform", driver.getCapabilities().getPlatform().toString());

@@ -10,14 +10,17 @@ import com.encash.offers.utility.GenericMethod;
 import com.encash.offers.utility.WaitMethod;
 import com.encash.offers.webdriver.BrowserInitialize;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.poi.EncryptedDocumentException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
 
 /**
- * <h1> This is Main class in which execution Start. </h1>
- * <p> Main call the constructor and initial all the variable required such as
- * URL, test case file, Log properties files and Result file  </p>
+ * <h1> In this class start executiong test case Start. </h1>
  * {@docRoot}
  * @serial 16-09-2020
  * @author Vinod Kumar R
@@ -26,24 +29,24 @@ import org.apache.poi.EncryptedDocumentException;
 
 public class BaseClass {
   private static Logger logger = LogManager.getLogger(BaseClass.class);
+  @Autowired
   private ConstantVariable constantVariable;
+  @Autowired
   private KeywordExecution keywordExecution;
+  @Autowired
   private GenericMethod genericMethod;
+  @Autowired
+  @Qualifier("testdata")
   private ExcelReader testData;
+  @Autowired
+  @Qualifier("testcase")
   private ExcelReader testCase;
-  private ExtentReport extentReport;
+  @Autowired
+  public ExtentReport extentReport;
+  @Autowired
+  private BrowserInitialize browserinitialize;
 
-  /**
-   * In Constructor, initializing the required class.
-   */
-  public BaseClass() {
-    constantVariable = new ConstantVariable();
-    extentReport = BrowserInitialize.getExtentReportInstance();
-    keywordExecution = new KeywordExecution();
-    genericMethod = new GenericMethod();
-    
-  }
-
+  
   /**
    * This Method start reading the Test case xlsx file  row by row.
    * 
@@ -70,12 +73,18 @@ public class BaseClass {
    * @throws DuplicateValueException duplicate key are found in ObjectRepository file
    */
   public void startRun() throws DuplicateValueException, EncryptedDocumentException, IOException  {
-
+     
+    //initialize the excel file for testdata and testcase
+    testData.setExcelfilename(ConstantVariable.TestDatas);
+    testData.setExcelsheetindex(0);
+    testCase.setExcelfilename(ConstantVariable.TestCases);
+    testCase.setExcelsheetindex(0);
+    
     constantVariable.searchTestData();
     constantVariable.objectRepository();
-    BrowserInitialize.getWebDriverInstance();
-    BrowserInitialize.browserInfo();
-
+    browserinitialize.getWebDriverInstance();
+    browserinitialize.browserInfo();
+ 
     int testcaserownumber = 1;
     int testDatarownumber = 0;
     int firstColumn = 0;
@@ -84,7 +93,6 @@ public class BaseClass {
     int fourthCoumn = 3;
     //Read the Test case data
     logger.debug("Test Case File name " + ConstantVariable.TestCases);
-    testCase = new ExcelReader(ConstantVariable.TestCases, 0);
     //is not of end of testcase row
     while (!(testCase.getCellData(testcaserownumber, firstColumn).equalsIgnoreCase("end"))) {
       //if Executed column is yes then executed else skip test skip
@@ -146,42 +154,35 @@ public class BaseClass {
     int currentCol = 1;
     String keyword = null;
 
-
     try {
-      testData = new ExcelReader(ConstantVariable.TestDatas, 0);
-
-
       while (testData.getCellData(currentRow, 0) == null
                       || !testData.getCellData(currentRow, 0).equalsIgnoreCase("End")) {
         keyword = testData.getCellData(currentRow, currentCol);
         logger.debug("Got the Key word from excel sheet " + keyword);
 
-        //Read the all the parameter for keyword and add delimiter ~
-        int column = 2;
-        String[] stringParam = null;
-        String param = "";
+        //skipping the step if keyword is "comment"
+        if (!keyword.equalsIgnoreCase("comment")) {
 
-        while (testData.getCellData(currentRow, column) != null) {
-          logger.debug("current row number " + currentRow + " Column number " + column);
-          logger.debug("Data from Cell " + testData.getCellData(currentRow, column));
+          //Read the all the parameter for keyword and add delimiter ~
+          int column = 2;
+          String param = "";
+          List<String> dataParam = new ArrayList<String>();
 
-          if (param.equals("")) {
+          while (testData.getCellData(currentRow, column) != null) {
+            logger.debug("current row number " + currentRow + " Column number " + column);
+            logger.debug("Data from Cell " + testData.getCellData(currentRow, column));
+
             param = testData.getCellData(currentRow, column);
-          } else {
-            param = param + "~" + testData.getCellData(currentRow, column);
+            dataParam.add(param);
+            //increment column
+            column++;
           }
-
-          column++;
-        }
-        //copy all the parameter to an array of string
-        if (!param.equals("")) {
-          stringParam = param.split("~");
-        }
-
-        keywordExecution.setvalue(KeywordType.valueOf(keyword));
-        logger.info("Executing the Keyword " + keyword);
-        keywordExecution.executed(stringParam);
-        //KeywordType.
+         
+          keywordExecution.setvalue(KeywordType.valueOf(keyword));
+          logger.info("Executing the Keyword " + keyword);
+          keywordExecution.executed(dataParam);
+        } 
+        //increment the row
         currentRow++;
 
       }
@@ -198,32 +199,8 @@ public class BaseClass {
       extentReport.writeLog(Status.FAIL, "Failed executing Keyword ---> " + keyword);
       extentReport.writeLog(Status.FAIL, e);
       extentReport.attachScreenshot(genericMethod.takeScreenshot());
-      // BrowserInitialize.quitBrowser();
+      //BrowserInitialize.quitBrowser();
       extentReport.flushlog();
-    }
-
-
-  }
-
-  /**
-   * This is the Main method and execution start from here.
-   * @param args is used
-   */
-  public static void main(final String[] args) {
-    // TODO Auto-generated method stub
-    BaseClass bc = new BaseClass();
-    try {
-      bc.startRun();
-      bc.extentReport.flushlog();
-      
-    } catch (DuplicateValueException e) {
-      logger.error("Found duplicate value ", e);
-      
-    } catch (Exception e) {
-      bc.extentReport.attachScreenshot(bc.genericMethod.takeScreenshot());
-      bc.extentReport.flushlog();
-      logger.error("got an error", e);
-      e.printStackTrace();
     }
   }
 }

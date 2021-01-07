@@ -20,6 +20,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.poi.EncryptedDocumentException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * This class the constant variable data which is used during execution of script. 
@@ -28,10 +30,7 @@ import org.apache.poi.EncryptedDocumentException;
  */
 public class ConstantVariable {
 
-  /**
-   * This variable contain the Browser name in which test script need to execute.
-   */
-  public static String browserBinaryName;
+
   /**
    * This variable the contain application URL in which test script need to executed. 
    */
@@ -63,11 +62,13 @@ public class ConstantVariable {
   public static String ResultLocation;
   public static String ResultDatelocaton;
   public static String Configlocation;
+  public static String Mailinatorurl;
   private static Logger logger = LogManager.getLogger(ConstantVariable.class.getName());
   private String dateformat = "dd_MMM_yyyy";
   private String timeformat = "HH_mm_ss";
-
-
+  @Autowired
+  @Qualifier("testdata")
+  private ExcelReader std;
 
 
   /**
@@ -94,7 +95,6 @@ public class ConstantVariable {
     ResultLocation = dateTime(timeformat, ResultDatelocaton);
     ExtentReportsLocation = ResultLocation + File.separator + "encashoffer.html";
     ScreenShotlocation = folderCreation(ResultLocation, "ScreenShot");
-    browserBinaryName = cr.getConfigurationStringValue("browser_Binary_file");
     EncashURL = cr.getConfigurationStringValue("encashurl");
     AdminURL = cr.getConfigurationStringValue("adminurl");
     TestDatas = cr.getConfigurationStringValue("testData");
@@ -107,6 +107,7 @@ public class ConstantVariable {
     polling = cr.getConfigurationIntValue("polling");
     HeadlessBrowser = cr.getConfigurationBooleanValue("headlessbrowser");
     AppiumURL = cr.getConfigurationStringValue("appiumServerurl");
+    Mailinatorurl = cr.getConfigurationStringValue("mailinatorurl");
   }
 
   /**
@@ -119,10 +120,8 @@ public class ConstantVariable {
 
   public void searchTestData() throws EncryptedDocumentException, IOException   {
 
-    ExcelReader std = new ExcelReader(ConstantVariable.TestDatas, 0);
     ConstantVariable.TestDataRowNumber = new HashMap<String, Integer>();
-    // int index = 0;
-
+    
     for (int i = 0; i < std.rowCout(0); i++) {
       if (std.getCellData(i, 0) != null 
                       && !std.getCellData(i, 0).equalsIgnoreCase("End")

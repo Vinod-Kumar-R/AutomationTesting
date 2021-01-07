@@ -2,42 +2,37 @@ package com.encash.offers.bussiness.admin;
 
 import com.encash.offers.utility.GenericMethod;
 import com.encash.offers.utility.WaitMethod;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebElement;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class Admin {
 
   private static Logger logger = LogManager.getLogger(Admin.class);
+  @Autowired
   private GenericMethod gemericMethod;
+  @Autowired
   private WaitMethod waitMethod;
 
 
   /**
-   * In constructor variable are initialized.
-   */
-  public Admin() {
-    gemericMethod = new GenericMethod();
-    waitMethod = new WaitMethod();
-
-
-  }
-  /**
    * This method is used to open the Admin URL page.
-   * @param stringParam contain the parameter value
+   * @param dataParam contain the parameter value
    * @return the status of execution i.e. pass or fail
    *
    */
 
-  public String adminurlopen(String[] stringParam)  {
+  public String adminurlopen(List<String> dataParam)  {
     //enter username and password 
     logger.debug("Enter the User name ");
     WebElement username = gemericMethod.getElement("admin_username");
-    username.sendKeys(stringParam[0]);
+    username.sendKeys(dataParam.get(0));
     
     logger.debug("Enter the User Password ");
     WebElement password = gemericMethod.getElement("admin_password");
-    password.sendKeys(stringParam[1]);
+    password.sendKeys(dataParam.get(1));
     
     logger.debug("click on login button");
     WebElement login = gemericMethod.getElement("admin_login");
@@ -48,16 +43,16 @@ public class Admin {
 
   /**
    * This method is used to create a new competition in admin page. 
-   * @param stringParam contain the parameter value
+   * @param dataParam contain the parameter value
    * @return  the status of execution i.e. pass or fail
    * 
    */
-  public String createCompetation(String[] stringParam)  {
+  public String createCompetation(List<String> dataParam)  {
     //WebElement element;
 
     gotoCompetation();
     waitMethod.angularWait();
-    //element = gm.getElement(StringParam[4]);
+    //element = gm.getElement(dataParam[4]);
     //element.click();
 
     return "pass";
