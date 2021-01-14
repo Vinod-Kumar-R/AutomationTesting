@@ -1,5 +1,6 @@
 package com.encash.offers.baseframework;
 
+import com.encash.offers.configuration.PropertiesValue;
 import com.encash.offers.custom.exception.DuplicateValueException;
 import java.io.IOException;
 import org.apache.logging.log4j.LogManager;
@@ -25,24 +26,26 @@ public class Mainfunction {
     // TODO Auto-generated method stub
 
     ApplicationContext context = new ClassPathXmlApplicationContext("springfile.xml");
+    
+    /*
+    PropertiesValue pro = context.getBean("properties", PropertiesValue.class);
+    logger.debug("propertives vinod " + pro.toString());
+    System.out.println(pro.getEncashUrl());
+    */
     BaseClass bc = context.getBean("base", BaseClass.class);
     try {
       
       logger.debug("Start Executing Test cases");
       bc.startRun();
       logger.debug("Complete Executing Test cases");
+      bc.emailTestResult();
+      logger.debug("Email has been sent");
       
     } catch (EncryptedDocumentException | DuplicateValueException | IOException e) {
       // TODO Auto-generated catch block
       logger.error(e);
       e.printStackTrace();
       bc.extentReport.flushlog();
-     
     }
-    
-  
-    
-    
   }
-
 }

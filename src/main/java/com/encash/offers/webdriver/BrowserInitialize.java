@@ -60,34 +60,34 @@ public final class BrowserInitialize {
      
 
     switch (bt) {
-      case SYSTEM_CHROME:
+      case CHROME:
 
         //System.setProperty("webdriver.chrome.logfile",ConstantVariable
         //.Configlocation+File.separator+"log"+File.separator+"chromelog.log");
         drivere = new ChromeDriver(de.chromeDesired());
         break;
 
-      case SYSTEM_FIREFOX:
+      case FIREFOX:
 
         drivere = new FirefoxDriver(de.firefoxDesired());
         break;
 
-      case SYSTEM_OPERA:
+      case OPERA:
 
         drivere = new OperaDriver(de.operaDesired());
         break;
 
-      case SYSTEM_EDGE:
+      case EDGE:
 
         drivere = new EdgeDriver(de.edgeDesired());
         break;
 
-      case SYSTEM_IEXPLORER:
+      case IEXPLORER:
 
         drivere = new InternetExplorerDriver(de.internetExploreDesired());
         break;
 
-      case SYSTEM_SAFARI:
+      case SAFARI:
 
         drivere = new SafariDriver(de.safariDesired());
         break;
@@ -96,7 +96,7 @@ public final class BrowserInitialize {
         break;
       case IOS_SAFARI:
         break;
-      case SYSTEM_MOBILE_EMULATION:
+      case MOBILE_EMULATION:
         drivere = new ChromeDriver(de.mobileSystembrowser());
         break;
 
@@ -126,6 +126,7 @@ public final class BrowserInitialize {
       JsWaiter.setDriver(driver);
     }
 
+    
     return driver;
 
   }

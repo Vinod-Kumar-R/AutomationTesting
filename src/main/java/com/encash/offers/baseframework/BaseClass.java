@@ -4,6 +4,8 @@ package com.encash.offers.baseframework;
 import com.aventstack.extentreports.Status;
 import com.encash.offers.configuration.ConstantVariable;
 import com.encash.offers.custom.exception.DuplicateValueException;
+import com.encash.offers.mail.MailContent;
+import com.encash.offers.mail.MailServiceImpl;
 import com.encash.offers.utility.ExcelReader;
 import com.encash.offers.utility.ExtentReport;
 import com.encash.offers.utility.GenericMethod;
@@ -45,6 +47,10 @@ public class BaseClass {
   public ExtentReport extentReport;
   @Autowired
   private BrowserInitialize browserinitialize;
+  @Autowired
+  private MailServiceImpl mail;
+  @Autowired
+  private MailContent content;
 
   
   /**
@@ -73,12 +79,16 @@ public class BaseClass {
    * @throws DuplicateValueException duplicate key are found in ObjectRepository file
    */
   public void startRun() throws DuplicateValueException, EncryptedDocumentException, IOException  {
-     
+    
+    constantVariable.initializeVariable();
+    extentReport.initializeExtentReport();
+    
     //initialize the excel file for testdata and testcase
     testData.setExcelfilename(ConstantVariable.TestDatas);
     testData.setExcelsheetindex(0);
     testCase.setExcelfilename(ConstantVariable.TestCases);
     testCase.setExcelsheetindex(0);
+    
     
     constantVariable.searchTestData();
     constantVariable.objectRepository();
@@ -202,5 +212,15 @@ public class BaseClass {
       //BrowserInitialize.quitBrowser();
       extentReport.flushlog();
     }
+  }
+  
+  /**
+   * This method is used to prepare for email content configuration and send email.
+   * @throws IOException through an exception if file not found
+   */
+  public void emailTestResult() throws IOException {
+
+    mail.sendEmail(content.maildata());
+   
   }
 }

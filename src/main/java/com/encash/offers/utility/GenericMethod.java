@@ -6,8 +6,14 @@ import com.encash.offers.webdriver.BrowserInitialize;
 import com.paulhammant.ngwebdriver.ByAngular;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -86,7 +92,7 @@ public class GenericMethod {
     String absolutePath = ConstantVariable.ScreenShotlocation +  File.separator
                     + filename + ".png";
     logger.debug("absolutepath " + absolutePath);
-    String relativePath = new File(ConstantVariable.ResultDatelocaton).toURI().relativize(
+    String relativePath = new File(ConstantVariable.ResultLocation).toURI().relativize(
                     new File(absolutePath).toURI()).getPath();
     logger.debug(" relative path " + relativePath);
     return ".." + File.separator + relativePath;
@@ -284,6 +290,42 @@ public class GenericMethod {
 
     logger.debug("Switch to parent frame ");
     driver.switchTo().defaultContent();
+  }
+  
+  /**
+   * This method is used to zip a folder.
+   * @param sourcNoteseDirPath  is the source path folde to which it has to zip
+   * @param zipFilePath  is the destination folder in which zip folder has to present
+   * @throws IOException  exception are throw when file not found exception
+   */
+  public Path zip(final String sourcNoteseDirPath, final String zipFilePath)
+                  throws IOException {
+    //delete the file if exist
+    Files.deleteIfExists(Paths.get(zipFilePath));
+    
+    Path zipFile = Files.createFile(Paths.get(zipFilePath));
+
+    Path sourceDirPath = Paths.get(sourcNoteseDirPath);
+    try (ZipOutputStream zipOutputStream = new ZipOutputStream(Files.newOutputStream(zipFile));
+                    Stream<Path> paths = Files.walk(sourceDirPath)) {
+      paths
+      .filter(path -> !Files.isDirectory(path))
+      .forEach(path -> {
+        
+        ZipEntry zipEntry = new ZipEntry(sourceDirPath.relativize(path).toString());
+        try {
+          zipOutputStream.putNextEntry(zipEntry);
+          Files.copy(path, zipOutputStream);
+          zipOutputStream.closeEntry();
+        } catch (IOException e) {
+          System.err.println(e);
+        }
+      });
+    }
+
+    logger.debug("Zip is created at : " + zipFile);
+    
+    return zipFile;
   }
 
 

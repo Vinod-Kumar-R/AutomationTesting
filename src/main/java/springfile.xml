@@ -9,7 +9,13 @@
         >
 
     <context:annotation-config />
+    <context:property-placeholder/>
+
     
+    <bean id="mailBean" class="com.encash.offers.beanclass.ExtentReportBean"></bean>
+    <bean id="mailconfiguration" class="com.encash.offers.mail.MailConfiguration"></bean>
+    <bean id="mailconent" class="com.encash.offers.mail.MailContent"></bean>
+    <bean id="properties" class="com.encash.offers.configuration.PropertiesValue"></bean>
     <bean id="mail" class="com.encash.offers.mailinator.Mailinator"></bean>
     <bean id="storedvalue" class="com.encash.offers.configuration.ApplicationStoreValue"></bean>
     <bean id="testdata" class="com.encash.offers.utility.ExcelReader"></bean>
@@ -29,6 +35,7 @@
     <bean id="browser" class="com.encash.offers.webdriver.BrowserInitialize"></bean>
     <bean id="desi" class="com.encash.offers.webdriver.Desired"></bean>
     <bean id="lister" class="com.encash.offers.webdriver.EventListener"></bean>
+    <bean id="mailService" class="com.encash.offers.mail.MailServiceImpl"></bean>
     
     
 </beans>
