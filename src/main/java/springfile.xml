@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd"
+        >
+
+    <context:annotation-config />
+    <context:property-placeholder location=
+    "file:${encashoffers}/properties/mail.properties,
+    file:${encashoffers}/properties/config1.properties"
+    />
+
+    
+    <bean id="mailBean" class="com.encash.offers.beanclass.ExtentReportBean"></bean>
+    <bean id="mailconfiguration" class="com.encash.offers.configuration.MailConfiguration"></bean>
+    <bean id="mailconent" class="com.encash.offers.mail.MailContent"></bean>
+    <bean id="properties" class="com.encash.offers.configuration.PropertiesValue"></bean>
+    <bean id="mail" class="com.encash.offers.mailinator.Mailinator"></bean>
+    <bean id="storedvalue" class="com.encash.offers.configuration.ApplicationStoreValue"></bean>
+    <bean id="testdata" class="com.encash.offers.utility.ExcelReader"></bean>
+    <bean id="testcase" class="com.encash.offers.utility.ExcelReader"></bean>
+    <bean id="constantvariable" class="com.encash.offers.configuration.ConstantVariable"></bean>
+    <bean id="base" class="com.encash.offers.baseframework.BaseClass"></bean>
+    <bean id="keyword" class="com.encash.offers.baseframework.KeywordExecution"></bean>
+    <bean id="repository" class="com.encash.offers.beanclass.RepositoryBean"></bean>
+    <bean id ="adminlogin" class="com.encash.offers.bussiness.admin.Admin"></bean>
+    <bean id="encashlogin" class="com.encash.offers.bussiness.encash.Encash"></bean>
+    <bean id="configure" class="com.encash.offers.configuration.ConfigurationReader"></bean>
+    <bean id="customwait" class="com.encash.offers.custom.wait.CustomWait"></bean>
+    <bean id="mobilelogin" class="com.encash.offers.mobile.encash.MobileEncash"></bean>
+    <bean id="report" class="com.encash.offers.utility.ExtentReport" ></bean>
+    <bean id="generic" class="com.encash.offers.utility.GenericMethod"></bean>
+    <bean id="wait" class="com.encash.offers.utility.WaitMethod"></bean>
+    <bean id="browser" class="com.encash.offers.webdriver.BrowserInitialize"></bean>
+    <bean id="desi" class="com.encash.offers.webdriver.Desired"></bean>
+    <bean id="lister" class="com.encash.offers.webdriver.EventListener"></bean>
+    <bean id="mailService" class="com.encash.offers.mail.MailServiceImpl"></bean>
+    <bean id="firebase" class="com.encash.offers.firebase.Firebase"></bean>
+    
+    
+</beans>

@@ -20,6 +20,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.poi.EncryptedDocumentException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * This class the constant variable data which is used during execution of script. 
@@ -28,10 +30,7 @@ import org.apache.poi.EncryptedDocumentException;
  */
 public class ConstantVariable {
 
-  /**
-   * This variable contain the Browser name in which test script need to execute.
-   */
-  public static String browserBinaryName;
+
   /**
    * This variable the contain application URL in which test script need to executed. 
    */
@@ -47,8 +46,7 @@ public class ConstantVariable {
    * This variable contain test case file (test case ID) which which need to executed. 
    */
   public static String TestCases;
-  public static String TestObjectsWeb;
-  public static String TestObjectsMobile;
+  public static String TestObjects;
   public static String ExtentReportsLocation;
   public static String ExtentReportsPropeties;
   public static String ScreenShotlocation;
@@ -61,22 +59,30 @@ public class ConstantVariable {
   public static String AppiumURL;
   public static String ResultBaseLocation;
   public static String ResultLocation;
+  public static String ResultLocation1;
   public static String ResultDatelocaton;
   public static String Configlocation;
+  public static String Mailinatorurl;
+  public static String Foldername = "AutomationResult";
   private static Logger logger = LogManager.getLogger(ConstantVariable.class.getName());
   private String dateformat = "dd_MMM_yyyy";
   private String timeformat = "HH_mm_ss";
-
-
+  private ConfigurationReader cr;
+  @Autowired
+  @Qualifier("testdata")
+  private ExcelReader std;
+  @Autowired
+  private PropertiesValue propertiesvalue;
 
 
   /**
    * This is the Constructor which is used to initialized the static variable.
    */
   public ConstantVariable()  {
+  
     Configlocation = readEnvironmnetVariable("encashoffers");
     //Read the properties file
-    ConfigurationReader cr = new ConfigurationReader();
+    cr = new ConfigurationReader();
     cr.readConfig(Configlocation + File.separator + "properties" 
                     + File.separator + "config.properties");
 
@@ -86,27 +92,38 @@ public class ConstantVariable {
     File file = new File(Configlocation + File.separator + "properties" 
                     + File.separator + "log4j2.xml");
     context.setConfigLocation(file.toURI());
+    //initializeVariable();
+  }
+  
+  /**
+   * This method is used to initialize the environment variable.
+   */
+  public void initializeVariable() {
+   
+  
 
     //setting the properties value 
     ResultBaseLocation = Configlocation + File.separator + "Result";
     Test_Execution = cr.getConfigurationStringValue("test_execution");
     ResultDatelocaton = dateTime(dateformat, ResultBaseLocation);
     ResultLocation = dateTime(timeformat, ResultDatelocaton);
-    ExtentReportsLocation = ResultLocation + File.separator + "encashoffer.html";
-    ScreenShotlocation = folderCreation(ResultLocation, "ScreenShot");
-    browserBinaryName = cr.getConfigurationStringValue("browser_Binary_file");
-    EncashURL = cr.getConfigurationStringValue("encashurl");
+    ResultLocation1 = ResultLocation + File.separator + Foldername;
+    ExtentReportsLocation = ResultLocation1 + File.separator + "encashoffer.html";
+    ScreenShotlocation = folderCreation(ResultLocation1, "ScreenShot");
+    EncashURL = propertiesvalue.getEncashUrl();
+    //EncashURL = cr.getConfigurationStringValue("encashurl");
     AdminURL = cr.getConfigurationStringValue("adminurl");
     TestDatas = cr.getConfigurationStringValue("testData");
     TestCases = cr.getConfigurationStringValue("testcase");
-    TestObjectsWeb = cr.getConfigurationStringValue("testobjectweb");
-    TestObjectsMobile = cr.getConfigurationStringValue("testobjectmobile");
+    TestObjects = cr.getConfigurationStringValue("testobjectweb");
     ExtentReportsPropeties = Configlocation + File.separator + "properties" 
                     + File.separator + "extentreportpropertes.xml";
     ExplictWait = cr.getConfigurationIntValue("explictwait");
     polling = cr.getConfigurationIntValue("polling");
     HeadlessBrowser = cr.getConfigurationBooleanValue("headlessbrowser");
     AppiumURL = cr.getConfigurationStringValue("appiumServerurl");
+    Mailinatorurl = cr.getConfigurationStringValue("mailinatorurl");
+    
   }
 
   /**
@@ -119,10 +136,8 @@ public class ConstantVariable {
 
   public void searchTestData() throws EncryptedDocumentException, IOException   {
 
-    ExcelReader std = new ExcelReader(ConstantVariable.TestDatas, 0);
     ConstantVariable.TestDataRowNumber = new HashMap<String, Integer>();
-    // int index = 0;
-
+    
     for (int i = 0; i < std.rowCout(0); i++) {
       if (std.getCellData(i, 0) != null 
                       && !std.getCellData(i, 0).equalsIgnoreCase("End")
@@ -155,14 +170,8 @@ public class ConstantVariable {
     String key;
     Set<String> duplicateValue = new HashSet<String>();
     ConstantVariable.GetObject = new HashMap<String, List<String>>();
-    FileReader file = null;
-
-    if (Test_Execution.equalsIgnoreCase("ANDROID_CHROME") 
-                    | Test_Execution.equalsIgnoreCase("IOS_SAFARI")) {
-      file = new FileReader(TestObjectsMobile);
-    } else {
-      file = new FileReader(TestObjectsWeb);
-    }
+    
+    FileReader file = new FileReader(TestObjects);
 
     List<RepositoryBean> repositoryobject = new CsvToBeanBuilder<RepositoryBean>(file)
                     .withType(RepositoryBean.class).build().parse();

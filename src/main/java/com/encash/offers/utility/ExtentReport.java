@@ -4,17 +4,32 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.model.Category;
+import com.aventstack.extentreports.model.Test;
+import com.aventstack.extentreports.model.context.NamedAttributeContext;
+import com.aventstack.extentreports.model.context.NamedAttributeContextManager;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.encash.offers.configuration.ConstantVariable;
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.joda.time.Interval;
+import org.joda.time.Period;
+
+
 
 /**
  * This class is used to Generated the Extent report.
  * @author Vinod Kumar R
  *
  */
+
 public class ExtentReport {
 
+  private static Logger logger = LogManager.getLogger(ExtentReport.class);
   public ExtentSparkReporter spark;
   public ExtentReports extent;
   public ExtentTest extenttest;
@@ -24,10 +39,9 @@ public class ExtentReport {
 
 
   /**
-   * In constructor initialization the extent report configuration.
+   * This method is used to initialize extent report.
    */
-  public ExtentReport()  {
-
+  public void initializeExtentReport() {
     this.spark = new ExtentSparkReporter(ConstantVariable.ExtentReportsLocation);
     this.spark.config().setCss(css1);
 
@@ -44,7 +58,6 @@ public class ExtentReport {
     this.extent.setSystemInfo("Encash URL", ConstantVariable.EncashURL);
     this.extent.setSystemInfo("Admin URL", ConstantVariable.AdminURL);
     this.extent.attachReporter(this.spark);
-
   }
 
   /**
@@ -150,4 +163,69 @@ public class ExtentReport {
     createTest(testName, description);
     this.extenttest.log(Status.SKIP, "Skipped the Test Case");
   }
+
+  /**
+   * this method is used to get the Category report which will be use full in mail content.
+   */
+  public void categeoryctx() {
+
+    NamedAttributeContextManager<Category> category = this.spark.getReport().getCategoryCtx();
+    Set<NamedAttributeContext<Category>>  set =  category.getSet();
+
+    for (NamedAttributeContext<Category> cc :set) {
+      logger.debug(cc.getAttr().getName()); 
+      logger.debug(cc.getFailed().toString());
+      logger.debug(cc.getPassed().toString());
+      logger.debug(cc.getSkipped().toString());
+      logger.debug(cc.getOthers().toString());
+      List<Test> test = cc.getTestList();
+      for (Test tes : test) {
+        tes.getAncestor();
+        tes.getDescription();
+      }
+    }
+  }
+  
+  public Date getStartTime() {
+    return this.spark.getReport().getStartTime();
+  }
+  
+  public Date getEndTime() {
+    return this.spark.getReport().getEndTime();
+    
+  }
+  
+  /**
+   * This method is used to get the Duration of Execution time.
+   * @return org.joda.time.Period
+   */
+  public Period getDurationTime() {
+    Interval interval = new Interval(this.spark.getReport().getStartTime().getTime(),
+                    this.spark.getReport().getEndTime().getTime());
+     
+    return interval.toPeriod();
+  }
+  
+  public  int getTotalTestcase() {
+    return this.spark.getReport().getTestList().size();
+  }
+  
+  /**
+   * 
+   * This method is used to get the total test case status.
+   * @param status is an enum constant SKIP,PASS,FAILED,OTHER
+   * @return total number of test case depend on Status
+   */
+  public int getTotalTestPasscase(Status status) {
+    List<Test> tests = this.spark.getReport().getTestList();
+    int count = 0;
+    for (Test test : tests) {
+      if (test.getStatus().equals(status)) {
+        count++;
+      }
+    }
+    return count;
+  }
+  
+  
 }

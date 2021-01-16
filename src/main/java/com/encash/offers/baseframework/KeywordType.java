@@ -32,6 +32,15 @@ public enum KeywordType {
   mobileregisterUsingMobileNumber,
   searchcompetation,
   mandatoryquestion,
-  competationquestion
+  competationquestion,
+  storewindow,
+  switchwindow,
+  newtab,
+  openmailinatorurl,
+  reademailotpmailinator,
+  enteremailotp,
+  gmail,
+  firebaselogin
+  
 
 }

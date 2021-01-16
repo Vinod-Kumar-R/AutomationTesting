@@ -15,28 +15,26 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 public class WaitMethod {
   private static Logger logger = LogManager.getLogger(WaitMethod.class.getName());
   public static boolean waitstatus = true;
+  @Autowired
   private GenericMethod genericMethod;
-
-  public WaitMethod() {
-    genericMethod = new GenericMethod();
-  }
-
+ 
   /**
    * This Method is used to Wait for an Element Visible in an web page.  
-   * @param stringParam
-   *     StringParam is a array of String variable which hold data 
-   *     StringParam[0] contain the Object which need to wait in html page 
+   * @param dataParam
+   *     dataParam is a array of String variable which hold data 
+   *     dataParam[0] contain the Object which need to wait in html page 
    * @return it return the status "pass" if execution success else fail
    *
    */
-  public  String waitForElementVisible(String stringParam) {
+  public  String waitForElementVisible(String dataParam) {
     WebDriver driver = BrowserInitialize.getWebDriverInstance();
-    By objectName = genericMethod.byType(stringParam);
+    By objectName = genericMethod.byType(dataParam);
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
                     .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
@@ -75,8 +73,8 @@ public class WaitMethod {
   /**
    * This Method is used to Wait for an Element Visible in an web page.  
    * @param elements
-   *     StringParam is a array of String variable which hold data 
-   *     StringParam[0] contain the Object which need to wait in html page 
+   *     dataParam is a array of String variable which hold data 
+   *     dataParam[0] contain the Object which need to wait in html page 
    * @return it return the status "pass" if execution success else fail
    *
    */
@@ -97,16 +95,16 @@ public class WaitMethod {
 
   /**
    * This Method is used to Wait for Text Visible in an web page.  
-   * @param stringParam
-   *     StringParam is a array of String variable which hold data 
-   *     StringParam[0] contain the Object which need to wait in html page 
+   * @param dataParam
+   *     dataParam is a array of String variable which hold data 
+   *     dataParam[0] contain the Object which need to wait in html page 
    * @return it return the status "pass" if execution success else throw an exception
    * 
    */
 
-  public  String waitForTexttVisible(String[] stringParam)  {
+  public  String waitForTexttVisible(List<String> dataParam)  {
     WebDriver driver = BrowserInitialize.getWebDriverInstance();
-    By objectName = genericMethod.byType(stringParam[0]); 
+    By objectName = genericMethod.byType(dataParam.get(0)); 
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
                     .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
@@ -114,7 +112,7 @@ public class WaitMethod {
                     .ignoring(NoSuchElementException.class);
 
     logger.debug("Waiting for the Text to be present " + objectName);
-    wait.until(ExpectedConditions.textToBePresentInElementLocated(objectName, stringParam[1]));
+    wait.until(ExpectedConditions.textToBePresentInElementLocated(objectName, dataParam.get(1)));
 
     waitstatus = true;
     return "pass";
@@ -122,22 +120,22 @@ public class WaitMethod {
 
   /**
    * This method is used wait for an Attributed value present in html page. 
-   * @param stringParam
-   *     StringParam is a array of String variable which hold data 
-   *     StringParam[0] contain the Object which need to present in html page
-   *     StringParam[1] contain the attribute in an xpath 
-   *     StringParam[2] contain the vaule which need to be present for an attributed  
+   * @param dataParam
+   *     dataParam is a array of String variable which hold data 
+   *     dataParam[0] contain the Object which need to present in html page
+   *     dataParam[1] contain the attribute in an xpath 
+   *     dataParam[2] contain the vaule which need to be present for an attributed  
    * @return it return the status "pass" if execution success else throw an exception
    * 
    */
 
-  public  String waitForAttributedContain(String[] stringParam) {
-    By objectName = genericMethod.byType(stringParam[0]);
+  public  String waitForAttributedContain(List<String> dataParam) {
+    By objectName = genericMethod.byType(dataParam.get(0));
     waitstatus = false;
 
     logger.debug("Waiting for the attributed presnt and value " + objectName);
-    logger.debug("attribute --------->" + stringParam[1]);
-    logger.debug("Value --------->" + stringParam[2]);
+    logger.debug("attribute --------->" + dataParam.get(1));
+    logger.debug("Value --------->" + dataParam.get(2));
 
     WebDriver driver = BrowserInitialize.getWebDriverInstance();
 
@@ -146,7 +144,8 @@ public class WaitMethod {
                     .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
                     .ignoring(NoSuchElementException.class);
 
-    wait.until(ExpectedConditions.attributeContains(objectName, stringParam[1], stringParam[2]));
+    wait.until(ExpectedConditions.attributeContains(objectName, dataParam.get(1),
+                    dataParam.get(2)));
 
     waitstatus = true;
     return "pass";
@@ -164,14 +163,14 @@ public class WaitMethod {
 
   /**
    * This method is used to wait until required element is present in DOM.
-   * @param stringParam contain Object location in DOM
-   * <br> stringParam[0] contain the object Name which need to wait
+   * @param dataParam contain Object location in DOM
+   * <br> dataParam[0] contain the object Name which need to wait
    * @return it return the status "pass" if execution success else fail
    */
-  public String waitForElementPresent(String stringParam) {
+  public String waitForElementPresent(String dataParam) {
 
     WebDriver driver = BrowserInitialize.getWebDriverInstance();
-    By objectName = genericMethod.byType(stringParam); 
+    By objectName = genericMethod.byType(dataParam); 
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
                     .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
@@ -180,7 +179,6 @@ public class WaitMethod {
 
     logger.debug("Waiting for the Text to be present " + objectName);
     wait.until(ExpectedConditions.presenceOfElementLocated(objectName));
-    
 
     waitstatus = true;
     return "pass";
@@ -191,13 +189,13 @@ public class WaitMethod {
 
   /**
    * This method is used to wait for Element is not present.
-   * @param stringParam contain the objectName which should not be present in DOM 
+   * @param dataParam contain the objectName which should not be present in DOM 
    * @return it return the status "pass" if execution success else fail
    */
-  public String waitForElementInvisible(String stringParam) {
+  public String waitForElementInvisible(String dataParam) {
 
     WebDriver driver = BrowserInitialize.getWebDriverInstance();
-    By objectName = genericMethod.byType(stringParam); 
+    By objectName = genericMethod.byType(dataParam); 
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
                     .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
@@ -238,14 +236,14 @@ public class WaitMethod {
   
   /**
    * This method is used to wait until element is click able.
-   * @param stringParam
-   *     stringParam[0] contain element location 
+   * @param dataParam
+   *     dataParam[0] contain element location 
    * @return it return the status "pass" if execution success else fail
    */
-  public String waitForElementClickable(String stringParam) {
+  public String waitForElementClickable(String dataParam) {
     
     WebDriver driver = BrowserInitialize.getWebDriverInstance();
-    By objectName = genericMethod.byType(stringParam); 
+    By objectName = genericMethod.byType(dataParam); 
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
                     .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
@@ -263,7 +261,7 @@ public class WaitMethod {
   /**
    * This method is used to wait until element is click able.
    * @param element
-   *     stringParam[0] contain element location 
+   *     dataParam[0] contain element location 
    * @return it return the status "pass" if execution success else fail
    */
   public String waitForElementClickable(WebElement element) {
@@ -311,7 +309,7 @@ public class WaitMethod {
   
   /**
    * This method is used to wait for alert to pop up. 
-   * @return
+   * @return after waiting for alert success return pass
    */
   public String waitForAlertPresent() {
 
@@ -329,6 +327,29 @@ public class WaitMethod {
     waitstatus = true;
     return "pass";
 
+  }
+  
+  /**
+   * This method is used to wait element not present in the DOM.
+   * @param element is WebElement
+   * @return pass if executed success
+   */
+  public String waitForStalenessElement(WebElement element) {
+
+    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    
+    waitstatus = false;
+    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
+                    .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
+                    .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
+                    .ignoring(NoSuchElementException.class);
+
+    logger.debug("Waiting for the Alert present");
+    wait.until(ExpectedConditions.stalenessOf(element));
+   
+    waitstatus = true;
+    return "pass";
+    
   }
   
 }

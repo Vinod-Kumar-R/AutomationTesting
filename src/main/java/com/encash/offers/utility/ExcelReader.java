@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -18,12 +20,41 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
  *
  */
 public class ExcelReader {
+  private static Logger logger = LogManager.getLogger(ExcelReader.class);
   private File  filename;
   private Workbook workbook;
   private Sheet sheet;
   private Row row;
+  private String excelfilename;
+  private int excelsheetindex;
+
+  public String getExcelfilename() {
+    return excelfilename;
+  }
 
   /**
+   * This method is used to set the excel file name for an object.
+   * @param excelfilename , excel file name which need to read
+   * @throws EncryptedDocumentException exception if excel file is encrypted
+   * @throws IOException , Exception if excel file is not able to read
+   */
+  public void setExcelfilename(String excelfilename) 
+                  throws EncryptedDocumentException, IOException {
+    this.excelfilename = excelfilename;
+    this.filename = new File(this.excelfilename);
+    this.workbook = WorkbookFactory.create(this.filename);
+  }
+
+  public int getExcelsheetindex() {
+    return excelsheetindex;
+  }
+
+  public void setExcelsheetindex(int excelsheetindex) {
+    this.excelsheetindex = excelsheetindex;
+    this.sheet = this.workbook.getSheetAt(this.excelsheetindex);
+  }
+
+   /**
    * In the constructor we are reading the excel file.
    * @param file it contain the location of the file which need to read
    * @param sheetIndex in excel it will specific which sheet row has to read
@@ -32,13 +63,18 @@ public class ExcelReader {
    *     EncryptedDocumentException are throw
    * 
    */
+  /**
   public ExcelReader(String file, int sheetIndex) throws EncryptedDocumentException, IOException  {
 
     this.filename = new File(file);
     this.workbook = WorkbookFactory.create(this.filename);
     this.sheet = this.workbook.getSheetAt(sheetIndex);
+    System.out.println("paramter constructor vinod");
+    logger.info("filename " + this.filename);
+    logger.info("workbook " + this.workbook);
+    logger.info("sheet " + this.sheet);
   }
-
+**/
   /**
    * This method is used to get the number of row count in an sheet.
    * @param sheetindex read the integer value of sheet
@@ -89,8 +125,6 @@ public class ExcelReader {
     this.workbook.close();
   }
 
-
-
   /**
    * This function return particular Row Data in format of Map&lt;Integer,String&gt;.
    * @param row this contain the row number in which data has to read
@@ -113,7 +147,13 @@ public class ExcelReader {
     return rowData;
   }
 
-
+  /**
+   * This is method is used to get data based on the cell type i.e. 
+   * cell has string value, boolean value or formula.
+   * @param cell cell 
+   * @return cell value is return
+   */
+  
   private String formatCell(Cell cell) {
     String cellvalue = null;
 
@@ -130,7 +170,8 @@ public class ExcelReader {
       case BOOLEAN : cellvalue = Boolean.toString(cell.getBooleanCellValue());
       break;
       case ERROR :   break;
-      case FORMULA : break;
+      case FORMULA : cellvalue =  cell.getStringCellValue();
+      break;
       case NUMERIC : 
         if (DateUtil.isCellDateFormatted(cell)) {
           cellvalue = cell.getDateCellValue().toString();
@@ -141,7 +182,7 @@ public class ExcelReader {
         break;
       case STRING : cellvalue =  cell.getStringCellValue();
       break;
-      
+
       default: break;
     }
 
