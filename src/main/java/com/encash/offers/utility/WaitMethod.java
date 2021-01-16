@@ -329,4 +329,27 @@ public class WaitMethod {
 
   }
   
+  /**
+   * This method is used to wait element not present in the DOM.
+   * @param element is WebElement
+   * @return pass if executed success
+   */
+  public String waitForStalenessElement(WebElement element) {
+
+    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    
+    waitstatus = false;
+    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
+                    .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
+                    .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
+                    .ignoring(NoSuchElementException.class);
+
+    logger.debug("Waiting for the Alert present");
+    wait.until(ExpectedConditions.stalenessOf(element));
+   
+    waitstatus = true;
+    return "pass";
+    
+  }
+  
 }

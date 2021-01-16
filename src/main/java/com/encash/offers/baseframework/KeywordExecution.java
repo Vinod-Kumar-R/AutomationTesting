@@ -4,6 +4,7 @@ import com.aventstack.extentreports.Status;
 import com.encash.offers.bussiness.admin.Admin;
 import com.encash.offers.bussiness.encash.Encash;
 import com.encash.offers.configuration.ConstantVariable;
+import com.encash.offers.firebase.Firebase;
 import com.encash.offers.mailinator.Mailinator;
 import com.encash.offers.mobile.encash.MobileEncash;
 import com.encash.offers.utility.ExtentReport;
@@ -42,6 +43,8 @@ public class KeywordExecution {
   private BrowserInitialize browserinitialize;
   @Autowired
   private Mailinator mailinator;
+  @Autowired
+  private Firebase firebase;
 
 
   /**
@@ -254,6 +257,16 @@ public class KeywordExecution {
         
       case enteremailotp:
         status = encash.enterEmailOtp();
+        testResult(status, keyword.toString());
+        break;
+        
+      case gmail:
+        status = firebase.gmaillogin(dataParam);
+        testResult(status, keyword.toString());
+        break;
+        
+      case firebaselogin:
+        status = firebase.firebaselogin();
         testResult(status, keyword.toString());
         break;
 

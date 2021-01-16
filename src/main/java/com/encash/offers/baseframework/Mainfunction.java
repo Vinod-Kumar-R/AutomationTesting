@@ -17,6 +17,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Mainfunction {
 
   private static Logger logger = LogManager.getLogger(Mainfunction.class);
+ 
   /**
    * This is the main method.
    * @param args this the main arguments
@@ -26,26 +27,32 @@ public class Mainfunction {
     // TODO Auto-generated method stub
 
     ApplicationContext context = new ClassPathXmlApplicationContext("springfile.xml");
-    
-    /*
-    PropertiesValue pro = context.getBean("properties", PropertiesValue.class);
-    logger.debug("propertives vinod " + pro.toString());
-    System.out.println(pro.getEncashUrl());
-    */
     BaseClass bc = context.getBean("base", BaseClass.class);
     try {
       
       logger.debug("Start Executing Test cases");
       bc.startRun();
       logger.debug("Complete Executing Test cases");
-      bc.emailTestResult();
-      logger.debug("Email has been sent");
-      
+ 
     } catch (EncryptedDocumentException | DuplicateValueException | IOException e) {
       // TODO Auto-generated catch block
       logger.error(e);
       e.printStackTrace();
       bc.extentReport.flushlog();
+    } finally {
+      try {
+        PropertiesValue propertiesvalue = context.getBean("properties", PropertiesValue.class);
+        if (propertiesvalue.isSendemail()) {
+          logger.debug("Email method calling");
+          bc.emailTestResult();
+          logger.debug("Email sent successfully");
+        }
+      } catch (IOException e) {
+        // TODO Auto-generated catch block
+        logger.error(e.getMessage());
+        e.printStackTrace();
+      }
+
     }
   }
 }

@@ -3,6 +3,7 @@ package com.encash.offers.mail;
 
 import com.encash.offers.beanclass.ExtentReportBean;
 import com.encash.offers.configuration.ConstantVariable;
+import com.encash.offers.configuration.MailConfiguration;
 import freemarker.template.Configuration;
 import java.util.HashMap;
 import java.util.Map;
@@ -89,7 +90,7 @@ public class MailServiceImpl {
   /**
    * This method is used to convert the html email template.
    * @param model is of type object
-   * @return
+   * @return Mail body content after replace the object 
    */
   public String geFreeMarkerTemplateContent(Map<String, Object> model) {
     StringBuffer content = new StringBuffer();

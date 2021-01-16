@@ -23,6 +23,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -293,9 +294,22 @@ public class GenericMethod {
   }
   
   /**
+   * This method is used to mouse over  WebElement.
+   * @param element is a WebElement
+   */
+  public void mouseover(WebElement element) {
+    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    
+    Actions action = new Actions(driver);
+    action.moveToElement(element).build().perform();
+    
+  }
+  
+  /**
    * This method is used to zip a folder.
    * @param sourcNoteseDirPath  is the source path folde to which it has to zip
    * @param zipFilePath  is the destination folder in which zip folder has to present
+   * @return Path where zip file has been created.
    * @throws IOException  exception are throw when file not found exception
    */
   public Path zip(final String sourcNoteseDirPath, final String zipFilePath)

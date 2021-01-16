@@ -177,8 +177,12 @@ public class ExtentReport {
       logger.debug(cc.getFailed().toString());
       logger.debug(cc.getPassed().toString());
       logger.debug(cc.getSkipped().toString());
-      cc.getStatusDist();
+      logger.debug(cc.getOthers().toString());
       List<Test> test = cc.getTestList();
+      for (Test tes : test) {
+        tes.getAncestor();
+        tes.getDescription();
+      }
     }
   }
   
@@ -207,7 +211,10 @@ public class ExtentReport {
   }
   
   /**
+   * 
    * This method is used to get the total test case status.
+   * @param status is an enum constant SKIP,PASS,FAILED,OTHER
+   * @return total number of test case depend on Status
    */
   public int getTotalTestPasscase(Status status) {
     List<Test> tests = this.spark.getReport().getTestList();

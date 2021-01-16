@@ -1,6 +1,5 @@
-package com.encash.offers.mail;
+package com.encash.offers.configuration;
 
-import com.encash.offers.configuration.ConstantVariable;
 import java.io.File;
 import java.util.Properties;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,7 +11,6 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 
 @Configuration
-@PropertySource("file:${encashoffers}/properties/mail.properties")
 public class MailConfiguration {
   
   @Value("${email.host}")
@@ -69,7 +67,7 @@ public class MailConfiguration {
 
   /**
    * This method is used to set the configuration of Email.
-   * @return
+   * @return the java Mail sender instance 
    */
   @Bean
   public JavaMailSender getMailSender() {
@@ -97,7 +95,7 @@ public class MailConfiguration {
 
   /**
    * This method is used to FreeMarker configuration.
-   * @return
+   * @return the bean for FreeMarker configuration
    */
   @Bean
   public FreeMarkerConfigurationFactoryBean getFreeMarkerConfiguration() {

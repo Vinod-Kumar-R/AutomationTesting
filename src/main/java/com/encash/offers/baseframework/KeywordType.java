@@ -38,7 +38,9 @@ public enum KeywordType {
   newtab,
   openmailinatorurl,
   reademailotpmailinator,
-  enteremailotp
+  enteremailotp,
+  gmail,
+  firebaselogin
   
 
 }
