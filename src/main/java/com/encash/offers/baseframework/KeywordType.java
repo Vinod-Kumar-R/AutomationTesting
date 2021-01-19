@@ -24,7 +24,7 @@ public enum KeywordType {
   entertext,
   openencashurl,
   openadminurl,
-  createcompetation,
+  competationform,
   registrationform,
   registerUsingMobileNumber,
   consent,
@@ -40,7 +40,7 @@ public enum KeywordType {
   reademailotpmailinator,
   enteremailotp,
   gmail,
-  firebaselogin
-  
-
+  firebaselogin,
+  logoutadmin,
+  offersform
 }

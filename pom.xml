@@ -155,6 +155,14 @@
 			<version>30.1-jre</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.aventstack/klov-reporter -->
+		<dependency>
+			<groupId>com.aventstack</groupId>
+			<artifactId>klov-reporter</artifactId>
+			<version>5.0.6</version>
+		</dependency>
+
+
 
 
 

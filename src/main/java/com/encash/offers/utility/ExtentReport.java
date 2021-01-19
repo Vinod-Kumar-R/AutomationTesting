@@ -8,6 +8,7 @@ import com.aventstack.extentreports.model.Category;
 import com.aventstack.extentreports.model.Test;
 import com.aventstack.extentreports.model.context.NamedAttributeContext;
 import com.aventstack.extentreports.model.context.NamedAttributeContextManager;
+import com.aventstack.extentreports.reporter.ExtentKlovReporter;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.encash.offers.configuration.ConstantVariable;
 import java.io.IOException;
@@ -31,6 +32,7 @@ public class ExtentReport {
 
   private static Logger logger = LogManager.getLogger(ExtentReport.class);
   public ExtentSparkReporter spark;
+  public ExtentKlovReporter klov;
   public ExtentReports extent;
   public ExtentTest extenttest;
   private String css1 = ".col-md-4 { -webkit-box-flex: 0; -ms-flex: 0 0 33.333333%; "

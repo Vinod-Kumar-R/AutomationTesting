@@ -115,7 +115,7 @@ public class ConstantVariable {
     AdminURL = cr.getConfigurationStringValue("adminurl");
     TestDatas = cr.getConfigurationStringValue("testData");
     TestCases = cr.getConfigurationStringValue("testcase");
-    TestObjects = cr.getConfigurationStringValue("testobjectweb");
+    TestObjects = cr.getConfigurationStringValue("testobject");
     ExtentReportsPropeties = Configlocation + File.separator + "properties" 
                     + File.separator + "extentreportpropertes.xml";
     ExplictWait = cr.getConfigurationIntValue("explictwait");

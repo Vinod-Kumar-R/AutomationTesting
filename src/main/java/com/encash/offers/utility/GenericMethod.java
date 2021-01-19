@@ -3,6 +3,8 @@ package com.encash.offers.utility;
 import com.encash.offers.configuration.ApplicationStoreValue;
 import com.encash.offers.configuration.ConstantVariable;
 import com.encash.offers.webdriver.BrowserInitialize;
+import com.encash.offers.webelement.custom.Calendar;
+import com.encash.offers.webelement.custom.MatOptions;
 import com.paulhammant.ngwebdriver.ByAngular;
 import java.io.File;
 import java.io.IOException;
@@ -38,6 +40,8 @@ public class GenericMethod {
   
   @Autowired
   private ApplicationStoreValue storevalue;
+  @Autowired
+  private Calendar calendar;
  
 
   /**
@@ -303,6 +307,27 @@ public class GenericMethod {
     Actions action = new Actions(driver);
     action.moveToElement(element).build().perform();
     
+  }
+  
+  /**
+   * This method is used to select the single option from dropdown.
+   * @param element WebElement
+   * @param textSelect text to select
+   */
+  public void matOption(WebElement element, String textSelect) {
+    MatOptions options = new MatOptions(element);
+    options.selectVisibleText(textSelect);
+
+  }
+  
+  public void matOptions(WebElement element, List<String> dataParam) {
+    MatOptions options = new MatOptions(element);
+    options.multipleSelectText(dataParam);
+  }
+  
+  public void dateSelection(WebElement element, String date, String month, String year) {
+    calendar.setCalendar(element);
+    calendar.selectDate(date, month, year);
   }
   
   /**

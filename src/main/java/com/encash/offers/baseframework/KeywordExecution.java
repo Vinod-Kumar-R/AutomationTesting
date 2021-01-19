@@ -152,8 +152,8 @@ public class KeywordExecution {
         testResult(status, keyword.toString());
         break;
 
-      case createcompetation:
-        status = admin.createCompetation(dataParam);
+      case competationform:
+        status = admin.competationForm(dataParam);
         logger.info("complete create competation");
         testResult(status, keyword.toString());
         break;
@@ -267,6 +267,16 @@ public class KeywordExecution {
         
       case firebaselogin:
         status = firebase.firebaselogin();
+        testResult(status, keyword.toString());
+        break;
+        
+      case logoutadmin:
+        status = admin.logoutAdmin();
+        testResult(status, keyword.toString());
+        break;
+        
+      case offersform:
+        status = admin.offersForm(dataParam);
         testResult(status, keyword.toString());
         break;
 
