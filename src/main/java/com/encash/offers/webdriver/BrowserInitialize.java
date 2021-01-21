@@ -41,11 +41,11 @@ public final class BrowserInitialize {
   /**
    * Private constructor is made because to maintain the single browser instance.
    */
-
+/*
   private BrowserInitialize() {
 
   }
-
+*/
   /**
    * This method is used to created the Web driver instance.
    * @param browserType contain which browser need to open for execution
@@ -120,22 +120,20 @@ public final class BrowserInitialize {
    * @return WebDriver instance
    */
   
-  public static WebDriver getWebDriverInstance() {
+  public WebDriver getWebDriverInstance() {
     if (driver == null) {
       createInstance(ConstantVariable.Test_Execution);
       JsWaiter.setDriver(driver);
     }
 
-    
     return driver;
-
   }
   
   /**
    * This method is used to override the Browser type during execution time.
    * @param browserType contain which browser has to executed
    */
-  public static void setWebDriverInstance(String browserType) {
+  public void setWebDriverInstance(String browserType) {
     if (driver != null) {
       quitBrowser();
     }
@@ -149,7 +147,7 @@ public final class BrowserInitialize {
    * this method is used to ngwebdriver instance. 
    * @return ngWebDriver instance
    */
-  public static NgWebDriver getNgWebDriverInstance() {
+  public NgWebDriver getNgWebDriverInstance() {
     if (driver == null) {
       createInstance(ConstantVariable.Test_Execution);
     }
@@ -160,7 +158,7 @@ public final class BrowserInitialize {
    * This method is used to quit the browser instance. 
    * @return status as "Pass" if execution completed 
    */
-  public static String quitBrowser() {
+  public String quitBrowser() {
 
     driver.quit();
     driver = null;

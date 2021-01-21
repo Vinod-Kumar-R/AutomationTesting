@@ -29,6 +29,7 @@ public class Admin {
   public String adminurlopen(List<String> dataParam)  {
     //enter username and password 
     logger.debug("Enter the User name ");
+    waitmethod.waitForElementPresent("admin_username");
     WebElement username = genericmethod.getElement("admin_username");
     username.sendKeys(dataParam.get(0));
     
@@ -52,6 +53,8 @@ public class Admin {
   public String competationForm(List<String> dataParam)  {
     
     gotoCompetation();
+    logger.debug("create new Competitions");
+    createNewCompetitions();
     
     logger.debug("Enter the Competition name");
     WebElement element = genericmethod.getElement("competition_name");
@@ -101,13 +104,44 @@ public class Admin {
     element = genericmethod.getElement("competition_calender");
     genericmethod.dateSelection(element, dataParam.get(5), dataParam.get(6), dataParam.get(7));
     
+    logger.debug("clicking on the competition add button");
+    element = genericmethod.getElement("competition_add");
+    element.click();
+    
+    logger.debug("enable the isActive button");
+    waitmethod.waitForElementPresent("competition_active");
+    element = genericmethod.getElement("competition_active");
+    element.click();
+    
+    logger.debug("Wait for notification disappear");
+    waitmethod.waitForElementPresent("notification");
+    element = genericmethod.getElement("notification");
+    waitmethod.waitForNotificationDisAppear(element);
+    
+    logger.debug("click on the save button");
+    element = genericmethod.getElement("competition_save");
+    waitmethod.waitForElementClickable(element);
+    element.click();
+    
+    logger.debug("Wait for notification appear");
+    waitmethod.waitForElementPresent("notification");
+    element = genericmethod.getElement("notification");
+    waitmethod.waitForNotificationAppear(element);
+    
+    
+    logger.debug("Wait for notification disappear");
+    waitmethod.waitForElementPresent("notification");
+    element = genericmethod.getElement("notification");
+    waitmethod.waitForNotificationDisAppear(element);
+    
+    
     return "pass";
   }
   
   /**
    * This method is used to fill the offers forms.
    * @param dataParam data required for form
-   * @return
+   * @return "pass" if executed success
    */
   public String offersForm(List<String> dataParam) {
     gotoOffers();
@@ -199,8 +233,7 @@ public class Admin {
     logger.debug("Waiting for the Angular request completed");
     waitmethod.angularWait();
     
-    logger.debug("create new Competitions");
-    createNewCompetitions();
+    
 
     return "Pass";
   }
@@ -208,7 +241,7 @@ public class Admin {
   
   /**
    * This method is used to create the new competitions.
-   * @return
+   * @return "pass" if executed success
    */
   public String createNewCompetitions() {
     
@@ -230,7 +263,7 @@ public class Admin {
   
   /**
    * This method is used to go to Offers.
-   * @return
+   * @return "pass" if executed success
    */
   public String gotoOffers() {
     
@@ -260,7 +293,7 @@ public class Admin {
   
   /**
    * This method is used to logout from admin application.
-   * @return
+   * @return "pass" if executed success
    */
   public String logoutAdmin() {
     
@@ -275,6 +308,32 @@ public class Admin {
     
     return "pass";
     
+  }
+ 
+  /**
+  * This method is used to Search for particular competition.
+  * @param dataParam contain competition name which need to search
+  * @return "pass" if executed success
+  */
+  public String searchCompetition(List<String> dataParam) {
+    logger.debug("Go to competatition ");
+    gotoCompetation();
+
+    logger.debug("typing on competitition search box");
+    waitmethod.waitForElementPresent("competition_search_page");
+    WebElement element = genericmethod.getElement("competition_search_page");
+    element.sendKeys(dataParam.get(0));
+
+    logger.debug("click on the competition search box");
+    element = genericmethod.getElement("competititon_search_result");
+    genericmethod.matTable(element, dataParam.get(0));
+    
+    logger.debug("click on the question tab");
+    waitmethod.waitForElementPresent("competition_tab");
+    element = genericmethod.getElement("competition_tab");
+    genericmethod.tabselect(element, dataParam.get(1));
+
+    return "pass";
   }
 
 }

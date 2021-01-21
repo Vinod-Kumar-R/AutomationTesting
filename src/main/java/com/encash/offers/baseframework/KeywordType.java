@@ -42,5 +42,6 @@ public enum KeywordType {
   gmail,
   firebaselogin,
   logoutadmin,
-  offersform
+  offersform,
+  searchcompetition
 }

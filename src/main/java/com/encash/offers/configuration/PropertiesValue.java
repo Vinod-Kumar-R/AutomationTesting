@@ -42,6 +42,12 @@ public class PropertiesValue {
   @Value("${sendemail}")
   private boolean sendemail;
   
+  @Value("${gmail}")
+  private String gmailUrl;
+  
+  @Value("${firebase}")
+  private String firebaseUrl;
+  
   private String ResultBaseLocation;
   private String ResultDatelocaton;
   private String ResultLocation;
@@ -52,6 +58,14 @@ public class PropertiesValue {
   
   
  
+  public String getFirebaseUrl() {
+    return firebaseUrl;
+  }
+
+  public String getGmailUrl() {
+    return gmailUrl;
+  }
+
   public String getResultBaseLocation() {
     return ResultBaseLocation;
   }

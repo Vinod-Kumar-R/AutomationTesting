@@ -23,6 +23,8 @@ public class Mailinator {
   private GenericMethod genericmethod;
   @Autowired
   private ApplicationStoreValue storevalue;
+  @Autowired
+  private BrowserInitialize browserinitialize; 
   
   /**
    * This method is used to open the mailinator URL and open the given email id.
@@ -31,7 +33,7 @@ public class Mailinator {
    */
   public String openUrl(List<String> dataParam) {
     
-    driver = BrowserInitialize.getWebDriverInstance();
+    driver = browserinitialize.getWebDriverInstance();
     driver.get(ConstantVariable.Mailinatorurl);
     
     //wait for element present

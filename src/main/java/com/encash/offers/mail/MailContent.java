@@ -24,6 +24,9 @@ public class MailContent {
   @Autowired
   private GenericMethod genericMethod;
   
+  @Autowired
+  private BrowserInitialize browserinitialize;
+  
   EventFiringWebDriver driver;
   
   
@@ -35,7 +38,7 @@ public class MailContent {
   public ExtentReportBean maildata() throws IOException {
     logger.debug("Setting the Email body content");
     
-    driver = (EventFiringWebDriver) BrowserInitialize.getWebDriverInstance();
+    driver = (EventFiringWebDriver) browserinitialize.getWebDriverInstance();
     
     // zip the result file
     Path resultfile = genericMethod.zip(ConstantVariable.ResultLocation, 

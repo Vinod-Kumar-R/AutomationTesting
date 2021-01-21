@@ -1,5 +1,6 @@
 package com.encash.offers.firebase;
 
+import com.encash.offers.configuration.PropertiesValue;
 import com.encash.offers.utility.GenericMethod;
 import com.encash.offers.utility.WaitMethod;
 import com.encash.offers.webdriver.BrowserInitialize;
@@ -19,6 +20,10 @@ public class Firebase {
   private GenericMethod genericmethod;
   @Autowired
   private WaitMethod waitmethod;
+  @Autowired
+  private BrowserInitialize browserinitialize;
+  @Autowired
+  private PropertiesValue properties;
 
   private WebDriver driver;
 
@@ -26,11 +31,11 @@ public class Firebase {
   /**
    * This method is used to login to Gmail.
    * @param dataParam contain the login id and passsword
-   * @return 
+   * @return "pass" if executed success
    */
   public String gmaillogin(List<String> dataParam) {
-    driver = BrowserInitialize.getWebDriverInstance();
-    driver.get("https://mail.google.com/");
+    driver = browserinitialize.getWebDriverInstance();
+    driver.get(properties.getGmailUrl());
 
     logger.debug("enter the gmail id");
     waitmethod.waitForElementPresent("gmail_id");
@@ -59,8 +64,8 @@ public class Firebase {
    * @return pass if execution success
    */
   public String firebaselogin() {
-    driver = BrowserInitialize.getWebDriverInstance();
-    driver.get("https://firebase.google.com/");
+    driver = browserinitialize.getWebDriverInstance();
+    driver.get(properties.getFirebaseUrl());
 
     logger.debug("waiting for firebase console");
     waitmethod.waitForElementVisible("firebaseconsole");

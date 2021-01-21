@@ -5,6 +5,8 @@ import com.encash.offers.configuration.ConstantVariable;
 import com.encash.offers.webdriver.BrowserInitialize;
 import com.encash.offers.webelement.custom.Calendar;
 import com.encash.offers.webelement.custom.MatOptions;
+import com.encash.offers.webelement.custom.MatTable;
+import com.encash.offers.webelement.custom.TabList;
 import com.paulhammant.ngwebdriver.ByAngular;
 import java.io.File;
 import java.io.IOException;
@@ -42,6 +44,8 @@ public class GenericMethod {
   private ApplicationStoreValue storevalue;
   @Autowired
   private Calendar calendar;
+  @Autowired
+  private BrowserInitialize browserinitialize; 
  
 
   /**
@@ -81,7 +85,7 @@ public class GenericMethod {
    * @return the file location in the String format
    */
   public  String takeScreenshot()   {
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
     long filename = System.currentTimeMillis();
     if (driver instanceof TakesScreenshot) {
       File tempFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
@@ -158,7 +162,12 @@ public class GenericMethod {
    */
   
   public String browsertype(String dataParam) {
-    BrowserInitialize.setWebDriverInstance(dataParam);
+    
+    if (dataParam.equalsIgnoreCase("config")) {
+      browserinitialize.setWebDriverInstance(ConstantVariable.Test_Execution);
+    } else {
+      browserinitialize.setWebDriverInstance(dataParam);
+    }
     return "pass";
   }
 
@@ -168,7 +177,7 @@ public class GenericMethod {
    * @return execution success then return pass
    */
   public String scrolltoelement(WebElement element) {
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
 
     JavascriptExecutor je = (JavascriptExecutor) driver;
     je.executeScript("arguments[0].scrollIntoView(true);", element);
@@ -183,7 +192,7 @@ public class GenericMethod {
    * @return the webelement
    */
   public WebElement getElement(String objectName) {
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
     By byElement = byType(objectName);
     WebElement element = driver.findElement(byElement);
     return element;
@@ -195,7 +204,7 @@ public class GenericMethod {
    * @return WebElement
    */
   public WebElement getElement(By byElement) {
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
     WebElement element = driver.findElement(byElement);
     return element;
   }
@@ -206,7 +215,7 @@ public class GenericMethod {
    * @return WebElement
    */
   public List<WebElement> getElements(String object) {
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
     By byElement = byType(object);
     List<WebElement> element = driver.findElements(byElement);
     return element;
@@ -241,7 +250,7 @@ public class GenericMethod {
    * @param key is used to uniquely identified 
    */
   public void currentWindow(String key) {
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
     String uniquename = driver.getWindowHandle();
     storevalue.windowHandle.put(key, uniquename);
  
@@ -252,7 +261,7 @@ public class GenericMethod {
    * @param key is used to get the unique Window
    */
   public void switchWindow(String key) {
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
     String uniquename = storevalue.windowHandle.get(key);
     driver.switchTo().window(uniquename);
   }
@@ -261,7 +270,7 @@ public class GenericMethod {
    * This method is used to created new blank tab.
    */
   public void newTab() {
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
     
     String a = "window.open('about:blank','_blank');";
     ((JavascriptExecutor ) driver). executeScript(a);
@@ -281,7 +290,7 @@ public class GenericMethod {
    * @param element contain the frame WebElement
    */
   public void switchframe(WebElement element) {
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
     
     logger.debug("Switch to frame " + element);
     driver.switchTo().frame(element);
@@ -291,7 +300,7 @@ public class GenericMethod {
    * This method is used to switch to parent frame.
    */
   public void switchframedefault() {
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
 
     logger.debug("Switch to parent frame ");
     driver.switchTo().defaultContent();
@@ -302,7 +311,7 @@ public class GenericMethod {
    * @param element is a WebElement
    */
   public void mouseover(WebElement element) {
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
     
     Actions action = new Actions(driver);
     action.moveToElement(element).build().perform();
@@ -317,17 +326,48 @@ public class GenericMethod {
   public void matOption(WebElement element, String textSelect) {
     MatOptions options = new MatOptions(element);
     options.selectVisibleText(textSelect);
-
   }
   
+  /**
+   * This method is used to select the multiple option from dropdown.
+   * @param element WebElement
+   * @param dataParam contain the list of data which need to select
+   */
   public void matOptions(WebElement element, List<String> dataParam) {
     MatOptions options = new MatOptions(element);
     options.multipleSelectText(dataParam);
   }
   
+  /**
+   * This Method is used to set the calendar. 
+   * @param element WebElement
+   * @param date Date in D
+   * @param month in MMM i.e. JAN
+   * @param year in YYYY i.e. 1986
+   */
   public void dateSelection(WebElement element, String date, String month, String year) {
     calendar.setCalendar(element);
     calendar.selectDate(date, month, year);
+  }
+  
+  /**
+   * This method is used to select the data in the mat table.
+   * @param element is WebElement
+   * @param data is used to click on the cell
+   */
+  public void matTable(WebElement element, String data) {
+    MatTable mattable = new MatTable(element);
+    mattable.selectdata(data);
+  }
+  
+  /**
+   * This method is used to switch between tab.
+   * @param element is WebElement
+   * @param tabname is the name to which it has to swtich
+   */
+  public void tabselect(WebElement element, String tabname) {
+    TabList tab = new TabList(element);
+    tab.selectTab(tabname);
   }
   
   /**

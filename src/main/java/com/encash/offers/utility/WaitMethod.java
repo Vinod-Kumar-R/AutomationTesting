@@ -23,6 +23,8 @@ public class WaitMethod {
   public static boolean waitstatus = true;
   @Autowired
   private GenericMethod genericMethod;
+  @Autowired
+  private BrowserInitialize browserinitialize;
  
   /**
    * This Method is used to Wait for an Element Visible in an web page.  
@@ -33,7 +35,7 @@ public class WaitMethod {
    *
    */
   public  String waitForElementVisible(String dataParam) {
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
     By objectName = genericMethod.byType(dataParam);
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
@@ -56,7 +58,7 @@ public class WaitMethod {
    *
    */
   public  String waitForElementVisible(WebElement element) {
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
                     .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
@@ -79,7 +81,7 @@ public class WaitMethod {
    *
    */
   public  String waitForAllElementVisible(List<WebElement> elements) {
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
                     .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
@@ -103,7 +105,7 @@ public class WaitMethod {
    */
 
   public  String waitForTexttVisible(List<String> dataParam)  {
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
     By objectName = genericMethod.byType(dataParam.get(0)); 
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
@@ -137,7 +139,7 @@ public class WaitMethod {
     logger.debug("attribute --------->" + dataParam.get(1));
     logger.debug("Value --------->" + dataParam.get(2));
 
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
 
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
                     .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
@@ -156,7 +158,7 @@ public class WaitMethod {
    * @return the status as "pass" if wait for angular request complete
    */
   public String angularWait() {
-    NgWebDriver ngwebdriver = BrowserInitialize.getNgWebDriverInstance();
+    NgWebDriver ngwebdriver = browserinitialize.getNgWebDriverInstance();
     ngwebdriver.waitForAngularRequestsToFinish();
     return "pass";
   }
@@ -169,7 +171,7 @@ public class WaitMethod {
    */
   public String waitForElementPresent(String dataParam) {
 
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
     By objectName = genericMethod.byType(dataParam); 
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
@@ -194,7 +196,7 @@ public class WaitMethod {
    */
   public String waitForElementInvisible(String dataParam) {
 
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
     By objectName = genericMethod.byType(dataParam); 
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
@@ -218,7 +220,7 @@ public class WaitMethod {
    */
   public String waitForElementAttributeNotPresent(String locator, String attributeName) {
 
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
     By objectName = genericMethod.byType(locator); 
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
@@ -242,7 +244,7 @@ public class WaitMethod {
    */
   public String waitForElementClickable(String dataParam) {
     
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
     By objectName = genericMethod.byType(dataParam); 
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
@@ -266,7 +268,7 @@ public class WaitMethod {
    */
   public String waitForElementClickable(WebElement element) {
     
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
     
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
@@ -290,7 +292,7 @@ public class WaitMethod {
    */
   public String waitForSomeTextPresent(WebElement element) {
 
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
      
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
@@ -313,7 +315,7 @@ public class WaitMethod {
    */
   public String waitForAlertPresent() {
 
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
      
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
@@ -336,7 +338,7 @@ public class WaitMethod {
    */
   public String waitForStalenessElement(WebElement element) {
 
-    WebDriver driver = BrowserInitialize.getWebDriverInstance();
+    WebDriver driver = browserinitialize.getWebDriverInstance();
     
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
@@ -350,6 +352,52 @@ public class WaitMethod {
     waitstatus = true;
     return "pass";
     
+  }
+  
+  
+  /**
+   * This method is used to wait for notification disappear.
+   * @param element is the webElement
+   * @return "pass" if executed success
+   */
+  public String waitForNotificationDisAppear(WebElement element) {
+    
+    WebDriver driver = browserinitialize.getWebDriverInstance();
+    
+    waitstatus = false;
+    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
+                    .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
+                    .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
+                    .ignoring(NoSuchElementException.class);
+
+    logger.debug("Waiting for the Notification disappear " + element);
+    wait.until(CustomWait.notification(element));
+    
+    waitstatus = true;
+    return "pass";
+  }
+  
+
+  /**
+   * This method is used to wait for notification appear.
+   * @param element is the webElement
+   * @return "pass" if executed success
+   */
+  public String waitForNotificationAppear(WebElement element) {
+
+    WebDriver driver = browserinitialize.getWebDriverInstance();
+
+    waitstatus = false;
+    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
+                    .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
+                    .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
+                    .ignoring(NoSuchElementException.class);
+
+    logger.debug("Waiting for the Notification disappear " + element);
+    wait.until(CustomWait.notificationappear(element));
+
+    waitstatus = true;
+    return "pass";
   }
   
 }

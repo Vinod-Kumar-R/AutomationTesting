@@ -47,6 +47,9 @@ public class Desired {
     chrome.addExtensions(chromeextion);
     
     //chrome.add_argument("--enable-javascript");
+    if (ConstantVariable.HeadlessBrowser) {
+      chrome.addArguments("--window-size=1280,800");
+    }
     chrome.addArguments("--start-maximized");
     chrome.addArguments("enable-javascript");
     /*
