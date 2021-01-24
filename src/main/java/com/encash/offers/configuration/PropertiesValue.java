@@ -48,38 +48,26 @@ public class PropertiesValue {
   @Value("${firebase}")
   private String firebaseUrl;
   
-  private String ResultBaseLocation;
-  private String ResultDatelocaton;
-  private String ResultLocation;
-  private String ResultLocation1;
-  private String dateformat = "dd_MMM_yyyy";
-  private String timeformat = "HH_mm_ss";
+  @Value("${encashoffers}/properties/extentreportpropertes.xml")
+  private String extentReportsPropeties;
   
+  @Value("${encashoffers}")
+  private String configLocation;
   
-  
- 
+  public String getConfigLocation() {
+    return configLocation;
+  }
+
+  public String getExtentReportsPropeties() {
+    return extentReportsPropeties;
+  }
+
   public String getFirebaseUrl() {
     return firebaseUrl;
   }
 
   public String getGmailUrl() {
     return gmailUrl;
-  }
-
-  public String getResultBaseLocation() {
-    return ResultBaseLocation;
-  }
-
-  public String getResultDatelocaton() {
-    return ResultDatelocaton;
-  }
-
-  public String getResultLocation() {
-    return ResultLocation;
-  }
-
-  public String getResultLocation1() {
-    return ResultLocation1;
   }
 
   public String getAdminUrl() {
@@ -129,15 +117,5 @@ public class PropertiesValue {
   public boolean isSendemail() {
     return sendemail;
   }
-
-  
-
-
-
-  
-
-
-
- 
 
 }

@@ -3,6 +3,7 @@ package com.encash.offers.mail;
 import com.aventstack.extentreports.Status;
 import com.encash.offers.beanclass.ExtentReportBean;
 import com.encash.offers.configuration.ConstantVariable;
+import com.encash.offers.configuration.PropertiesValue;
 import com.encash.offers.utility.ExtentReport;
 import com.encash.offers.utility.GenericMethod;
 import com.encash.offers.webdriver.BrowserInitialize;
@@ -27,6 +28,9 @@ public class MailContent {
   @Autowired
   private BrowserInitialize browserinitialize;
   
+  @Autowired
+  private PropertiesValue properties;
+  
   EventFiringWebDriver driver;
   
   
@@ -42,7 +46,7 @@ public class MailContent {
     
     // zip the result file
     Path resultfile = genericMethod.zip(ConstantVariable.ResultLocation, 
-                    ConstantVariable.ResultBaseLocation + File.separator 
+                   ConstantVariable.ResultBaseLocation + File.separator 
                     + ConstantVariable.Foldername + ".zip");
         
     ExtentReportBean report = new ExtentReportBean();
@@ -55,8 +59,8 @@ public class MailContent {
     report.setSkiptestcase(extentreport.getTotalTestPasscase(Status.SKIP));
     report.setTotaltestcase(extentreport.getTotalTestcase());
     report.setPlatform(driver.getCapabilities().getPlatform().toString());
-    report.setEncashUrl(ConstantVariable.EncashURL);
-    report.setAdminUrl(ConstantVariable.AdminURL);
+    report.setEncashUrl(properties.getEncashUrl());
+    report.setAdminUrl(properties.getAdminUrl());
     report.setBuildnumber("XXXX");
     report.setAutomationresult(resultfile.toFile());
     report.setBrowsername(driver.getCapabilities().getBrowserName());

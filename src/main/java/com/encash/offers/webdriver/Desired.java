@@ -2,6 +2,7 @@ package com.encash.offers.webdriver;
 
 import com.encash.offers.configuration.ConfigurationReader;
 import com.encash.offers.configuration.ConstantVariable;
+import com.encash.offers.configuration.PropertiesValue;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,19 +14,16 @@ import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.opera.OperaOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariOptions;
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 
 public class Desired {
 
+  @Autowired
+  private PropertiesValue properties;
   private String headless = "headless";
 
-
-  /**
-   * Constractor.
-   */
-  public Desired() {
-
-  }
 
 
   /**
@@ -36,18 +34,16 @@ public class Desired {
 
     ChromeOptions chrome = new ChromeOptions();
 
-  
-
-    chrome.setHeadless(ConstantVariable.HeadlessBrowser);
+    chrome.setHeadless(properties.getHeadlessBrowser());
     chrome.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
     
-    File chromeextion = new File(ConstantVariable.Configlocation 
+    File chromeextion = new File(properties.getConfigLocation() 
                     + File.separator + "extension" 
                     + File.separator + "chrompath.crx");
     chrome.addExtensions(chromeextion);
     
     //chrome.add_argument("--enable-javascript");
-    if (ConstantVariable.HeadlessBrowser) {
+    if (properties.getHeadlessBrowser()) {
       chrome.addArguments("--window-size=1280,800");
     }
     chrome.addArguments("--start-maximized");
@@ -72,7 +68,7 @@ public class Desired {
   public FirefoxOptions firefoxDesired() {
 
     FirefoxOptions options = new FirefoxOptions();
-    options.setHeadless(ConstantVariable.HeadlessBrowser);
+    options.setHeadless(properties.getHeadlessBrowser());
     return options;
   }
 
@@ -84,7 +80,7 @@ public class Desired {
   public  DesiredCapabilities androidDesired() {
     DesiredCapabilities dc = new DesiredCapabilities();
 
-    if (ConstantVariable.Test_Execution.equalsIgnoreCase("ANDROID_CHROME")) {
+    if (properties.getTestBrowser().equalsIgnoreCase("ANDROID_CHROME")) {
       ConfigurationReader cr = new ConfigurationReader();
       cr.readConfig(ConstantVariable.DesiredAndroidCapability);
 
@@ -120,7 +116,7 @@ public class Desired {
    */
   public OperaOptions operaDesired() {
     OperaOptions oo = new OperaOptions();
-    oo.setCapability(headless, ConstantVariable.HeadlessBrowser);
+    oo.setCapability(headless, properties.getHeadlessBrowser());
     return oo;
   }
 
@@ -130,7 +126,7 @@ public class Desired {
    */
   public EdgeOptions edgeDesired() {
     DesiredCapabilities dc = new DesiredCapabilities();
-    dc.setCapability(headless, ConstantVariable.HeadlessBrowser);
+    dc.setCapability(headless, properties.getHeadlessBrowser());
 
     EdgeOptions eo = new EdgeOptions();
     eo.merge(dc);
@@ -156,7 +152,7 @@ public class Desired {
    */
   public SafariOptions safariDesired() {
     SafariOptions so = new SafariOptions();
-    so.setCapability(headless, ConstantVariable.HeadlessBrowser);
+    so.setCapability(headless, properties.getHeadlessBrowser());
     return so;
   }
 
@@ -171,7 +167,7 @@ public class Desired {
     mobileemulation.put("deviceName", "Nexus 5");
     chromeOptions.setExperimentalOption("mobileEmulation", mobileemulation);
     
-    File chromeextion = new File(ConstantVariable.Configlocation 
+    File chromeextion = new File(properties.getConfigLocation() 
                     + File.separator + "extension" 
                     + File.separator + "chrompath.crx");
     

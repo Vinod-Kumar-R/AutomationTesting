@@ -1,6 +1,7 @@
 package com.encash.offers.utility;
 
 import com.encash.offers.configuration.ConstantVariable;
+import com.encash.offers.configuration.PropertiesValue;
 import com.encash.offers.custom.wait.CustomWait;
 import com.encash.offers.webdriver.BrowserInitialize;
 import com.paulhammant.ngwebdriver.NgWebDriver;
@@ -25,6 +26,8 @@ public class WaitMethod {
   private GenericMethod genericMethod;
   @Autowired
   private BrowserInitialize browserinitialize;
+  @Autowired
+  private PropertiesValue properties;
  
   /**
    * This Method is used to Wait for an Element Visible in an web page.  
@@ -39,8 +42,8 @@ public class WaitMethod {
     By objectName = genericMethod.byType(dataParam);
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
-                    .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
+                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
+                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
                     .ignoring(NoSuchElementException.class)
                     .withMessage("time out message");
 
@@ -61,8 +64,8 @@ public class WaitMethod {
     WebDriver driver = browserinitialize.getWebDriverInstance();
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
-                    .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
+                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
+                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
                     .ignoring(NoSuchElementException.class);
 
     logger.debug("Waiting for the WebElement Visibility " + element);
@@ -84,8 +87,8 @@ public class WaitMethod {
     WebDriver driver = browserinitialize.getWebDriverInstance();
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
-                    .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
+                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
+                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
                     .ignoring(NoSuchElementException.class);
 
     logger.debug("Waiting for All WebElement Visibility " + elements);
@@ -109,8 +112,8 @@ public class WaitMethod {
     By objectName = genericMethod.byType(dataParam.get(0)); 
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
-                    .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
+                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
+                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
                     .ignoring(NoSuchElementException.class);
 
     logger.debug("Waiting for the Text to be present " + objectName);
@@ -142,8 +145,8 @@ public class WaitMethod {
     WebDriver driver = browserinitialize.getWebDriverInstance();
 
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
-                    .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
+                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
+                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
                     .ignoring(NoSuchElementException.class);
 
     wait.until(ExpectedConditions.attributeContains(objectName, dataParam.get(1),
@@ -175,8 +178,8 @@ public class WaitMethod {
     By objectName = genericMethod.byType(dataParam); 
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
-                    .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
+                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
+                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
                     .ignoring(NoSuchElementException.class);
 
     logger.debug("Waiting for the Text to be present " + objectName);
@@ -200,8 +203,8 @@ public class WaitMethod {
     By objectName = genericMethod.byType(dataParam); 
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
-                    .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
+                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
+                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
                     .ignoring(NoSuchElementException.class);
 
     logger.debug("Waiting element invisible " + objectName);
@@ -224,8 +227,8 @@ public class WaitMethod {
     By objectName = genericMethod.byType(locator); 
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
-                    .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
+                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
+                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
                     .ignoring(NoSuchElementException.class);
 
     logger.debug("Waiting element attribute not present " + objectName);
@@ -248,8 +251,8 @@ public class WaitMethod {
     By objectName = genericMethod.byType(dataParam); 
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
-                    .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
+                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
+                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
                     .ignoring(NoSuchElementException.class);
 
     logger.debug("Waiting element attribute not present " + objectName);
@@ -272,8 +275,8 @@ public class WaitMethod {
     
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
-                    .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
+                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
+                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
                     .ignoring(NoSuchElementException.class);
 
     logger.debug("Waiting for element to be clickable " + element);
@@ -296,8 +299,8 @@ public class WaitMethod {
      
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
-                    .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
+                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
+                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
                     .ignoring(NoSuchElementException.class);
 
     logger.debug("Waiting for the Text to be present " + element);
@@ -319,8 +322,8 @@ public class WaitMethod {
      
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
-                    .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
+                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
+                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
                     .ignoring(NoSuchElementException.class);
 
     logger.debug("Waiting for the Alert present");
@@ -342,8 +345,8 @@ public class WaitMethod {
     
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
-                    .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
+                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
+                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
                     .ignoring(NoSuchElementException.class);
 
     logger.debug("Waiting for the Alert present");
@@ -366,8 +369,8 @@ public class WaitMethod {
     
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
-                    .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
+                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
+                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
                     .ignoring(NoSuchElementException.class);
 
     logger.debug("Waiting for the Notification disappear " + element);
@@ -389,8 +392,8 @@ public class WaitMethod {
 
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(ConstantVariable.ExplictWait))   
-                    .pollingEvery(Duration.ofSeconds(ConstantVariable.polling))   
+                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
+                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
                     .ignoring(NoSuchElementException.class);
 
     logger.debug("Waiting for the Notification disappear " + element);

@@ -1,7 +1,7 @@
 package com.encash.offers.webdriver;
 
 
-import com.encash.offers.configuration.ConstantVariable;
+import com.encash.offers.configuration.PropertiesValue;
 import com.encash.offers.utility.ExtentReport;
 import com.encash.offers.utility.JsWaiter;
 import com.paulhammant.ngwebdriver.NgWebDriver;
@@ -36,24 +36,18 @@ public final class BrowserInitialize {
   private static JavascriptExecutor jsDriver;
   @Autowired
   private  ExtentReport extentreport;
+  @Autowired
+  private PropertiesValue properties;
+  @Autowired
+  private Desired desired;
 
 
-  /**
-   * Private constructor is made because to maintain the single browser instance.
-   */
-/*
-  private BrowserInitialize() {
-
-  }
-*/
   /**
    * This method is used to created the Web driver instance.
    * @param browserType contain which browser need to open for execution
    */
-  private static void createInstance(String browserType) {
+  private void createInstance(String browserType) {
 
-    Desired de = new Desired();
-    
     BrowserExecutionType bt = BrowserExecutionType.valueOf(browserType);
     DriverManagerType driverManagerType = DriverManagerType.valueOf(bt.binaryBrower.toUpperCase());
     WebDriverManager.getInstance(driverManagerType).setup();
@@ -64,32 +58,32 @@ public final class BrowserInitialize {
 
         //System.setProperty("webdriver.chrome.logfile",ConstantVariable
         //.Configlocation+File.separator+"log"+File.separator+"chromelog.log");
-        drivere = new ChromeDriver(de.chromeDesired());
+        drivere = new ChromeDriver(desired.chromeDesired());
         break;
 
       case FIREFOX:
 
-        drivere = new FirefoxDriver(de.firefoxDesired());
+        drivere = new FirefoxDriver(desired.firefoxDesired());
         break;
 
       case OPERA:
 
-        drivere = new OperaDriver(de.operaDesired());
+        drivere = new OperaDriver(desired.operaDesired());
         break;
 
       case EDGE:
 
-        drivere = new EdgeDriver(de.edgeDesired());
+        drivere = new EdgeDriver(desired.edgeDesired());
         break;
 
       case IEXPLORER:
 
-        drivere = new InternetExplorerDriver(de.internetExploreDesired());
+        drivere = new InternetExplorerDriver(desired.internetExploreDesired());
         break;
 
       case SAFARI:
 
-        drivere = new SafariDriver(de.safariDesired());
+        drivere = new SafariDriver(desired.safariDesired());
         break;
 
       case ANDROID_CHROME :
@@ -97,7 +91,7 @@ public final class BrowserInitialize {
       case IOS_SAFARI:
         break;
       case MOBILE_EMULATION:
-        drivere = new ChromeDriver(de.mobileSystembrowser());
+        drivere = new ChromeDriver(desired.mobileSystembrowser());
         break;
 
       default : 
@@ -122,7 +116,7 @@ public final class BrowserInitialize {
   
   public WebDriver getWebDriverInstance() {
     if (driver == null) {
-      createInstance(ConstantVariable.Test_Execution);
+      createInstance(properties.getTestBrowser());
       JsWaiter.setDriver(driver);
     }
 
@@ -149,7 +143,7 @@ public final class BrowserInitialize {
    */
   public NgWebDriver getNgWebDriverInstance() {
     if (driver == null) {
-      createInstance(ConstantVariable.Test_Execution);
+      createInstance(properties.getTestBrowser());
     }
     return ngwebdriver;
   }

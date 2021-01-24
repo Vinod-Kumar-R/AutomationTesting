@@ -2,6 +2,7 @@ package com.encash.offers.utility;
 
 import com.encash.offers.configuration.ApplicationStoreValue;
 import com.encash.offers.configuration.ConstantVariable;
+import com.encash.offers.configuration.PropertiesValue;
 import com.encash.offers.webdriver.BrowserInitialize;
 import com.encash.offers.webelement.custom.Calendar;
 import com.encash.offers.webelement.custom.MatOptions;
@@ -46,6 +47,8 @@ public class GenericMethod {
   private Calendar calendar;
   @Autowired
   private BrowserInitialize browserinitialize; 
+  @Autowired
+  private PropertiesValue properties;
  
 
   /**
@@ -164,7 +167,7 @@ public class GenericMethod {
   public String browsertype(String dataParam) {
     
     if (dataParam.equalsIgnoreCase("config")) {
-      browserinitialize.setWebDriverInstance(ConstantVariable.Test_Execution);
+      browserinitialize.setWebDriverInstance(properties.getTestBrowser());
     } else {
       browserinitialize.setWebDriverInstance(dataParam);
     }

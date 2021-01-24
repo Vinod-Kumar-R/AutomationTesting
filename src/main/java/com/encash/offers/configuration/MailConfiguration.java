@@ -2,6 +2,7 @@ package com.encash.offers.configuration;
 
 import java.io.File;
 import java.util.Properties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +34,9 @@ public class MailConfiguration {
   
   @Value("${email.username}")
   private String emailUsername;
+  
+  @Autowired
+  private PropertiesValue properties;
   
   public String getHost() {
     return host;
@@ -99,7 +103,7 @@ public class MailConfiguration {
    */
   @Bean
   public FreeMarkerConfigurationFactoryBean getFreeMarkerConfiguration() {
-    String location = "file://" + ConstantVariable.Configlocation 
+    String location = "file://" +  properties.getConfigLocation()
                     + File.separator + "properties" + File.separator;
     FreeMarkerConfigurationFactoryBean bean = new FreeMarkerConfigurationFactoryBean();
     bean.setTemplateLoaderPath(location);

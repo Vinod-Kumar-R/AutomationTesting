@@ -2,6 +2,7 @@ package com.encash.offers.mailinator;
 
 import com.encash.offers.configuration.ApplicationStoreValue;
 import com.encash.offers.configuration.ConstantVariable;
+import com.encash.offers.configuration.PropertiesValue;
 import com.encash.offers.utility.GenericMethod;
 import com.encash.offers.utility.WaitMethod;
 import com.encash.offers.webdriver.BrowserInitialize;
@@ -24,7 +25,9 @@ public class Mailinator {
   @Autowired
   private ApplicationStoreValue storevalue;
   @Autowired
-  private BrowserInitialize browserinitialize; 
+  private BrowserInitialize browserinitialize;
+  @Autowired
+  private PropertiesValue properties;
   
   /**
    * This method is used to open the mailinator URL and open the given email id.
@@ -34,7 +37,7 @@ public class Mailinator {
   public String openUrl(List<String> dataParam) {
     
     driver = browserinitialize.getWebDriverInstance();
-    driver.get(ConstantVariable.Mailinatorurl);
+    driver.get(properties.getMailinatorUrl());
     
     //wait for element present
     logger.debug("Waiting for the element present email_id ");

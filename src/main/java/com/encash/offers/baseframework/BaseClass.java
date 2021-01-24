@@ -3,6 +3,7 @@ package com.encash.offers.baseframework;
 
 import com.aventstack.extentreports.Status;
 import com.encash.offers.configuration.ConstantVariable;
+import com.encash.offers.configuration.PropertiesValue;
 import com.encash.offers.custom.exception.DuplicateValueException;
 import com.encash.offers.mail.MailContent;
 import com.encash.offers.mail.MailServiceImpl;
@@ -51,6 +52,8 @@ public class BaseClass {
   private MailServiceImpl mail;
   @Autowired
   private MailContent content;
+  @Autowired
+  private PropertiesValue properties;
 
   
   /**
@@ -84,9 +87,9 @@ public class BaseClass {
     extentReport.initializeExtentReport();
     
     //initialize the excel file for testdata and testcase
-    testData.setExcelfilename(ConstantVariable.TestDatas);
+    testData.setExcelfilename(properties.getTestdata());
     testData.setExcelsheetindex(0);
-    testCase.setExcelfilename(ConstantVariable.TestCases);
+    testCase.setExcelfilename(properties.getTestcase());
     testCase.setExcelsheetindex(0);
     
     
@@ -102,7 +105,7 @@ public class BaseClass {
     int thirdColumn = 2;
     int fourthCoumn = 3;
     //Read the Test case data
-    logger.debug("Test Case File name " + ConstantVariable.TestCases);
+    logger.debug("Test Case File name " + properties.getTestcase());
     //is not of end of testcase row
     while (!(testCase.getCellData(testcaserownumber, firstColumn).equalsIgnoreCase("end"))) {
       //if Executed column is yes then executed else skip test skip

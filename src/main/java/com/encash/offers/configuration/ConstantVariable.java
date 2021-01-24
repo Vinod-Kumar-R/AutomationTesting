@@ -30,49 +30,26 @@ import org.springframework.beans.factory.annotation.Qualifier;
  */
 public class ConstantVariable {
 
-
-  /**
-   * This variable the contain application URL in which test script need to executed. 
-   */
-  public static String EncashURL;
-  public static String AdminURL;
-  public static String LogFile;
-  public static String Test_Execution;
-  /**
-   * This variable contain the Test Script file which need to executed.
-   */
-  public static String TestDatas;
-  /**
-   * This variable contain test case file (test case ID) which which need to executed. 
-   */
-  public static String TestCases;
-  public static String TestObjects;
   public static String ExtentReportsLocation;
-  public static String ExtentReportsPropeties;
   public static String ScreenShotlocation;
-  public static int ExplictWait;
-  public static int polling;
   public static HashMap<String, Integer> TestDataRowNumber;
   public static HashMap<String, List<String>> GetObject;
-  public static boolean HeadlessBrowser;
   public static String DesiredAndroidCapability;
-  public static String AppiumURL;
   public static String ResultBaseLocation;
   public static String ResultLocation;
   public static String ResultLocation1;
   public static String ResultDatelocaton;
-  public static String Configlocation;
-  public static String Mailinatorurl;
   public static String Foldername = "AutomationResult";
+  private String environment = "encashoffers";
   private static Logger logger = LogManager.getLogger(ConstantVariable.class.getName());
   private String dateformat = "dd_MMM_yyyy";
   private String timeformat = "HH_mm_ss";
-  private ConfigurationReader cr;
+  
   @Autowired
   @Qualifier("testdata")
   private ExcelReader std;
   @Autowired
-  private PropertiesValue propertiesvalue;
+  private PropertiesValue properties;
 
 
   /**
@@ -80,16 +57,11 @@ public class ConstantVariable {
    */
   public ConstantVariable()  {
   
-    Configlocation = readEnvironmnetVariable("encashoffers");
-    //Read the properties file
-    cr = new ConfigurationReader();
-    cr.readConfig(Configlocation + File.separator + "properties" 
-                    + File.separator + "config.properties");
-
+    String location = readEnvironmnetVariable(environment);
     //Setting the logger context
     LoggerContext context = (org.apache.logging.log4j.core.LoggerContext) 
                     LogManager.getContext(false);
-    File file = new File(Configlocation + File.separator + "properties" 
+    File file = new File(location + File.separator + "properties" 
                     + File.separator + "log4j2.xml");
     context.setConfigLocation(file.toURI());
     //initializeVariable();
@@ -99,31 +71,14 @@ public class ConstantVariable {
    * This method is used to initialize the environment variable.
    */
   public void initializeVariable() {
-   
-  
 
     //setting the properties value 
-    ResultBaseLocation = Configlocation + File.separator + "Result";
-    Test_Execution = cr.getConfigurationStringValue("test_execution");
+    ResultBaseLocation = properties.getConfigLocation() + File.separator + "Result";
     ResultDatelocaton = dateTime(dateformat, ResultBaseLocation);
     ResultLocation = dateTime(timeformat, ResultDatelocaton);
     ResultLocation1 = ResultLocation + File.separator + Foldername;
     ExtentReportsLocation = ResultLocation1 + File.separator + "encashoffer.html";
     ScreenShotlocation = folderCreation(ResultLocation1, "ScreenShot");
-    EncashURL = propertiesvalue.getEncashUrl();
-    //EncashURL = cr.getConfigurationStringValue("encashurl");
-    AdminURL = cr.getConfigurationStringValue("adminurl");
-    TestDatas = cr.getConfigurationStringValue("testData");
-    TestCases = cr.getConfigurationStringValue("testcase");
-    TestObjects = cr.getConfigurationStringValue("testobject");
-    ExtentReportsPropeties = Configlocation + File.separator + "properties" 
-                    + File.separator + "extentreportpropertes.xml";
-    ExplictWait = cr.getConfigurationIntValue("explictwait");
-    polling = cr.getConfigurationIntValue("polling");
-    HeadlessBrowser = cr.getConfigurationBooleanValue("headlessbrowser");
-    AppiumURL = cr.getConfigurationStringValue("appiumServerurl");
-    Mailinatorurl = cr.getConfigurationStringValue("mailinatorurl");
-    
   }
 
   /**
@@ -148,7 +103,7 @@ public class ConstantVariable {
     }
 
     std.closeWorkbook();
-    logger.debug("found the testcase in the TestDatas" + ConstantVariable.TestDatas 
+    logger.debug("found the testcase in the TestDatas" + properties.getTestdata() 
                     + "in the row number ");
   }
 
@@ -171,7 +126,7 @@ public class ConstantVariable {
     Set<String> duplicateValue = new HashSet<String>();
     ConstantVariable.GetObject = new HashMap<String, List<String>>();
     
-    FileReader file = new FileReader(TestObjects);
+    FileReader file = new FileReader(properties.getTestobject());
 
     List<RepositoryBean> repositoryobject = new CsvToBeanBuilder<RepositoryBean>(file)
                     .withType(RepositoryBean.class).build().parse();

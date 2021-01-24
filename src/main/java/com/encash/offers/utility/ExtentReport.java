@@ -11,6 +11,7 @@ import com.aventstack.extentreports.model.context.NamedAttributeContextManager;
 import com.aventstack.extentreports.reporter.ExtentKlovReporter;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.encash.offers.configuration.ConstantVariable;
+import com.encash.offers.configuration.PropertiesValue;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +20,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.Interval;
 import org.joda.time.Period;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 
@@ -38,6 +40,8 @@ public class ExtentReport {
   private String css1 = ".col-md-4 { -webkit-box-flex: 0; -ms-flex: 0 0 33.333333%; "
                   + "flex: 0 0 33.333333%; max-width: 100%;} "
                   + ".table td, .table th {vertical-align: middle; white-space: nowrap; }";
+  @Autowired
+  private PropertiesValue properties;
 
 
   /**
@@ -48,7 +52,7 @@ public class ExtentReport {
     this.spark.config().setCss(css1);
 
     try {
-      this.spark.loadXMLConfig(ConstantVariable.ExtentReportsPropeties);
+      this.spark.loadXMLConfig(properties.getExtentReportsPropeties());
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -57,8 +61,8 @@ public class ExtentReport {
     this.extent.setSystemInfo("Organization", "Enchashes");
     this.extent.setSystemInfo("OS Version number", System.getProperty("os.version"));
     this.extent.setSystemInfo("Build Number", "Need to fetch the Build Number");
-    this.extent.setSystemInfo("Encash URL", ConstantVariable.EncashURL);
-    this.extent.setSystemInfo("Admin URL", ConstantVariable.AdminURL);
+    this.extent.setSystemInfo("Encash URL", properties.getEncashUrl());
+    this.extent.setSystemInfo("Admin URL", properties.getAdminUrl());
     this.extent.attachReporter(this.spark);
   }
 
