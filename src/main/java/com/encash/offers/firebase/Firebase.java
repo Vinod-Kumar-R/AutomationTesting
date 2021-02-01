@@ -149,5 +149,21 @@ public class Firebase {
 
     return "pass";
   }
+  
+  
+  public String firebaseLogin1(List<String> dataParam) {
+    
+    driver = browserinitialize.getWebDriverInstance();
+    driver.get(properties.getFirebaseUrl());
+    
+    logger.debug("waiting for firebase sign in button");
+    waitmethod.waitForElementVisible("firebaselogin");
+    WebElement element = genericmethod.getElement("firebaselogin");
+    element.click();
+    
+    
+    
+    return "pass";
+  }
 
 }

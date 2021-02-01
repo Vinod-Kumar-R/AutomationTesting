@@ -306,6 +306,8 @@ public class Admin {
     element = genericmethod.getElement("logout_admin");
     element.click();
     
+    genericmethod.refreshPage();
+    
     return "pass";
     
   }
@@ -326,14 +328,122 @@ public class Admin {
 
     logger.debug("click on the competition search box");
     element = genericmethod.getElement("competititon_search_result");
+    waitmethod.waitThread();
     genericmethod.matTable(element, dataParam.get(0));
+    
+    return "pass";
+  }
+  
+  /**
+   * This method is used to click on the question tab and click on add button.  
+   * @param dataParam 
+   * @return
+   */
+  public String questionnairesTab(List<String> dataParam) {
     
     logger.debug("click on the question tab");
     waitmethod.waitForElementPresent("competition_tab");
-    element = genericmethod.getElement("competition_tab");
-    genericmethod.tabselect(element, dataParam.get(1));
+    WebElement element = genericmethod.getElement("competition_tab");
+    genericmethod.tabselect(element, dataParam.get(0));
+    
+    //click on the questionnaries button for first time
+    if (dataParam.get(1).equalsIgnoreCase("yes")) {
+      logger.debug("click on the Add questionnaires click");
+      element = genericmethod.getElement("competition_question_button");
+      waitmethod.waitForElementClickable(element);
+      element.click();
+    }
+    
+    return "pass";
+  }
+  
+  
+  /**
+   * This method is used to add the questionnaires in competition.
+   * @param dataParam contain the data
+   * @return pass if execution success
+   */
+  public String questionnariesCreate(List<String> dataParam) {
+
+    WebElement element = genericmethod.getElement("competition_questionaries_list");
+
+    if (dataParam.get(0).equalsIgnoreCase("New")) {
+      logger.debug("Create a new row for questionnnaries");
+      genericmethod.createNewQuesetionnariesRow(element);
+      logger.debug("select the questinnaries from dropdown list");
+      genericmethod.newQuestionnaire(element, dataParam.get(1));
+    } else {
+      genericmethod.newQuestionnaire(element, dataParam.get(1));
+    }
+
+    logger.debug("Save the questionnaires");
+    genericmethod.saveQuestionnaries(element);
+    
+   /* logger.debug("waiting for the notification");
+    element = genericmethod.getElement("notification");
+    waitmethod.waitForNotificationAppear(element);
+    waitmethod.waitForNotificationDisAppear(element);
+   */ 
+
+    return "pass";
+
+  }
+  
+  public String questionnariesDelete(List<String> dataParam) {
+    
+    WebElement element = genericmethod.getElement("competition_questionaries_list");
+    
+    logger.debug("delete the questionnaries row");
+    genericmethod.deleteQuestionnariesRow(element, dataParam.get(0));
+    
+    
+    return "pass";
+  }
+  
+  public String leveltab(List<String> dataParam) {
+    
+    logger.debug("click on the level tab");
+    waitmethod.waitForElementPresent("competition_tab");
+    WebElement element = genericmethod.getElement("competition_tab");
+    genericmethod.tabselect(element, dataParam.get(0));
+    
+    //click on the levels button for first time
+    if (dataParam.get(1).equalsIgnoreCase("yes")) {
+      logger.debug("clicking on the add level button");
+      element = genericmethod.getElement("add_levels");
+      waitmethod.waitForElementVisible(element);
+      element.click();
+    }
+    
+    return "pass";
+  }
+  
+  public String levels(List<String> dataParam) {
+    
+    logger.debug("getting the base element for levels");
+    WebElement element = genericmethod.getElement("competition_levels_base");
+
+    if (!dataParam.get(0).equalsIgnoreCase("New")) {
+      logger.debug("selecting the questionnaires for levels");
+      genericmethod.selectLevelsQuestionnaries(element, dataParam.get(1));
+    } else {
+      logger.debug("click creating the new level to add");
+      genericmethod.createNewLevelsRow(element);
+      logger.debug("selecting the questionnaires for levels");
+      genericmethod.selectLevelsQuestionnaries(element, dataParam.get(1));
+    }
+
+    genericmethod.levelSave(element);
+    
+    logger.debug("waiting for the notification");
+    waitmethod.waitForElementPresent("notification");
+    element = genericmethod.getElement("notification");
+    waitmethod.waitForNotificationAppear(element);
+    waitmethod.waitForNotificationDisAppear(element);
 
     return "pass";
   }
+  
+  
 
 }

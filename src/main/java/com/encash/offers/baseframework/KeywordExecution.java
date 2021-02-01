@@ -241,6 +241,12 @@ public class KeywordExecution {
         testResult("Pass", keyword.toString());
         break;
         
+      case switchdriver:
+        genericMethod.switchDriver(dataParam.get(0));
+        logger.debug("swtich Driver instance");
+        testResult("Pass", keyword.toString());
+        break;
+        
       case newtab:
         genericMethod.newTab();
         logger.debug("crete new Tab in browser");
@@ -295,6 +301,61 @@ public class KeywordExecution {
         status = admin.searchCompetition(dataParam);
         testResult(status, keyword.toString());
         break;
+        
+      case questionnaires:
+        logger.debug("creating the new questionnaires");
+        status = admin.questionnariesCreate(dataParam);
+        testResult(status, keyword.toString());
+        break;
+        
+      case questionnariesdelete:
+        logger.debug("Deleting the questionnaries");
+        status = admin.questionnariesDelete(dataParam);
+        testResult(status, keyword.toString());
+        break;
+        
+      case levels:
+        logger.debug("creating the levels");
+        status = admin.levels(dataParam);
+        testResult(status, keyword.toString());
+        break;
+        
+      case questionnairestab:
+        logger.debug("questnnaires tab");
+        status = admin.questionnairesTab(dataParam);
+        testResult(status, keyword.toString());
+        break;
+        
+      case leveltab:
+        logger.debug("Levels tab");
+        status = admin.leveltab(dataParam);
+        testResult(status, keyword.toString());
+        break;
+        
+      case emailencash:
+        logger.debug("Email encash");
+        status = encash.emailEncash(dataParam);
+        testResult(status, keyword.toString());
+        break;
+     
+      case firebaselogin1:
+        logger.debug("firebase login");
+        status = firebase.firebaseLogin1(dataParam);
+        testResult(status, keyword.toString());
+        break;
+      
+      case browserswitch:
+        logger.debug("Switching the browser");
+        status = genericMethod.browserSwtich(dataParam);
+        testResult(status, keyword.toString());
+        break;
+        
+      case closebrowser:
+        logger.debug("closing the browser");
+        genericMethod.browserClose();
+        testResult("pass", keyword.toString());
+        break;
+        
 
       default: logger.debug("Invalid Keyword");
 

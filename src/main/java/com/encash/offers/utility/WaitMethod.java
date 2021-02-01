@@ -1,12 +1,13 @@
 package com.encash.offers.utility;
 
-import com.encash.offers.configuration.ConstantVariable;
 import com.encash.offers.configuration.PropertiesValue;
 import com.encash.offers.custom.wait.CustomWait;
 import com.encash.offers.webdriver.BrowserInitialize;
 import com.paulhammant.ngwebdriver.NgWebDriver;
 import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -182,7 +183,7 @@ public class WaitMethod {
                     .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
                     .ignoring(NoSuchElementException.class);
 
-    logger.debug("Waiting for the Text to be present " + objectName);
+    logger.debug("Waiting for the element to be present " + objectName);
     wait.until(ExpectedConditions.presenceOfElementLocated(objectName));
 
     waitstatus = true;
@@ -239,6 +240,56 @@ public class WaitMethod {
 
   }
   
+  
+
+  /**
+   * This method is used to wait for attributed not present in particular DOM.
+   * @param locator is of type string
+   * @param attributeName is of type string
+   * @return it return the status "pass" if execution success else fail
+   */
+  public String waitForElementAttributeNotPresent(WebElement element, String attributeName) {
+
+    WebDriver driver = browserinitialize.getWebDriverInstance();
+     
+    waitstatus = false;
+    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
+                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
+                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
+                    .ignoring(NoSuchElementException.class);
+
+    logger.debug("Waiting element attribute not present " + element);
+    wait.until(CustomWait.attributedNotPresent(element, attributeName));
+
+    waitstatus = true;
+    return "pass";
+
+  }
+  
+  /**
+   * This method is used to wait for attributed not present in particular DOM.
+   * @param locator is of type string
+   * @param attributeName is of type string
+   * @return it return the status "pass" if execution success else fail
+   */
+  public String waitForElementAttributePresent(WebElement element, String attributeName) {
+
+    WebDriver driver = browserinitialize.getWebDriverInstance();
+     
+    waitstatus = false;
+    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
+                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
+                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
+                    .ignoring(NoSuchElementException.class);
+
+    logger.debug("Waiting element attribute not present " + element);
+    wait.until(CustomWait.attributedNotPresent(element, attributeName));
+
+    waitstatus = true;
+    return "pass";
+
+  }
+  
   /**
    * This method is used to wait until element is click able.
    * @param dataParam
@@ -255,7 +306,7 @@ public class WaitMethod {
                     .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
                     .ignoring(NoSuchElementException.class);
 
-    logger.debug("Waiting element attribute not present " + objectName);
+    logger.debug("Waiting element clickable " + objectName);
     wait.until(ExpectedConditions.elementToBeClickable(objectName));
 
     waitstatus = true;
@@ -349,7 +400,7 @@ public class WaitMethod {
                     .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
                     .ignoring(NoSuchElementException.class);
 
-    logger.debug("Waiting for the Alert present");
+    logger.debug("Waiting for the staleness element");
     wait.until(ExpectedConditions.stalenessOf(element));
    
     waitstatus = true;
@@ -396,11 +447,28 @@ public class WaitMethod {
                     .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
                     .ignoring(NoSuchElementException.class);
 
-    logger.debug("Waiting for the Notification disappear " + element);
+    logger.debug("Waiting for the Notification appear " + element);
     wait.until(CustomWait.notificationappear(element));
 
     waitstatus = true;
     return "pass";
+  }
+  
+  
+  public String waitForimplicitWait() {
+    
+    WebDriver driver = browserinitialize.getWebDriverInstance();
+    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+    return "pass";
+  }
+  
+  public void waitThread() {
+    try {
+      Thread.sleep(2000);
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
   
 }

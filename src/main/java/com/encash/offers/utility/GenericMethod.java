@@ -5,6 +5,8 @@ import com.encash.offers.configuration.ConstantVariable;
 import com.encash.offers.configuration.PropertiesValue;
 import com.encash.offers.webdriver.BrowserInitialize;
 import com.encash.offers.webelement.custom.Calendar;
+import com.encash.offers.webelement.custom.CreateQuestionnaire;
+import com.encash.offers.webelement.custom.Levels;
 import com.encash.offers.webelement.custom.MatOptions;
 import com.encash.offers.webelement.custom.MatTable;
 import com.encash.offers.webelement.custom.TabList;
@@ -29,6 +31,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -49,6 +52,16 @@ public class GenericMethod {
   private BrowserInitialize browserinitialize; 
   @Autowired
   private PropertiesValue properties;
+  @Autowired
+  private WaitMethod waitmethod;
+  @Autowired
+  private CreateQuestionnaire questinnaire;
+  @Autowired
+  private MatOptions options;
+  @Autowired
+  private MatTable mattable;
+  @Autowired
+  private Levels levels;
  
 
   /**
@@ -60,6 +73,7 @@ public class GenericMethod {
    */
   public String click(String dataParam)  {
     WebElement element = getElement(dataParam);
+    waitmethod.waitForElementClickable(element);
     element.click();
     return "pass";
   }
@@ -173,6 +187,41 @@ public class GenericMethod {
     }
     return "pass";
   }
+  
+  /**
+   * This method is used to stored the current window information
+   * and switch to newly created window of type browser.
+   * @param dataParam
+   * @return
+   */
+  public String browserSwtich(List<String> dataParam) {
+    
+    currentDriver(dataParam.get(0));
+    browserinitialize.setSwitchDriverInstance(dataParam.get(1));
+  
+    return "pass";
+  }
+  
+  public void currentDriver(String key) {
+    EventFiringWebDriver driver = (EventFiringWebDriver) browserinitialize.getWebDriverInstance();
+    //String uniquename = driver.getWindowHandle();
+    //storevalue.windowHandle.put(key, uniquename);
+    storevalue.driverinstance.put(key, driver);
+ 
+  }
+  
+  public void switchDriver(String key) {
+    EventFiringWebDriver driver = storevalue.driverinstance.get(key);
+    logger.debug("dirver instance restore " + driver);
+    browserinitialize.setDriverInstance(driver);
+  }
+  
+  public void browserClose() {
+    browserinitialize.closeBrowser();
+  }
+
+  
+  
 
   /**
    * This method is used to scroll until WebElement is view in web page.
@@ -327,7 +376,9 @@ public class GenericMethod {
    * @param textSelect text to select
    */
   public void matOption(WebElement element, String textSelect) {
-    MatOptions options = new MatOptions(element);
+   // MatOptions options = new MatOptions(element);
+    options.setOptions(element);
+    logger.debug("Selecting the options from dropdown " + textSelect);
     options.selectVisibleText(textSelect);
   }
   
@@ -337,7 +388,8 @@ public class GenericMethod {
    * @param dataParam contain the list of data which need to select
    */
   public void matOptions(WebElement element, List<String> dataParam) {
-    MatOptions options = new MatOptions(element);
+    //MatOptions options = new MatOptions(element);
+    options.setOptions(element);
     options.multipleSelectText(dataParam);
   }
   
@@ -359,8 +411,15 @@ public class GenericMethod {
    * @param data is used to click on the cell
    */
   public void matTable(WebElement element, String data) {
-    MatTable mattable = new MatTable(element);
+    mattable.setTable(element);
     mattable.selectdata(data);
+  }
+  
+  public void matTableRefresh(WebElement element) {
+    mattable.setTable(element);
+    WebElement firstrow =  mattable.waitMatTable();
+    waitmethod.waitForElementAttributeNotPresent(firstrow, "style");
+    //waitmethod.waitForStalenessElement(element);
   }
   
   /**
@@ -372,6 +431,56 @@ public class GenericMethod {
     TabList tab = new TabList(element);
     tab.selectTab(tabname);
   }
+  
+  public void newQuestionnaire(WebElement element, String selectText) {
+    questinnaire.setElement(element);
+    questinnaire.selectquestionnaries();
+    WebElement listdata = getElement("competition_questionnaries_list_data");
+    waitmethod.waitForElementVisible(listdata);
+    matOption(listdata, selectText);
+  }
+  
+  public void createNewQuesetionnariesRow(WebElement element) {
+    questinnaire.setElement(element);
+    questinnaire.createNewQuestionnaries();
+  }
+  
+  public void saveQuestionnaries(WebElement element) {
+    questinnaire.setElement(element);
+    questinnaire.saveQuestionnaries();
+  }
+  
+  public void deleteQuestionnariesRow(WebElement element, String deleteText) {
+    questinnaire.setElement(element);
+    questinnaire.deleteQuestionnaries(deleteText);
+  }
+  
+  public void createNewLevelsRow(WebElement element) {
+    levels.setElement(element);
+    levels.createLevels();
+  }
+  
+  public void selectLevelsQuestionnaries(WebElement element, String selectText) {
+    levels.setElement(element);
+    levels.selectQuestionnairesLevel();
+    WebElement listdata = getElement("competition_questionnaries_list_data");
+    waitmethod.waitForElementVisible(listdata);
+    matOption(listdata, selectText);
+    
+  }
+
+  public void refreshPage() {
+
+    WebDriver driver = browserinitialize.getWebDriverInstance();
+    driver.navigate().refresh();
+  }
+  
+  public void levelSave(WebElement element) {
+    
+    levels.setElement(element);
+    levels.saveLevels();
+  }
+  
   
   /**
    * This method is used to zip a folder.

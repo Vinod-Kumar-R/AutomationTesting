@@ -7,21 +7,20 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
-public class AttributedNotPresent implements ExpectedCondition<Boolean> {
-
-
-  private static Logger logger = LogManager.getLogger(AttributedNotPresent.class.getName());
+public class AttributedPresent implements ExpectedCondition<Boolean> {
+  
+  private static Logger logger = LogManager.getLogger(AttributedPresent.class.getName());
 
   private By byType;
   private String attributeName;
   private WebElement element;
 
-  public AttributedNotPresent(final By byType, final String attributeName) {
+  public AttributedPresent(final By byType, final String attributeName) {
     this.byType = byType;
     this.attributeName = attributeName;
   }
 
-  public AttributedNotPresent(final WebElement element, final String attributeName) {
+  public AttributedPresent(final WebElement element, final String attributeName) {
     this.element = element;
     this.attributeName = attributeName;
   }
@@ -38,16 +37,13 @@ public class AttributedNotPresent implements ExpectedCondition<Boolean> {
     }
     String status = element.getAttribute(this.attributeName);
     logger.debug("xpath " + this.byType);
-    logger.debug("custom wait implement by " + status);
-    if (null == status) {
-      logger.debug("return true");
+    logger.debug("custom wait implated by " + status);
+    if (null != status) {
       return true;
     }
-    logger.debug("return false");
     return false;
   }
 
 
+
 }
-
-

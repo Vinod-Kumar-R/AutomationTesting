@@ -26,8 +26,12 @@ public class Calendar {
    * This method is used to click on the Year to display it.
    */
   private void monthYearview() {
+    logger.debug("click on the montyyearview button");
+    waitmethod.waitForElementPresent("calender_monthyearview");
     WebElement monthyearview = genericmethod.getWebElement(calendar, "calender_monthyearview");
+    waitmethod.waitForElementClickable(monthyearview);
     monthyearview.click();
+    logger.debug("click on the month year view button");
   }
   
   
@@ -36,8 +40,10 @@ public class Calendar {
    * @param year should me in YYYY
    */
   private void yearSelect(String year) {
+    logger.debug("click on the year table");
     waitmethod.waitForElementPresent("calender_years");
     WebElement yeartable = genericmethod.getWebElement(calendar, "calender_years");
+    waitmethod.waitForElementClickable(yeartable);
     Table table = new Table(yeartable);
     table.selectdata(year);
     
@@ -48,6 +54,7 @@ public class Calendar {
    * @param month should be in MMM i.e. JAN
    */
   private void monthSelect(String month) {
+    logger.debug("click on the Month table");
     waitmethod.waitForElementPresent("calender_month");
     WebElement monthtable = genericmethod.getWebElement(calendar, "calender_month");
     Table table = new Table(monthtable);
@@ -59,6 +66,7 @@ public class Calendar {
    * @param date should be in D i.e 1, 5 or 10
    */
   private void dateSelect(String date) {
+    logger.debug("clicking on the date table");
     waitmethod.waitForElementPresent("calender_date");
     WebElement datetable = genericmethod.getWebElement(calendar, "calender_date");
     Table table = new Table(datetable);

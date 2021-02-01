@@ -48,14 +48,12 @@ public class Desired {
     }
     chrome.addArguments("--start-maximized");
     chrome.addArguments("enable-javascript");
-    /*
-    chrome.addArguments("user-data-dir=C:\\Users\\HP\\AppData\\Local"
-                    + "\\Google\\Chrome\\User Data\\Profile 1");
-    chrome.addArguments("--profile-directory=Profile 2");
-     */
+    //chrome.addArguments("--disable-notifications");
+
     Map<String, Object> prefs = new HashMap<String, Object>();
     prefs.put("credentials_enable_service", false);
     prefs.put("profile.password_manager_enabled", false);
+    prefs.put("profile.default_content_setting_values.notifications", 2);
 
     chrome.setExperimentalOption("prefs", prefs);
     return chrome;

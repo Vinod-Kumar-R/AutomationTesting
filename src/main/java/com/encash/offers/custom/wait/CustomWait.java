@@ -18,6 +18,20 @@ public class CustomWait {
     logger.debug("calling the custom wait method AttributedNotPresent");
     return new AttributedNotPresent(byType, attributeName);
   }
+  
+  public static ExpectedCondition<Boolean> attributedNotPresent(WebElement element, 
+                  String attributeName) {
+    logger.debug("calling the custom wait method AttributedNotPresent");
+    return new AttributedNotPresent(element, attributeName);
+    
+  }
+  
+  public static ExpectedCondition<Boolean> attributedPresent(WebElement element, 
+                  String attributeName) {
+    logger.debug("calling the custom wait method AttributedNotPresent");
+    return new AttributedNotPresent(element, attributeName);
+    
+  }
 
   public static ExpectedCondition<Boolean> someTextPresent(WebElement element) {
     logger.debug("Calling the Custom wait method Where some text to be present in WebElement");

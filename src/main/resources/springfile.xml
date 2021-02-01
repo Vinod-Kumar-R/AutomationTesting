@@ -40,6 +40,9 @@
     <bean id="mailService" class="com.encash.offers.mail.MailServiceImpl"></bean>
     <bean id="firebase" class="com.encash.offers.firebase.Firebase"></bean>
     <bean id="calender" class="com.encash.offers.webelement.custom.Calendar"></bean>
-    
+    <bean id="competitionquestionnarie" class="com.encash.offers.webelement.custom.CreateQuestionnaire"></bean>
+    <bean id="matoptions" class="com.encash.offers.webelement.custom.MatOptions"></bean>
+    <bean id="mattable" class="com.encash.offers.webelement.custom.MatTable"></bean>
+    <bean id="levels" class="com.encash.offers.webelement.custom.Levels"></bean>
       
 </beans>

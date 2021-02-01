@@ -136,6 +136,25 @@ public final class BrowserInitialize {
       JsWaiter.setDriver(driver);
     }
   }
+  
+  public void setSwitchDriverInstance(String browserType) {
+    if (driver != null) {
+      driver = null;
+      createInstance(browserType);
+      JsWaiter.setDriver(driver);
+    }
+  }
+  
+  public void setDriverInstance(EventFiringWebDriver driver) {
+    this.driver = driver;
+    this.driver.manage().window().maximize();
+  }
+  
+  public void closeBrowser() {
+    driver.close();
+  }
+  
+  
 
   /**
    * this method is used to ngwebdriver instance. 
