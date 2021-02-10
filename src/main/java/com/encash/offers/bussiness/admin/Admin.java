@@ -228,6 +228,7 @@ public class Admin {
     
     logger.debug("click on the Encash button");
     element = genericmethod.getElement("competitions");
+    waitmethod.waitForElementClickable(element);
     element.click();
 
     logger.debug("Waiting for the Angular request completed");

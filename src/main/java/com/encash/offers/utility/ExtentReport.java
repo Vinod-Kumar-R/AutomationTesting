@@ -12,6 +12,8 @@ import com.aventstack.extentreports.reporter.ExtentKlovReporter;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.encash.offers.configuration.ConstantVariable;
 import com.encash.offers.configuration.PropertiesValue;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -48,11 +50,17 @@ public class ExtentReport {
    * This method is used to initialize extent report.
    */
   public void initializeExtentReport() {
+ 
+    this.klov = new ExtentKlovReporter();
     this.spark = new ExtentSparkReporter(ConstantVariable.ExtentReportsLocation);
     this.spark.config().setCss(css1);
-
+    
     try {
       this.spark.loadXMLConfig(properties.getExtentReportsPropeties());
+      if (properties.isKlov()) {
+        this.klov.loadInitializationParams(new FileInputStream(
+                        new File(properties.getklovrproperties())));
+      }
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -63,7 +71,12 @@ public class ExtentReport {
     this.extent.setSystemInfo("Build Number", "Need to fetch the Build Number");
     this.extent.setSystemInfo("Encash URL", properties.getEncashUrl());
     this.extent.setSystemInfo("Admin URL", properties.getAdminUrl());
-    this.extent.attachReporter(this.spark);
+    
+    if (properties.isKlov()) {
+      this.extent.attachReporter(this.spark, this.klov);
+    } else {
+      this.extent.attachReporter(this.spark);
+    }
   }
 
   /**

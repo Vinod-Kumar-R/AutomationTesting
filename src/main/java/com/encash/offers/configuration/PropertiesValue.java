@@ -54,6 +54,20 @@ public class PropertiesValue {
   @Value("${encashoffers}")
   private String configLocation;
   
+  @Value("${encashoffers}/properties/klov.properties")
+  private String klovrproperties;
+  
+  @Value("${klov}")
+  private boolean isKlov;
+  
+  public boolean isKlov() {
+    return isKlov;
+  }
+
+  public String getklovrproperties() {
+    return klovrproperties;
+  }
+
   public String getConfigLocation() {
     return configLocation;
   }

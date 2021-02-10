@@ -527,7 +527,12 @@ public class Encash {
     return "pass";
   }
   
-  public String emailEncash(List<String>dataParam) {
+  /**
+   * This method is used to verify the email or skip the email verification.
+   * @param dataParam data to verify
+   * @return
+   */
+  public String emailEncash(List<String> dataParam) {
     
     WebElement element;
 

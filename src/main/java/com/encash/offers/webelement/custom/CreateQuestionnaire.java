@@ -29,7 +29,7 @@ public class CreateQuestionnaire {
   public int getNumberofQuestionnaires() {
     int row = element.findElements(By.xpath("div")).size();
     // total row minus 2 is because to get only question not with save and save all product
-    return row - 2;
+    return row - 1;
   }
 
   /**
