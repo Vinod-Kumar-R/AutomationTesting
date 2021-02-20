@@ -191,8 +191,8 @@ public class GenericMethod {
   /**
    * This method is used to stored the current window information
    * and switch to newly created window of type browser.
-   * @param dataParam
-   * @return
+   * @param dataParam contain the browser info
+   * @return "pass" if execution success
    */
   public String browserSwtich(List<String> dataParam) {
     
@@ -202,14 +202,20 @@ public class GenericMethod {
     return "pass";
   }
   
+  /**
+   * This method is used to store the current Driver instance.
+   * @param key contain the name in which it has to store.
+   */
   public void currentDriver(String key) {
     EventFiringWebDriver driver = (EventFiringWebDriver) browserinitialize.getWebDriverInstance();
-    //String uniquename = driver.getWindowHandle();
-    //storevalue.windowHandle.put(key, uniquename);
     storevalue.driverinstance.put(key, driver);
  
   }
   
+  /**
+   * This method is used to switch between Driver instance.
+   * @param key contain the name of instance key to which it has to set
+   */
   public void switchDriver(String key) {
     EventFiringWebDriver driver = storevalue.driverinstance.get(key);
     logger.debug("dirver instance restore " + driver);
@@ -368,6 +374,15 @@ public class GenericMethod {
     Actions action = new Actions(driver);
     action.moveToElement(element).build().perform();
     
+  }
+  
+  /**
+   * This method is used to click on the hyperlink.
+   * @param dataParam contain the hyperlink text with a tag
+   */
+  public void goToLink(String dataParam) {
+    WebElement element = getElement(dataParam);
+    element.click();
   }
   
   /**

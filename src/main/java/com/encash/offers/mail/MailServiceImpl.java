@@ -80,7 +80,7 @@ public class MailServiceImpl {
          * Additionally, let's add a resource as an attachment as well.
          */
         //helper.addAttachment("cutie.png", new ClassPathResource("linux-icon.png"));
-        helper.addAttachment(ConstantVariable.Foldername + ".zip", report.getAutomationresult());
+        //helper.addAttachment(ConstantVariable.Foldername + ".zip", report.getAutomationresult());
 
       }
     };

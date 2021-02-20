@@ -20,11 +20,6 @@ public class MatOptions {
   WebElement options;
   private static Logger logger = LogManager.getLogger(MatOptions.class);
 
- /* public MatOptions(WebElement options) {
-    super();
-    this.options = options;
-  }
-*/
   public void setOptions(WebElement options) {
     this.options = options;
   }
@@ -35,7 +30,7 @@ public class MatOptions {
    */
   public void selectVisibleText(String optionText) {
     WebElement option = this.options.findElement(By.xpath(
-                    ".//mat-option[normalize-space(.) = " + Quotes.escape(optionText) + "]"));
+                    "//mat-option[normalize-space(.) = " + Quotes.escape(optionText) + "]"));
     logger.debug("scroll to element");
     //genericmethod.scrolltoelement(option);
     logger.debug("click on the options");

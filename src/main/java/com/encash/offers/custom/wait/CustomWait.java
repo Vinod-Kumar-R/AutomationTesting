@@ -29,7 +29,7 @@ public class CustomWait {
   public static ExpectedCondition<Boolean> attributedPresent(WebElement element, 
                   String attributeName) {
     logger.debug("calling the custom wait method AttributedNotPresent");
-    return new AttributedNotPresent(element, attributeName);
+    return new AttributedPresent(element, attributeName);
     
   }
 

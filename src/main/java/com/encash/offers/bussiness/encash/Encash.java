@@ -6,6 +6,7 @@ import com.encash.offers.configuration.ApplicationStoreValue;
 import com.encash.offers.utility.ExtentReport;
 import com.encash.offers.utility.GenericMethod;
 import com.encash.offers.utility.WaitMethod;
+import com.encash.offers.webelement.custom.MandatoryQuestion;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +32,8 @@ public class Encash {
   private ExtentReport extentReport;
   @Autowired
   private ApplicationStoreValue storevalue;
+  @Autowired
+  private MandatoryQuestion mandatoryquestions; 
 
 
   /**
@@ -374,6 +377,9 @@ public class Encash {
 
       }
     }
+    
+    logger.debug("waiting for the loadcontainer invisiable");
+    waitmethod.waitForElementInvisible("lodercontainer");
 
     return "pass";
 
@@ -388,6 +394,7 @@ public class Encash {
    * <br> dataParam[1] to dataParam[9] contain the answer option to select
    * @return the status as "pass" if script executed success else "fail" 
    */
+  @Deprecated
   public String mandatoryquestion(List<String> dataParam) {
 
     //First question is drop down
@@ -529,8 +536,8 @@ public class Encash {
   
   /**
    * This method is used to verify the email or skip the email verification.
-   * @param dataParam data to verify
-   * @return
+   * @param dataParam contain any of the data i.e. "skip" or "verify"
+   * @return "pass" if execution is success
    */
   public String emailEncash(List<String> dataParam) {
     
@@ -547,6 +554,62 @@ public class Encash {
 
     }
 
+    return "pass";
+  }
+  
+  /**
+   * This method is used to click on the participate button.
+   * @return "pass" if execution is success
+   */
+  public String competationparticpate() {
+    
+    logger.debug("click on the Participate button");
+    WebElement element = genericmethod.getElement("competition_play");
+    waitmethod.waitForElementClickable(element);
+    element.click();
+    
+    logger.debug("Waiting for the lodercontainer invisiable");
+    waitmethod.waitForElementInvisible("lodercontainer");
+    
+    return "pass";
+  }
+  
+  /**
+   * This method is used to answer and verify the mandatory question.
+   * @param dataParam dataParam[0] contain the question data 
+   dataParam remaining contain answer
+   * @return "pass" if execution success else "fail" any verification not pass
+   */
+  public String mandatoryQuesetion(List<String> dataParam) {
+    
+    logger.debug("wait for to load question");
+    waitmethod.waitForElementPresent("mandatory_question_base");
+    
+    WebElement element = genericmethod.getElement("mandatory_question_base");
+    mandatoryquestions.setElement(element);
+    
+    Boolean status = mandatoryquestions.verifyQuestion(dataParam.get(0));
+    
+    if (!status) {
+      logger.debug("Question content are not correct");
+      return "fail";
+    }
+    
+    //remove the first element in the dataParam so that we will get only answer need to select
+    List<String> answers = dataParam;
+    answers.remove(0);
+    
+    for (String answer : answers) {
+      status = mandatoryquestions.selectAnswer(answer);
+      
+      if (!status) {
+        logger.debug("answer not found ");
+        return "fail";
+      }
+    }
+    
+    mandatoryquestions.nextQuestion();
+    
     return "pass";
   }
 

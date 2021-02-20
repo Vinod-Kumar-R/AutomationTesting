@@ -1,7 +1,12 @@
 package com.encash.offers.beanclass;
 
+import com.aventstack.extentreports.model.Category;
+import com.aventstack.extentreports.model.Test;
+import com.aventstack.extentreports.model.context.NamedAttributeContext;
 import java.io.File;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 import org.joda.time.Period;
 
 public class ExtentReportBean {
@@ -21,9 +26,45 @@ public class ExtentReportBean {
   private String browsername;
   private String browserversion;
   private File automationresult;
+  private Set<NamedAttributeContext<Category>> categeorys;
+  private List<Test> failTest;
+  private List<Test> passTest;
+  private List<Test> skipTest;
 
   public File getAutomationresult() {
     return automationresult;
+  }
+
+  public Set<NamedAttributeContext<Category>> getCategeorys() {
+    return categeorys;
+  }
+
+  public void setCategeorys(Set<NamedAttributeContext<Category>> categeorys) {
+    this.categeorys = categeorys;
+  }
+
+  public List<Test> getFailTest() {
+    return failTest;
+  }
+
+  public void setFailTest(List<Test> failTest) {
+    this.failTest = failTest;
+  }
+
+  public List<Test> getPassTest() {
+    return passTest;
+  }
+
+  public void setPassTest(List<Test> passTest) {
+    this.passTest = passTest;
+  }
+
+  public List<Test> getSkipTest() {
+    return skipTest;
+  }
+
+  public void setSkipTest(List<Test> skipTest) {
+    this.skipTest = skipTest;
   }
 
   public void setAutomationresult(File automationresult) {

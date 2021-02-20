@@ -44,5 +44,6 @@
     <bean id="matoptions" class="com.encash.offers.webelement.custom.MatOptions"></bean>
     <bean id="mattable" class="com.encash.offers.webelement.custom.MatTable"></bean>
     <bean id="levels" class="com.encash.offers.webelement.custom.Levels"></bean>
+    <bean id="mandatoryquestion" class="com.encash.offers.webelement.custom.MandatoryQuestion"></bean>
       
 </beans>

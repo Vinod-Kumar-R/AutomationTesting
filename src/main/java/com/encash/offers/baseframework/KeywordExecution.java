@@ -218,7 +218,7 @@ public class KeywordExecution {
         break;
         
       case mandatoryquestion:
-        status = encash.mandatoryquestion(dataParam);
+        status = encash.mandatoryQuesetion(dataParam);
         logger.debug("searching for competition and click on it");
         testResult(status, keyword.toString());
         break;
@@ -353,6 +353,18 @@ public class KeywordExecution {
       case closebrowser:
         logger.debug("closing the browser");
         genericMethod.browserClose();
+        testResult("pass", keyword.toString());
+        break;
+        
+      case gotolink:
+        logger.debug("clicking on the hyperlink");
+        genericMethod.goToLink(dataParam.get(0));
+        testResult("pass", keyword.toString());
+        break;
+        
+      case participate:
+        logger.debug("clicking on the participate");
+        encash.competationparticpate();
         testResult("pass", keyword.toString());
         break;
         

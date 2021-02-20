@@ -15,6 +15,7 @@ import com.encash.offers.configuration.PropertiesValue;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -185,24 +186,30 @@ public class ExtentReport {
 
   /**
    * this method is used to get the Category report which will be use full in mail content.
+   * @return category in the form of set
    */
-  public void categeoryctx() {
+  public Set<NamedAttributeContext<Category>> categeoryctx() {
 
     NamedAttributeContextManager<Category> category = this.spark.getReport().getCategoryCtx();
-    Set<NamedAttributeContext<Category>>  set =  category.getSet();
 
+    /*  
+    Set<NamedAttributeContext<Category>>  set =  category.getSet();
     for (NamedAttributeContext<Category> cc :set) {
       logger.debug(cc.getAttr().getName()); 
       logger.debug(cc.getFailed().toString());
       logger.debug(cc.getPassed().toString());
       logger.debug(cc.getSkipped().toString());
       logger.debug(cc.getOthers().toString());
+      logger.debug((cc.getPassed()/(cc.getPassed()+cc.getFailed()+cc.getSkipped())*100));
       List<Test> test = cc.getTestList();
       for (Test tes : test) {
         tes.getAncestor();
         tes.getDescription();
       }
     }
+    */
+    
+    return category.getSet();
   }
   
   public Date getStartTime() {
@@ -246,5 +253,21 @@ public class ExtentReport {
     return count;
   }
   
-  
+  /**
+   * This method is used to get the list of Test detail. 
+   * @param status should be any one "PASS","FAILED","SKIP"
+   * @return the list of Test Data 
+   */
+  public List<Test> getTestDetail(Status status) {
+    List<Test> tests = this.spark.getReport().getTestList();
+
+    List<Test> testStatus = new ArrayList<Test>();
+
+    for (Test test : tests) {
+      if (test.getStatus().equals(status)) {
+        testStatus.add(test);
+      }
+    }
+    return testStatus;
+  }
 }

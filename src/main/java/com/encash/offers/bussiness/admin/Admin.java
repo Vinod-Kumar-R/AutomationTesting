@@ -337,8 +337,8 @@ public class Admin {
   
   /**
    * This method is used to click on the question tab and click on add button.  
-   * @param dataParam 
-   * @return
+   * @param dataParam , contain tab name in which it has to click
+   * @return "pass" if click on the question tab else false
    */
   public String questionnairesTab(List<String> dataParam) {
     
@@ -380,11 +380,12 @@ public class Admin {
     logger.debug("Save the questionnaires");
     genericmethod.saveQuestionnaries(element);
     
-   /* logger.debug("waiting for the notification");
+    logger.debug("waiting for the notification");
+    waitmethod.waitForElementPresent("notification");
     element = genericmethod.getElement("notification");
     waitmethod.waitForNotificationAppear(element);
     waitmethod.waitForNotificationDisAppear(element);
-   */ 
+    
 
     return "pass";
 

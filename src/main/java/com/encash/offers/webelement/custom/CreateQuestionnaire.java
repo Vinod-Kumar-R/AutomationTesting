@@ -24,7 +24,7 @@ public class CreateQuestionnaire {
 
   /**
    * This will return how many questionnaires are there.
-   * @return 
+   * @return number of row
    */
   public int getNumberofQuestionnaires() {
     int row = element.findElements(By.xpath("div")).size();
@@ -79,11 +79,23 @@ public class CreateQuestionnaire {
     
     List<WebElement> creates =  genericmethod.getWebElements(element, 
                     "competition_questionnaries_lists");
-    //  element.findElements(By.xpath("div"));
+   
     
-    WebElement savebutton = creates.get(getNumberofQuestionnaires());
-    waitmethod.waitForElementClickable(savebutton);
-    savebutton.click();
+    //buttons has save and save all to product
+    WebElement buttons = creates.get(getNumberofQuestionnaires());
+    
+    //getting list of buttons
+    List<WebElement> buttonlist = genericmethod.getWebElements(buttons, 
+                    "competition_questionnaries_save_lists");
+
+    for (WebElement save : buttonlist) {
+      logger.debug("Competition button text name : " + save.getText());
+      if (save.getText().equals("SAVE")) {
+        waitmethod.waitForElementClickable(save);
+        logger.debug("click on the Save button");
+        save.click();
+      }
+    }
     
   }
   
