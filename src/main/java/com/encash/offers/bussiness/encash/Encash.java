@@ -6,6 +6,7 @@ import com.encash.offers.configuration.ApplicationStoreValue;
 import com.encash.offers.utility.ExtentReport;
 import com.encash.offers.utility.GenericMethod;
 import com.encash.offers.utility.WaitMethod;
+import com.encash.offers.webelement.custom.CompetitionQuestion;
 import com.encash.offers.webelement.custom.MandatoryQuestion;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +34,9 @@ public class Encash {
   @Autowired
   private ApplicationStoreValue storevalue;
   @Autowired
-  private MandatoryQuestion mandatoryquestions; 
+  private CompetitionQuestion competitionquestions; 
+  @Autowired
+  private MandatoryQuestion mandatoryquestions;
 
 
   /**
@@ -256,8 +259,9 @@ public class Encash {
     element.click();
 
     logger.debug("waiting for loder class request complete");
+    waitmethod.waitForElementPresent("loderclass");
     waitmethod.waitForElementInvisible("loderclass");
-
+    
     char[] otp = dataParam.get(1).toCharArray();
     
     waitmethod.waitForElementPresent("otp");
@@ -350,27 +354,44 @@ public class Encash {
     waitmethod.waitForElementInvisible("home_page");
     waitmethod.waitForElementVisible("competition_search");
 
+    logger.debug("Enter in the search text box");
     WebElement element = genericmethod.getElement("competition_search");
     element.sendKeys(dataParam.get(0));
 
-    //wait for search result to update in result
+    //wait for search result to update in resul
+    logger.debug("waiting for the search text to update ");
     waitmethod.waitForElementInvisible("search_competation_wait");
+    waitmethod.waitThread();
 
     List<WebElement> elements = genericmethod.getElements("competiton_search_result");
+    
     for (WebElement competations :elements) {
+      //waitmethod.waitForStalenessElement(competations);
+      logger.debug("get the list of search list data");
       List<WebElement> competation = genericmethod.getWebElements(competations, 
                       "competition_search_data");
-
+      
+      logger.debug("scorll to search result");
       genericmethod.scrolltoelement(competations);
+      
+      if (genericmethod.isMobileview()) {
+        logger.debug("scorll to search result in mobile view");
+        genericmethod.scrollToElementOffsetYaxix(competations, -100);
+        waitmethod.waitThread();
+      }
 
       for (WebElement competate : competation) {
 
-        // wm.waitForElementVisible(competate);
+        logger.debug("waiting for the element visible");
+        waitmethod.waitForElementVisible(competate);
+        logger.debug("waiting for some text present");
         waitmethod.waitForSomeTextPresent(competate);
 
         logger.debug("Feached text ----> " + competate.getText());
         if (competate.getText().equals(dataParam.get(1))) {
           logger.debug("found matching and clicking on");
+          //genericmethod.scrolltoelement(competate);
+          waitmethod.waitForElementVisible(competate);
           waitmethod.waitForElementClickable(competate);
           competate.click();
         }
@@ -580,6 +601,45 @@ public class Encash {
    dataParam remaining contain answer
    * @return "pass" if execution success else "fail" any verification not pass
    */
+  public String competitionQuesetion(List<String> dataParam) {
+    
+    logger.debug("wait for to load question");
+    waitmethod.waitForElementPresent("competition_question_base");
+    
+    WebElement element = genericmethod.getElement("competition_question_base");
+    competitionquestions.setElement(element);
+    
+    Boolean status = competitionquestions.verifyQuestion(dataParam.get(0));
+    
+    if (!status) {
+      logger.debug("Question content are not correct");
+      //return "fail";
+    }
+    
+    //remove the first element in the dataParam so that we will get only answer need to select
+    List<String> answers = dataParam;
+    answers.remove(0);
+    
+    for (String answer : answers) {
+      status = competitionquestions.selectAnswer(answer);
+      
+      if (!status) {
+        logger.debug("answer not found ");
+        //return "fail";
+      }
+    }
+    
+    competitionquestions.nextQuestion();
+    
+    return "pass";
+  }
+  
+  /**
+   * This method is used to answer and verify the mandatory question.
+   * @param dataParam dataParam[0] contain the question data 
+   dataParam remaining contain answer
+   * @return "pass" if execution success else "fail" any verification not pass
+   */
   public String mandatoryQuesetion(List<String> dataParam) {
     
     logger.debug("wait for to load question");
@@ -612,5 +672,4 @@ public class Encash {
     
     return "pass";
   }
-
 }

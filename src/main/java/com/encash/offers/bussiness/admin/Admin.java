@@ -127,13 +127,9 @@ public class Admin {
     waitmethod.waitForElementPresent("notification");
     element = genericmethod.getElement("notification");
     waitmethod.waitForNotificationAppear(element);
-    
-    
+    closeNotification();
     logger.debug("Wait for notification disappear");
-    waitmethod.waitForElementPresent("notification");
-    element = genericmethod.getElement("notification");
     waitmethod.waitForNotificationDisAppear(element);
-    
     
     return "pass";
   }
@@ -384,6 +380,7 @@ public class Admin {
     waitmethod.waitForElementPresent("notification");
     element = genericmethod.getElement("notification");
     waitmethod.waitForNotificationAppear(element);
+    closeNotification();
     waitmethod.waitForNotificationDisAppear(element);
     
 
@@ -441,9 +438,23 @@ public class Admin {
     waitmethod.waitForElementPresent("notification");
     element = genericmethod.getElement("notification");
     waitmethod.waitForNotificationAppear(element);
+    closeNotification();
     waitmethod.waitForNotificationDisAppear(element);
 
     return "pass";
+  }
+  
+  
+  /**
+   * This method is used to close the notification shown to user.
+   */
+  public void closeNotification() {
+    logger.debug("wait for close notification button present");
+    waitmethod.waitForElementPresent("closenotification");
+    
+    logger.debug("click on the close notification button");
+    WebElement element = genericmethod.getElement("closenotification");
+    element.click();
   }
   
   

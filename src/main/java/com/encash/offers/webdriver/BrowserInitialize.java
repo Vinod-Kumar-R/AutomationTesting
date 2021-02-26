@@ -5,12 +5,16 @@ import com.encash.offers.configuration.PropertiesValue;
 import com.encash.offers.utility.ExtentReport;
 import com.encash.offers.utility.JsWaiter;
 import com.paulhammant.ngwebdriver.NgWebDriver;
+import io.appium.java_client.AppiumDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
+import java.net.MalformedURLException;
+import java.net.URL;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -87,6 +91,14 @@ public final class BrowserInitialize {
         break;
 
       case ANDROID_CHROME :
+
+        try {
+          drivere = new AppiumDriver<WebElement>(new URL("http://127.0.0.1:4723/wd/hub"), desired.androidDesired());
+        } catch (MalformedURLException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+
         break;
       case IOS_SAFARI:
         break;
@@ -147,7 +159,7 @@ public final class BrowserInitialize {
   
   public void setDriverInstance(EventFiringWebDriver driver) {
     this.driver = driver;
-    this.driver.manage().window().maximize();
+    //this.driver.manage().window().maximize();
   }
   
   public void closeBrowser() {

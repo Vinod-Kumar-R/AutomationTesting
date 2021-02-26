@@ -452,8 +452,58 @@ public class WaitMethod {
     waitstatus = true;
     return "pass";
   }
+
+  /**
+   * This method is used to wait for all the child element are loaded by giving the parent By class.
+   * @param parent is By method of parent element
+   * @param childLocator is By method of Child element need to load 
+   * @return "pass" if execution success
+   */
+  public String waitForNestedElementsPresence(By parent, By childLocator) {
+    
+    WebDriver driver = browserinitialize.getWebDriverInstance();
+
+    waitstatus = false;
+    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
+                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
+                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
+                    .ignoring(NoSuchElementException.class);
+
+    logger.debug("Waiting for the child elements " + childLocator);
+    wait.until(ExpectedConditions.presenceOfNestedElementsLocatedBy(parent, childLocator));
+
+    waitstatus = true;
+    return "pass";
+  }
   
+  /**
+   * This method is used to wait until the child element are loaded.
+   * @param element is a WebElement of the parent element
+   * @param childLocator is a By element for which it has to wait for presence
+   * @return "pass" 
+   */
+  public String waitForNestedElementPresence(WebElement element, By childLocator) {
+    
+    WebDriver driver = browserinitialize.getWebDriverInstance();
+
+    waitstatus = false;
+    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
+                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
+                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
+                    .ignoring(NoSuchElementException.class);
+
+    logger.debug("Waiting for the child elements " + childLocator);
+    wait.until(ExpectedConditions.presenceOfNestedElementLocatedBy(element, childLocator));
+
+    waitstatus = true;
+    return "pass";
+    
+  }
   
+  /**
+   * This method is used for implicityWait. 
+   * @return "pass" on success
+   */
   public String waitForimplicitWait() {
     
     WebDriver driver = browserinitialize.getWebDriverInstance();
@@ -461,6 +511,10 @@ public class WaitMethod {
     return "pass";
   }
   
+  /**
+   * This method is used to wait for particular second. 
+   * don't use this method more frequently as it will slow the execution speed
+   */
   public void waitThread() {
     try {
       Thread.sleep(2000);

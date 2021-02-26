@@ -25,6 +25,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -62,6 +63,8 @@ public class GenericMethod {
   private MatTable mattable;
   @Autowired
   private Levels levels;
+  @Autowired
+  private JsWaiter jswaiter;
  
 
   /**
@@ -118,10 +121,19 @@ public class GenericMethod {
     String absolutePath = ConstantVariable.ScreenShotlocation +  File.separator
                     + filename + ".png";
     logger.debug("absolutepath " + absolutePath);
+    
+    /*Block of code is comment becase in KLOV report required the absolute path rather 
+     * then relative path 
+     * relative path is used only for attach the extent repor to email 
+     * as of now report are not attach to email so comment out the below code
+    */ 
+    /*
     String relativePath = new File(ConstantVariable.ResultLocation).toURI().relativize(
                     new File(absolutePath).toURI()).getPath();
     logger.debug(" relative path " + relativePath);
     return ".." + File.separator + relativePath;
+    */
+    return absolutePath;
   }
 
   /**
@@ -239,8 +251,44 @@ public class GenericMethod {
 
     JavascriptExecutor je = (JavascriptExecutor) driver;
     je.executeScript("arguments[0].scrollIntoView(true);", element);
+    
+    jswaiter.setDriver(driver);
+    jswaiter.waitUntilJSReady();
 
     return "pass";
+  }
+  
+  public String scrollToElementOffsetYaxix(WebElement element , int offset) {
+
+    WebDriver driver = browserinitialize.getWebDriverInstance();
+
+    JavascriptExecutor je = (JavascriptExecutor) driver;
+
+    je.executeScript("window.scrollTo(" + element.getLocation().getX() + "," + 
+                    (element.getLocation().getY() + offset) + ");");
+    
+    jswaiter.setDriver(driver);
+    jswaiter.waitUntilJSReady();
+
+    return "pass";
+  }
+  
+  /**
+   * This method is used to check browser is mobile view or Desktop view.
+   * @return true if it mobile view else false
+   */
+  public boolean isMobileview() {
+
+    WebDriver driver = browserinitialize.getWebDriverInstance();
+
+    Dimension dimension = driver.manage().window().getSize();
+
+    if (dimension.getHeight() <= 708 && dimension.getWidth() <= 1050) {
+      return true;
+    }
+
+    return false;
+
   }
 
 
@@ -381,6 +429,10 @@ public class GenericMethod {
    * @param dataParam contain the hyperlink text with a tag
    */
   public void goToLink(String dataParam) {
+    
+    logger.debug("waite for overlay backdrop invisiable");
+    waitmethod.waitForElementInvisible("overlaybackdrop");
+    
     WebElement element = getElement(dataParam);
     element.click();
   }
@@ -391,7 +443,7 @@ public class GenericMethod {
    * @param textSelect text to select
    */
   public void matOption(WebElement element, String textSelect) {
-   // MatOptions options = new MatOptions(element);
+    //MatOptions options = new MatOptions(element);
     options.setOptions(element);
     logger.debug("Selecting the options from dropdown " + textSelect);
     options.selectVisibleText(textSelect);
@@ -447,6 +499,11 @@ public class GenericMethod {
     tab.selectTab(tabname);
   }
   
+  /**
+   * This method is used to create a New Questionnaire in Admin. 
+   * @param element contain the questionnaire Webelement
+   * @param selectText contain which quuestinnaire need to select from dropdown
+   */
   public void newQuestionnaire(WebElement element, String selectText) {
     questinnaire.setElement(element);
     questinnaire.selectquestionnaries();

@@ -29,6 +29,11 @@ public class MatOptions {
    * @param optionText text need to be select
    */
   public void selectVisibleText(String optionText) {
+    
+    logger.debug("waiting for the options to be present");
+    waitmethod.waitForNestedElementPresence(this.options, By.xpath(
+                    "//mat-option[normalize-space(.) = " + Quotes.escape(optionText) + "]"));
+    
     WebElement option = this.options.findElement(By.xpath(
                     "//mat-option[normalize-space(.) = " + Quotes.escape(optionText) + "]"));
     logger.debug("scroll to element");

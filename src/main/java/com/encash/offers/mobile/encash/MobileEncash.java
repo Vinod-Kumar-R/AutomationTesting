@@ -3,6 +3,7 @@ package com.encash.offers.mobile.encash;
 import com.encash.offers.utility.ExtentReport;
 import com.encash.offers.utility.GenericMethod;
 import com.encash.offers.utility.WaitMethod;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,19 +30,17 @@ public class MobileEncash {
    */
   public String registerUsingMobileNumber(List<String> dataParam) {
 
-    logger.debug("waiting for register button enable");
-    waitMethod.waitForElementClickable("m_register");
-
-    logger.debug("clicking on the Register button");
-    WebElement element = genericMethod.getElement("m_register");
-    element.click();
+    List<String> menu = new ArrayList<String>();
+    menu.add("m_register");
+    logger.debug("click on the menu button");
+    encashMenu(menu);
 
 
     logger.debug("waiting for mobile number visiable");
-    waitMethod.waitForElementVisible("mobilenumber");
-
+    waitMethod.waitForElementPresent("mobilenumber");
+    
     logger.debug("Entering the mobile number");
-    element = genericMethod.getElement("mobilenumber");
+    WebElement element = genericMethod.getElement("mobilenumber");
     element.sendKeys(dataParam.get(0));
 
 
@@ -50,14 +49,19 @@ public class MobileEncash {
     element.click();
 
     logger.debug("waiting for loder class request complete");
+    //waitMethod.waitForElementPresent("loderclass");
     waitMethod.waitForElementInvisible("loderclass");
 
     char[] otp = dataParam.get(1).toCharArray();
 
+    logger.debug("Waiting for the OTP element");
+    waitMethod.waitForElementPresent("otp");
+    
     List<WebElement> elements = genericMethod.getElements("otp");
     int index = 0;
     for (WebElement otpElement : elements) {
       logger.debug("Entering the OPT for element " + otp[index]);
+      
       otpElement.sendKeys(Character.toString(otp[index]));
       index++;
     }
@@ -71,6 +75,31 @@ public class MobileEncash {
 
     return "pass";
 
+  }
+  
+  /**
+   * This method is used for mobile encash menu bar
+   * and click on the required option.
+   * @param dataParam contian which option need to select
+   */
+  public void encashMenu(List<String> dataParam) {
+    
+    logger.debug("waiting for the navibar button");
+    waitMethod.waitForElementVisible("navibar");
+    
+    logger.debug("click on the navibar button");
+    WebElement element = genericMethod.getElement("navibar");
+    element.click();
+    
+    logger.debug("waiting for button enable " + dataParam.get(0));
+    waitMethod.waitForElementPresent("mobile_listmenu");
+    waitMethod.waitThread();
+    
+    logger.debug("click on the button " + dataParam.get(0));
+    element = genericMethod.getElement(dataParam.get(0));
+    waitMethod.waitForElementClickable(element);
+    element.click();
+    
   }
 
 }

@@ -78,19 +78,22 @@ public class Desired {
   public  DesiredCapabilities androidDesired() {
     DesiredCapabilities dc = new DesiredCapabilities();
 
-    if (properties.getTestBrowser().equalsIgnoreCase("ANDROID_CHROME")) {
-      ConfigurationReader cr = new ConfigurationReader();
-      cr.readConfig(ConstantVariable.DesiredAndroidCapability);
+    //read the configuration file for mobile devices
+    String mobileproperties = properties.getConfigLocation() + File.separator + "properties" 
+                    + File.separator + "mobile_device.properties";
 
-      Iterator<String> androidkeys = cr.getAllKeys();
+    ConfigurationReader cr = new ConfigurationReader();
+    cr.readConfig(mobileproperties);
 
-      while (androidkeys.hasNext()) {
-        String key = androidkeys.next();
-        String value = cr.getConfigurationStringValue(key);
-        dc.setCapability(key, value);
-      }
+    Iterator<String> androidkeys = cr.getAllKeys();
 
+    while (androidkeys.hasNext()) {
+      String key = androidkeys.next();
+      String value = cr.getConfigurationStringValue(key);
+      dc.setCapability(key, value);
     }
+
+
     return dc;
   }
 
@@ -165,11 +168,20 @@ public class Desired {
     mobileemulation.put("deviceName", "Nexus 5");
     chromeOptions.setExperimentalOption("mobileEmulation", mobileemulation);
     
+    chromeOptions.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+    
     File chromeextion = new File(properties.getConfigLocation() 
                     + File.separator + "extension" 
                     + File.separator + "chrompath.crx");
     
     chromeOptions.addExtensions(chromeextion);
+    
+    Map<String, Object> prefs = new HashMap<String, Object>();
+    prefs.put("credentials_enable_service", false);
+    prefs.put("profile.password_manager_enabled", false);
+    prefs.put("profile.default_content_setting_values.notifications", 2);
+
+    chromeOptions.setExperimentalOption("prefs", prefs);
     return chromeOptions;
   }
 

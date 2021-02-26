@@ -217,14 +217,14 @@ public class KeywordExecution {
         testResult(status, keyword.toString());
         break;
         
-      case mandatoryquestion:
-        status = encash.mandatoryQuesetion(dataParam);
+      case competitionquesetion:
+        status = encash.competitionQuesetion(dataParam);
         logger.debug("searching for competition and click on it");
         testResult(status, keyword.toString());
         break;
         
-      case competationquestion:
-        status = encash.competationquestion(dataParam);
+      case mandatoryquestion:
+        status = encash.mandatoryQuesetion(dataParam);
         logger.debug("Verifying the question and answer for competitions");
         testResult(status, keyword.toString());
         break;
@@ -368,6 +368,11 @@ public class KeywordExecution {
         testResult("pass", keyword.toString());
         break;
         
+      case encashmenu:
+        logger.debug("click on the navibar and selecting the required option");
+        mobileEncash.encashMenu(dataParam);
+        testResult("pass", keyword.toString());
+        break;
 
       default: logger.debug("Invalid Keyword");
 

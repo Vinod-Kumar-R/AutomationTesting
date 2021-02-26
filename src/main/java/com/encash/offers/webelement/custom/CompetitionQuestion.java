@@ -8,14 +8,14 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class MandatoryQuestion {
+public class CompetitionQuestion {
   
   @Autowired
   private GenericMethod genericmethod;
   @Autowired
   private WaitMethod waitmethod;
   WebElement baseElement;
-  private static Logger logger = LogManager.getLogger(MandatoryQuestion.class);
+  private static Logger logger = LogManager.getLogger(CompetitionQuestion.class);
 
   public void setElement(WebElement baseElement) {
     this.baseElement = baseElement;
@@ -28,9 +28,14 @@ public class MandatoryQuestion {
    */
   public boolean verifyQuestion(String question) {
     
-    WebElement questionElement = genericmethod.getWebElement(baseElement,
-                    "mandatory_question");
+    waitmethod.waitForElementPresent("competition_question_answer");
     
+    WebElement questionanwerElement = genericmethod.getWebElement(baseElement,
+                    "competition_question_answer");
+    
+    WebElement questionElement = genericmethod.getWebElement(questionanwerElement,
+                    "competition_question_only");
+
     logger.debug("fetched question :- " + questionElement.getText());
     logger.debug("question got from excel :- " + question);
     if (questionElement.getText().equals(question)) {
@@ -47,9 +52,11 @@ public class MandatoryQuestion {
    * @return the boolean status 
    */
   public Boolean selectAnswer(String answerSelect) {
+    WebElement questionanwerElement = genericmethod.getWebElement(baseElement,
+                    "competition_question_answer");
     
-    List<WebElement> answers = genericmethod.getWebElements(baseElement, 
-                    "mandatory_answer_list");
+    List<WebElement> answers = genericmethod.getWebElements(questionanwerElement, 
+                    "competition_answer_list");
     
     for (WebElement answer : answers) {
       logger.debug("feachted answer :- " + answer.getText());
@@ -62,15 +69,16 @@ public class MandatoryQuestion {
     
     logger.debug("Answer not found");
     return false;
+    
   }
-
+  
   /**
    * This method is used to click on the next button on mandatory question.
    */
   public void nextQuestion() {
     
     List<WebElement> buttons = genericmethod.getWebElements(baseElement,
-                    "mandatory_next_question");
+                    "competition_question_next_cancel");
     
     logger.debug("get the button text");
     for (WebElement button : buttons) {
@@ -82,8 +90,8 @@ public class MandatoryQuestion {
         button.click();
         
         logger.debug("waiting for loder class request complete");
-        waitmethod.waitForElementPresent("mandatory_next_question_wait");
-        waitmethod.waitForElementInvisible("mandatory_next_question_wait");
+        waitmethod.waitForElementPresent("competition_next_question_load");
+        waitmethod.waitForElementInvisible("competition_next_question_load");
         break;
       }
     }
