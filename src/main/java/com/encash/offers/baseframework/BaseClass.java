@@ -212,7 +212,7 @@ public class BaseClass {
       extentReport.writeLog(Status.FAIL, "Failed executing Keyword ---> " + keyword);
       extentReport.writeLog(Status.FAIL, e);
       extentReport.attachScreenshot(genericMethod.takeScreenshot());
-      //browserinitialize.quitBrowser();
+      browserinitialize.quitBrowser();
       extentReport.flushlog();
     }
   }

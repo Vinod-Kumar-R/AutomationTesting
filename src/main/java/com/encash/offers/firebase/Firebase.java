@@ -5,7 +5,6 @@ import com.encash.offers.utility.GenericMethod;
 import com.encash.offers.utility.WaitMethod;
 import com.encash.offers.webdriver.BrowserInitialize;
 import com.google.common.collect.Lists;
-
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -150,7 +149,11 @@ public class Firebase {
     return "pass";
   }
   
-  
+  /**
+   * this method is used to login to firebase.
+   * @param dataParam contain the login detail
+   * @return pass if execution success.
+   */
   public String firebaseLogin1(List<String> dataParam) {
     
     driver = browserinitialize.getWebDriverInstance();

@@ -25,8 +25,6 @@ import org.joda.time.Interval;
 import org.joda.time.Period;
 import org.springframework.beans.factory.annotation.Autowired;
 
-
-
 /**
  * This class is used to Generated the Extent report.
  * @author Vinod Kumar R
@@ -237,7 +235,6 @@ public class ExtentReport {
   }
   
   /**
-   * 
    * This method is used to get the total test case status.
    * @param status is an enum constant SKIP,PASS,FAILED,OTHER
    * @return total number of test case depend on Status

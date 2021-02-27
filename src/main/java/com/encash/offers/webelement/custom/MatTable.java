@@ -12,26 +12,28 @@ public class MatTable {
   private static Logger logger = LogManager.getLogger(MatTable.class);
   @Autowired
   private WaitMethod waitmethod;
+ 
   WebElement table;
   
-  /*
-  public MatTable(WebElement table) {
-    super();
-    this.table = table;
-  }
-  
-  */
+
   public void setTable(WebElement table) {
     this.table = table;
   }
   
+  /**
+   * This method is used to get the row count of a table.
+   * @return the int value 
+   */
   public int getRowCount() {
+    waitmethod.waitForNestedElementPresence(this.table, By.tagName("mat-row"));
     int row = table.findElements(By.tagName("mat-row")).size();
     return row;
   }
   
- 
-
+  /**
+  * This method is used get the fist row column count.
+  * @return the int value
+  */
   public int getColumnCount() {
     int column = table.findElements(By.xpath("mat-row[1]/mat-cell")).size();
     return column;
@@ -58,14 +60,6 @@ public class MatTable {
         }
       }
     }
-  }
-  
-  public WebElement waitMatTable() {
-
-    WebElement firstrow = table.findElement(By.xpath("mat-row[1]"));
-    return firstrow;
-    //waitmethod.waitForElementAttributeNotPresent(firstrow, "style");
-    //waitmethod.waitForElementAttributePresent(firstrow, "style");
   }
 
 }

@@ -47,5 +47,6 @@
     <bean id="competitionquestion" class="com.encash.offers.webelement.custom.CompetitionQuestion"></bean>
     <bean id="mandatoryquestion" class="com.encash.offers.webelement.custom.MandatoryQuestion"></bean>
     <bean id="jsscript" class="com.encash.offers.utility.JsWaiter"></bean>
+    <bean id="table" class="com.encash.offers.webelement.custom.Table"></bean>
       
 </beans>

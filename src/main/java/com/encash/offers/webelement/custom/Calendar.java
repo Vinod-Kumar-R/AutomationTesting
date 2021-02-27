@@ -13,6 +13,8 @@ public class Calendar {
   private GenericMethod genericmethod;
   @Autowired
   private WaitMethod waitmethod;
+  @Autowired
+  private Table table;
   
   WebElement calendar;
   
@@ -44,7 +46,7 @@ public class Calendar {
     waitmethod.waitForElementPresent("calender_years");
     WebElement yeartable = genericmethod.getWebElement(calendar, "calender_years");
     waitmethod.waitForElementClickable(yeartable);
-    Table table = new Table(yeartable);
+    table.setTable(yeartable);
     table.selectdata(year);
     
   }
@@ -57,7 +59,7 @@ public class Calendar {
     logger.debug("click on the Month table");
     waitmethod.waitForElementPresent("calender_month");
     WebElement monthtable = genericmethod.getWebElement(calendar, "calender_month");
-    Table table = new Table(monthtable);
+    table.setTable(monthtable);
     table.selectdata(month);
   }
   
@@ -69,7 +71,7 @@ public class Calendar {
     logger.debug("clicking on the date table");
     waitmethod.waitForElementPresent("calender_date");
     WebElement datetable = genericmethod.getWebElement(calendar, "calender_date");
-    Table table = new Table(datetable);
+    table.setTable(datetable);
     table.selectdata(date);
   }
   

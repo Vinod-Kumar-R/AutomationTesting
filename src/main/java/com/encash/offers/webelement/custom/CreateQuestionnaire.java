@@ -58,7 +58,9 @@ public class CreateQuestionnaire {
       }
   }
   
-  
+  /**
+   * This method is used to created new row for creating questionnaries.
+   */
   public void selectquestionnaries() {
     
     List<WebElement> creates = genericmethod.getWebElements(element, 
@@ -75,6 +77,9 @@ public class CreateQuestionnaire {
     
   }
   
+  /**
+   * this method is used to save created questionnaires.
+   */
   public void saveQuestionnaries() {
     
     List<WebElement> creates =  genericmethod.getWebElements(element, 
@@ -99,6 +104,10 @@ public class CreateQuestionnaire {
     
   }
   
+  /**
+   * This method is used to delete particular questionnaires based on questionnaire text.
+   * @param deleteText contain the text which need to delete
+   */
   public void deleteQuestionnaries(String deleteText) {
 
     List<WebElement> creates =  genericmethod.getWebElements(element, 
@@ -126,9 +135,6 @@ public class CreateQuestionnaire {
         }
       }
   }
-
-
-
 
 }
 

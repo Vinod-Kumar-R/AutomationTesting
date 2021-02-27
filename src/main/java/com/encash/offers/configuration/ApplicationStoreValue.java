@@ -19,6 +19,7 @@ public class ApplicationStoreValue {
   /**
    * This is used to stored the Driver instance. 
    */
-  public Map<String, EventFiringWebDriver> driverinstance = new HashMap<String, EventFiringWebDriver>();
+  public Map<String, EventFiringWebDriver> driverinstance = new HashMap<String, 
+                  EventFiringWebDriver>();
 
 }

@@ -2,7 +2,6 @@ package com.encash.offers.mail;
 
 
 import com.encash.offers.beanclass.ExtentReportBean;
-import com.encash.offers.configuration.ConstantVariable;
 import com.encash.offers.configuration.MailConfiguration;
 import freemarker.template.Configuration;
 import java.util.HashMap;

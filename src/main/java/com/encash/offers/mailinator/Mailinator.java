@@ -1,7 +1,6 @@
 package com.encash.offers.mailinator;
 
 import com.encash.offers.configuration.ApplicationStoreValue;
-import com.encash.offers.configuration.ConstantVariable;
 import com.encash.offers.configuration.PropertiesValue;
 import com.encash.offers.utility.GenericMethod;
 import com.encash.offers.utility.WaitMethod;

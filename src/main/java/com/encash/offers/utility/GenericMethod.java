@@ -144,7 +144,6 @@ public class GenericMethod {
    *     dataParam[1] contain the expected text when need to compare with text with 
    *     attribute value 
    * @return it return the status "pass" if execution success else throw an exception 
-   *
    */
   public String verifyAttributedValue(List<String> dataParam)  {
 
@@ -184,12 +183,12 @@ public class GenericMethod {
 
     return "pass";
   }
+  
   /**
    * This method is used to override test execution script browser.
    * @param dataParam contain which browser need to switch
    * @return if success then return "pass" else "fail"
    */
-  
   public String browsertype(String dataParam) {
     
     if (dataParam.equalsIgnoreCase("config")) {
@@ -234,12 +233,12 @@ public class GenericMethod {
     browserinitialize.setDriverInstance(driver);
   }
   
+  /**
+   * This method is used to close the current browser.
+   */
   public void browserClose() {
     browserinitialize.closeBrowser();
   }
-
-  
-  
 
   /**
    * This method is used to scroll until WebElement is view in web page.
@@ -258,7 +257,14 @@ public class GenericMethod {
     return "pass";
   }
   
-  public String scrollToElementOffsetYaxix(WebElement element , int offset) {
+  /**
+   * this method is used to scroll browser in y axis with specific.
+   * negative value is used to scroll up and positive value is used scroll down
+   * @param element is WebElement of element in which it has to scroll
+   * @param offset is a int value in which it has to scroll.
+   * @return pass if execution success
+   */
+  public String scrollToElementOffsetYaxix(WebElement element, int offset) {
 
     WebDriver driver = browserinitialize.getWebDriverInstance();
 
@@ -443,7 +449,7 @@ public class GenericMethod {
    * @param textSelect text to select
    */
   public void matOption(WebElement element, String textSelect) {
-    //MatOptions options = new MatOptions(element);
+    
     options.setOptions(element);
     logger.debug("Selecting the options from dropdown " + textSelect);
     options.selectVisibleText(textSelect);
@@ -455,7 +461,7 @@ public class GenericMethod {
    * @param dataParam contain the list of data which need to select
    */
   public void matOptions(WebElement element, List<String> dataParam) {
-    //MatOptions options = new MatOptions(element);
+    
     options.setOptions(element);
     options.multipleSelectText(dataParam);
   }
@@ -482,13 +488,14 @@ public class GenericMethod {
     mattable.selectdata(data);
   }
   
+  /*
   public void matTableRefresh(WebElement element) {
     mattable.setTable(element);
     WebElement firstrow =  mattable.waitMatTable();
     waitmethod.waitForElementAttributeNotPresent(firstrow, "style");
     //waitmethod.waitForStalenessElement(element);
   }
-  
+ */ 
   /**
    * This method is used to switch between tab.
    * @param element is WebElement
@@ -512,26 +519,48 @@ public class GenericMethod {
     matOption(listdata, selectText);
   }
   
+  /**
+   * This method used to create new Questionnaries row.
+   * @param element is a webElemnt of base element.
+   */
   public void createNewQuesetionnariesRow(WebElement element) {
     questinnaire.setElement(element);
     questinnaire.createNewQuestionnaries();
   }
   
+  /**
+   * this method is used to save the questionnaries.
+   * @param element is a webelement of base element
+   */
   public void saveQuestionnaries(WebElement element) {
     questinnaire.setElement(element);
     questinnaire.saveQuestionnaries();
   }
   
+  /**
+   * this method used to delete the questionnaires. 
+   * @param element contian the base element
+   * @param deleteText questionnaires text which need to deleted
+   */
   public void deleteQuestionnariesRow(WebElement element, String deleteText) {
     questinnaire.setElement(element);
     questinnaire.deleteQuestionnaries(deleteText);
   }
   
+  /**
+   * This method used to create new row in levels.
+   * @param element is a webelement.
+   */
   public void createNewLevelsRow(WebElement element) {
     levels.setElement(element);
     levels.createLevels();
   }
   
+  /**
+   * This method used to select the questionnaires in levels.
+   * @param element is the base Webelement
+   * @param selectText questionnaires text need to select 
+   */
   public void selectLevelsQuestionnaries(WebElement element, String selectText) {
     levels.setElement(element);
     levels.selectQuestionnairesLevel();
@@ -541,12 +570,19 @@ public class GenericMethod {
     
   }
 
+  /**
+   * This method used to refresh current page.
+   */
   public void refreshPage() {
 
     WebDriver driver = browserinitialize.getWebDriverInstance();
     driver.navigate().refresh();
   }
   
+  /**
+   * This method used to save level in admin.
+   * @param element is the base element.
+   */
   public void levelSave(WebElement element) {
     
     levels.setElement(element);

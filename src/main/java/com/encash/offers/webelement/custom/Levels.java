@@ -2,7 +2,6 @@ package com.encash.offers.webelement.custom;
 
 import com.encash.offers.utility.GenericMethod;
 import com.encash.offers.utility.WaitMethod;
-
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,7 +21,10 @@ public class Levels {
     this.element = element;
   }
 
-
+  /**
+   * This method is used to get the number levels present current time.
+   * @return the int value.
+   */
   private int numbetOfLevels() {
 
     List<WebElement> numberofLevels = genericmethod.getWebElements(this.element, 
@@ -76,13 +78,14 @@ public class Levels {
     
   }
   
+  /**
+   * This method is used save created levels.
+   */
   public void saveLevels() {
     
     WebElement savebutton = genericmethod.getWebElement(this.element, "competition_level_save");
     waitmethod.waitForElementClickable(savebutton);
     savebutton.click();
   }
-
-
 
 }

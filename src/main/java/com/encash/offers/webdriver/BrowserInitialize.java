@@ -1,6 +1,5 @@
 package com.encash.offers.webdriver;
 
-
 import com.encash.offers.configuration.PropertiesValue;
 import com.encash.offers.utility.ExtentReport;
 import com.encash.offers.utility.JsWaiter;
@@ -20,6 +19,7 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +55,7 @@ public final class BrowserInitialize {
     BrowserExecutionType bt = BrowserExecutionType.valueOf(browserType);
     DriverManagerType driverManagerType = DriverManagerType.valueOf(bt.binaryBrower.toUpperCase());
     WebDriverManager.getInstance(driverManagerType).setup();
-     
+
 
     switch (bt) {
       case CHROME:
@@ -93,17 +93,33 @@ public final class BrowserInitialize {
       case ANDROID_CHROME :
 
         try {
-          drivere = new AppiumDriver<WebElement>(new URL("http://127.0.0.1:4723/wd/hub"), desired.androidDesired());
+          drivere = new AppiumDriver<WebElement>(new URL(properties.getAppiumUrl()), 
+                          desired.androidDesired());
         } catch (MalformedURLException e) {
           // TODO Auto-generated catch block
           e.printStackTrace();
         }
 
         break;
+
       case IOS_SAFARI:
         break;
+
       case MOBILE_EMULATION:
         drivere = new ChromeDriver(desired.mobileSystembrowser());
+        break;
+        
+      case BROWSER_STACK:
+
+        logger.debug("URL :- " + properties.getAppiumUrl());
+        String rul = properties.getAppiumUrl();
+        try {
+          drivere = new RemoteWebDriver(new URL(rul), desired.browserStack());
+        } catch (Exception e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+
         break;
 
       default : 
@@ -149,6 +165,10 @@ public final class BrowserInitialize {
     }
   }
   
+  /**
+   * This method is used to set the DriverInstance.
+   * @param browserType which browser need to set for current execution
+   */
   public void setSwitchDriverInstance(String browserType) {
     if (driver != null) {
       driver = null;
@@ -157,17 +177,22 @@ public final class BrowserInitialize {
     }
   }
   
+  /**
+   * This method is used to set the DriverInstance.
+   * @param driver is of Type EventFiringWebDriver
+   */
   public void setDriverInstance(EventFiringWebDriver driver) {
     this.driver = driver;
     //this.driver.manage().window().maximize();
   }
   
+  /**
+   * This method is used to close the current Browser.
+   */
   public void closeBrowser() {
     driver.close();
   }
   
-  
-
   /**
    * this method is used to ngwebdriver instance. 
    * @return ngWebDriver instance
@@ -199,6 +224,5 @@ public final class BrowserInitialize {
     extentreport.setSystemInfo("Browser Version", driver.getCapabilities().getVersion());
     extentreport.setSystemInfo("Platform", driver.getCapabilities().getPlatform().toString());
   }
-
 
 }

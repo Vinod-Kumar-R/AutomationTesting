@@ -230,8 +230,6 @@ public class Admin {
     logger.debug("Waiting for the Angular request completed");
     waitmethod.angularWait();
     
-    
-
     return "Pass";
   }
   
@@ -388,6 +386,11 @@ public class Admin {
 
   }
   
+  /**
+   * This method is used to Delete the Questionnaires in Admin.
+   * @param dataParam contain which questionnaires need to deleted
+   * @return "pass" if execution success
+   */
   public String questionnariesDelete(List<String> dataParam) {
     
     WebElement element = genericmethod.getElement("competition_questionaries_list");
@@ -399,6 +402,11 @@ public class Admin {
     return "pass";
   }
   
+  /**
+   * This method is used to select the Level tab.
+   * @param dataParam a list of data which is required for clicking on level tab
+   * @return "pass" if execution success
+   */
   public String leveltab(List<String> dataParam) {
     
     logger.debug("click on the level tab");
@@ -417,6 +425,11 @@ public class Admin {
     return "pass";
   }
   
+  /**
+   * This method is used to select the levels while creating the questionnaires.
+   * @param dataParam contain the list of data required for creating levels
+   * @return "pass" if execution success.
+   */
   public String levels(List<String> dataParam) {
     
     logger.debug("getting the base element for levels");

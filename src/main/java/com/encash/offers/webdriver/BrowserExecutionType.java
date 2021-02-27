@@ -11,7 +11,8 @@ public enum BrowserExecutionType {
   SAFARI("SAFARI"),
   ANDROID_CHROME("CHROME"),
   IOS_SAFARI("SAFARI"),
-  MOBILE_EMULATION("CHROME");
+  MOBILE_EMULATION("CHROME"),
+  BROWSER_STACK("CHROME");
   
   public final String binaryBrower;
   

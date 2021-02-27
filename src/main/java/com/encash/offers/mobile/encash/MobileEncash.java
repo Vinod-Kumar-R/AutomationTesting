@@ -1,6 +1,5 @@
 package com.encash.offers.mobile.encash;
 
-import com.encash.offers.utility.ExtentReport;
 import com.encash.offers.utility.GenericMethod;
 import com.encash.offers.utility.WaitMethod;
 import java.util.ArrayList;
@@ -18,8 +17,6 @@ public class MobileEncash {
   private WaitMethod waitMethod;
   @Autowired
   private GenericMethod genericMethod;
-  @Autowired
-  private ExtentReport extentReport;
 
 
   /**

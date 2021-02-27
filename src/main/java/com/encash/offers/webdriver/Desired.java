@@ -1,12 +1,13 @@
 package com.encash.offers.webdriver;
 
 import com.encash.offers.configuration.ConfigurationReader;
-import com.encash.offers.configuration.ConstantVariable;
 import com.encash.offers.configuration.PropertiesValue;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -16,15 +17,12 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 
-
-
 public class Desired {
 
+  private static Logger logger = LogManager.getLogger(Desired.class.getName());
   @Autowired
   private PropertiesValue properties;
   private String headless = "headless";
-
-
 
   /**
    * This Method is used to configured the Chrome Options before execution.
@@ -183,6 +181,31 @@ public class Desired {
 
     chromeOptions.setExperimentalOption("prefs", prefs);
     return chromeOptions;
+  }
+  
+  public DesiredCapabilities browserStack() {
+    
+    DesiredCapabilities dc = new DesiredCapabilities();
+
+    //read the configuration file for mobile devices
+    String mobileproperties = properties.getConfigLocation() + File.separator + "properties" 
+                    + File.separator + "browserstack.properties";
+
+    ConfigurationReader cr = new ConfigurationReader();
+    cr.readConfig(mobileproperties);
+
+    Iterator<String> androidkeys = cr.getAllKeys();
+
+    while (androidkeys.hasNext()) {
+      String key = androidkeys.next();
+      String value = cr.getConfigurationStringValue(key);
+      logger.debug("key " + key);
+      logger.debug("value " + value);
+      dc.setCapability(key, value);
+    }
+
+
+    return dc;
   }
 
 }

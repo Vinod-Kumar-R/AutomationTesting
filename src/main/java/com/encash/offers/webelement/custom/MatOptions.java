@@ -64,10 +64,5 @@ public class MatOptions {
       }
     }
   }
-  
-  private void waitForOptionsLoad() {
-    
-  }
-
 
 }

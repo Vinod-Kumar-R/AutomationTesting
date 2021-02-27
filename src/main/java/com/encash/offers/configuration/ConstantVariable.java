@@ -34,7 +34,6 @@ public class ConstantVariable {
   public static String ScreenShotlocation;
   public static HashMap<String, Integer> TestDataRowNumber;
   public static HashMap<String, List<String>> GetObject;
-  //public static String DesiredAndroidCapability;
   public static String ResultBaseLocation;
   public static String ResultLocation;
   public static String ResultLocation1;
