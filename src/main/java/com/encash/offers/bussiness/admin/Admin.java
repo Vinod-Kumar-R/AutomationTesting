@@ -2,7 +2,6 @@ package com.encash.offers.bussiness.admin;
 
 import com.encash.offers.utility.GenericMethod;
 import com.encash.offers.utility.WaitMethod;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -116,6 +115,8 @@ public class Admin {
     logger.debug("Wait for notification disappear");
     waitmethod.waitForElementPresent("notification");
     element = genericmethod.getElement("notification");
+    waitmethod.waitForNotificationAppear(element);
+    closeNotification();
     waitmethod.waitForNotificationDisAppear(element);
     
     logger.debug("click on the save button");
@@ -321,9 +322,13 @@ public class Admin {
     WebElement element = genericmethod.getElement("competition_search_page");
     element.sendKeys(dataParam.get(0));
 
-    logger.debug("click on the competition search box");
+    logger.debug("wait for result data to load");
+    //waitmethod.waitForElementLessThan("competititon_search_result", 2);
+    waitmethod.waitForMatTableUpadate(5);
+    
+    logger.debug("click on the competition search result");
     element = genericmethod.getElement("competititon_search_result");
-    waitmethod.waitThread();
+    //waitmethod.waitThread();
     genericmethod.matTable(element, dataParam.get(0));
     
     return "pass";

@@ -50,8 +50,13 @@ public class MandatoryQuestion {
     
     List<WebElement> answers = genericmethod.getWebElements(baseElement, 
                     "mandatory_answer_list");
-    
+   
     for (WebElement answer : answers) {
+      
+      if (genericmethod.isMobileview()) {
+        genericmethod.scrolltoelementBottom(answer);
+      }
+      
       logger.debug("feachted answer :- " + answer.getText());
       if (answer.getText().equals(answerSelect)) {
         answer.click();

@@ -2,7 +2,6 @@ package com.encash.offers.webdriver;
 
 import com.encash.offers.configuration.PropertiesValue;
 import com.encash.offers.utility.ExtentReport;
-import com.encash.offers.utility.JsWaiter;
 import com.paulhammant.ngwebdriver.NgWebDriver;
 import io.appium.java_client.AppiumDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -111,10 +110,9 @@ public final class BrowserInitialize {
         
       case BROWSER_STACK:
 
-        logger.debug("URL :- " + properties.getAppiumUrl());
-        String rul = properties.getAppiumUrl();
         try {
-          drivere = new RemoteWebDriver(new URL(rul), desired.browserStack());
+          drivere = new RemoteWebDriver(new URL(properties.getBrowserStackUrl()), 
+                          desired.browserStack());
         } catch (Exception e) {
           // TODO Auto-generated catch block
           e.printStackTrace();
@@ -145,7 +143,7 @@ public final class BrowserInitialize {
   public WebDriver getWebDriverInstance() {
     if (driver == null) {
       createInstance(properties.getTestBrowser());
-      JsWaiter.setDriver(driver);
+      //JsWaiter.setDriver(driver);
     }
 
     return driver;
@@ -161,7 +159,7 @@ public final class BrowserInitialize {
     }
     if (driver == null) {
       createInstance(browserType);
-      JsWaiter.setDriver(driver);
+      //JsWaiter.setDriver(driver);
     }
   }
   
@@ -173,7 +171,7 @@ public final class BrowserInitialize {
     if (driver != null) {
       driver = null;
       createInstance(browserType);
-      JsWaiter.setDriver(driver);
+      //JsWaiter.setDriver(driver);
     }
   }
   
@@ -201,6 +199,8 @@ public final class BrowserInitialize {
     if (driver == null) {
       createInstance(properties.getTestBrowser());
     }
+    jsDriver = (JavascriptExecutor) driver;
+    ngwebdriver = new NgWebDriver(jsDriver);
     return ngwebdriver;
   }
 

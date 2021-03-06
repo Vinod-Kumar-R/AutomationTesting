@@ -245,7 +245,7 @@ public class GenericMethod {
    * @param element is a WebElement of web page
    * @return execution success then return pass
    */
-  public String scrolltoelement(WebElement element) {
+  public String scrolltoelementTop(WebElement element) {
     WebDriver driver = browserinitialize.getWebDriverInstance();
 
     JavascriptExecutor je = (JavascriptExecutor) driver;
@@ -254,6 +254,35 @@ public class GenericMethod {
     jswaiter.setDriver(driver);
     jswaiter.waitUntilJSReady();
 
+    return "pass";
+  }
+  
+  /**
+   * This method is used to scroll until WebElement is view in web page.
+   * @param element is a WebElement of web page
+   * @return execution success then return pass
+   */
+  public String scrolltoelementBottom(WebElement element) {
+    WebDriver driver = browserinitialize.getWebDriverInstance();
+
+    JavascriptExecutor je = (JavascriptExecutor) driver;
+    je.executeScript("arguments[0].scrollIntoView(false);", element);
+    
+    jswaiter.setDriver(driver);
+    jswaiter.waitUntilJSReady();
+
+    return "pass";
+  }
+  
+  public String jsready() {
+    
+    WebDriver driver = browserinitialize.getWebDriverInstance();
+    jswaiter.setDriver(driver);
+    jswaiter.waitUntilJSReady();
+    //jswaiter.waitForJQueryLoad();
+    jswaiter.waitUntilAngularReady();
+    jswaiter.waitJQueryAngular();
+    
     return "pass";
   }
   
@@ -270,9 +299,9 @@ public class GenericMethod {
 
     JavascriptExecutor je = (JavascriptExecutor) driver;
 
-    je.executeScript("window.scrollTo(" + element.getLocation().getX() + "," + 
-                    (element.getLocation().getY() + offset) + ");");
-    
+    je.executeScript("window.scrollTo(" + element.getLocation().getX() + "," 
+                    + (element.getLocation().getY() + offset) + ");");
+
     jswaiter.setDriver(driver);
     jswaiter.waitUntilJSReady();
 
@@ -289,7 +318,7 @@ public class GenericMethod {
 
     Dimension dimension = driver.manage().window().getSize();
 
-    if (dimension.getHeight() <= 708 && dimension.getWidth() <= 1050) {
+    if (dimension.getHeight() <= 747 && dimension.getWidth() <= 1080) {
       return true;
     }
 
@@ -355,6 +384,13 @@ public class GenericMethod {
     By byElement = byType(object);
     List<WebElement> elements = element.findElements(byElement);
     return elements;
+  }
+  
+  public By getBy(String objectName) {
+    
+    By byElement = byType(objectName);
+    return byElement;
+   
   }
   
   /**
@@ -634,7 +670,7 @@ public class GenericMethod {
    * @param object contain the Object key
    * @return the By type
    */
-  public By byType(String object) {
+  private By byType(String object) {
 
     List<String> data = ConstantVariable.GetObject.get(object);
 

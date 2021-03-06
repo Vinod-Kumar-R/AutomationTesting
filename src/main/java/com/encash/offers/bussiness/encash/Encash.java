@@ -264,12 +264,9 @@ public class Encash {
     
     char[] otp = dataParam.get(1).toCharArray();
     
-    waitmethod.waitForElementPresent("otp");
-    List<WebElement> elements = genericmethod.getElements("otp");
-    
     logger.debug("wait for OTP element present");
-    //waitmethod.waitForAllElementVisible(elements);
-    
+    waitmethod.waitForElementEqualTo("otp", 6);
+    List<WebElement> elements = genericmethod.getElements("otp");
  
     int index = 0;
     for (WebElement otpElement : elements) {
@@ -283,6 +280,7 @@ public class Encash {
     element.click();
 
     logger.debug("waiting for loder class request complete");
+    waitmethod.waitForElementPresent("loderclass");
     waitmethod.waitForElementInvisible("loderclass");
 
     return "pass";
@@ -358,26 +356,23 @@ public class Encash {
     WebElement element = genericmethod.getElement("competition_search");
     element.sendKeys(dataParam.get(0));
 
-    //wait for search result to update in resul
-    logger.debug("waiting for the search text to update ");
-    waitmethod.waitForElementInvisible("search_competation_wait");
-    waitmethod.waitThread();
-
+    logger.debug("wait for result to update");
+    waitmethod.waitForElementLessThan("competiton_search_result", 5);
+    
     List<WebElement> elements = genericmethod.getElements("competiton_search_result");
     
     for (WebElement competations :elements) {
-      //waitmethod.waitForStalenessElement(competations);
       logger.debug("get the list of search list data");
       List<WebElement> competation = genericmethod.getWebElements(competations, 
                       "competition_search_data");
       
       logger.debug("scorll to search result");
-      genericmethod.scrolltoelement(competations);
-      
+      genericmethod.scrolltoelementBottom(competations);
+
       if (genericmethod.isMobileview()) {
         logger.debug("scorll to search result in mobile view");
-        genericmethod.scrollToElementOffsetYaxix(competations, -100);
-        waitmethod.waitThread();
+        genericmethod.scrolltoelementBottom(competations);
+        
       }
 
       for (WebElement competate : competation) {
@@ -390,9 +385,8 @@ public class Encash {
         logger.debug("Feached text ----> " + competate.getText());
         if (competate.getText().equals(dataParam.get(1))) {
           logger.debug("found matching and clicking on");
-          //genericmethod.scrolltoelement(competate);
-          waitmethod.waitForElementVisible(competate);
-          waitmethod.waitForElementClickable(competate);
+          //waitmethod.waitForElementVisible(competate);
+          //waitmethod.waitForElementClickable(competate);
           competate.click();
         }
 
@@ -660,6 +654,7 @@ public class Encash {
     answers.remove(0);
     
     for (String answer : answers) {
+      
       status = mandatoryquestions.selectAnswer(answer);
       
       if (!status) {
@@ -672,4 +667,40 @@ public class Encash {
     
     return "pass";
   }
+  
+  /**
+   * this method is used to login to encash application using email id and password.
+   * @param dataParam contain 
+   *     dataParam[0] :- emailid of the user
+   *     dataParam[1] :- password for the user
+   * @return "pass" if executed success
+   */
+  public String loginReisterUser(List<String> dataParam) {
+    
+    logger.debug("wait for login button visible");
+    waitmethod.waitForElementPresent("login");
+    
+    logger.debug("click on the login button");
+    WebElement element = genericmethod.getElement("login");
+    element.click();
+    
+    logger.debug("wait for email text visible");
+    waitmethod.waitForElementPresent("login_email");
+    
+    logger.debug("enter the email id");
+    element = genericmethod.getElement("login_email");
+    element.sendKeys(dataParam.get(0));
+    
+    logger.debug("enter the password");
+    element = genericmethod.getElement("login_password");
+    element.sendKeys(dataParam.get(1));
+    
+    logger.debug("click on the continue button");
+    element = genericmethod.getElement("login_continue");
+    element.submit();
+     
+    return "pass";
+  }
+  
+  
 }

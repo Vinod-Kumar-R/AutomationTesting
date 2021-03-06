@@ -18,6 +18,9 @@ public class PropertiesValue {
   @Value("${appiumServerurl}")
   private String appiumUrl;
   
+  @Value("${browserstackurl}")
+  private String browserStackUrl;
+  
   @Value("${testcase}")
   private String testcase;
   
@@ -62,6 +65,10 @@ public class PropertiesValue {
   
   public boolean isKlov() {
     return isKlov;
+  }
+  
+  public String getBrowserStackUrl() {
+    return browserStackUrl;
   }
 
   public String getklovrproperties() {

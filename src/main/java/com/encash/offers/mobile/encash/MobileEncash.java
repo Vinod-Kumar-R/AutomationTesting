@@ -14,9 +14,9 @@ public class MobileEncash {
   
   private static Logger logger = LogManager.getLogger(MobileEncash.class.getName());
   @Autowired
-  private WaitMethod waitMethod;
+  private WaitMethod waitmethod;
   @Autowired
-  private GenericMethod genericMethod;
+  private GenericMethod genericmethod;
 
 
   /**
@@ -34,27 +34,27 @@ public class MobileEncash {
 
 
     logger.debug("waiting for mobile number visiable");
-    waitMethod.waitForElementPresent("mobilenumber");
+    waitmethod.waitForElementPresent("mobilenumber");
     
     logger.debug("Entering the mobile number");
-    WebElement element = genericMethod.getElement("mobilenumber");
+    WebElement element = genericmethod.getElement("mobilenumber");
     element.sendKeys(dataParam.get(0));
 
 
     logger.debug("clicking on the continue button");
-    element = genericMethod.getElement("continue");
+    element = genericmethod.getElement("continue");
     element.click();
 
     logger.debug("waiting for loder class request complete");
     //waitMethod.waitForElementPresent("loderclass");
-    waitMethod.waitForElementInvisible("loderclass");
+    waitmethod.waitForElementInvisible("loderclass");
 
     char[] otp = dataParam.get(1).toCharArray();
 
     logger.debug("Waiting for the OTP element");
-    waitMethod.waitForElementPresent("otp");
+    waitmethod.waitForElementPresent("otp");
     
-    List<WebElement> elements = genericMethod.getElements("otp");
+    List<WebElement> elements = genericmethod.getElements("otp");
     int index = 0;
     for (WebElement otpElement : elements) {
       logger.debug("Entering the OPT for element " + otp[index]);
@@ -64,11 +64,11 @@ public class MobileEncash {
     }
 
     logger.debug("click on the continue Button");
-    element = genericMethod.getElement("otpcontinue");
+    element = genericmethod.getElement("otpcontinue");
     element.click();
 
     logger.debug("waiting for loder class request complete");
-    waitMethod.waitForElementInvisible("loderclass");
+    waitmethod.waitForElementInvisible("loderclass");
 
     return "pass";
 
@@ -82,21 +82,47 @@ public class MobileEncash {
   public void encashMenu(List<String> dataParam) {
     
     logger.debug("waiting for the navibar button");
-    waitMethod.waitForElementVisible("navibar");
+    waitmethod.waitForElementVisible("navibar");
     
     logger.debug("click on the navibar button");
-    WebElement element = genericMethod.getElement("navibar");
+    WebElement element = genericmethod.getElement("navibar");
     element.click();
     
     logger.debug("waiting for button enable " + dataParam.get(0));
-    waitMethod.waitForElementPresent("mobile_listmenu");
-    waitMethod.waitThread();
+    waitmethod.waitForElementPresent("mobile_listmenu");
+    waitmethod.waitThread();
     
     logger.debug("click on the button " + dataParam.get(0));
-    element = genericMethod.getElement(dataParam.get(0));
-    waitMethod.waitForElementClickable(element);
+    element = genericmethod.getElement(dataParam.get(0));
+    waitmethod.waitForElementClickable(element);
     element.click();
     
   }
-
+  
+  
+  /**
+   * This method is used to click on the participate button.
+   * @return "pass" if execution is success
+   */
+  public String competationparticpate() {
+    
+    logger.debug("wait for competition button present");
+    waitmethod.waitForElementPresent("competition_play");
+    
+    logger.debug("click on the Participate button");
+    WebElement element = genericmethod.getElement("competition_play");
+    
+    logger.debug("scroll to element view");
+    genericmethod.scrolltoelementBottom(element);
+    
+    logger.debug("click on the Participate button");
+    waitmethod.waitForElementClickable(element);
+    element.click();
+    
+    logger.debug("Waiting for the lodercontainer invisiable");
+    waitmethod.waitForElementInvisible("lodercontainer");
+    
+    return "pass";
+  }
+  
 }

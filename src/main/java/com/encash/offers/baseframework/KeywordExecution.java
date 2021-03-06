@@ -367,10 +367,22 @@ public class KeywordExecution {
         encash.competationparticpate();
         testResult("pass", keyword.toString());
         break;
+      
+      case mobileparticipate:
+        logger.debug("clicking on the participate");
+        mobileEncash.competationparticpate();
+        testResult("pass", keyword.toString());
+        break;
         
       case encashmenu:
         logger.debug("click on the navibar and selecting the required option");
         mobileEncash.encashMenu(dataParam);
+        testResult("pass", keyword.toString());
+        break;
+        
+      case loginemail:
+        logger.debug("click on the login button and login to application");
+        encash.loginReisterUser(dataParam);
         testResult("pass", keyword.toString());
         break;
 

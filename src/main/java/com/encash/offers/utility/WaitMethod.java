@@ -39,7 +39,7 @@ public class WaitMethod {
    */
   public  String waitForElementVisible(String dataParam) {
     WebDriver driver = browserinitialize.getWebDriverInstance();
-    By objectName = genericMethod.byType(dataParam);
+    By objectName = genericMethod.getBy(dataParam);
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
                     .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
@@ -109,7 +109,7 @@ public class WaitMethod {
 
   public  String waitForTexttVisible(List<String> dataParam)  {
     WebDriver driver = browserinitialize.getWebDriverInstance();
-    By objectName = genericMethod.byType(dataParam.get(0)); 
+    By objectName = genericMethod.getBy(dataParam.get(0)); 
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
                     .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
@@ -135,7 +135,7 @@ public class WaitMethod {
    */
 
   public  String waitForAttributedContain(List<String> dataParam) {
-    By objectName = genericMethod.byType(dataParam.get(0));
+    By objectName = genericMethod.getBy(dataParam.get(0));
     waitstatus = false;
 
     logger.debug("Waiting for the attributed presnt and value " + objectName);
@@ -175,7 +175,7 @@ public class WaitMethod {
   public String waitForElementPresent(String dataParam) {
 
     WebDriver driver = browserinitialize.getWebDriverInstance();
-    By objectName = genericMethod.byType(dataParam); 
+    By objectName = genericMethod.getBy(dataParam); 
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
                     .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
@@ -200,7 +200,7 @@ public class WaitMethod {
   public String waitForElementInvisible(String dataParam) {
 
     WebDriver driver = browserinitialize.getWebDriverInstance();
-    By objectName = genericMethod.byType(dataParam); 
+    By objectName = genericMethod.getBy(dataParam); 
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
                     .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
@@ -224,7 +224,7 @@ public class WaitMethod {
   public String waitForElementAttributeNotPresent(String locator, String attributeName) {
 
     WebDriver driver = browserinitialize.getWebDriverInstance();
-    By objectName = genericMethod.byType(locator); 
+    By objectName = genericMethod.getBy(locator); 
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
                     .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
@@ -298,7 +298,7 @@ public class WaitMethod {
   public String waitForElementClickable(String dataParam) {
     
     WebDriver driver = browserinitialize.getWebDriverInstance();
-    By objectName = genericMethod.byType(dataParam); 
+    By objectName = genericMethod.getBy(dataParam); 
     waitstatus = false;
     Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
                     .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
@@ -494,12 +494,103 @@ public class WaitMethod {
 
     logger.debug("Waiting for the child elements " + childLocator);
     wait.until(ExpectedConditions.presenceOfNestedElementLocatedBy(element, childLocator));
-
+    
     waitstatus = true;
     return "pass";
     
   }
   
+  /**
+   * This method is used wait for element which is less the specified element.
+   * @param byObject is of type String
+   * @param number element should be less than
+   * @return "pass"
+   */
+  public String waitForElementLessThan(String byObject, int number) {
+
+    WebDriver driver = browserinitialize.getWebDriverInstance();
+    
+    By by = genericMethod.getBy(byObject);
+
+    waitstatus = false;
+    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
+                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
+                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
+                    .ignoring(NoSuchElementException.class);
+
+    logger.debug("Waiting for the locators elements " + by);
+    wait.until(ExpectedConditions.numberOfElementsToBeLessThan(by, number));
+
+    waitstatus = true;
+    return "pass";
+
+  }
+  
+  /**
+   * This method is used wait for element which is less the specified element.
+   * @param byObject is a By type
+   * @param number is number of element should be less than
+   * @return "pass"
+   */
+  public String waitForElementLessThan(By byObject, int number) {
+
+    WebDriver driver = browserinitialize.getWebDriverInstance();
+    
+    waitstatus = false;
+    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
+                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
+                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
+                    .ignoring(NoSuchElementException.class);
+
+    logger.debug("Waiting for the locators elements " + byObject);
+    wait.until(ExpectedConditions.numberOfElementsToBeLessThan(byObject, number));
+   
+    waitstatus = true;
+    return "pass";
+
+  }
+  
+  /**
+   * This method is used to wait for element should be equal to.
+   * @param byObject is string object of type By
+   * @param number is exact number element should present.
+   * @return "pass"
+   */
+  public String waitForElementEqualTo(String byObject, int number) {
+
+    WebDriver driver = browserinitialize.getWebDriverInstance();
+    
+    By by = genericMethod.getBy(byObject);
+
+    waitstatus = false;
+    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
+                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
+                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
+                    .ignoring(NoSuchElementException.class);
+
+    logger.debug("Waiting for the locators elements " + by);
+    wait.until(ExpectedConditions.numberOfElementsToBe(by, number));
+
+    waitstatus = true;
+    return "pass";
+
+  }
+  
+
+  
+  /**
+   * This is method is used to wait unit the mat row table are less than given number.
+   * @param numberofRowLessThan is integer number, which contain the number row should be less than 
+   * @return
+   */
+  public String waitForMatTableUpadate(int numberofRowLessThan) {
+    
+    By child = By.tagName("mat-row");
+    waitForElementLessThan(child, numberofRowLessThan);
+    
+    return "pass";
+  }
+
   /**
    * This method is used for implicityWait. 
    * @return "pass" on success
@@ -515,6 +606,7 @@ public class WaitMethod {
    * This method is used to wait for particular second. 
    * don't use this method more frequently as it will slow the execution speed
    */
+  
   public void waitThread() {
     try {
       Thread.sleep(2000);
