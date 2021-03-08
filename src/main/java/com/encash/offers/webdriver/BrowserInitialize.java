@@ -2,6 +2,7 @@ package com.encash.offers.webdriver;
 
 import com.encash.offers.configuration.PropertiesValue;
 import com.encash.offers.utility.ExtentReport;
+import com.microsoft.edge.seleniumtools.EdgeDriver;
 import com.paulhammant.ngwebdriver.NgWebDriver;
 import io.appium.java_client.AppiumDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -14,7 +15,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
@@ -33,10 +33,10 @@ public final class BrowserInitialize {
 
 
   private static Logger logger = LogManager.getLogger(BrowserInitialize.class);
-  private static  WebDriver drivere;
-  private static EventFiringWebDriver driver;
-  private static  NgWebDriver ngwebdriver;
-  private static JavascriptExecutor jsDriver;
+  private WebDriver drivere;
+  private EventFiringWebDriver driver;
+  private NgWebDriver ngwebdriver;
+  private JavascriptExecutor jsDriver;
   @Autowired
   private  ExtentReport extentreport;
   @Autowired
@@ -54,8 +54,7 @@ public final class BrowserInitialize {
     BrowserExecutionType bt = BrowserExecutionType.valueOf(browserType);
     DriverManagerType driverManagerType = DriverManagerType.valueOf(bt.binaryBrower.toUpperCase());
     WebDriverManager.getInstance(driverManagerType).setup();
-
-
+    
     switch (bt) {
       case CHROME:
 
@@ -75,7 +74,7 @@ public final class BrowserInitialize {
         break;
 
       case EDGE:
-
+       
         drivere = new EdgeDriver(desired.edgeDesired());
         break;
 

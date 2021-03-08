@@ -129,7 +129,8 @@
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version>
 		</dependency>
-		<!-- we have to choice correct version of freemarker has extent report also using it  -->
+		<!-- we have to choice correct version of freemarker has extent report 
+			also using it -->
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
@@ -163,6 +164,13 @@
 			<artifactId>java-client</artifactId>
 			<version>7.3.0</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.microsoft.edge</groupId>
+			<artifactId>msedge-selenium-tools-java</artifactId>
+			<version>[3.141.0,)</version>
+		</dependency>
+
 	</dependencies>
 
 	<reporting>

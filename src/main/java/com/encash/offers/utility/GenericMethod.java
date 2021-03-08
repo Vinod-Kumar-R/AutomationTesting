@@ -44,7 +44,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class GenericMethod {
   static Logger logger = LogManager.getLogger(GenericMethod.class.getName());
-  
+
   @Autowired
   private ApplicationStoreValue storevalue;
   @Autowired
@@ -89,7 +89,6 @@ public class GenericMethod {
    *     dataParam[1] contain the expected text when need to compare with text on html page 
    * @return it return the status "pass" if execution success else throw an exception 
    */
-
   public String verifyText(List<String> dataParam)  {
     logger.debug("Verifying the text-------> " + dataParam.get(1));
     WebElement element = getElement(dataParam.get(0));
@@ -98,7 +97,6 @@ public class GenericMethod {
     }
     return "fail";
   }
-
 
   /**
    * This Method is used to take an WebBrowser Screenshot.
@@ -274,6 +272,10 @@ public class GenericMethod {
     return "pass";
   }
   
+  /**
+   * This method to wait js ready.
+   * @return
+   */
   public String jsready() {
     
     WebDriver driver = browserinitialize.getWebDriverInstance();
@@ -325,7 +327,6 @@ public class GenericMethod {
     return false;
 
   }
-
 
   /**
    * This Element is used to get the WebElement for and element.
@@ -386,6 +387,11 @@ public class GenericMethod {
     return elements;
   }
   
+  /**
+   * This method is used to get the object in the form of By.
+   * @param objectName is String
+   * @return ByElement
+   */
   public By getBy(String objectName) {
     
     By byElement = byType(objectName);
@@ -624,8 +630,7 @@ public class GenericMethod {
     levels.setElement(element);
     levels.saveLevels();
   }
-  
-  
+    
   /**
    * This method is used to zip a folder.
    * @param sourcNoteseDirPath  is the source path folde to which it has to zip
@@ -662,7 +667,6 @@ public class GenericMethod {
     
     return zipFile;
   }
-
 
   /**
    * This method is used for generic way of getting By class type

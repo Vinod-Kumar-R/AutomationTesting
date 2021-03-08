@@ -2,6 +2,7 @@ package com.encash.offers.webdriver;
 
 import com.encash.offers.configuration.ConfigurationReader;
 import com.encash.offers.configuration.PropertiesValue;
+import com.microsoft.edge.seleniumtools.EdgeOptions;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -9,7 +10,6 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.opera.OperaOptions;
@@ -124,13 +124,21 @@ public class Desired {
    * @return EdgeOptions for edge browser
    */
   public EdgeOptions edgeDesired() {
-    DesiredCapabilities dc = new DesiredCapabilities();
-    dc.setCapability(headless, properties.getHeadlessBrowser());
 
-    EdgeOptions eo = new EdgeOptions();
-    eo.merge(dc);
+    EdgeOptions options = new EdgeOptions();
+    options.setHeadless(properties.getHeadlessBrowser());
+    options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+    options.addArguments("--start-maximized");
+    if (properties.getHeadlessBrowser()) {
+      options.addArguments("--window-size=1280,800");
+    }
+    Map<String, Object> prefs = new HashMap<String, Object>();
+    prefs.put("credentials_enable_service", false);
+    prefs.put("profile.password_manager_enabled", false);
+    prefs.put("profile.default_content_setting_values.notifications", 2);
 
-    return eo;
+    options.setExperimentalOption("prefs", prefs);
+    return options;
 
   }
 
@@ -183,28 +191,30 @@ public class Desired {
     return chromeOptions;
   }
   
+  /**
+   * This method is used to set the desired capabilities of Browser stack.
+   * @return the DesiredCapabilities of browser stack
+   */
   public DesiredCapabilities browserStack() {
     
     DesiredCapabilities dc = new DesiredCapabilities();
 
-    //read the configuration file for mobile devices
-    String mobileproperties = properties.getConfigLocation() + File.separator + "properties" 
+    //read the configuration file for browser stacks
+    String browserstackproperties = properties.getConfigLocation() + File.separator + "properties" 
                     + File.separator + "browserstack.properties";
 
     ConfigurationReader cr = new ConfigurationReader();
-    cr.readConfig(mobileproperties);
+    cr.readConfig(browserstackproperties);
 
-    Iterator<String> androidkeys = cr.getAllKeys();
+    Iterator<String> browserkeys = cr.getAllKeys();
 
-    while (androidkeys.hasNext()) {
-      String key = androidkeys.next();
+    while (browserkeys.hasNext()) {
+      String key = browserkeys.next();
       String value = cr.getConfigurationStringValue(key);
       logger.debug("key " + key);
       logger.debug("value " + value);
       dc.setCapability(key, value);
     }
-
-
     return dc;
   }
 

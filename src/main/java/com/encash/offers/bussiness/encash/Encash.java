@@ -367,7 +367,7 @@ public class Encash {
                       "competition_search_data");
       
       logger.debug("scorll to search result");
-      genericmethod.scrolltoelementBottom(competations);
+      genericmethod.scrolltoelementTop(competations);
 
       if (genericmethod.isMobileview()) {
         logger.debug("scorll to search result in mobile view");
@@ -385,8 +385,8 @@ public class Encash {
         logger.debug("Feached text ----> " + competate.getText());
         if (competate.getText().equals(dataParam.get(1))) {
           logger.debug("found matching and clicking on");
-          //waitmethod.waitForElementVisible(competate);
-          //waitmethod.waitForElementClickable(competate);
+          waitmethod.waitForElementVisible(competate);
+          waitmethod.waitForElementClickable(competate);
           competate.click();
         }
 
@@ -459,6 +459,7 @@ public class Encash {
    * @param dataParam is an array of data contain the question type, question,answer and marks 
    * @return all the competition questions are answered then return 'pass' else 'fail'
    */
+  @Deprecated
   public String competationquestion(List<String> dataParam) {
 
     logger.debug("wait for next question to load");
@@ -484,8 +485,6 @@ public class Encash {
       } else {
         return "fail";
       }
-
-
     }
 
     if (dataParam.get(0).equalsIgnoreCase("MultipleChoice")) {
@@ -578,6 +577,9 @@ public class Encash {
    */
   public String competationparticpate() {
     
+    logger.debug("Wait for Participate button present");
+    waitmethod.waitForElementPresent("competition_play");
+    
     logger.debug("click on the Participate button");
     WebElement element = genericmethod.getElement("competition_play");
     waitmethod.waitForElementClickable(element);
@@ -607,7 +609,7 @@ public class Encash {
     
     if (!status) {
       logger.debug("Question content are not correct");
-      //return "fail";
+      return "fail";
     }
     
     //remove the first element in the dataParam so that we will get only answer need to select
@@ -619,7 +621,7 @@ public class Encash {
       
       if (!status) {
         logger.debug("answer not found ");
-        //return "fail";
+        return "fail";
       }
     }
     

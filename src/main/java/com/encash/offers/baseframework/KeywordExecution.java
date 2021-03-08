@@ -3,7 +3,6 @@ package com.encash.offers.baseframework;
 import com.aventstack.extentreports.Status;
 import com.encash.offers.bussiness.admin.Admin;
 import com.encash.offers.bussiness.encash.Encash;
-import com.encash.offers.configuration.ConstantVariable;
 import com.encash.offers.configuration.PropertiesValue;
 import com.encash.offers.firebase.Firebase;
 import com.encash.offers.mailinator.Mailinator;

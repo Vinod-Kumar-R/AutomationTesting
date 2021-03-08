@@ -201,8 +201,10 @@ public class BaseClass {
       }
       testData.closeWorkbook();
     } catch (EncryptedDocumentException e) {
+      logger.error("EncryptedDocumentException ---> " + e.getMessage());
 
     } catch (IOException e) {
+      logger.error("IOException ---> " + e.getMessage());
 
     } catch (Exception e) {
 
