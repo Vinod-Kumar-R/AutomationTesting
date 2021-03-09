@@ -112,6 +112,7 @@ public final class BrowserInitialize {
         try {
           drivere = new RemoteWebDriver(new URL(properties.getBrowserStackUrl()), 
                           desired.browserStack());
+          drivere.manage().window().maximize();
         } catch (Exception e) {
           // TODO Auto-generated catch block
           e.printStackTrace();

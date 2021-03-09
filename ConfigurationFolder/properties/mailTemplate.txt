@@ -1,51 +1,210 @@
-<p>Hi All,</p>
-<p>Automation Execution completed on build number ${report.buildnumber} in platform ${report.platform} and URL used for testing</p>
-<p>Encash URL :- ${report.encashUrl}<br />Admin URL :- ${report.adminUrl}<br /><br />Please find the attachement for complete test result and below are summary</p>
-<table style="width: 100%;" border="1">
+<html>
+<head></head>
+<body>
+<p>HI All,</p>
+<p>Automation Script Executed Success on build number ${report.buildnumber} and URL used for testing
+
+</p>
+<p> completed test report can be found here <a title="complete" href="Report" target="_blank" rel="noopener">Report</a> </p>
+
+<p>Below are Summary Report</p>
+<p>&nbsp;</p>
+<table style="border-collapse: collapse; width: 75%;" border="1">
 <tbody>
 <tr>
-<td style="text-align: left;">Start time</td>
-<td style="text-align: auto;">${report.startExecutiontime?datetime}</td>
+<td style="width: 100%; background-color: #0094ff; text-align: center;">
+<h1><span style="color: #000000;"><strong>TEST SUMMARY</strong></span></h1>
+</td>
 </tr>
 <tr>
-<td style="text-align: left;">End time</td>
-<td style="text-align: auto;">${report.endExecutiontime?datetime}</td>
+<td style="width: 100%; text-align: center;">
+<table style="border-collapse: collapse; width: 99.8705%; height: 171px;" border="1">
+<tbody>
+<tr style="height: 36px;">
+<td style="width: 30%; height: 36px; text-align: left;"><strong>Total Test case Executed</strong></td>
+<td style="width: 10%; height: 36px;"><strong>${report.totaltestcase}</strong></td>
+<td style="width: 8%; border-style: none; height: 171px;" rowspan="6">&nbsp;</td>
+<td style="width: 22%; height: 36px; text-align: left;"><strong>Total Duration</strong></td>
+<td style="width: 30%; height: 36px;"><strong>${report.duration.getHours()} H ${report.duration.getMinutes()} M ${report.duration.getSeconds()} S</strong></td>
 </tr>
-<tr>
-<td style="text-align: left;">Total Duration</td>
-<td style="text-align: auto;">${report.duration.getHours()} H ${report.duration.getMinutes()} M ${report.duration.getSeconds()} S</td>
+<tr style="height: 36px;">
+<td style="width: 30%; height: 36px; text-align: left;"><strong>Total Test case Pass</strong></td>
+<td style="width: 10%; height: 36px;"><strong><span style="color: #008000;">${report.passtestcase}</span></strong></td>
+<td style="width: 22%; height: 36px; text-align: left;"><strong>Start Time</strong></td>
+<td style="width: 30%; height: 36px;"><strong>${report.startExecutiontime?datetime}</strong></td>
 </tr>
-<tr>
-<td style="text-align: left;">Total test case Executed</td>
-<td style="text-align: auto;">${report.totaltestcase}</td>
+<tr style="height: 36px;">
+<td style="width: 30%; height: 36px; text-align: left;"><strong>Total Test case Fail</strong></td>
+<td style="width: 10%; height: 36px;"><strong><span style="color: #ff0000;">${report.failtestcase}</span></strong></td>
+<td style="width: 22%; height: 36px; text-align: left;"><strong>End Time</strong></td>
+<td style="width: 30%; height: 36px;"><strong>${report.endExecutiontime?datetime}</strong></td>
 </tr>
-<tr>
-<td style="text-align: left;">Total Test Case Pass</td>
-<td style="text-align: auto;"><span style="color: #00ff00;">${report.passtestcase}</span></td>
+<tr style="height: 36px;">
+<td style="width: 30%; height: 36px; text-align: left;"><strong>Total Skip Test case</strong></td>
+<td style="width: 10%; height: 36px;"><strong><span style="color: #0000ff;">${report.skiptestcase}</span></strong></td>
+<td style="width: 22%; height: 36px; text-align: left;"><strong>Browser</strong></td>
+<td style="width: 30%; height: 36px;"><strong>${report.browsername}</strong></td>
 </tr>
-<tr>
-<td style="text-align: left;">Total Test Case Failed</td>
-<td style="text-align: auto;"><span style="color: #ff0000;">${report.failtestcase}</span></td>
+<tr style="height: 36px;">
+<td style="width: 30%; height: 36px; text-align: left;"><strong>OS Version</strong></td>
+<td style="width: 10%; height: 36px;"><strong>${report.os}</strong></td>
+<td style="width: 22%; height: 36px; text-align: left;"><strong>Browser Version</strong></td>
+<td style="width: 30%; height: 36px;"><strong>${report.browserversion}</strong></td>
 </tr>
-<tr>
-<td style="text-align: left;">Total Test Case skip</td>
-<td style="text-align: auto;">${report.skiptestcase}</td>
+<#-- comment for if any new row need to added
+<tr style="height: 36px;">
+<td style="width: 30%; height: 36px;">&nbsp;</td>
+<td style="width: 10%; height: 36px;">&nbsp;</td>
+<td style="width: 22%; height: 36px;">&nbsp;</td>
+<td style="width: 30%; height: 36px;">&nbsp;</td>
 </tr>
-<tr>
-<td style="text-align: left;">Browser</td>
-<td style="text-align: auto;">${report.browsername}</td>
-</tr>
-<tr>
-<td style="text-align: left;">Browser Version</td>
-<td style="text-align: auto;">${report.browserversion}</td>
-</tr>
-<tr>
-<td style="text-align: left;">OS Version</td>
-<td style="text-align: auto;">${report.os}</td>
+-->
+</tbody>
+</table>
+</td>
 </tr>
 </tbody>
 </table>
-<br></br>
-
-<p>Please don't reply to this email as this has been generated by automation script</p>
-<p>Regards<br />Automation Script</p>
+<p>&nbsp;</p>
+<table style="border-collapse: collapse; width: 75%; height: 41px;" border="1">
+<tbody>
+<tr>
+<td style="width: 100%; background-color: #c000ff;">
+<h1 style="text-align: center;">TEST CATEGORY</h1>
+</td>
+</tr>
+<tr>
+<td style="width: 100%;">
+<table style="border-collapse: collapse; width: 100%; height: 60px;" border="1">
+<tbody>
+<tr style="height: 24px; background-color: #a9a89a;">
+<td style="width: 31%; text-align: center; height: 24px;"><strong>NAME</strong></td>
+<td style="width: 10%; text-align: center; height: 24px;"><strong>PASSED</strong></td>
+<td style="width: 10%; text-align: center; height: 24px;"><strong>FAILED</strong></td>
+<td style="width: 10%; text-align: center; height: 24px;"><strong>SKIPPED</strong></td>
+<td style="width: 13%; text-align: center; height: 24px;"><strong>PASSED %</strong></td>
+<td style="width: 13%; text-align: center; height: 24px;"><strong>FAILED %</strong></td>
+<td style="width: 13%; text-align: center; height: 24px;"><strong>SKIPPED %</strong></td>
+</tr>
+<#list report.categeorys as category>
+<tr style="height: 18px;">
+<td style="width: 31%; height: 18px;">${category.getAttr().getName()}</td>
+<td style="width: 10%; height: 18px;">${category.getPassed()}</td>
+<td style="width: 10%; height: 18px;">${category.getFailed()}</td>
+<td style="width: 10%; height: 18px;">${category.getSkipped()}</td>
+<td style="width: 13%; height: 18px;">${(category.getPassed()/(category.getPassed()+category.getFailed()+category.getSkipped())*100)}%</td>
+<td style="width: 13%; height: 18px;">${(category.getFailed()/(category.getPassed()+category.getFailed()+category.getSkipped())*100)}%</td>
+<td style="width: 13%; height: 18px;">${(category.getSkipped()/(category.getPassed()+category.getFailed()+category.getSkipped())*100)}%</td>
+</tr>
+</#list>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<#--  check the size of the table is greater then 1 the   -->
+<#if report.failTest?size gt 0>
+<p>&nbsp;</p>
+<table style="border-collapse: collapse; width: 75%; height: 82px;" border="1">
+<tbody>
+<tr style="height: 18px;">
+<td style="width: 100%; height: 18px; background-color: #fa0f0f; text-align: center;">
+<h1><span style="color: #ffffff;">FAILED TEST CASES</span></h1>
+</td>
+</tr>
+<tr style="height: 64px;">
+<td style="width: 100%; text-align: center; height: 64px;">
+<table style="border-collapse: collapse; width: 100%;" border="1">
+<tbody>
+<tr style="background-color: #a9a89a;">
+<td style="width: 23%;"><strong>TEST CASE ID</strong></td>
+<td style="width: 64%;"><strong>TEST DESCRIPTION</strong></td>
+<td style="width: 13%;"><strong>STATUS</strong></td>
+</tr>
+<#list report.failTest as test>
+<tr>
+<td style="width: 23%; text-align: left;">${test.getFullName()}</td>
+<td style="width: 64%; text-align: left;">${test.getDescription()}</td>
+<td style="width: 13%;"><span style="color: #ff0000;">${test.getStatus()}</span></td>
+</tr>
+</#list>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</#if>
+<#--  check the size of the table is greater then 1 the   -->
+<#if report.passTest?size gt 0>
+<p>&nbsp;</p>
+<table style="border-collapse: collapse; width: 75%; height: 52px;" border="1">
+<tbody>
+<tr>
+<td style="width: 100%; background-color: #14fa0f; text-align: center;">
+<h1><span style="color: #ffffff;">PASS TEST CASES</span></h1>
+</td>
+</tr>
+<tr>
+<td style="width: 100%;">
+<table style="border-collapse: collapse; width: 100%;" border="1">
+<tbody>
+<tr style="background-color: #a9a89a;">
+<td style="width: 23%; text-align: center;"><strong>TEST CASE ID</strong></td>
+<td style="width: 64%; text-align: center;"><strong>TEST DESCRIPTION</strong></td>
+<td style="width: 13%; text-align: center;"><strong>STATUS</strong></td>
+</tr>
+<#list report.passTest as test>
+<tr>
+<td style="width: 23%;">${test.getFullName()}</td>
+<td style="width: 64%;">${test.getDescription()}</td>
+<td style="width: 13%;"><span style="color: #339966;">${test.getStatus()}</span></td>
+</tr>
+</#list>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table
+</#if>
+<#--  check the size of the table is greater then 1 the   -->
+<#if report.skipTest?size gt 0>
+<p>&nbsp;</p>
+<table style="border-collapse: collapse; width: 75%; height: 37px;" border="1">
+<tbody>
+<tr>
+<td style="width: 100%; background-color: #140ffa; text-align: center;">
+<h1><span style="color: #ffffff;">SKIPPED TEST CASES</span></h1>
+</td>
+</tr>
+<tr>
+<td style="width: 100%;">
+<table style="border-collapse: collapse; width: 100%;" border="1">
+<tbody>
+<tr style="background-color: #a9a89a;">
+<td style="width: 23%; text-align: center;"><strong>TEST CASE ID</strong></td>
+<td style="width: 64%; text-align: center;"><strong>TEST DESCRIPTION</strong></td>
+<td style="width: 13%; text-align: center;"><strong>STATUS</strong></td>
+</tr>
+<#list report.skipTest as test>
+<tr>
+<td style="width: 23%;">${test.getFullName()}</td>
+<td style="width: 64%;">${test.getDescription()}</td>
+<td style="width: 13%;"><span style="color: #0000ff;">${test.getStatus()}</span></td>
+</tr>
+</#list>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+</#if>
+<p>Please don't replay to this email, it been genreated by automation script.</p>
+<p>Regards</p>
+<p>Automation Script</p>
+</body>
+</html>
