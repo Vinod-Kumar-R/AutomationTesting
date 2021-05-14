@@ -1,11 +1,11 @@
 # AutomationTesting (Framework used to test on WebApplication, Mobile Browser application and Browser stack)
 Keyword Driver Framework has been used to impleted, for this used the spring core and JAVA, 
 Test Script are used in the Excel sheet ( mail me vinodraju26@gmail.com) if you are instreated to under the framework 
-After exception of completed testcase an summary email report are send ( configuration ) and used the Extent Report and KLOV report for historical data
+After execution of completed testcase an summary email report are send ( configuration ) and used for report used Extent Report and KLOV report for historical data
 
 Cofiguration 
 
-Step 1 :- Create a environment veriable called "encashoffers" and copy the content of inside the "ConfigurationFolder" to newly created enviroment variable
+Step 1 :- Create a environment veriable called "encashoffers" and copy the content inside the "ConfigurationFolder" to newly created enviroment variable
 
 Step 2 :- restart the system
 
