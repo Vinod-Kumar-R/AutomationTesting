@@ -5,6 +5,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.model.Category;
+import com.aventstack.extentreports.model.SystemEnvInfo;
 import com.aventstack.extentreports.model.Test;
 import com.aventstack.extentreports.model.context.NamedAttributeContext;
 import com.aventstack.extentreports.model.context.NamedAttributeContextManager;
@@ -172,6 +173,16 @@ public class ExtentReport {
     this.extent.setSystemInfo(key, value);
   }
 
+  public String getSystemInfo(String envname) {
+    List<SystemEnvInfo> envInfo = this.extent.getReport().getSystemEnvInfo();
+    for (SystemEnvInfo s : envInfo) {
+      if (s.getName().equals(envname)) {
+        return s.getValue();
+      }
+    }
+    return "null";
+  }
+  
   /**
    * this method is used to when test case are skipped.
    * @param testName test case execution name
@@ -189,24 +200,6 @@ public class ExtentReport {
   public Set<NamedAttributeContext<Category>> categeoryctx() {
 
     NamedAttributeContextManager<Category> category = this.spark.getReport().getCategoryCtx();
-
-    /*  
-    Set<NamedAttributeContext<Category>>  set =  category.getSet();
-    for (NamedAttributeContext<Category> cc :set) {
-      logger.debug(cc.getAttr().getName()); 
-      logger.debug(cc.getFailed().toString());
-      logger.debug(cc.getPassed().toString());
-      logger.debug(cc.getSkipped().toString());
-      logger.debug(cc.getOthers().toString());
-      logger.debug((cc.getPassed()/(cc.getPassed()+cc.getFailed()+cc.getSkipped())*100));
-      List<Test> test = cc.getTestList();
-      for (Test tes : test) {
-        tes.getAncestor();
-        tes.getDescription();
-      }
-    }
-    */
-    
     return category.getSet();
   }
   

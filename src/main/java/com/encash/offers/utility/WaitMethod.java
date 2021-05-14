@@ -570,7 +570,7 @@ public class WaitMethod {
 
     logger.debug("Waiting for the locators elements " + by);
     wait.until(ExpectedConditions.numberOfElementsToBe(by, number));
-
+    
     waitstatus = true;
     return "pass";
 

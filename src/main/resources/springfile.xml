@@ -10,7 +10,7 @@
 
     <context:annotation-config />
     <context:property-placeholder location= "file:${encashoffers}/properties/mail.properties,
-    file:${encashoffers}/properties/config1.properties"
+    file:${encashoffers}/properties/config.properties"
     />
 
     

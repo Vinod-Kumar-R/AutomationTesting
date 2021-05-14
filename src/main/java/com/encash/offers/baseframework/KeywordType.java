@@ -7,19 +7,15 @@ package com.encash.offers.baseframework;
  */
 public enum KeywordType {
 
-  angularWait,
   banner,
   browsertype,
   browserswitch,
-  click,
-  comment,
   competationform,
   mandatoryquestion,
   mobileparticipate,
   consent,
   closebrowser,
   enteremailotp,
-  entertext,
   emailencash,
   encashmenu,
   firebaselogin,
@@ -51,12 +47,5 @@ public enum KeywordType {
   storewindow,
   switchdriver,
   switchwindow,
-  takescreenshot,
-  verifyattributedvalue,
-  verifytext,
-  waitforattributedcontain,
-  waitForElementInvisible,
-  waitForElementPresent,
-  waitforelementvisible,
-  waitfortexttvisible
+  takescreenshot
 }

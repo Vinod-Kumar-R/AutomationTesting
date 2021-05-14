@@ -68,7 +68,8 @@ public class MailServiceImpl {
         model.put("report", report);
 
         String text = geFreeMarkerTemplateContent(model);
-        System.out.println("Template content : " + text);
+        //System.out.println("Template content : " + text);
+        logger.debug("Template content : " + text);
 
         /*
          * use the true flag to indicate you need a multipart message

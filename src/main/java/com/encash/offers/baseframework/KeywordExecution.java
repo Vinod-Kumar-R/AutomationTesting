@@ -86,33 +86,9 @@ public class KeywordExecution {
         testResult(status, "Browser Open");
         break;
 
-      case waitforelementvisible :
-        logger.debug("Waiting for the element visible");
-        status = waitMethod.waitForElementVisible(dataParam.get(0));
-        testResult(status, keyword.toString());
-        break;
-
-      case waitfortexttvisible :
-        logger.debug("Waiting for the Text visible");
-        status = waitMethod.waitForTexttVisible(dataParam);
-        testResult(status, keyword.toString());
-        break;
-
-      case click :
-        status = genericMethod.click(dataParam.get(0));
-        logger.debug("clicked  on Element");
-        testResult(status, keyword.toString());
-        break;
-
       case quitbrowser :
         status = browserinitialize.quitBrowser();
         logger.debug("QuiteBrowser");
-        testResult(status, keyword.toString());
-        break;
-
-      case verifytext :
-        status = genericMethod.verifyText(dataParam);
-        logger.debug("verified the text");
         testResult(status, keyword.toString());
         break;
 
@@ -129,27 +105,9 @@ public class KeywordExecution {
         testResult(status, keyword.toString());
         break;
 
-      case waitforattributedcontain :
-        status = waitMethod.waitForAttributedContain(dataParam);
-        logger.debug("Waited for An Attibuted ");
-        testResult(status, keyword.toString());
-        break;
-
-      case verifyattributedvalue :
-        status = genericMethod.verifyAttributedValue(dataParam);
-        logger.debug("verified the attributed Value");
-        testResult(status, keyword.toString());
-        break;
-
       case banner :
         status = encash.banner(dataParam);
         logger.debug("verifed the Banner");
-        testResult(status, keyword.toString());
-        break;
-
-      case entertext:
-        status = genericMethod.entertext(dataParam);
-        logger.debug("Enter the text");
         testResult(status, keyword.toString());
         break;
 
@@ -157,9 +115,6 @@ public class KeywordExecution {
         status = admin.competationForm(dataParam);
         logger.debug("complete create competation");
         testResult(status, keyword.toString());
-        break;
-
-      case comment :
         break;
 
       case registrationform :
@@ -179,12 +134,6 @@ public class KeywordExecution {
         logger.debug("Expand all consent");
         testResult(status, keyword.toString());
         break;
-        
-      case waitForElementInvisible:
-        status = waitMethod.waitForElementInvisible(dataParam.get(0));
-        logger.debug("waiting for Element invisible");
-        testResult(status, keyword.toString());
-        break;
 
       case browsertype:
         status = genericMethod.browsertype(dataParam.get(0));
@@ -195,18 +144,6 @@ public class KeywordExecution {
       case mobileregisterUsingMobileNumber:
         status = mobileEncash.registerUsingMobileNumber(dataParam);
         logger.debug("complete entering registration");
-        testResult(status, keyword.toString());
-        break;
-        
-      case waitForElementPresent:
-        status = waitMethod.waitForElementPresent(dataParam.get(0));
-        logger.debug("waiting for Element Present");
-        testResult(status, keyword.toString());
-        break;
-        
-      case angularWait:
-        status = waitMethod.angularWait();
-        logger.debug("angularWait");
         testResult(status, keyword.toString());
         break;
         

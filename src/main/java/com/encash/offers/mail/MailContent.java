@@ -42,7 +42,7 @@ public class MailContent {
   public ExtentReportBean maildata() throws IOException {
     logger.debug("Setting the Email body content");
     
-    driver = (EventFiringWebDriver) browserinitialize.getWebDriverInstance();
+    //driver = (EventFiringWebDriver) browserinitialize.getWebDriverInstance();
     
     // zip the result file
     Path resultfile = genericMethod.zip(ConstantVariable.ResultLocation, 
@@ -58,13 +58,13 @@ public class MailContent {
     report.setFailtestcase(extentreport.getTotalTestPasscase(Status.FAIL));
     report.setSkiptestcase(extentreport.getTotalTestPasscase(Status.SKIP));
     report.setTotaltestcase(extentreport.getTotalTestcase());
-    report.setPlatform(driver.getCapabilities().getPlatform().toString());
+    report.setPlatform(extentreport.getSystemInfo("Platform"));
     report.setEncashUrl(properties.getEncashUrl());
     report.setAdminUrl(properties.getAdminUrl());
     report.setBuildnumber("XXXX");
     report.setAutomationresult(resultfile.toFile());
-    report.setBrowsername(driver.getCapabilities().getBrowserName());
-    report.setBrowserversion(driver.getCapabilities().getVersion());
+    report.setBrowsername(extentreport.getSystemInfo("Browser Name"));
+    report.setBrowserversion(extentreport.getSystemInfo("Browser Version"));
     report.setOs(System.getProperty("os.name"));
     report.setCategeorys(extentreport.categeoryctx());
     report.setPassTest(extentreport.getTestDetail(Status.PASS));

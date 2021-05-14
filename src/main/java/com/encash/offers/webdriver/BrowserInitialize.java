@@ -58,8 +58,6 @@ public final class BrowserInitialize {
     switch (bt) {
       case CHROME:
 
-        //System.setProperty("webdriver.chrome.logfile",ConstantVariable
-        //.Configlocation+File.separator+"log"+File.separator+"chromelog.log");
         drivere = new ChromeDriver(desired.chromeDesired());
         break;
 
