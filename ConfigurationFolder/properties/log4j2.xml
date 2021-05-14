@@ -2,8 +2,8 @@
 <Configuration status="WARN" monitorInterval="30">
  
     <Properties>
-        <Property name="LOG_PATTERN">%d{dd-MMM-yyyy HH:mm:ss.SSS} [%t] %-5level %logger{36} [%L] - %msg%n</Property>
-		<Property name="APP_LOG_ROOT">D:/Vinod/encashoffers/log</Property>
+        <Property name="LOG_PATTERN">%d{dd-MMM-yyyy HH:mm:ss.SSS} %-5level %logger{36} [%L] - %msg%n</Property>
+		<Property name="APP_LOG_ROOT">${env:encashoffers}/log</Property>
     </Properties>
  
     <Appenders>
@@ -47,14 +47,14 @@
     <Loggers>
      
         <Logger name="com.encash.offers" additivity="false">
-            <AppenderRef ref="debugLog" /> 
-            <AppenderRef ref="infoLog"  />
             <AppenderRef ref="errorLog" />
-            <AppenderRef ref="Console"  />
+			<AppenderRef ref="infoLog"  />
+			<AppenderRef ref="debugLog" />
+            <AppenderRef ref="Console"  /> 
         </Logger>
 
-        <Root level="all">
-         <!--   <AppenderRef ref="Console"/> -->
+        <Root level="INFO">
+           <!-- <AppenderRef ref="Console"/> -->
         </Root>
  
     </Loggers>
