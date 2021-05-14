@@ -1,4 +1,4 @@
-# AutomationTesting (Frameword used to test on WebApplication, Mobile Browser application and Browser stack)
+# AutomationTesting (Framework used to test on WebApplication, Mobile Browser application and Browser stack)
 Keyword Driver Framework has been used to impleted, for this used the spring core and JAVA, 
 Test Script are used in the Excel sheet ( mail me vinodraju26@gmail.com) if you are instreated to under the framework 
 After exception of completed testcase an summary email report are send ( configuration ) and used the Extent Report and KLOV report for historical data
