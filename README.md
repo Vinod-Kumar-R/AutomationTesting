@@ -1,13 +1,23 @@
 # AutomationTesting (Framework used to test on WebApplication, Mobile Browser application and Browser stack)
-Keyword Driver Framework has been used to impleted, for this used the spring core and JAVA, 
-Test Script are used in the Excel sheet ( mail me vinodraju26@gmail.com) if you are instreated to under the framework 
-After execution of completed testcase an summary email report are send ( configuration ) and used for report used Extent Report and KLOV report for historical data
+Keyword Driver Framework is a tet Data Driven (TDD) and implemented using JAVA and Spring Core.
+Main method start from class Mainfunction under package "com.encash.offers.baseframework"
+
+the framework support both Web Automation and Mobile Web Browser automation, Most of the code will be reusable for Web Automation and Mobile Web browser. it also support all types of Browser (configuration file).
+for testing Mobile Web Browser, then Appium Server is required of version 1.18.0-2 ( test on this)
+ 
+Test Script are used in the Excel sheet (.xlsx or xls) and CSV file for Object Repository.
+ 
+After testcase execution complete an summary email report are send (configuration) and for Report used Extent Report and KLOV report for historical data
+
+sample image of testcase, testscript, objectRepositorty and email format, file are stored in "ConfigurationFolder/sampleTestScript/"
 
 Cofiguration 
 
-Step 1 :- Create a environment veriable called "encashoffers" and copy the content inside the "ConfigurationFolder" to newly created enviroment variable
+Step 1 :- Create a environment variable called "encashoffers" and copy the content inside the "ConfigurationFolder" to newly created enviroment variable
 
 Step 2 :- restart the system
+
+Step 3 :- update the config.properties file with properly.
 
 Run the program from command line 
 
