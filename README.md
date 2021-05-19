@@ -1,13 +1,13 @@
 # AutomationTesting (Framework used to test on WebApplication, Mobile Browser application and Browser stack)
-Keyword Driver Framework is a tet Data Driven (TDD) and implemented using JAVA and Spring Core.
+Keyword Driver Framework is a test Data Driven (TDD) and implemented using JAVA and Spring Core.
 Main method start from class Mainfunction under package "com.encash.offers.baseframework"
 
 the framework support both Web Automation and Mobile Web Browser automation, Most of the code will be reusable for Web Automation and Mobile Web browser. it also support all types of Browser (configuration file).
-for testing Mobile Web Browser, then Appium Server is required of version 1.18.0-2 ( test on this)
+for testing Mobile Web Browser, then Appium Server is required of version 1.18.0-2 ( tested on this)
  
-Test Script are used in the Excel sheet (.xlsx or xls) and CSV file for Object Repository.
+Test Script are used in the Excel sheet (.xlsx or .xls) and CSV file for Object Repository.
  
-After testcase execution complete an summary email report are send (configuration) and for Report used Extent Report and KLOV report for historical data
+After all testcase executed, an summary email report are send to team (configuration) and for Report used Extent Report and KLOV report for historical data
 
 sample image of testcase, testscript, objectRepositorty and email format, file are stored in "ConfigurationFolder/sampleTestScript/"
 
