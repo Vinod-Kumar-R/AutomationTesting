@@ -1,6 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>Encash</groupId>
@@ -171,7 +173,32 @@
 			<version>[3.141.0,)</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.atlassian.jira/jira-rest-java-client-core -->
+		<dependency>
+			<groupId>com.atlassian.jira</groupId>
+			<artifactId>jira-rest-java-client-core</artifactId>
+			<version>5.2.2</version>
+		</dependency>
+
+
 	</dependencies>
+
+
+	<repositories>
+		<repository>
+			<id>atlassian-public</id>
+			<url>https://maven.atlassian.com/repository/public</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+				<checksumPolicy>warn</checksumPolicy>
+			</releases>
+		</repository>
+	</repositories>
 
 	<reporting>
 		<plugins>
@@ -218,7 +245,11 @@
 						<additionalOptions>-html5</additionalOptions>
 					</configuration>
 				</plugin>
+
+
 			</plugins>
+
+
 		</pluginManagement>
 	</build>
 </project>
