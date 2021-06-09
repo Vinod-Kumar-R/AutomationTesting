@@ -1,12 +1,8 @@
 package com.automation.baseframework;
 
-import com.automation.configuration.PropertiesValue;
-import com.automation.custom.exception.DuplicateValueException;
-
-import java.io.IOException;
+import com.automation.jira.zephyr.api.TestCaseapi;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.poi.EncryptedDocumentException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -28,7 +24,14 @@ public class Mainfunction {
     // TODO Auto-generated method stub
 
     ApplicationContext context = new ClassPathXmlApplicationContext("springfile.xml");
-    BaseClass bc = context.getBean("base", BaseClass.class);
+    //BaseClass bc = context.getBean("base", BaseClass.class);
+    TestCaseapi au = context.getBean("jiratestcase", TestCaseapi.class);
+    //au.getAllTestCase("projectKey = \"SEL\" AND \"Automation\" IN (\"DONE\")", 0, 10);
+    //au.getDownloadTestCaseFile("http://192.168.0.109:8080/rest/tests/1.0/attachment/1/", "vinod.xlsx");
+    //au.getTestcase("SEL-T1");
+    //au.getTestCaseAttachmentList("SEL-T1");
+    
+    /**
     try {
       
       logger.debug("Start Executing Test cases");
@@ -54,6 +57,6 @@ public class Mainfunction {
         e.printStackTrace();
       }
 
-    }
+    }**/
   }
 }

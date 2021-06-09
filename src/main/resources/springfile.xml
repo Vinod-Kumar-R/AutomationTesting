@@ -10,7 +10,8 @@
 
     <context:annotation-config />
     <context:property-placeholder location= "file:${automation}/properties/mail.properties,
-    file:${automation}/properties/config.properties"
+    file:${automation}/properties/config.properties,
+    file:${automation}/properties/jira.properties"
     />
 
     
@@ -48,5 +49,9 @@
     <bean id="mandatoryquestion" class="com.automation.webelement.custom.MandatoryQuestion"></bean>
     <bean id="jsscript" class="com.automation.utility.JsWaiter"></bean>
     <bean id="table" class="com.automation.webelement.custom.Table"></bean>
-      
+    <bean id="jiraauthentication" class="com.automation.jira.Authentication"></bean>
+    <bean id="jiraconfig" class="com.automation.configuration.JiraConfiguration"></bean>
+    <bean id="jiratestcase" class="com.automation.jira.zephyr.api.TestCaseapi"></bean>
+    <bean id="requsetbuilder" class="com.automation.jira.RequestBuilder"></bean>
+          
 </beans>

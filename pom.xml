@@ -173,32 +173,15 @@
 			<version>[3.141.0,)</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.atlassian.jira/jira-rest-java-client-core -->
+		<!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
 		<dependency>
-			<groupId>com.atlassian.jira</groupId>
-			<artifactId>jira-rest-java-client-core</artifactId>
-			<version>5.2.2</version>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>4.4.0</version>
 		</dependency>
-
 
 	</dependencies>
 
-
-	<repositories>
-		<repository>
-			<id>atlassian-public</id>
-			<url>https://maven.atlassian.com/repository/public</url>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-				<checksumPolicy>warn</checksumPolicy>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-				<checksumPolicy>warn</checksumPolicy>
-			</releases>
-		</repository>
-	</repositories>
 
 	<reporting>
 		<plugins>
@@ -231,7 +214,7 @@
 					<artifactId>exec-maven-plugin</artifactId>
 					<version>1.6.0</version>
 					<configuration>
-						<mainClass>com.encash.offers.baseframework.Mainfunction</mainClass>
+						<mainClass>com.automation.baseframework.Mainfunction</mainClass>
 						<cleanupDaemonThreads>false</cleanupDaemonThreads>
 					</configuration>
 				</plugin>
