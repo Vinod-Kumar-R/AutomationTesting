@@ -22,7 +22,7 @@
     <bean id="mail" class="com.automation.mailinator.Mailinator"></bean>
     <bean id="storedvalue" class="com.automation.configuration.ApplicationStoreValue"></bean>
     <bean id="testdata" class="com.automation.utility.ExcelReader"></bean>
-    <bean id="testcase" class="com.automation.utility.ExcelReader"></bean>
+    <bean id="createtestcase" class="com.automation.utility.ExcelReader"></bean>
     <bean id="constantvariable" class="com.automation.configuration.ConstantVariable"></bean>
     <bean id="base" class="com.automation.baseframework.BaseClass"></bean>
     <bean id="keyword" class="com.automation.baseframework.KeywordExecution"></bean>

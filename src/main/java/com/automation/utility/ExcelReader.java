@@ -1,13 +1,16 @@
 package com.automation.utility;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
@@ -27,6 +30,7 @@ public class ExcelReader {
   private Row row;
   private String excelfilename;
   private int excelsheetindex;
+  private Cell cell;
 
   public String getExcelfilename() {
     return excelfilename;
@@ -43,16 +47,26 @@ public class ExcelReader {
     this.excelfilename = excelfilename;
     this.filename = new File(this.excelfilename);
     this.workbook = WorkbookFactory.create(this.filename);
+   
   }
-
+  
+  public void createExcelFile(boolean excelfile) throws IOException {
+    this.workbook = WorkbookFactory.create(excelfile);
+  }
+  
   public int getExcelsheetindex() {
     return excelsheetindex;
   }
 
-  public void setExcelsheetindex(int excelsheetindex) {
+  public void getExcelsheetindex(int excelsheetindex) {
     this.excelsheetindex = excelsheetindex;
     this.sheet = this.workbook.getSheetAt(this.excelsheetindex);
   }
+  
+  public void setExcelSheet(String sheetName) {
+    this.sheet = this.workbook.createSheet(sheetName);
+  }
+  
 
    /**
    * In the constructor we are reading the excel file.
@@ -97,8 +111,6 @@ public class ExcelReader {
 
   private int  headerColumncount() {
     return this.sheet.getRow(0).getPhysicalNumberOfCells();
-
-
   }
 
   /**
@@ -110,11 +122,24 @@ public class ExcelReader {
    */
   public String getCellData(int row, int column) {
 
-
     String cellvalue = null;
     this.row = sheet.getRow(row);
     cellvalue = formatCell(this.row.getCell(column));
     return cellvalue;
+  }
+  
+  /**
+   * method used to create cell and update the value in it. 
+   * @param column is column number in which value as to set
+   * @param cellData is data to set in row and cell
+   */
+  public void setCellData(int column, String cellData) {
+    this.cell = this.row.createCell(column, CellType.STRING);
+    this.cell.setCellValue(cellData);
+  }
+  
+  public void setCreateRow(int row) {
+    this.row = this.sheet.createRow(row);
   }
 
   /**
@@ -124,6 +149,18 @@ public class ExcelReader {
   public void closeWorkbook() throws IOException {
     this.workbook.close();
   }
+  
+  /**
+   * Method is used to write to excel sheet.
+   * @param fileName is the new file which will create if not exit.
+   * @throws IOException if file not able to write
+   */
+  public void writeWorkbook(String fileName) throws IOException {
+    FileOutputStream fileOut  = new FileOutputStream(fileName);
+    this.workbook.write(fileOut);
+    fileOut.close();
+  }
+
 
   /**
    * This function return particular Row Data in format of Map&lt;Integer,String&gt;.

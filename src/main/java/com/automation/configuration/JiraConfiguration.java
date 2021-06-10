@@ -23,6 +23,28 @@ public class JiraConfiguration {
   
   @Value("${jira.port}")
   private int jiraport;
+  
+  @Value("${jira.testcase.query}")
+  private String testcaseQuery;
+  
+  @Value("${jira.testcase.fetchmax}")
+  private int testcaseMaxresult;
+
+  public String getTestcaseQuery() {
+    return testcaseQuery;
+  }
+
+  public void setTestcaseQuery(String testcaseQuery) {
+    this.testcaseQuery = testcaseQuery;
+  }
+
+  public int getTestcaseMaxresult() {
+    return testcaseMaxresult;
+  }
+
+  public void setTestcaseMaxresult(int testcaseMaxresult) {
+    this.testcaseMaxresult = testcaseMaxresult;
+  }
 
   public String getJiratoken() {
     return jiratoken;
