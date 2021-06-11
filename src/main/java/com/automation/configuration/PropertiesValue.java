@@ -63,8 +63,35 @@ public class PropertiesValue {
   @Value("${klov}")
   private boolean isKlov;
   
+  @Value("${jiraintegration}")
+  private boolean isJiraIntegration;
+
+  private String extentreportlocation;
+  
+  private String templocation;
+  
+  public String getTemplocation() {
+    return templocation;
+  }
+
+  public void setTemplocation(String templocation) {
+    this.templocation = templocation;
+  }
+
+  public String getExtentreportlocation() {
+    return extentreportlocation;
+  }
+
+  public void setExtentreportlocation(String extentreportlocation) {
+    this.extentreportlocation = extentreportlocation;
+  }
+
   public boolean isKlov() {
     return isKlov;
+  }
+  
+  public boolean isJiraIntegration() {
+    return isJiraIntegration;
   }
   
   public String getBrowserStackUrl() {

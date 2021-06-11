@@ -66,7 +66,7 @@ public class BaseClass {
   @Autowired
   private JiraConfiguration jiraconfiguration;
 
-  
+
   /**
    * This Method start reading the Test case xlsx file  row by row.
    * 
@@ -91,58 +91,68 @@ public class BaseClass {
    * @throws EncryptedDocumentException file has been excypted  
    * <pre> this is the main which accept all the Exception </pre>
    * @throws DuplicateValueException duplicate key are found in ObjectRepository file
-   * @throws SpreadsheetReadException 
    */
   public void startRun() throws DuplicateValueException, EncryptedDocumentException, IOException  {
-    
+
     constantVariable.initializeVariable();
     extentReport.initializeExtentReport();
-    
-    //initialize the excel file for testdata
-    testData.setExcelfilename(properties.getTestdata());
-    testData.getExcelsheetindex(0);
-    
-    constantVariable.searchTestData();
     constantVariable.objectRepository();
     browserinitialize.getWebDriverInstance();
     browserinitialize.browserInfo();
-    
-    int testDatarownumber = 0;
-    
-    //Read the Test case data
-    logger.debug("Test Case File name " + properties.getTestcase());
-    List<TestExcelBean> testcases = Poiji.fromExcel(new File(properties.getTestcase()),
-                    TestExcelBean.class);  
-    for (TestExcelBean testca : testcases) {
-      if (testca.getTestExecute().equalsIgnoreCase("yes")) {
-        logger.info("Started Executing Test Case ID " + testca.getTestcaseId());
-        logger.debug("Test Case ID " + testca.getTestcaseId());
-        logger.debug("Test Case Description " + testca.getTestcaseDescription());
-        logger.debug("Test Case Categeory " + testca.getTestCatgeory());
 
-        extentReport.createTest(testca.getTestcaseId(), testca.getTestcaseDescription());
-        extentReport.categeory(testca.getTestCatgeory());
-
-        logger.debug("Test case found in the test data file at----> "
-                        + ConstantVariable.TestDataRowNumber.get(testca.getTestcaseId()));
-        testDatarownumber = ConstantVariable.TestDataRowNumber.get(testca.getTestcaseId());
-
-        //Execute the Test case ID
-        logger.debug("Test Case ID found and started executing " + testca.getTestcaseId());
-        testRunId(testDatarownumber);
-        extentReport.flushlog();
-
-      } else {
-        logger.info("Skiped the Test case " + testca.getTestcaseId());
-        extentReport.skipTest(testca.getTestcaseId(), testca.getTestcaseDescription());
-        extentReport.categeory(testca.getTestCatgeory());
-      }
-      
+    if (properties.isJiraIntegration()) {
+      executetestcase(testdatapreparation());
+    } else {
+      //initialize the excel file for testdata
+      testData.setExcelfilename(properties.getTestdata());
+      testData.getExcelsheetindex(0);
+      constantVariable.searchTestData();
+      executetestcase(properties.getTestcase());
     }
+  }
 
+  private void executetestcase(String testfile) {
+    int testDatarownumber = 0;
+
+    //Read the Test case data
+    logger.debug("Test Case File name " + testfile);
+    List<TestExcelBean> testcases = Poiji.fromExcel(new File(testfile),
+                    TestExcelBean.class);  
+    for (TestExcelBean testcase : testcases) {
+      if (testcase.getTestExecute().equalsIgnoreCase("yes")) {
+        logger.info("Started Executing Test Case ID " + testcase.getTestcaseId());
+        logger.debug("Test Case ID " + testcase.getTestcaseId());
+        logger.debug("Test Case Description " + testcase.getTestcaseDescription());
+        logger.debug("Test Case Categeory " + testcase.getTestCatgeory());
+
+        extentReport.createTest(testcase.getTestcaseId(), testcase.getTestcaseDescription());
+        extentReport.categeory(testcase.getTestCatgeory());
+
+        //check if jira integration is enable then from first row is the testcaseID
+        if (properties.isJiraIntegration()) {
+          //Execute the Test case ID
+          logger.debug("Test Case ID found and started executing " + testcase.getTestcaseId());
+          testRunId(0, testcase.getTestDatalocation());
+          extentReport.flushlog();
+        } else {
+          logger.debug("Test case found in the test data file at----> "
+                          + ConstantVariable.TestDataRowNumber.get(testcase.getTestcaseId()));
+          testDatarownumber = ConstantVariable.TestDataRowNumber.get(testcase.getTestcaseId());
+
+          //Execute the Test case ID
+          logger.debug("Test Case ID found and started executing " + testcase.getTestcaseId());
+          testRunId(testDatarownumber, properties.getTestdata());
+          extentReport.flushlog();
+        }
+      } else {
+        logger.info("Skiped the Test case " + testcase.getTestcaseId());
+        extentReport.skipTest(testcase.getTestcaseId(), testcase.getTestcaseDescription());
+        extentReport.categeory(testcase.getTestCatgeory());
+      }
+    }
     extentReport.flushlog();
     logger.info("Completed Exeuction of all the Test Case i.e " + testcases.size());
-    logger.info("Result file are located in :- " + ConstantVariable.ExtentReportsLocation);
+    logger.info("Result file are located in :- " + properties.getExtentreportlocation());
   }
 
   /**
@@ -163,12 +173,19 @@ public class BaseClass {
    *     which indicate from which row test script has to executed
    */
 
-  public void testRunId(int rowStartfrom) {
+  public void testRunId(int rowStartfrom, String testdatafile) {
+
     int currentRow = rowStartfrom;
     int currentCol = 1;
     String keyword = null;
 
     try {
+
+      if (!testdatafile.equalsIgnoreCase("")) {
+        testData.setExcelfilename(testdatafile);
+        testData.getExcelsheetindex(0);
+      }
+
       while (testData.getCellData(currentRow, 0) == null
                       || !testData.getCellData(currentRow, 0).equalsIgnoreCase("End")) {
         keyword = testData.getCellData(currentRow, currentCol);
@@ -191,7 +208,7 @@ public class BaseClass {
             //increment column
             column++;
           }
-         
+
           keywordExecution.setvalue(KeywordType.valueOf(keyword));
           logger.info("Executing the Keyword " + keyword);
           keywordExecution.executed(dataParam);
@@ -220,29 +237,37 @@ public class BaseClass {
     }
   }
 
-  
+
   /**
-   *  abcd.
-   * @throws IOException 
+   * Method is used to create a test case excel file based on the result fetch from jira.
+   * @return the file location of the created test case excel file 
+   * @throws IOException not able to write to file
    */
-  public void testdatapreparation() throws IOException {
-   
+  public String testdatapreparation() throws IOException {
+
     //Prepare the test date
+    //create a excel sheet with header and close the workbook
+    testcaseCreation.createExcelFile(true);
+    testcaseCreation.setExcelSheet("Sheet1");
+    //Excel header name
+    testcaseCreation.setCreateRow(0);
+    testcaseCreation.setCellData(0, "Test Case ID");
+    testcaseCreation.setCellData(1, "Test Case Description");
+    testcaseCreation.setCellData(2, "Test Categeory");
+    testcaseCreation.setCellData(3, "Executed");
+    testcaseCreation.setCellData(4, "Test Data Location");
+
     //make a request call to Jira to fetch the list of testcase
     List<TestCase> testcases = testcaseapi.getAllTestCase(
                     jiraconfiguration.getTestcaseQuery(), 0, 
                     jiraconfiguration.getTestcaseMaxresult());
-   
-    //create a exel sheet with header and close the workbook
-    String excelfilename = properties.getConfigLocation() + "/temp/" + "automation.xlsx";
-    createExcelSheet(excelfilename);
-    
     //now open created file in read write mode 
     int cellrow = 1;
-                       
+    String testscriptlocation;
+
     //loop the TestCase
     for (TestCase testcase : testcases) {
-      
+
       //download the testscript from jira
       logger.debug("testcase ID " + testcase.getTestcaseId()
           + "-----" + "projectID " + testcase.getProjectId());
@@ -253,11 +278,9 @@ public class BaseClass {
                         && attachment.getFilesize() > 0) {
           logger.debug("testfile need to download need to download");
           //download the test script assuming file has download
-          testcaseapi.getDownloadTestCaseFile(attachment.getUrl(), 
-                          properties.getConfigLocation() 
-                          + "/temp/" 
-                          + testcase.testcaseId.replace("-", "")
-                          + attachment.getFilename());
+          testscriptlocation = properties.getTemplocation() + File.separator 
+                          + testcase.testcaseId.replace("-", "") + attachment.getFilename();
+          testcaseapi.getDownloadTestCaseFile(attachment.getUrl(), testscriptlocation);
           // write to exel sheet 
           logger.debug("writing to excel sheet");
           testcaseCreation.setCreateRow(cellrow);
@@ -265,39 +288,22 @@ public class BaseClass {
           testcaseCreation.setCellData(1, testcase.getTestCaseDescription());
           testcaseCreation.setCellData(2, testcase.getCustomField().getCategeory());
           testcaseCreation.setCellData(3, "Yes");
+          testcaseCreation.setCellData(4, testscriptlocation);
           cellrow++;
 
         } 
       }
     }
-    
-    //write data in buffer to file 
+
+    //write data from buffer to file
+    String excelfilename = properties.getTemplocation() + File.separator + "automation.xlsx";
     testcaseCreation.writeWorkbook(excelfilename);
     testcaseCreation.closeWorkbook();
-  }
-  
-  //
-  public void createExcelSheet(String excelfilename) throws IOException {
-  //creat a test excel data 
-    testcaseCreation.createExcelFile(true);
-    testcaseCreation.setExcelSheet("Sheet1");
-    //Excel header name
-    testcaseCreation.setCreateRow(0);
-    testcaseCreation.setCellData(0, "Test Case ID");
-    testcaseCreation.setCellData(1, "Test Case Description");
-    testcaseCreation.setCellData(2, "Test Categeory");
-    testcaseCreation.setCellData(3, "Executed");
-    
-    //close the workbook
-    //not closed because to finish 
-    //testcaseCreation.writeWorkbook(excelfilename);
-    //testcaseCreation.closeWorkbook();
-    
+    //return the created testfile  
+    return excelfilename;
   }
 
-  
-  
-  /**
+   /**
    * This method is used to prepare for email content configuration and send email.
    * @throws IOException through an exception if file not found
    */

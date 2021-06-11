@@ -1,6 +1,5 @@
 package com.automation.utility;
 
-import com.automation.configuration.ConstantVariable;
 import com.automation.configuration.PropertiesValue;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -13,7 +12,6 @@ import com.aventstack.extentreports.model.context.NamedAttributeContext;
 import com.aventstack.extentreports.model.context.NamedAttributeContextManager;
 import com.aventstack.extentreports.reporter.ExtentKlovReporter;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -53,7 +51,7 @@ public class ExtentReport {
   public void initializeExtentReport() {
  
     this.klov = new ExtentKlovReporter();
-    this.spark = new ExtentSparkReporter(ConstantVariable.ExtentReportsLocation);
+    this.spark = new ExtentSparkReporter(properties.getExtentreportlocation());
     this.spark.config().setCss(css1);
     
     try {

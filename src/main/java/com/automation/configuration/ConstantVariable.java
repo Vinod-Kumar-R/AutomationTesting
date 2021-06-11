@@ -30,19 +30,22 @@ import org.springframework.beans.factory.annotation.Qualifier;
  */
 public class ConstantVariable {
 
-  public static String ExtentReportsLocation;
+  private String extentReportsLocation;
   public static String ScreenShotlocation;
   public static HashMap<String, Integer> TestDataRowNumber;
   public static HashMap<String, List<String>> GetObject;
-  public static String ResultBaseLocation;
-  public static String ResultLocation;
-  public static String ResultLocation1;
-  public static String ResultDatelocaton;
+  private String resultBaseLocation;
+  private String resultLocation;
+  private String resultLocation1;
+  private String resultDatelocaton;
   public static String Foldername = "AutomationResult";
   private String environment = "automation";
   private static Logger logger = LogManager.getLogger(ConstantVariable.class.getName());
   private String dateformat = "dd_MMM_yyyy";
   private String timeformat = "HH_mm_ss";
+  private String date;
+  private String time;
+  private String tempBaseLocation;
   
   @Autowired
   @Qualifier("testdata")
@@ -72,12 +75,23 @@ public class ConstantVariable {
   public void initializeVariable() {
 
     //setting the properties value 
-    ResultBaseLocation = properties.getConfigLocation() + File.separator + "Result";
-    ResultDatelocaton = dateTime(dateformat, ResultBaseLocation);
-    ResultLocation = dateTime(timeformat, ResultDatelocaton);
-    ResultLocation1 = ResultLocation + File.separator + Foldername;
-    ExtentReportsLocation = ResultLocation1 + File.separator + "encashoffer.html";
-    ScreenShotlocation = folderCreation(ResultLocation1, "ScreenShot");
+    date = dateTime(dateformat);
+    time = dateTime(timeformat);
+    resultBaseLocation = properties.getConfigLocation() + File.separator + "Result";
+    resultDatelocaton = dateTime(date, resultBaseLocation);
+    resultLocation = dateTime(time, resultDatelocaton);
+    resultLocation1 = resultLocation + File.separator + Foldername;
+    extentReportsLocation = resultLocation1 + File.separator + "encashoffer.html";
+    properties.setExtentreportlocation(extentReportsLocation);
+    ScreenShotlocation = folderCreation(resultLocation1, "ScreenShot");
+    
+    //create temp folder 
+    tempBaseLocation = properties.getConfigLocation() + File.separator + "temp";
+    String tempDateLocation = dateTime(date, tempBaseLocation);
+    String templocation = dateTime(time, tempDateLocation);
+    properties.setTemplocation(templocation);
+    
+    
   }
 
   /**
@@ -149,20 +163,28 @@ public class ConstantVariable {
     }
 
   }
+  
+  
+  /**
+   * method is used to get the date and time format.
+   * @param timeformat format type
+   * @return string type
+   */
+  private String dateTime(String timeformat) {
+    SimpleDateFormat formatter = new SimpleDateFormat(timeformat); 
+    Date date = new Date();
+    return formatter.format(date);
+  }
 
   /**
    * This method is used to created the folder structure based on the date and time format. 
-   * @param timeformat it can be any time format
    * @param baseLocation this contain the location in which it has to create
    * @return  AbsolutePath of folder is return back  
    */
 
-  public String dateTime(String timeformat, String baseLocation) {
-    SimpleDateFormat formatter = new SimpleDateFormat(timeformat); 
+  public String dateTime(String foldername, String baseLocation) {
 
-    Date date = new Date();
-
-    File file = new File(baseLocation + File.separator + formatter.format(date));
+    File file = new File(baseLocation + File.separator + foldername);
     try {
       FileUtils.forceMkdir(file);
       logger.debug("Folder created at location " + file.getAbsolutePath());
@@ -204,5 +226,4 @@ public class ConstantVariable {
     configuration = System.getenv(key);
     return configuration;
   }
-
 }

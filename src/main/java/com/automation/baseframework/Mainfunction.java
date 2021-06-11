@@ -35,6 +35,7 @@ public class Mainfunction {
       bc.startRun();
       //bc.testdatapreparation();
       logger.debug("Complete Executing Test cases");
+      System.gc();
 
     } catch (EncryptedDocumentException | IOException 
                     | DuplicateValueException  e) {

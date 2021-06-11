@@ -18,6 +18,17 @@ public class TestExcelBean {
   @ExcelCellName("Executed")
   private String testExecute;
   
+  @ExcelCellName("Test Data Location")
+  private String testDatalocation;
+  
+  public String getTestDatalocation() {
+    return testDatalocation;
+  }
+
+  public void setTestDatalocation(String testDatalocation) {
+    this.testDatalocation = testDatalocation;
+  }
+
   public String getTestcaseId() {
     return testcaseId;
   }
