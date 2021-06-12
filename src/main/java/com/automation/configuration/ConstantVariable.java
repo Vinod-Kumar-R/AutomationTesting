@@ -86,12 +86,12 @@ public class ConstantVariable {
     ScreenShotlocation = folderCreation(resultLocation1, "ScreenShot");
     
     //create temp folder 
-    tempBaseLocation = properties.getConfigLocation() + File.separator + "temp";
-    String tempDateLocation = dateTime(date, tempBaseLocation);
-    String templocation = dateTime(time, tempDateLocation);
-    properties.setTemplocation(templocation);
-    
-    
+    if (properties.isJiraIntegration()) {
+      tempBaseLocation = properties.getConfigLocation() + File.separator + "temp";
+      String tempDateLocation = dateTime(date, tempBaseLocation);
+      String templocation = dateTime(time, tempDateLocation);
+      properties.setTemplocation(templocation);
+    }
   }
 
   /**

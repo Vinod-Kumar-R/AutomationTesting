@@ -1,6 +1,5 @@
 package com.automation.jira.zephyr.api;
 
-import com.automation.configuration.PropertiesValue;
 import com.automation.jira.ApiEndPoints;
 import com.automation.jira.RequestBuilder;
 import com.automation.jira.beanclass.TestCase;
@@ -23,18 +22,16 @@ public class TestCaseapi {
   private static Logger logger = LogManager.getLogger(TestCaseapi.class);
   @Autowired
   private RequestBuilder requestBuilder;
-  @Autowired
-  private PropertiesValue propertiveValue;
-
   
   /**
    * This method is used to fetch the specific test case.
    * @param testCase it the testcase Key 
    */
   public void getTestcase(String testCase) {
-    RequestSpecification rs = requestBuilder.setSingleTestCase(ApiEndPoints.TEST_CASE_FETCH, testCase);
+    RequestSpecification rs = requestBuilder.setSingleTestCase(ApiEndPoints.TEST_CASE_FETCH,
+                    testCase);
     Response res = RestAssured.given(rs).get();
-    System.out.println(res.asPrettyString());
+    //System.out.println(res.asPrettyString());
   }
 
   /**

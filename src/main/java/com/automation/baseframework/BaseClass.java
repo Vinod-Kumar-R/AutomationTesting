@@ -118,6 +118,7 @@ public class BaseClass {
       testData.setExcelfilename(properties.getTestdata());
       testData.getExcelsheetindex(0);
       constantVariable.searchTestData();
+      testData.closeWorkbook();
       executetestcase(properties.getTestcase());
     }
   }
@@ -192,10 +193,8 @@ public class BaseClass {
 
     try {
 
-      if (!testdatafile.equalsIgnoreCase("")) {
-        testData.setExcelfilename(testdatafile);
-        testData.getExcelsheetindex(0);
-      }
+      testData.setExcelfilename(testdatafile);
+      testData.getExcelsheetindex(0);
 
       while (testData.getCellData(currentRow, 0) == null
                       || !testData.getCellData(currentRow, 0).equalsIgnoreCase("End")) {
@@ -229,12 +228,6 @@ public class BaseClass {
 
       }
       testData.closeWorkbook();
-    } catch (EncryptedDocumentException e) {
-      logger.error("EncryptedDocumentException ---> " + e.getMessage());
-
-    } catch (IOException e) {
-      logger.error("IOException ---> " + e.getMessage());
-
     } catch (Exception e) {
 
       logger.error("Got an exception while executing keyword --> " + keyword, e);
@@ -268,43 +261,49 @@ public class BaseClass {
     testcaseCreation.setCellData(3, "Executed");
     testcaseCreation.setCellData(4, "Test Data Location");
 
-    //make a request call to Jira to fetch the list of testcase
-    List<TestCase> testcases = testcaseapi.getAllTestCase(
-                    jiraconfiguration.getTestcaseQuery(), 0, 
-                    jiraconfiguration.getTestcaseMaxresult());
-    //now open created file in read write mode 
+    List<TestCase> testcases = new ArrayList<>();
     int cellrow = 1;
-    String testscriptlocation;
+    //check whether all test case are read from api 
+    int startindex = 0;
+    
+    do {
+      //make a request call to Jira to fetch the list of testcase
+      testcases = testcaseapi.getAllTestCase(
+                      jiraconfiguration.getTestcaseQuery(), startindex, 
+                      jiraconfiguration.getTestcaseMaxresult());
+      //for next loop increase the start index 
+      startindex = startindex + jiraconfiguration.getTestcaseMaxresult();
+      String testscriptlocation;
+      //loop the TestCase
+      for (TestCase testcase : testcases) {
 
-    //loop the TestCase
-    for (TestCase testcase : testcases) {
+        //download the testscript from jira
+        logger.debug("testcase ID " + testcase.getTestcaseId()
+            + "-----" + "projectID " + testcase.getProjectId());
+        List<TestCaseAttachment> attachments = 
+                        testcaseapi.getTestCaseAttachmentList(testcase.getTestcaseId());
+        for (TestCaseAttachment attachment : attachments) {
+          if (attachment.getFilename().equalsIgnoreCase("Automation.xlsx") 
+                          && attachment.getFilesize() > 0) {
+            logger.debug("testfile need to download need to download");
+            //download the test script assuming file has download
+            testscriptlocation = properties.getTemplocation() + File.separator 
+                            + testcase.testcaseId.replace("-", "") + attachment.getFilename();
+            testcaseapi.getDownloadTestCaseFile(attachment.getUrl(), testscriptlocation);
+            // write to exel sheet 
+            logger.debug("writing to excel sheet");
+            testcaseCreation.setCreateRow(cellrow);
+            testcaseCreation.setCellData(0, testcase.getTestcaseId());
+            testcaseCreation.setCellData(1, testcase.getTestCaseDescription());
+            testcaseCreation.setCellData(2, testcase.getCustomField().getCategeory());
+            testcaseCreation.setCellData(3, "Yes");
+            testcaseCreation.setCellData(4, testscriptlocation);
+            cellrow++;
 
-      //download the testscript from jira
-      logger.debug("testcase ID " + testcase.getTestcaseId()
-          + "-----" + "projectID " + testcase.getProjectId());
-      List<TestCaseAttachment> attachments = 
-                      testcaseapi.getTestCaseAttachmentList(testcase.getTestcaseId());
-      for (TestCaseAttachment attachment : attachments) {
-        if (attachment.getFilename().equalsIgnoreCase("Automation.xlsx") 
-                        && attachment.getFilesize() > 0) {
-          logger.debug("testfile need to download need to download");
-          //download the test script assuming file has download
-          testscriptlocation = properties.getTemplocation() + File.separator 
-                          + testcase.testcaseId.replace("-", "") + attachment.getFilename();
-          testcaseapi.getDownloadTestCaseFile(attachment.getUrl(), testscriptlocation);
-          // write to exel sheet 
-          logger.debug("writing to excel sheet");
-          testcaseCreation.setCreateRow(cellrow);
-          testcaseCreation.setCellData(0, testcase.getTestcaseId());
-          testcaseCreation.setCellData(1, testcase.getTestCaseDescription());
-          testcaseCreation.setCellData(2, testcase.getCustomField().getCategeory());
-          testcaseCreation.setCellData(3, "Yes");
-          testcaseCreation.setCellData(4, testscriptlocation);
-          cellrow++;
-
-        } 
+          } 
+        }
       }
-    }
+    } while (testcases.size() == jiraconfiguration.getTestcaseMaxresult());  
 
     //write data from buffer to file
     String excelfilename = properties.getTemplocation() + File.separator + "automation.xlsx";
