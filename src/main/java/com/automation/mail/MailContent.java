@@ -1,21 +1,17 @@
 package com.automation.mail;
 
 import com.automation.beanclass.ExtentReportBean;
-import com.automation.configuration.ConstantVariable;
 import com.automation.configuration.PropertiesValue;
 import com.automation.utility.ExtentReport;
-import com.automation.utility.GenericMethod;
-import com.automation.webdriver.BrowserInitialize;
 import com.aventstack.extentreports.Status;
-
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 
+/*
+ * used for creating the Mail content preparation.
+ */
 public class MailContent {
   
   private static Logger logger = LogManager.getLogger(MailContent.class);
@@ -24,16 +20,8 @@ public class MailContent {
   private ExtentReport extentreport;
   
   @Autowired
-  private GenericMethod genericMethod;
-  
-  @Autowired
-  private BrowserInitialize browserinitialize;
-  
-  @Autowired
   private PropertiesValue properties;
-  
-  EventFiringWebDriver driver;
-  
+ 
   
   /**
    * This method is used to set the Mail content data.
@@ -41,9 +29,8 @@ public class MailContent {
    * @throws IOException if file not found
    */
   public ExtentReportBean maildata() throws IOException {
+
     logger.debug("Setting the Email body content");
-    
-    //driver = (EventFiringWebDriver) browserinitialize.getWebDriverInstance();
     
     // zip the result file
     /*Path resultfile = genericMethod.zip(ConstantVariable.ResultLocation, 

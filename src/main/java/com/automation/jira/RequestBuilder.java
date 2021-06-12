@@ -2,17 +2,16 @@ package com.automation.jira;
 
 import com.automation.configuration.JiraConfiguration;
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.internal.multipart.MultiPartSpecificationImpl;
 import io.restassured.specification.RequestSpecification;
-
 import java.io.File;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class RequestBuilder {
 
   @Autowired
   private JiraConfiguration jc;
+  @Autowired
+  private Authentication authentication;
 
   private RequestSpecBuilder requestbuilder;
 
@@ -23,7 +22,7 @@ public class RequestBuilder {
   private void init() {
     requestbuilder =  new RequestSpecBuilder();
     requestbuilder.setBaseUri(jc.getJiraurl());
-    requestbuilder.addHeader("authorization", "Basic dmlub2Q6dmlub2Q=");
+    requestbuilder.addHeader("authorization", authentication.credentcial());
   }
 
   /**
