@@ -1,8 +1,5 @@
 package com.automation.configuration;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,82 +18,41 @@ public class JiraConfiguration {
   @Value("${jira.token}")
   private String jiratoken;
   
-  @Value("${jira.port}")
-  private int jiraport;
-  
   @Value("${jira.testcase.query}")
   private String testcaseQuery;
   
   @Value("${jira.testcase.fetchmax}")
   private int testcaseMaxresult;
-
-  public String getTestcaseQuery() {
-    return testcaseQuery;
-  }
-
-  public void setTestcaseQuery(String testcaseQuery) {
-    this.testcaseQuery = testcaseQuery;
-  }
-
-  public int getTestcaseMaxresult() {
-    return testcaseMaxresult;
-  }
-
-  public void setTestcaseMaxresult(int testcaseMaxresult) {
-    this.testcaseMaxresult = testcaseMaxresult;
-  }
-
-  public String getJiratoken() {
-    return jiratoken;
-  }
-
-  public void setJiratoken(String jiratoken) {
-    this.jiratoken = jiratoken;
-  }
-
-  public int getJiraport() {
-    return jiraport;
-  }
-
-  public void setJiraport(int jiraport) {
-    this.jiraport = jiraport;
-  }
+  
+  @Value("${jira.projectkey}")
+  private String jiraProjectkey;
 
   public String getJiraUsername() {
     return jiraUsername;
-  }
-
-  public void setJiraUsername(String jiraUsername) {
-    this.jiraUsername = jiraUsername;
   }
 
   public String getJiraPassword() {
     return jiraPassword;
   }
 
-  public void setJiraPassword(String jiraPassword) {
-    this.jiraPassword = jiraPassword;
-  }
-
   public String getJiraurl() {
     return jiraurl;
   }
 
-  public void setJiraurl(String jiraurl) {
-    this.jiraurl = jiraurl;
+  public String getJiratoken() {
+    return jiratoken;
   }
-  
-  public URI getBaseurl() {
-    URI baseurl = null;
-    try {
-      baseurl = new URI("http://" + "192.168.0.109" + ":" + getJiraport() + "/rest/atm/1.0");
-    } catch (URISyntaxException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    return baseurl;
+
+  public String getTestcaseQuery() {
+    return testcaseQuery;
   }
-  
-  
+
+  public int getTestcaseMaxresult() {
+    return testcaseMaxresult;
+  }
+
+  public String getJiraProjectkey() {
+    return jiraProjectkey;
+  }
 
 }

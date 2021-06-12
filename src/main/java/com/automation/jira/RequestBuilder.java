@@ -2,7 +2,11 @@ package com.automation.jira;
 
 import com.automation.configuration.JiraConfiguration;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.internal.multipart.MultiPartSpecificationImpl;
 import io.restassured.specification.RequestSpecification;
+
+import java.io.File;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class RequestBuilder {
@@ -18,8 +22,7 @@ public class RequestBuilder {
    */
   private void init() {
     requestbuilder =  new RequestSpecBuilder();
-    requestbuilder.setBaseUri(jc.getBaseurl());
-    requestbuilder.setPort(jc.getJiraport());
+    requestbuilder.setBaseUri(jc.getJiraurl());
     requestbuilder.addHeader("authorization", "Basic dmlub2Q6dmlub2Q=");
   }
 
@@ -66,6 +69,20 @@ public class RequestBuilder {
     requestbuilder.addQueryParam("startAt", startIndex);
     requestbuilder.addQueryParam("maxResults", limit);
     requestbuilder.setBasePath(path);
+    return requestbuilder.build();
+  }
+  
+  /**
+   * method used to file upload.
+   * @param filelocation file location for uploading
+   * @return
+   */
+  public RequestSpecification postDataResult(String path, File filelocation, String projectkey) {
+    init();
+    requestbuilder.setBasePath(path);
+    requestbuilder.addMultiPart(filelocation);
+    requestbuilder.addHeader("accept", "application/json");
+    requestbuilder.addPathParam("projectKey", projectkey);
     return requestbuilder.build();
   }
 

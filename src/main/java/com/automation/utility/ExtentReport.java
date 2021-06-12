@@ -259,4 +259,9 @@ public class ExtentReport {
     }
     return testStatus;
   }
+  
+  public List<Test> getTestDetail() {
+    List<Test> tests = this.spark.getReport().getTestList();
+    return tests;
+  }
 }

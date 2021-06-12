@@ -12,6 +12,8 @@ import com.automation.webelement.custom.MatTable;
 import com.automation.webelement.custom.TabList;
 import com.paulhammant.ngwebdriver.ByAngular;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -633,7 +635,7 @@ public class GenericMethod {
     
   /**
    * This method is used to zip a folder.
-   * @param sourcNoteseDirPath  is the source path folde to which it has to zip
+   * @param sourcNoteseDirPath  is the source path folder to which it has to zip
    * @param zipFilePath  is the destination folder in which zip folder has to present
    * @return Path where zip file has been created.
    * @throws IOException  exception are throw when file not found exception
@@ -667,7 +669,19 @@ public class GenericMethod {
     
     return zipFile;
   }
+  
+  public File zipFile(String zippath, Path filetozip) throws IOException {
+    Path zipFile = Files.createFile(Paths.get(zippath));
+    
+    ZipEntry zipEntry = new ZipEntry(filetozip.getFileName().toString());
+    ZipOutputStream zipOutputStream = new ZipOutputStream(Files.newOutputStream(zipFile));
+    zipOutputStream.putNextEntry(zipEntry);
+    Files.copy(filetozip, zipOutputStream);
+    zipOutputStream.close();
 
+    return zipFile.toFile();
+  }
+  
   /**
    * This method is used for generic way of getting By class type
    * i.e. id, xpath,css,name etc

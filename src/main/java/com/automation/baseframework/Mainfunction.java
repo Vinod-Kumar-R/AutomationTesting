@@ -33,7 +33,6 @@ public class Mainfunction {
     try {
       logger.debug("Start Executing Test cases");
       bc.startRun();
-      //bc.testdatapreparation();
       logger.debug("Complete Executing Test cases");
       System.gc();
 

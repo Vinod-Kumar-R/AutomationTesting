@@ -53,5 +53,6 @@
     <bean id="jiraconfig" class="com.automation.configuration.JiraConfiguration"></bean>
     <bean id="jiratestcase" class="com.automation.jira.zephyr.api.TestCaseapi"></bean>
     <bean id="requsetbuilder" class="com.automation.jira.RequestBuilder"></bean>
+    <bean id="jiraresult" class="com.automation.jira.zephyr.api.AutomationResultapi"></bean>
           
 </beans>

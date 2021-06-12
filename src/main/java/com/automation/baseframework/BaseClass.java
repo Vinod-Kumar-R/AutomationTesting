@@ -8,6 +8,7 @@ import com.automation.configuration.PropertiesValue;
 import com.automation.custom.exception.DuplicateValueException;
 import com.automation.jira.beanclass.TestCase;
 import com.automation.jira.beanclass.TestCaseAttachment;
+import com.automation.jira.zephyr.api.AutomationResultapi;
 import com.automation.jira.zephyr.api.TestCaseapi;
 import com.automation.mail.MailContent;
 import com.automation.mail.MailServiceImpl;
@@ -20,6 +21,7 @@ import com.aventstack.extentreports.Status;
 import com.poiji.bind.Poiji;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -64,6 +66,8 @@ public class BaseClass {
   @Autowired
   private TestCaseapi testcaseapi;
   @Autowired
+  private AutomationResultapi testresult;
+  @Autowired
   private JiraConfiguration jiraconfiguration;
 
 
@@ -102,6 +106,13 @@ public class BaseClass {
 
     if (properties.isJiraIntegration()) {
       executetestcase(testdatapreparation());
+      //prepare test result
+      Path jsonfile =   testresult.jiraresult("vinod");
+      File resultfile = genericMethod.zipFile(properties.getTemplocation() 
+                      + File.separator + "result.zip", jsonfile);
+      logger.debug("updating the result to jira");
+      testresult.postTestResult(resultfile);
+      logger.debug("Result update to jira complete");
     } else {
       //initialize the excel file for testdata
       testData.setExcelfilename(properties.getTestdata());
@@ -303,10 +314,10 @@ public class BaseClass {
     return excelfilename;
   }
 
-   /**
-   * This method is used to prepare for email content configuration and send email.
-   * @throws IOException through an exception if file not found
-   */
+  /**
+  * This method is used to prepare for email content configuration and send email.
+  * @throws IOException through an exception if file not found
+  */
   public void emailTestResult() throws IOException {
     mail.sendEmail(content.maildata());
   }
