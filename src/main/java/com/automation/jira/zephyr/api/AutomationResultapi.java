@@ -83,7 +83,7 @@ public class AutomationResultapi {
     try {
       //create a json file 
       ObjectMapper resultjson = new ObjectMapper();
-      file = new File(properties.getTemplocation() + File.separator + filename + ".json");
+      file = new File(properties.getTemplocation() + File.separator + filename);
       resultjson.writeValue(file, result);
     } catch (JsonGenerationException e) {
       // TODO Auto-generated catch block

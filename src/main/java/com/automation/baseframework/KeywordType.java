@@ -34,6 +34,7 @@ public enum KeywordType {
   openadminurl,
   openencashurl,
   openmailinatorurl,
+  openamazonurl,
   participate,
   questionnaires,
   questionnairestab,
@@ -47,5 +48,6 @@ public enum KeywordType {
   storewindow,
   switchdriver,
   switchwindow,
-  takescreenshot
+  takescreenshot,
+  amazonitemadd;
 }

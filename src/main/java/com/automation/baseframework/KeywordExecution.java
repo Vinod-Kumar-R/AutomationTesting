@@ -1,5 +1,6 @@
 package com.automation.baseframework;
 
+import com.automation.amazon.AmazonItem;
 import com.automation.bussiness.admin.Admin;
 import com.automation.bussiness.encash.Encash;
 import com.automation.configuration.PropertiesValue;
@@ -8,10 +9,8 @@ import com.automation.mailinator.Mailinator;
 import com.automation.mobile.encash.MobileEncash;
 import com.automation.utility.ExtentReport;
 import com.automation.utility.GenericMethod;
-import com.automation.utility.WaitMethod;
 import com.automation.webdriver.BrowserInitialize;
 import com.aventstack.extentreports.Status;
-
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,8 +32,6 @@ public class KeywordExecution {
   @Autowired
   private Admin admin;
   @Autowired
-  private WaitMethod waitMethod;
-  @Autowired
   private Encash encash;
   @Autowired
   private ExtentReport extentReport;
@@ -48,6 +45,8 @@ public class KeywordExecution {
   private Mailinator mailinator;
   @Autowired
   private Firebase firebase;
+  @Autowired
+  private AmazonItem amazon;
 
 
   /**
@@ -84,6 +83,14 @@ public class KeywordExecution {
         driver = browserinitialize.getWebDriverInstance();
         driver.get(properties.getAdminUrl());
         status = admin.adminurlopen(dataParam);
+        testResult(status, "Browser Open");
+        break;
+        
+      case openamazonurl : 
+        logger.debug("Opening the URL " + properties.getAmazonurl());
+        driver = browserinitialize.getWebDriverInstance();
+        driver.get(properties.getAmazonurl());
+        status = "pass";
         testResult(status, "Browser Open");
         break;
 
@@ -322,6 +329,14 @@ public class KeywordExecution {
         encash.loginReisterUser(dataParam);
         testResult("pass", keyword.toString());
         break;
+        
+      case amazonitemadd:
+        logger.debug("Select the item and add to basket");
+        amazon.addItem();
+        testResult("pass", keyword.toString());
+        break;
+        
+      
 
       default: logger.debug("Invalid Keyword");
 

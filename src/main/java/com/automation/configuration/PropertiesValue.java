@@ -65,6 +65,13 @@ public class PropertiesValue {
   
   @Value("${jiraintegration}")
   private boolean isJiraIntegration;
+  
+  @Value("${amazonurl}")
+  private String amazonurl;
+
+  public String getAmazonurl() {
+    return amazonurl;
+  }
 
   private String extentreportlocation;
   

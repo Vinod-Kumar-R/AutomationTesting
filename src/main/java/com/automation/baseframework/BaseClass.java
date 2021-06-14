@@ -15,7 +15,6 @@ import com.automation.mail.MailServiceImpl;
 import com.automation.utility.ExcelReader;
 import com.automation.utility.ExtentReport;
 import com.automation.utility.GenericMethod;
-import com.automation.utility.WaitMethod;
 import com.automation.webdriver.BrowserInitialize;
 import com.aventstack.extentreports.Status;
 import com.poiji.bind.Poiji;
@@ -32,7 +31,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 
 /**
- * <h1> In this class start executiong test case Start. </h1>
+ * <h1> In this class start executing test case Start. </h1>
  * {@docRoot}
  * @serial 16-09-2020
  * @author Vinod Kumar R
@@ -107,14 +106,14 @@ public class BaseClass {
     if (properties.isJiraIntegration()) {
       executetestcase(testdatapreparation());
       //prepare test result
-      Path jsonfile =   testresult.jiraresult("vinod");
+      Path jsonfile =   testresult.jiraresult("result.json");
       File resultfile = genericMethod.zipFile(properties.getTemplocation() 
                       + File.separator + "result.zip", jsonfile);
-      logger.debug("updating the result to jira");
+      logger.debug("updating result to jira");
       testresult.postTestResult(resultfile);
       logger.debug("Result update to jira complete");
     } else {
-      //initialize the excel file for testdata
+      //initialize the excel file for testdata and stored all the row number of testdata start
       testData.setExcelfilename(properties.getTestdata());
       testData.getExcelsheetindex(0);
       constantVariable.searchTestData();
@@ -123,6 +122,11 @@ public class BaseClass {
     }
   }
 
+  /*
+   * This method read the test data excel file row by row
+   * and execute the test case 
+   * 
+   */
   private void executetestcase(String testfile) {
     int testDatarownumber = 0;
 
@@ -185,7 +189,7 @@ public class BaseClass {
    *     which indicate from which row test script has to executed
    */
 
-  public void testRunId(int rowStartfrom, String testdatafile) {
+  private void testRunId(int rowStartfrom, String testdatafile) {
 
     int currentRow = rowStartfrom;
     int currentCol = 1;
@@ -225,19 +229,24 @@ public class BaseClass {
         } 
         //increment the row
         currentRow++;
-
       }
       testData.closeWorkbook();
     } catch (Exception e) {
-
-      logger.error("Got an exception while executing keyword --> " + keyword, e);
-      e.printStackTrace();
-      WaitMethod.waitstatus = false;
-      extentReport.writeLog(Status.FAIL, "Failed executing Keyword ---> " + keyword);
-      extentReport.writeLog(Status.FAIL, e);
-      extentReport.attachScreenshot(genericMethod.takeScreenshot());
-      browserinitialize.quitBrowser();
-      extentReport.flushlog();
+      try {
+        testData.closeWorkbook();
+        logger.error("Got an exception while executing keyword --> " + keyword, e);
+        e.printStackTrace();
+        extentReport.writeLog(Status.FAIL, "Failed executing Keyword ---> " + keyword);
+        extentReport.writeLog(Status.FAIL, e);
+        extentReport.attachScreenshot(genericMethod.takeScreenshot());
+        browserinitialize.quitBrowser();
+        extentReport.flushlog();
+        
+      } catch (IOException e1) {
+        // TODO Auto-generated catch block
+        logger.error("Problem while closing the TestData.xlsx file " + e);
+        e1.printStackTrace();
+      }
     }
   }
 
@@ -247,7 +256,7 @@ public class BaseClass {
    * @return the file location of the created test case excel file 
    * @throws IOException not able to write to file
    */
-  public String testdatapreparation() throws IOException {
+  private String testdatapreparation() throws IOException {
 
     //Prepare the test date
     //create a excel sheet with header and close the workbook
@@ -299,7 +308,6 @@ public class BaseClass {
             testcaseCreation.setCellData(3, "Yes");
             testcaseCreation.setCellData(4, testscriptlocation);
             cellrow++;
-
           } 
         }
       }

@@ -1,33 +1,29 @@
 package com.automation.utility;
 
-import com.automation.configuration.PropertiesValue;
 import com.automation.custom.wait.CustomWait;
 import com.automation.webdriver.BrowserInitialize;
 import com.paulhammant.ngwebdriver.NgWebDriver;
-import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
 public class WaitMethod {
   private static Logger logger = LogManager.getLogger(WaitMethod.class.getName());
-  public static boolean waitstatus = true;
+    
   @Autowired
   private GenericMethod genericMethod;
   @Autowired
   private BrowserInitialize browserinitialize;
   @Autowired
-  private PropertiesValue properties;
+  private GeneralWait generalwait;
  
   /**
    * This Method is used to Wait for an Element Visible in an web page.  
@@ -38,19 +34,11 @@ public class WaitMethod {
    *
    */
   public  String waitForElementVisible(String dataParam) {
-    WebDriver driver = browserinitialize.getWebDriverInstance();
-    By objectName = genericMethod.getBy(dataParam);
-    waitstatus = false;
-    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
-                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
-                    .ignoring(NoSuchElementException.class)
-                    .withMessage("time out message");
 
+    By objectName = genericMethod.getBy(dataParam);
+    Wait<WebDriver> wait = generalwait.fluenttimeoutwait();
     logger.debug("Waiting for the Element Visibility " + objectName);
     wait.until(ExpectedConditions.visibilityOfElementLocated(objectName));
-
-    waitstatus = true;
     return "pass";
   }
   
@@ -61,17 +49,9 @@ public class WaitMethod {
    *
    */
   public  String waitForElementVisible(WebElement element) {
-    WebDriver driver = browserinitialize.getWebDriverInstance();
-    waitstatus = false;
-    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
-                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
-                    .ignoring(NoSuchElementException.class);
-
+    Wait<WebDriver> wait = generalwait.fluentwait();
     logger.debug("Waiting for the WebElement Visibility " + element);
     wait.until(ExpectedConditions.visibilityOf(element));
-
-    waitstatus = true;
     return "pass";
   }
   
@@ -84,17 +64,10 @@ public class WaitMethod {
    *
    */
   public  String waitForAllElementVisible(List<WebElement> elements) {
-    WebDriver driver = browserinitialize.getWebDriverInstance();
-    waitstatus = false;
-    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
-                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
-                    .ignoring(NoSuchElementException.class);
 
+    Wait<WebDriver> wait = generalwait.fluentwait();   
     logger.debug("Waiting for All WebElement Visibility " + elements);
     wait.until(ExpectedConditions.visibilityOfAllElements(elements));
-
-    waitstatus = true;
     return "pass";
   }
 
@@ -108,18 +81,11 @@ public class WaitMethod {
    */
 
   public  String waitForTexttVisible(List<String> dataParam)  {
-    WebDriver driver = browserinitialize.getWebDriverInstance();
+    
     By objectName = genericMethod.getBy(dataParam.get(0)); 
-    waitstatus = false;
-    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
-                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
-                    .ignoring(NoSuchElementException.class);
-
+    Wait<WebDriver> wait = generalwait.fluentwait();    
     logger.debug("Waiting for the Text to be present " + objectName);
     wait.until(ExpectedConditions.textToBePresentInElementLocated(objectName, dataParam.get(1)));
-
-    waitstatus = true;
     return "pass";
   }
 
@@ -136,23 +102,12 @@ public class WaitMethod {
 
   public  String waitForAttributedContain(List<String> dataParam) {
     By objectName = genericMethod.getBy(dataParam.get(0));
-    waitstatus = false;
-
     logger.debug("Waiting for the attributed presnt and value " + objectName);
     logger.debug("attribute --------->" + dataParam.get(1));
     logger.debug("Value --------->" + dataParam.get(2));
-
-    WebDriver driver = browserinitialize.getWebDriverInstance();
-
-    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
-                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
-                    .ignoring(NoSuchElementException.class);
-
+    Wait<WebDriver> wait = generalwait.fluentwait();    
     wait.until(ExpectedConditions.attributeContains(objectName, dataParam.get(1),
                     dataParam.get(2)));
-
-    waitstatus = true;
     return "pass";
   }
 
@@ -174,24 +129,13 @@ public class WaitMethod {
    */
   public String waitForElementPresent(String dataParam) {
 
-    WebDriver driver = browserinitialize.getWebDriverInstance();
     By objectName = genericMethod.getBy(dataParam); 
-    waitstatus = false;
-    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
-                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
-                    .ignoring(NoSuchElementException.class);
-
+    Wait<WebDriver> wait = generalwait.fluentwait();
     logger.debug("Waiting for the element to be present " + objectName);
     wait.until(ExpectedConditions.presenceOfElementLocated(objectName));
-
-    waitstatus = true;
     return "pass";
-
   }
-  
-
-
+ 
   /**
    * This method is used to wait for Element is not present.
    * @param dataParam contain the objectName which should not be present in DOM 
@@ -199,18 +143,10 @@ public class WaitMethod {
    */
   public String waitForElementInvisible(String dataParam) {
 
-    WebDriver driver = browserinitialize.getWebDriverInstance();
     By objectName = genericMethod.getBy(dataParam); 
-    waitstatus = false;
-    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
-                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
-                    .ignoring(NoSuchElementException.class);
-
+    Wait<WebDriver> wait = generalwait.fluentwait();    
     logger.debug("Waiting element invisible " + objectName);
     wait.until(ExpectedConditions.invisibilityOfElementLocated(objectName));
-
-    waitstatus = true;
     return "pass";
 
   }
@@ -223,20 +159,11 @@ public class WaitMethod {
    */
   public String waitForElementAttributeNotPresent(String locator, String attributeName) {
 
-    WebDriver driver = browserinitialize.getWebDriverInstance();
     By objectName = genericMethod.getBy(locator); 
-    waitstatus = false;
-    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
-                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
-                    .ignoring(NoSuchElementException.class);
-
+    Wait<WebDriver> wait = generalwait.fluentwait();    
     logger.debug("Waiting element attribute not present " + objectName);
     wait.until(CustomWait.attributedNotPresent(objectName, attributeName));
-
-    waitstatus = true;
     return "pass";
-
   }
   
   
@@ -249,20 +176,10 @@ public class WaitMethod {
    */
   public String waitForElementAttributeNotPresent(WebElement element, String attributeName) {
 
-    WebDriver driver = browserinitialize.getWebDriverInstance();
-     
-    waitstatus = false;
-    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
-                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
-                    .ignoring(NoSuchElementException.class);
-
+    Wait<WebDriver> wait = generalwait.fluentwait();    
     logger.debug("Waiting element attribute not present " + element);
     wait.until(CustomWait.attributedNotPresent(element, attributeName));
-
-    waitstatus = true;
     return "pass";
-
   }
   
   /**
@@ -273,20 +190,10 @@ public class WaitMethod {
    */
   public String waitForElementAttributePresent(WebElement element, String attributeName) {
 
-    WebDriver driver = browserinitialize.getWebDriverInstance();
-     
-    waitstatus = false;
-    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
-                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
-                    .ignoring(NoSuchElementException.class);
-
+    Wait<WebDriver> wait = generalwait.fluentwait();    
     logger.debug("Waiting element attribute not present " + element);
     wait.until(CustomWait.attributedPresent(element, attributeName));
-
-    waitstatus = true;
     return "pass";
-
   }
   
   /**
@@ -297,19 +204,10 @@ public class WaitMethod {
    */
   public String waitForElementClickable(String dataParam) {
     
-    WebDriver driver = browserinitialize.getWebDriverInstance();
     By objectName = genericMethod.getBy(dataParam); 
-    waitstatus = false;
-    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
-                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
-                    .ignoring(NoSuchElementException.class);
-
+    Wait<WebDriver> wait = generalwait.fluentwait();    
     logger.debug("Waiting element clickable " + objectName);
     wait.until(ExpectedConditions.elementToBeClickable(objectName));
-
-    waitstatus = true;
-    
     return "pass";
   }
   
@@ -321,19 +219,9 @@ public class WaitMethod {
    */
   public String waitForElementClickable(WebElement element) {
     
-    WebDriver driver = browserinitialize.getWebDriverInstance();
-    
-    waitstatus = false;
-    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
-                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
-                    .ignoring(NoSuchElementException.class);
-
+    Wait<WebDriver> wait = generalwait.fluentwait();    
     logger.debug("Waiting for element to be clickable " + element);
     wait.until(ExpectedConditions.elementToBeClickable(element));
-
-    waitstatus = true;
-    
     return "pass";
   }
   
@@ -345,21 +233,10 @@ public class WaitMethod {
    */
   public String waitForSomeTextPresent(WebElement element) {
 
-    WebDriver driver = browserinitialize.getWebDriverInstance();
-     
-    waitstatus = false;
-    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
-                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
-                    .ignoring(NoSuchElementException.class);
-
+    Wait<WebDriver> wait = generalwait.fluentwait();    
     logger.debug("Waiting for the Text to be present " + element);
     wait.until(CustomWait.someTextPresent(element));
-    
-
-    waitstatus = true;
     return "pass";
-
   }
   
   /**
@@ -368,20 +245,10 @@ public class WaitMethod {
    */
   public String waitForAlertPresent() {
 
-    WebDriver driver = browserinitialize.getWebDriverInstance();
-     
-    waitstatus = false;
-    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
-                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
-                    .ignoring(NoSuchElementException.class);
-
+    Wait<WebDriver> wait = generalwait.fluentwait();    
     logger.debug("Waiting for the Alert present");
     wait.until(ExpectedConditions.alertIsPresent());
-   
-    waitstatus = true;
     return "pass";
-
   }
   
   /**
@@ -391,20 +258,10 @@ public class WaitMethod {
    */
   public String waitForStalenessElement(WebElement element) {
 
-    WebDriver driver = browserinitialize.getWebDriverInstance();
-    
-    waitstatus = false;
-    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
-                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
-                    .ignoring(NoSuchElementException.class);
-
+    Wait<WebDriver> wait = generalwait.fluentwait();    
     logger.debug("Waiting for the staleness element");
     wait.until(ExpectedConditions.stalenessOf(element));
-   
-    waitstatus = true;
     return "pass";
-    
   }
   
   
@@ -415,18 +272,9 @@ public class WaitMethod {
    */
   public String waitForNotificationDisAppear(WebElement element) {
     
-    WebDriver driver = browserinitialize.getWebDriverInstance();
-    
-    waitstatus = false;
-    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
-                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
-                    .ignoring(NoSuchElementException.class);
-
+    Wait<WebDriver> wait = generalwait.fluentwait();    
     logger.debug("Waiting for the Notification disappear " + element);
     wait.until(CustomWait.notification(element));
-    
-    waitstatus = true;
     return "pass";
   }
   
@@ -438,18 +286,9 @@ public class WaitMethod {
    */
   public String waitForNotificationAppear(WebElement element) {
 
-    WebDriver driver = browserinitialize.getWebDriverInstance();
-
-    waitstatus = false;
-    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
-                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
-                    .ignoring(NoSuchElementException.class);
-
+    Wait<WebDriver> wait = generalwait.fluentwait();    
     logger.debug("Waiting for the Notification appear " + element);
     wait.until(CustomWait.notificationappear(element));
-
-    waitstatus = true;
     return "pass";
   }
 
@@ -461,18 +300,9 @@ public class WaitMethod {
    */
   public String waitForNestedElementsPresence(By parent, By childLocator) {
     
-    WebDriver driver = browserinitialize.getWebDriverInstance();
-
-    waitstatus = false;
-    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
-                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
-                    .ignoring(NoSuchElementException.class);
-
+    Wait<WebDriver> wait = generalwait.fluentwait();    
     logger.debug("Waiting for the child elements " + childLocator);
     wait.until(ExpectedConditions.presenceOfNestedElementsLocatedBy(parent, childLocator));
-
-    waitstatus = true;
     return "pass";
   }
   
@@ -484,20 +314,10 @@ public class WaitMethod {
    */
   public String waitForNestedElementPresence(WebElement element, By childLocator) {
     
-    WebDriver driver = browserinitialize.getWebDriverInstance();
-
-    waitstatus = false;
-    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
-                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
-                    .ignoring(NoSuchElementException.class);
-
+    Wait<WebDriver> wait = generalwait.fluentwait();    
     logger.debug("Waiting for the child elements " + childLocator);
     wait.until(ExpectedConditions.presenceOfNestedElementLocatedBy(element, childLocator));
-    
-    waitstatus = true;
     return "pass";
-    
   }
   
   /**
@@ -508,22 +328,11 @@ public class WaitMethod {
    */
   public String waitForElementLessThan(String byObject, int number) {
 
-    WebDriver driver = browserinitialize.getWebDriverInstance();
-    
     By by = genericMethod.getBy(byObject);
-
-    waitstatus = false;
-    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
-                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
-                    .ignoring(NoSuchElementException.class);
-
+    Wait<WebDriver> wait = generalwait.fluentwait();    
     logger.debug("Waiting for the locators elements " + by);
     wait.until(ExpectedConditions.numberOfElementsToBeLessThan(by, number));
-
-    waitstatus = true;
     return "pass";
-
   }
   
   /**
@@ -534,20 +343,10 @@ public class WaitMethod {
    */
   public String waitForElementLessThan(By byObject, int number) {
 
-    WebDriver driver = browserinitialize.getWebDriverInstance();
-    
-    waitstatus = false;
-    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
-                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
-                    .ignoring(NoSuchElementException.class);
-
+    Wait<WebDriver> wait = generalwait.fluentwait();    
     logger.debug("Waiting for the locators elements " + byObject);
     wait.until(ExpectedConditions.numberOfElementsToBeLessThan(byObject, number));
-   
-    waitstatus = true;
     return "pass";
-
   }
   
   /**
@@ -558,25 +357,12 @@ public class WaitMethod {
    */
   public String waitForElementEqualTo(String byObject, int number) {
 
-    WebDriver driver = browserinitialize.getWebDriverInstance();
-    
     By by = genericMethod.getBy(byObject);
-
-    waitstatus = false;
-    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)    
-                    .withTimeout(Duration.ofMinutes(properties.getExplictwait()))   
-                    .pollingEvery(Duration.ofSeconds(properties.getPolling()))   
-                    .ignoring(NoSuchElementException.class);
-
+    Wait<WebDriver> wait = generalwait.fluentwait();    
     logger.debug("Waiting for the locators elements " + by);
     wait.until(ExpectedConditions.numberOfElementsToBe(by, number));
-    
-    waitstatus = true;
     return "pass";
-
   }
-  
-
   
   /**
    * This is method is used to wait unit the mat row table are less than given number.
@@ -587,7 +373,6 @@ public class WaitMethod {
     
     By child = By.tagName("mat-row");
     waitForElementLessThan(child, numberofRowLessThan);
-    
     return "pass";
   }
 

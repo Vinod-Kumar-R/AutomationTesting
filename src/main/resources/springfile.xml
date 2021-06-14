@@ -54,5 +54,7 @@
     <bean id="jiratestcase" class="com.automation.jira.zephyr.api.TestCaseapi"></bean>
     <bean id="requsetbuilder" class="com.automation.jira.RequestBuilder"></bean>
     <bean id="jiraresult" class="com.automation.jira.zephyr.api.AutomationResultapi"></bean>
+    <bean id="amazonitem" class= "com.automation.amazon.AmazonItem"></bean>
+    <bean id="generalwait" class="com.automation.utility.GeneralWait"></bean>
           
 </beans>
