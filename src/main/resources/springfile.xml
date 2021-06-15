@@ -9,44 +9,52 @@
         >
 
     <context:annotation-config />
-    <context:property-placeholder location= "file:${encashoffers}/properties/mail.properties,
-    file:${encashoffers}/properties/config.properties"
+    <context:property-placeholder location= "file:${automation}/properties/mail.properties,
+    file:${automation}/properties/config.properties,
+    file:${automation}/properties/jira.properties"
     />
 
     
-    <bean id="mailBean" class="com.encash.offers.beanclass.ExtentReportBean"></bean>
-    <bean id="mailconfiguration" class="com.encash.offers.configuration.MailConfiguration"></bean>
-    <bean id="mailconent" class="com.encash.offers.mail.MailContent"></bean>
-    <bean id="properties" class="com.encash.offers.configuration.PropertiesValue"></bean>
-    <bean id="mail" class="com.encash.offers.mailinator.Mailinator"></bean>
-    <bean id="storedvalue" class="com.encash.offers.configuration.ApplicationStoreValue"></bean>
-    <bean id="testdata" class="com.encash.offers.utility.ExcelReader"></bean>
-    <bean id="testcase" class="com.encash.offers.utility.ExcelReader"></bean>
-    <bean id="constantvariable" class="com.encash.offers.configuration.ConstantVariable"></bean>
-    <bean id="base" class="com.encash.offers.baseframework.BaseClass"></bean>
-    <bean id="keyword" class="com.encash.offers.baseframework.KeywordExecution"></bean>
-    <bean id="repository" class="com.encash.offers.beanclass.RepositoryBean"></bean>
-    <bean id ="adminlogin" class="com.encash.offers.bussiness.admin.Admin"></bean>
-    <bean id="encashlogin" class="com.encash.offers.bussiness.encash.Encash"></bean>
-    <bean id="configure" class="com.encash.offers.configuration.ConfigurationReader"></bean>
-    <bean id="customwait" class="com.encash.offers.custom.wait.CustomWait"></bean>
-    <bean id="mobilelogin" class="com.encash.offers.mobile.encash.MobileEncash"></bean>
-    <bean id="report" class="com.encash.offers.utility.ExtentReport" ></bean>
-    <bean id="generic" class="com.encash.offers.utility.GenericMethod"></bean>
-    <bean id="wait" class="com.encash.offers.utility.WaitMethod"></bean>
-    <bean id="browser" class="com.encash.offers.webdriver.BrowserInitialize"></bean>
-    <bean id="desi" class="com.encash.offers.webdriver.Desired"></bean>
-    <bean id="lister" class="com.encash.offers.webdriver.EventListener"></bean>
-    <bean id="mailService" class="com.encash.offers.mail.MailServiceImpl"></bean>
-    <bean id="firebase" class="com.encash.offers.firebase.Firebase"></bean>
-    <bean id="calender" class="com.encash.offers.webelement.custom.Calendar"></bean>
-    <bean id="competitionquestionnarie" class="com.encash.offers.webelement.custom.CreateQuestionnaire"></bean>
-    <bean id="matoptions" class="com.encash.offers.webelement.custom.MatOptions"></bean>
-    <bean id="mattable" class="com.encash.offers.webelement.custom.MatTable"></bean>
-    <bean id="levels" class="com.encash.offers.webelement.custom.Levels"></bean>
-    <bean id="competitionquestion" class="com.encash.offers.webelement.custom.CompetitionQuestion"></bean>
-    <bean id="mandatoryquestion" class="com.encash.offers.webelement.custom.MandatoryQuestion"></bean>
-    <bean id="jsscript" class="com.encash.offers.utility.JsWaiter"></bean>
-    <bean id="table" class="com.encash.offers.webelement.custom.Table"></bean>
-      
+    <bean id="mailBean" class="com.automation.beanclass.ExtentReportBean"></bean>
+    <bean id="mailconfiguration" class="com.automation.configuration.MailConfiguration"></bean>
+    <bean id="mailconent" class="com.automation.mail.MailContent"></bean>
+    <bean id="properties" class="com.automation.configuration.PropertiesValue"></bean>
+    <bean id="mail" class="com.automation.mailinator.Mailinator"></bean>
+    <bean id="storedvalue" class="com.automation.configuration.ApplicationStoreValue"></bean>
+    <bean id="testdata" class="com.automation.utility.ExcelReader"></bean>
+    <bean id="createtestcase" class="com.automation.utility.ExcelReader"></bean>
+    <bean id="constantvariable" class="com.automation.configuration.ConstantVariable"></bean>
+    <bean id="base" class="com.automation.baseframework.BaseClass"></bean>
+    <bean id="keyword" class="com.automation.baseframework.KeywordExecution"></bean>
+    <bean id="repository" class="com.automation.beanclass.RepositoryBean"></bean>
+    <bean id ="adminlogin" class="com.automation.bussiness.admin.Admin"></bean>
+    <bean id="encashlogin" class="com.automation.bussiness.encash.Encash"></bean>
+    <bean id="configure" class="com.automation.configuration.ConfigurationReader"></bean>
+    <bean id="customwait" class="com.automation.custom.wait.CustomWait"></bean>
+    <bean id="mobilelogin" class="com.automation.mobile.encash.MobileEncash"></bean>
+    <bean id="report" class="com.automation.utility.ExtentReport" ></bean>
+    <bean id="generic" class="com.automation.utility.GenericMethod"></bean>
+    <bean id="wait" class="com.automation.utility.WaitMethod"></bean>
+    <bean id="browser" class="com.automation.webdriver.BrowserInitialize"></bean>
+    <bean id="desi" class="com.automation.webdriver.Desired"></bean>
+    <bean id="lister" class="com.automation.webdriver.EventListener"></bean>
+    <bean id="mailService" class="com.automation.mail.MailServiceImpl"></bean>
+    <bean id="firebase" class="com.automation.firebase.Firebase"></bean>
+    <bean id="calender" class="com.automation.webelement.custom.Calendar"></bean>
+    <bean id="competitionquestionnarie" class="com.automation.webelement.custom.CreateQuestionnaire"></bean>
+    <bean id="matoptions" class="com.automation.webelement.custom.MatOptions"></bean>
+    <bean id="mattable" class="com.automation.webelement.custom.MatTable"></bean>
+    <bean id="levels" class="com.automation.webelement.custom.Levels"></bean>
+    <bean id="competitionquestion" class="com.automation.webelement.custom.CompetitionQuestion"></bean>
+    <bean id="mandatoryquestion" class="com.automation.webelement.custom.MandatoryQuestion"></bean>
+    <bean id="jsscript" class="com.automation.utility.JsWaiter"></bean>
+    <bean id="table" class="com.automation.webelement.custom.Table"></bean>
+    <bean id="jiraauthentication" class="com.automation.jira.Authentication"></bean>
+    <bean id="jiraconfig" class="com.automation.configuration.JiraConfiguration"></bean>
+    <bean id="jiratestcase" class="com.automation.jira.zephyr.api.TestCaseapi"></bean>
+    <bean id="requsetbuilder" class="com.automation.jira.RequestBuilder"></bean>
+    <bean id="jiraresult" class="com.automation.jira.zephyr.api.AutomationResultapi"></bean>
+    <bean id="amazonitem" class= "com.automation.amazon.AmazonItem"></bean>
+    <bean id="generalwait" class="com.automation.utility.GeneralWait"></bean>
+          
 </beans>
