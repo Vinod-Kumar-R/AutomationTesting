@@ -3,11 +3,11 @@ Keyword Driver Framework is a test Data Driven (TDD) and implemented using JAVA 
 Main method start from class "Mainfunction.java" under package "com.automation.baseframework"
 
 Below feature are supported by framework
- > Web Browser, Mobile Browser and Browser stack
- > Support all type of Browser
- > Integration bewteen JIRA and Automation Framwork
- > Extent Report and KLOV Report (historical) for Test Result
- > Summar status report of test script are send to mail id after complete execution. 
+ 1. Web Browser, Mobile Browser and Browser stack
+ 2. Support all type of Browser
+ 3. Integration bewteen JIRA and Automation Framwork
+ 4. Extent Report and KLOV Report (historical) for Test Result
+ 5. Summar status report of test script are send to mail id after complete execution. 
 
 Setup of Automation framework
 
