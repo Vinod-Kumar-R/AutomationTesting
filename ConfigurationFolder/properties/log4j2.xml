@@ -3,7 +3,7 @@
  
     <Properties>
         <Property name="LOG_PATTERN">%d{dd-MMM-yyyy HH:mm:ss.SSS} %-5level %logger{36} [%L] - %msg%n</Property>
-		<Property name="APP_LOG_ROOT">${env:encashoffers}/log</Property>
+		<Property name="APP_LOG_ROOT">${env:automation}/log</Property>
     </Properties>
  
     <Appenders>
@@ -46,7 +46,7 @@
  
     <Loggers>
      
-        <Logger name="com.encash.offers" additivity="false">
+        <Logger name="com.automation" additivity="false">
             <AppenderRef ref="errorLog" />
 			<AppenderRef ref="infoLog"  />
 			<AppenderRef ref="debugLog" />

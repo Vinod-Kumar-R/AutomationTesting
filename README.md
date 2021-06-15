@@ -1,23 +1,21 @@
-# AutomationTesting (Framework used to test on WebApplication, Mobile Browser application and Browser stack)
+# AutomationTesting (Framework used to test Web Application in all Browser, Mobile Browser and Browser stack)
 Keyword Driver Framework is a test Data Driven (TDD) and implemented using JAVA and Spring Core.
-Main method start from class Mainfunction under package "com.encash.offers.baseframework"
+Main method start from class "Mainfunction.java" under package "com.automation.baseframework"
 
-the framework support both Web Automation and Mobile Web Browser automation, Most of the code will be reusable for Web Automation and Mobile Web browser. it also support all types of Browser (configuration file).
-for testing Mobile Web Browser, then Appium Server is required of version 1.18.0-2 ( tested on this)
- 
-Test Script are used in the Excel sheet (.xlsx or .xls) and CSV file for Object Repository.
- 
-After all testcase executed, an summary email report are send to team (configuration) and for Report used Extent Report and KLOV report for historical data
+Below feature are supported by framework
+ > Web Browser, Mobile Browser and Browser stack
+ > Support all type of Browser
+ > Integration bewteen JIRA and Automation Framwork
+ > Extent Report and KLOV Report (historical) for Test Result
+ > Summar status report of test script are send to mail id after complete execution. 
 
-sample image of testcase, testscript, objectRepositorty and email format, file are stored in "ConfigurationFolder/sampleTestScript/"
+Setup of Automation framework
 
-Cofiguration 
-
-Step 1 :- Create a environment variable called "encashoffers" and copy the content inside the "ConfigurationFolder" to newly created enviroment variable
+Step 1 :- Create a environment variable called "automation" and copy the content inside the "ConfigurationFolder" to newly created enviroment variable
 
 Step 2 :- restart the system
 
-Step 3 :- update the config.properties file with properly.
+Step 3 :- update the config.properties file in "<Environmentvarialbe>/properties".
 
 Run the program from command line 
 
@@ -33,7 +31,53 @@ step 2 :- run the command  "mvn javadoc:javadoc"
 
 step 3 :- java doc are generated in .../target/apidocs/index.html
 
-To get an excel sheet (test script) mail me to :- vinodraju26@gmail.com
+Configuration of Email
 
+Step 1:- update the key value of "sendemail" to "true" in config.properties to enable mail to trigger.
 
+Step 2:- Open the mail.properties file and update corresponding properties 
 
+Important Note By default Gmail account is highly secured.
+
+1.Login to Gmail.
+
+2.Access the URL as https://www.google.com/settings/security/lesssecureapps
+
+3.Select "Turn on"
+
+Note :- to change the email template or format, update the "mailTemplate.txt" 
+
+Configuration of KLOV
+
+Step 1:- Update the key value of "klov" to "true" in config.properties to enable klov report
+
+Step 2:- Open klov.properties file and updated all value.
+
+Note :- KLOV server has to up and running and it required mongo database
+
+Configuration of JIRA
+
+Step 1:- update the key value of "jiraintegration" to true in config.properties to enable jira integration
+
+Step 2:- Open jira.properties file and update all the value.
+
+Note 1:- jira should support the below API for integration and it should have Zephyr scale test management enable.
+https://support.smartbear.com/zephyr-scale-server/api-docs/v1/
+
+Note 2:- In jira, 2 custom field has to be created under testcase 
+      i. Automation  (is single selection from dropdown)
+	 ii. Categeory   (is Multiple selection from dropdown)
+
+Automation custom filed is used to know, particular test case has been automated or not (it is single selection from dorpdown and it value should be "DONE" and "NOT" ) and it should be mandatary filed
+
+Categeory custom filed is used to know that, particular test case below to "Smoke test", or "Regression Test" etc ( it is multiple selection from dropdown and it value should be different type of test name.
+
+Note 3:- If particular test is automated, then TestScript has to attach in the name "Automation.xlsx".
+
+Automation Result
+
+After completion of all test script execution, then automation result are updated in location :-  <Environmentvarialbe>/Result/<date format folder>/<time format folder>/AutomationResult/automation.html
+
+sample testscript can be find in folder "sampleTestScript"
+
+Any help required in setup up framework, can reach out to me :- vinodraju26@gmail.com

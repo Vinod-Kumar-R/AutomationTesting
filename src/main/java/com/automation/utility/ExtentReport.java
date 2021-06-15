@@ -65,7 +65,7 @@ public class ExtentReport {
       e.printStackTrace();
     }
     this.extent = new ExtentReports();
-    this.extent.setSystemInfo("Organization", "Enchashes");
+    this.extent.setSystemInfo("Organization", "Automation");
     this.extent.setSystemInfo("OS Version number", System.getProperty("os.version"));
     this.extent.setSystemInfo("Build Number", "Need to fetch the Build Number");
     this.extent.setSystemInfo("Encash URL", properties.getEncashUrl());
