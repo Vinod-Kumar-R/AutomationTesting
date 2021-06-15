@@ -86,5 +86,19 @@ Automation Result
 After completion of all test script execution, then automation result are updated in location :-  <Environmentvarialbe>/Result/dateformatfolder/timeformatfolder/AutomationResult/automation.html
 
 sample testscript can be find in folder "sampleTestScript"
+ 
+Run the program from command line 
+
+Step 1:- Goto the folder where source code has been downloaded
+
+step 2 :- run the command  "mvn compile exec:java"
+
+To generated the JAVA doc 
+
+Step 1:- Goto the folder where source code has been downloaded
+
+step 2 :- run the command  "mvn javadoc:javadoc"
+
+step 3 :- java doc are generated in .../target/apidocs/index.html
 
 Any help required in setup up framework, can reach out to me :- vinodraju26@gmail.com
