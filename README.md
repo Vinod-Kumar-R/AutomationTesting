@@ -66,7 +66,7 @@ https://support.smartbear.com/zephyr-scale-server/api-docs/v1/
 
 Note 2:- In jira, 2 custom field has to be created under testcase 
       i. Automation  (is single selection from dropdown)
-	 ii. Categeory   (is Multiple selection from dropdown)
+     ii. Categeory   (is Multiple selection from dropdown)
 
 Automation custom filed is used to know, particular test case has been automated or not (it is single selection from dorpdown and it value should be "DONE" and "NOT" ) and it should be mandatary filed
 
@@ -76,7 +76,7 @@ Note 3:- If particular test is automated, then TestScript has to attach in the n
 
 Automation Result
 
-After completion of all test script execution, then automation result are updated in location :-  <Environmentvarialbe>/Result/<date format folder>/<time format folder>/AutomationResult/automation.html
+After completion of all test script execution, then automation result are updated in location :-  <Environmentvarialbe>/Result/dateformatfolder/timeformatfolder/AutomationResult/automation.html
 
 sample testscript can be find in folder "sampleTestScript"
 
