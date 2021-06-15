@@ -73,6 +73,13 @@ Automation custom filed is used to know, particular test case has been automated
 Categeory custom filed is used to know that, particular test case below to "Smoke test", or "Regression Test" etc ( it is multiple selection from dropdown and it value should be different type of test name.
 
 Note 3:- If particular test is automated, then TestScript has to attach in the name "Automation.xlsx".
+ 
+Configuration of Mobile Testing
+Step 1:- Android SDK has to be install in the system for testing Android Mobile 
+Step 2:- Appium server has to installed 
+Step 3:- update the Mobile_devices.properties which is key value pare (any new proprties can also be added)
+Step 4:- In config.properties file udpate the key value i.e "appiumServerurl" to Appium server detail for example :- http://<IPADDRES>:<PORT>/wd/hub
+ 
 
 Automation Result
 
