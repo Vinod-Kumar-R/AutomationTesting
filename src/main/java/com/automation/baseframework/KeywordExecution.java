@@ -332,8 +332,8 @@ public class KeywordExecution {
         
       case amazonitemadd:
         logger.debug("Select the item and add to basket");
-        amazon.addItem();
-        testResult("pass", keyword.toString());
+        status = amazon.addItem(dataParam);
+        testResult(status, keyword.toString());
         break;
         
       

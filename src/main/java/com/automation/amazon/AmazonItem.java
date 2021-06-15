@@ -16,21 +16,29 @@ public class AmazonItem {
   @Autowired
   WaitMethod waitmethod;
   
-  public void addItem() {
+  /**
+   * method is used to add the selected item to cart.
+   * @return 
+   */
+  public String addItem(List<String> dataParam) {
     
+    logger.debug("clicking on the 'All' hyberlink in amazon");
     WebElement element = genericmethod.getElement("amazonall");
     waitmethod.waitForElementPresent("amazonall");
     element.click();
     
-    //first slide bar
-    sidebar("amazonsidebar", "Fire TV");
+    logger.debug("enalbe the side bar and select the Main categeory iteam");
+    sidebar("amazonsidebar", dataParam.get(0));
     
-    //second slid bar
-    sidebar("amazonsidebartwo", "Fire TV Cube");
+    logger.debug("select the sub categeroy iteam");
+    sidebar("amazonsidebartwo", dataParam.get(1));
     
     waitmethod.waitForElementPresent("amazonaddtocart");
+    logger.debug("add select iteam to cart");
     element = genericmethod.getElement("amazonaddtocart");
     element.click();
+    
+    return "pass";
     
   }
   
