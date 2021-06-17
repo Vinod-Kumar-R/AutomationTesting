@@ -17,20 +17,6 @@ Step 2 :- restart the system
 
 Step 3 :- update the config.properties file in "<Environmentvarialbe>/properties".
 
-Run the program from command line 
-
-Step 1:- Goto the folder where source code has been downloaded
-
-step 2 :- run the command  "mvn compile exec:java"
-
-To generated the JAVA doc 
-
-Step 1:- Goto the folder where source code has been downloaded
-
-step 2 :- run the command  "mvn javadoc:javadoc"
-
-step 3 :- java doc are generated in .../target/apidocs/index.html
-
 Configuration of Email
 
 Step 1:- update the key value of "sendemail" to "true" in config.properties to enable mail to trigger.
