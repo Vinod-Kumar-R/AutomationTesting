@@ -15,7 +15,7 @@ public class JsWaiter {
   private JavascriptExecutor jsExec;
 
   //Get the driver from relevant test
-  public void setDriver (WebDriver driver) {
+  public void setDriver( WebDriver driver) {
     jsWaitDriver = driver;
     jsWait = new WebDriverWait(jsWaitDriver, 10);
     jsExec = (JavascriptExecutor) jsWaitDriver;

@@ -56,6 +56,7 @@ public final class BrowserInitialize {
     WebDriverManager.getInstance(driverManagerType).setup();
     
     switch (bt) {
+      
       case CHROME:
 
         drivere = new ChromeDriver(desired.chromeDesired());
@@ -169,7 +170,7 @@ public final class BrowserInitialize {
     if (driver != null) {
       driver = null;
       createInstance(browserType);
-      //JsWaiter.setDriver(driver);
+     
     }
   }
   
@@ -179,7 +180,7 @@ public final class BrowserInitialize {
    */
   public void setDriverInstance(EventFiringWebDriver driver) {
     this.driver = driver;
-    //this.driver.manage().window().maximize();
+    
   }
   
   /**

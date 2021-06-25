@@ -5,7 +5,6 @@ import com.automation.utility.GenericMethod;
 import com.automation.utility.WaitMethod;
 import com.automation.webdriver.BrowserInitialize;
 import com.google.common.collect.Lists;
-
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

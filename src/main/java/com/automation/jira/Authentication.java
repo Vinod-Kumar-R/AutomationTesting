@@ -10,7 +10,7 @@ public class Authentication {
   private JiraConfiguration jc;
   
   /**
-   * Credential for authentication
+   * Credential for authentication.
    * @return token
    */
   public String credentcial() {

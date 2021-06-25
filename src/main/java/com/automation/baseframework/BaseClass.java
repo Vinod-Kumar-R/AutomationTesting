@@ -122,9 +122,8 @@ public class BaseClass {
     }
   }
 
-  /*
-   * This method read the test data excel file row by row
-   * and execute the test case 
+  /**
+   * This method read the test data excel file row by row and execute the test case.
    * 
    */
   private void executetestcase(String testfile) {
@@ -243,7 +242,6 @@ public class BaseClass {
         extentReport.flushlog();
         
       } catch (IOException e1) {
-        // TODO Auto-generated catch block
         logger.error("Problem while closing the TestData.xlsx file " + e);
         e1.printStackTrace();
       }

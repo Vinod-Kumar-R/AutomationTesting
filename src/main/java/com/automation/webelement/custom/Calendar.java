@@ -1,12 +1,11 @@
 package com.automation.webelement.custom;
 
+import com.automation.utility.GenericMethod;
+import com.automation.utility.WaitMethod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.automation.utility.GenericMethod;
-import com.automation.utility.WaitMethod;
 
 public class Calendar {
   private static Logger logger = LogManager.getLogger(Calendar.class);

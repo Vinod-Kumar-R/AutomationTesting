@@ -1,5 +1,6 @@
 package com.automation.webelement.custom;
 
+import com.automation.utility.WaitMethod;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,16 +9,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Quotes;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.automation.utility.GenericMethod;
-import com.automation.utility.WaitMethod;
 
 
 public class MatOptions {
 
   @Autowired
   private WaitMethod waitmethod;
-  @Autowired
-  private GenericMethod genericmethod;
   WebElement options;
   private static Logger logger = LogManager.getLogger(MatOptions.class);
 
