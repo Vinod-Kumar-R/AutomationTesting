@@ -56,21 +56,24 @@ Automation Script can be exeucted in 2 way's
 
 **Executing Script from MAVEN**
 1. Open the command prompt and navigate to source code
-2. Type below command 
+2. Type below command  
+  
 ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/mvnstart.JPG?raw=true)
 
 3. To override the properties, such as test_execution, sendemail, klov etc, then we have to use -DpropertieKey=propertieValue
-![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/mvnstartparameter.JPG?raw=true)
+  
+    ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/mvnstartparameter.JPG?raw=true)
 
 **Test Execution Control**
 
-There are 2 Excel file and 1 CSV file are input to automation framework and Excel file are used to maintain **"Test Case"**, **"Test Script"** and **"Object Repository"**
-Below Diagram show High Level diagram of Autoamtion Framework
-![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/FrameworkDiagram.jpg?raw=true)
+There are 2 Excel file and 1 CSV file are input to automation framework and Excel file are used to maintain **"Test Case"**, **"Test Script"** and **"Object Repository"**  
+Below Diagram show High Level diagram of Autoamtion Framework  
+  
+  ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/FrameworkDiagram.jpg?raw=true)
 
 - **Test Case Excel File**
-Automation Code read test case excel file in format ".xlsx" and executed each test case based on the condition, By default sheeet name should be "Sheet1"
-![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/Testcase.JPG?raw=true)
+Automation Code read test case excel file in format ".xlsx" and executed each test case based on the condition, By default sheeet name should be "Sheet1"  
+![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/Testcase.JPG?raw=true)  
 
 1st row is a header consistence of 4 columns
 
@@ -95,7 +98,8 @@ If keyword type is “comment” then we will ignore the particular column and t
 - **Test Object CSV File**
 
 Test Object csv file is used as Object Repository file to store the DOM element which is used during automation script execution.
-![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/testobject.JPG?raw=true)
+![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/testobject.JPG?raw=true)  
+
 1st row in Test Object csv is consider as header and it has 3 column
 **ObjectName**:-  It consider as unique name in column and used to replace the ObjectName with ObjectValue in  Automation code.
 **ObjectType**:- It is consider as Locating element in an HTML page and should be any one locator of enum  of type class “ByMethod”.
