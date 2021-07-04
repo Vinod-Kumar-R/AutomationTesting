@@ -107,6 +107,7 @@ xpath,id,name,classname,paritallinktext,linktext,tagname,angularbuttontext,repea
 **ObjectValue**:- it has the DOM Element, which is used by the Selenium WebDriver during automation.
 
 **Automation Result**
+
 After completion of all test script execution, then automatically result are updated in location :-  <Environmentvarialbe>/Result/
 After execution of automation in console we can find the result location. 
 

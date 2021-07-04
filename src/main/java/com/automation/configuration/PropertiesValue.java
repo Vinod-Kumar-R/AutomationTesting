@@ -68,6 +68,13 @@ public class PropertiesValue {
   
   @Value("${amazonurl}")
   private String amazonurl;
+  
+  @Value("${repository}")
+  private boolean isObjectRepository;
+
+  public boolean isObjectRepository() {
+    return isObjectRepository;
+  }
 
   public String getAmazonurl() {
     return amazonurl;

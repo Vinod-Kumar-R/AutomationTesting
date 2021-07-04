@@ -29,7 +29,7 @@ public class Mainfunction {
     ApplicationContext context = new ClassPathXmlApplicationContext("springfile.xml");
     BaseClass bc = context.getBean("base", BaseClass.class);
     PropertiesValue propertiesvalue = context.getBean("properties", PropertiesValue.class);
-
+    
     try {
       logger.debug("Start Executing Test cases");
       bc.startRun();
@@ -45,9 +45,9 @@ public class Mainfunction {
     } finally {
       try {
         if (propertiesvalue.isSendemail()) {
-          logger.debug("Email method calling");
+          logger.info("Email method calling");
           bc.emailTestResult();
-          logger.debug("Email sent successfully");
+          logger.info("Email sent successfully");
         }
       } catch (IOException e) {
         // TODO Auto-generated catch block

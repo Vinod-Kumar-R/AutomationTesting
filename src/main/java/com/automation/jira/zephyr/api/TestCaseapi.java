@@ -39,7 +39,7 @@ public class TestCaseapi {
    * @param queryParam is the filter to fetch only required test case
    * @param startIndex starting index from 
    * @param limit max result to fetch
-   * @return 
+   * @return found test case list are return
    * 
    */
   public List<TestCase> getAllTestCase(String queryParam, int startIndex, int limit) {
@@ -56,7 +56,7 @@ public class TestCaseapi {
   /**
    * This method is used to get the list of attachment for particular test case.
    * @param testCase is the test key in the jira
-   * @return 
+   * @return List of TestCaseAttachment for particular testcase ID
    */
   public List<TestCaseAttachment> getTestCaseAttachmentList(String testCase) {
     RequestSpecification rs = requestBuilder.setSingleTestCase(ApiEndPoints.TEST_CASE_ATTACHMENT,

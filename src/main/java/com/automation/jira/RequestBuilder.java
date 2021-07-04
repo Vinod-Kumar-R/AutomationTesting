@@ -73,8 +73,10 @@ public class RequestBuilder {
   
   /**
    * method used to file upload.
-   * @param filelocation file location for uploading
-   * @return
+   * @param filelocation file location to send to Jira.
+   * @param projectkey is unique key in jira which test case below to project
+   * @param path is BasePath to which request has to send
+   * @return of type RequestSpecification
    */
   public RequestSpecification postDataResult(String path, File filelocation, String projectkey) {
     init();

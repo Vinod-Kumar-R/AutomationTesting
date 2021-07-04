@@ -3,7 +3,6 @@ package com.automation.mail;
 
 import com.automation.beanclass.ExtentReportBean;
 import com.automation.configuration.MailConfiguration;
-
 import freemarker.template.Configuration;
 import java.util.HashMap;
 import java.util.Map;

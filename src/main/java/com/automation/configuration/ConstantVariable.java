@@ -2,6 +2,7 @@ package com.automation.configuration;
 
 import com.automation.beanclass.RepositoryBean;
 import com.automation.custom.exception.DuplicateValueException;
+import com.automation.dao.RepositoryDao;
 import com.automation.utility.ExcelReader;
 import com.opencsv.bean.CsvToBeanBuilder;
 import java.io.File;
@@ -33,7 +34,7 @@ public class ConstantVariable {
   private String extentReportsLocation;
   public static String ScreenShotlocation;
   public static HashMap<String, Integer> TestDataRowNumber;
-  public static HashMap<String, List<String>> GetObject;
+  private HashMap<String, List<String>> objects;
   private String resultBaseLocation;
   private String resultLocation;
   private String resultLocation1;
@@ -52,6 +53,8 @@ public class ConstantVariable {
   private ExcelReader std;
   @Autowired
   private PropertiesValue properties;
+  @Autowired
+  private RepositoryDao respository;
 
 
   /**
@@ -137,7 +140,7 @@ public class ConstantVariable {
 
     String key;
     Set<String> duplicateValue = new HashSet<String>();
-    ConstantVariable.GetObject = new HashMap<String, List<String>>();
+    objects = new HashMap<String, List<String>>();
     
     FileReader file = new FileReader(properties.getTestobject());
 
@@ -155,7 +158,7 @@ public class ConstantVariable {
       
       if (!duplicateValue.contains(key)) {
         duplicateValue.add(key);
-        GetObject.put(key, object);
+        objects.put(key, object);
       } else {
         throw new DuplicateValueException("Duplicate name in column "
                         + "'ObjectName' file Object Repository file  ---> " + key);
@@ -179,6 +182,7 @@ public class ConstantVariable {
   /**
    * This method is used to created the folder structure based on the date and time format. 
    * @param baseLocation this contain the location in which it has to create
+   * @param foldername it a name in which folder has to created
    * @return  AbsolutePath of folder is return back  
    */
 
@@ -226,4 +230,37 @@ public class ConstantVariable {
     configuration = System.getenv(key);
     return configuration;
   }
+  
+  /**
+   * Method is used to get the ObjectValue from csv file or from database based on the condition.
+   * @param object is the primary key to fetch the data.
+   * @return data.
+   */
+  public List<String> getObject(String object) {
+    
+    if (properties.isObjectRepository()) {
+      return respository.searchValue(object);
+    } else {
+      return this.objects.get(object);
+    }
+  }
+  
+ 
+  /**
+   * method is used to insert the data to database and when every it required uncomment it
+   * @throws FileNotFoundException file not found
+   */
+  /*
+  public void writetodata() throws FileNotFoundException {
+    FileReader file = new FileReader(properties.getTestobject());
+
+    List<RepositoryBean> repositoryobject = new CsvToBeanBuilder<RepositoryBean>(file)
+                    .withType(RepositoryBean.class).build().parse();
+    
+    for (RepositoryBean csvobject : repositoryobject) {
+      respository.insertValue(csvobject);
+    }
+    
+  }*/
+  
 }

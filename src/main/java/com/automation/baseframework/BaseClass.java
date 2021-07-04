@@ -99,7 +99,11 @@ public class BaseClass {
 
     constantVariable.initializeVariable();
     extentReport.initializeExtentReport();
-    constantVariable.objectRepository();
+   
+    if (!properties.isObjectRepository()) {
+      constantVariable.objectRepository();
+    }
+    
     browserinitialize.getWebDriverInstance();
     browserinitialize.browserInfo();
 
@@ -123,9 +127,9 @@ public class BaseClass {
   }
 
   /**
-   * This method read the test data excel file row by row and execute the test case.
-   * 
-   */
+  * This method read the test data excel file row by row and execute the test case.
+  * @param testfile is a location of test data file in which is read
+  */
   private void executetestcase(String testfile) {
     int testDatarownumber = 0;
 
@@ -186,6 +190,7 @@ public class BaseClass {
    * and  column contain text as "END"
    * @param rowStartfrom This parameter take the integer number ,
    *     which indicate from which row test script has to executed
+   * @param testdatafile is test case file which contain the keyword has to executed
    */
 
   private void testRunId(int rowStartfrom, String testdatafile) {

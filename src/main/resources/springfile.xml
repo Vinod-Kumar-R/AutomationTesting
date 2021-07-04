@@ -2,18 +2,23 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        https://www.springframework.org/schema/context/spring-context.xsd"
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
         >
-
+    
+   <!--  <tx:annotation-driven />  -->
+    <context:component-scan base-package="com.automation.beanclass" />
     <context:annotation-config />
     <context:property-placeholder location= "file:${automation}/properties/mail.properties,
     file:${automation}/properties/config.properties,
-    file:${automation}/properties/jira.properties"
+    file:${automation}/properties/jira.properties,
+    file:${automation}/properties/database.properties"
     />
-
+    
     
     <bean id="mailBean" class="com.automation.beanclass.ExtentReportBean"></bean>
     <bean id="mailconfiguration" class="com.automation.configuration.MailConfiguration"></bean>
@@ -56,5 +61,7 @@
     <bean id="jiraresult" class="com.automation.jira.zephyr.api.AutomationResultapi"></bean>
     <bean id="amazonitem" class= "com.automation.amazon.AmazonItem"></bean>
     <bean id="generalwait" class="com.automation.utility.GeneralWait"></bean>
+    <bean id="repositoryDao" class="com.automation.dao.RepositoryDaoImpl"></bean>
+    <bean id="dda" class="com.automation.configuration.DatabaseConfiguration"></bean>
           
 </beans>

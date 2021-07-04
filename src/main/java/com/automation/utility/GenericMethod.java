@@ -65,6 +65,8 @@ public class GenericMethod {
   private Levels levels;
   @Autowired
   private JsWaiter jswaiter;
+  @Autowired
+  private ConstantVariable constantVariable;
  
 
   /**
@@ -274,7 +276,7 @@ public class GenericMethod {
   
   /**
    * This method to wait js ready.
-   * @return
+   * @return "pass" after completion Jquery
    */
   public String jsready() {
     
@@ -688,7 +690,7 @@ public class GenericMethod {
    */
   private By byType(String object) {
 
-    List<String> data = ConstantVariable.GetObject.get(object);
+    List<String> data = constantVariable.getObject(object);
 
     //get the locator value type
     ByMethod locator = ByMethod.valueOf(data.get(0));

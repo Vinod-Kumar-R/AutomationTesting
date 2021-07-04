@@ -18,7 +18,10 @@ public class AmazonItem {
   
   /**
    * method is used to add the selected item to cart.
-   * @return 
+   * @param dataParam
+   *        dataParam[0] item to be select from first side bar
+   *        dataParam[1] item to be select from second side bar
+   * @return "pass" after successful execution
    */
   public String addItem(List<String> dataParam) {
     
@@ -27,7 +30,7 @@ public class AmazonItem {
     waitmethod.waitForElementPresent("amazonall");
     element.click();
     
-    logger.debug("enalbe the side bar and select the Main categeory iteam");
+    logger.debug("enable the side bar and select the Main categeory iteam");
     sidebar("amazonsidebar", dataParam.get(0));
     
     logger.debug("select the sub categeroy iteam");
