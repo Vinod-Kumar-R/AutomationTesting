@@ -31,6 +31,7 @@ public class TestCaseapi {
     RequestSpecification rs = requestBuilder.setSingleTestCase(ApiEndPoints.TEST_CASE_FETCH,
                     testCase);
     Response res = RestAssured.given(rs).get();
+    logger.debug("fetch test case " + res.asString());
     //System.out.println(res.asPrettyString());
   }
 
@@ -100,7 +101,8 @@ public class TestCaseapi {
       }
       fileOS.close();
     } catch (IOException e) {
-
+      logger.error(e.getMessage());
+      System.out.println(e.getMessage());
     }
 
   }

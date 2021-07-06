@@ -5,7 +5,6 @@ import com.automation.configuration.PropertiesValue;
 import com.automation.jira.ApiEndPoints;
 import com.automation.jira.RequestBuilder;
 import com.automation.jira.beanclass.Execution;
-import com.automation.jira.beanclass.JiraResult;
 import com.automation.jira.beanclass.TestResult;
 import com.automation.jira.beanclass.TestStatus;
 import com.automation.utility.ExtentReport;
@@ -14,17 +13,14 @@ import com.aventstack.extentreports.model.Test;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.reflect.TypeToken;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,11 +46,16 @@ public class AutomationResultapi {
                     file, jc.getJiraProjectkey());
     Response res = RestAssured.given(rs).post();
     logger.debug(res.asString());
-    Type type = new TypeToken<JiraResult>() {}.getType();
-    JiraResult jiraresult = res.as(type);
+    logger.info("Result are posted to Jira " + res.getStatusCode());
+    
   }
 
 
+  /**
+   * Method is used to create jira test result after completion of test execution.
+   * @param filename  is a string which is used to store the notedpad++ for storing result.
+   * @return file path.
+   */
   public Path jiraresult(String filename) {
 
     List<Test> tests =  extentreport.getTestDetail();

@@ -31,7 +31,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public final class BrowserInitialize {
 
-
   private static Logger logger = LogManager.getLogger(BrowserInitialize.class);
   private WebDriver drivere;
   private EventFiringWebDriver driver;
@@ -142,7 +141,6 @@ public final class BrowserInitialize {
   public WebDriver getWebDriverInstance() {
     if (driver == null) {
       createInstance(properties.getTestBrowser());
-      //JsWaiter.setDriver(driver);
     }
 
     return driver;
@@ -158,7 +156,6 @@ public final class BrowserInitialize {
     }
     if (driver == null) {
       createInstance(browserType);
-      //JsWaiter.setDriver(driver);
     }
   }
   

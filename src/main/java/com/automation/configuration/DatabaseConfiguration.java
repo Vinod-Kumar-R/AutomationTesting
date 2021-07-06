@@ -48,6 +48,10 @@ public class DatabaseConfiguration {
     return driverClassName;
   }
 
+  /**
+   * Method is used to setup the DataSource with user name and password.
+   * @return DataSource
+   */
   @Bean
   public DataSource getDataSource() {
     DriverManagerDataSource drivermanager = new DriverManagerDataSource();
@@ -93,6 +97,10 @@ public class DatabaseConfiguration {
   }
 
  
+  /**
+   * Method used to initializing the HibernateTemplate.
+   * @return
+   */
   @Bean
   @Autowired
   public HibernateTemplate getHibernateTemplate() {

@@ -1,8 +1,7 @@
 package com.automation.dao;
 
-import java.util.List;
-
 import com.automation.beanclass.RepositoryBean;
+import java.util.List;
 
 public interface RepositoryDao {
 

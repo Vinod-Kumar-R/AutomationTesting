@@ -8,7 +8,6 @@ import com.automation.utility.WaitMethod;
 import com.automation.webelement.custom.CompetitionQuestion;
 import com.automation.webelement.custom.MandatoryQuestion;
 import com.aventstack.extentreports.Status;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -366,8 +365,6 @@ public class Encash {
       logger.debug("get the list of search list data");
       List<WebElement> competation = genericmethod.getWebElements(competations, 
                       "competition_search_data");
-      
-      logger.debug("scorll to search result");
       genericmethod.scrolltoelementTop(competations);
 
       if (genericmethod.isMobileview()) {

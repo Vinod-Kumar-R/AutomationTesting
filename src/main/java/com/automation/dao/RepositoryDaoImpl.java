@@ -2,10 +2,8 @@ package com.automation.dao;
 
 import com.automation.beanclass.RepositoryBean;
 import com.automation.configuration.DatabaseConfiguration;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 

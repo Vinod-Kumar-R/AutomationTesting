@@ -75,7 +75,7 @@ public class ConstantVariable {
   /**
    * This method is used to initialize the environment variable.
    */
-   public void initializeVariable() {
+  public void initializeVariable() {
 
     //setting the properties value 
     date = dateTime(dateformat);
@@ -247,7 +247,7 @@ public class ConstantVariable {
   
  
   /**
-   * method is used to insert the data to database and when every it required uncomment it
+   * method is used to insert the data to database and when every it required uncomment it.
    * @throws FileNotFoundException file not found
    */
   /*

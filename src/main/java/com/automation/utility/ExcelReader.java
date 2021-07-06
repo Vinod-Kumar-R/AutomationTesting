@@ -5,8 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -22,7 +20,6 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
  *
  */
 public class ExcelReader {
-  private static Logger logger = LogManager.getLogger(ExcelReader.class);
   private File  filename;
   private Workbook workbook;
   private Sheet sheet;
@@ -67,7 +64,7 @@ public class ExcelReader {
   }
   
 
-   /**
+  /**
    * In the constructor we are reading the excel file.
    * @param file it contain the location of the file which need to read
    * @param sheetIndex in excel it will specific which sheet row has to read
@@ -76,7 +73,7 @@ public class ExcelReader {
    *     EncryptedDocumentException are throw
    * 
    */
-  /**
+  /*
   public ExcelReader(String file, int sheetIndex) throws EncryptedDocumentException, IOException  {
 
     this.filename = new File(file);
@@ -87,7 +84,7 @@ public class ExcelReader {
     logger.info("workbook " + this.workbook);
     logger.info("sheet " + this.sheet);
   }
-**/
+*/
   /**
    * This method is used to get the number of row count in an sheet.
    * @param sheetindex read the integer value of sheet

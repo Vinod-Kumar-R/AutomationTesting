@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.joda.time.Interval;
 import org.joda.time.Period;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +31,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class ExtentReport {
 
-  private static Logger logger = LogManager.getLogger(ExtentReport.class);
   public ExtentSparkReporter spark;
   public ExtentKlovReporter klov;
   public ExtentReports extent;
@@ -172,6 +169,11 @@ public class ExtentReport {
     this.extent.setSystemInfo(key, value);
   }
 
+  /**
+   * Method is used to update the system in Extent report.
+   * @param envname is environment variable, in which used to setup the system info file
+   * @return "value" for particular "Key"
+   */
   public String getSystemInfo(String envname) {
     List<SystemEnvInfo> envInfo = this.extent.getReport().getSystemEnvInfo();
     for (SystemEnvInfo s : envInfo) {

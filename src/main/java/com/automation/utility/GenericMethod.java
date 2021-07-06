@@ -64,8 +64,6 @@ public class GenericMethod {
   @Autowired
   private Levels levels;
   @Autowired
-  private JsWaiter jswaiter;
-  @Autowired
   private ConstantVariable constantVariable;
  
 
@@ -250,10 +248,6 @@ public class GenericMethod {
 
     JavascriptExecutor je = (JavascriptExecutor) driver;
     je.executeScript("arguments[0].scrollIntoView(true);", element);
-    
-    jswaiter.setDriver(driver);
-    jswaiter.waitUntilJSReady();
-
     return "pass";
   }
   
@@ -267,26 +261,6 @@ public class GenericMethod {
 
     JavascriptExecutor je = (JavascriptExecutor) driver;
     je.executeScript("arguments[0].scrollIntoView(false);", element);
-    
-    jswaiter.setDriver(driver);
-    jswaiter.waitUntilJSReady();
-
-    return "pass";
-  }
-  
-  /**
-   * This method to wait js ready.
-   * @return "pass" after completion Jquery
-   */
-  public String jsready() {
-    
-    WebDriver driver = browserinitialize.getWebDriverInstance();
-    jswaiter.setDriver(driver);
-    jswaiter.waitUntilJSReady();
-    //jswaiter.waitForJQueryLoad();
-    jswaiter.waitUntilAngularReady();
-    jswaiter.waitJQueryAngular();
-    
     return "pass";
   }
   
@@ -305,10 +279,6 @@ public class GenericMethod {
 
     je.executeScript("window.scrollTo(" + element.getLocation().getX() + "," 
                     + (element.getLocation().getY() + offset) + ");");
-
-    jswaiter.setDriver(driver);
-    jswaiter.waitUntilJSReady();
-
     return "pass";
   }
   
@@ -653,7 +623,7 @@ public class GenericMethod {
       paths
       .filter(path -> !Files.isDirectory(path))
       .forEach(path -> {
-        
+
         ZipEntry zipEntry = new ZipEntry(sourceDirPath.relativize(path).toString());
         try {
           zipOutputStream.putNextEntry(zipEntry);
@@ -670,6 +640,13 @@ public class GenericMethod {
     return zipFile;
   }
   
+  /**
+   * Method used to zip a single file.
+   * @param zippath is location where the zip file to store
+   * @param filetozip  is file which need to zip
+   * @return the zip file location.
+   * @throws IOException  IO Operation
+   */
   public File zipFile(String zippath, Path filetozip) throws IOException {
     Path zipFile = Files.createFile(Paths.get(zippath));
     

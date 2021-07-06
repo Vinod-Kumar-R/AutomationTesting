@@ -19,6 +19,12 @@ public class CustomWait {
     return new AttributedNotPresent(byType, attributeName);
   }
   
+  /**
+   * Method is used to wait until attribute not present in DOM.
+   * @param element is WebElement
+   * @param attributeName is attribute which need to wait untill not present
+   * @return "pass"
+   */
   public static ExpectedCondition<Boolean> attributedNotPresent(WebElement element, 
                   String attributeName) {
     logger.debug("calling the custom wait method AttributedNotPresent");
@@ -26,6 +32,12 @@ public class CustomWait {
     
   }
   
+  /**
+   * Method used to wait for particular attribute present.
+   * @param element WebElement
+   * @param attributeName name which need to wait to present.
+   * @return "Pass"
+   */
   public static ExpectedCondition<Boolean> attributedPresent(WebElement element, 
                   String attributeName) {
     logger.debug("calling the custom wait method AttributedNotPresent");
