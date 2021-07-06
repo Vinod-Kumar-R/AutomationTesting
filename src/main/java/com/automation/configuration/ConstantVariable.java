@@ -75,7 +75,7 @@ public class ConstantVariable {
   /**
    * This method is used to initialize the environment variable.
    */
-  public void initializeVariable() {
+   public void initializeVariable() {
 
     //setting the properties value 
     date = dateTime(dateformat);

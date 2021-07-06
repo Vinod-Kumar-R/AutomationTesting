@@ -28,7 +28,7 @@ public class MailContent {
    * @return Pojo file content of ExtentReportBean
    * @throws IOException if file not found
    */
-  public ExtentReportBean maildata() throws IOException {
+  public ExtentReportBean maildata() {
 
     logger.debug("Setting the Email body content");
     

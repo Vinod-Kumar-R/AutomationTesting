@@ -328,7 +328,7 @@ public class BaseClass {
   * This method is used to prepare for email content configuration and send email.
   * @throws IOException through an exception if file not found
   */
-  public void emailTestResult() throws IOException {
+  public void emailTestResult() {
     mail.sendEmail(content.maildata());
   }
 }

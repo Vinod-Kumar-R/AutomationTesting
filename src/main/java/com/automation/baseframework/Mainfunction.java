@@ -42,18 +42,16 @@ public class Mainfunction {
       logger.error(e);
       e.printStackTrace();
       bc.extentReport.flushlog();
+      
     } finally {
-      try {
-        if (propertiesvalue.isSendemail()) {
-          logger.info("Email method calling");
-          bc.emailTestResult();
-          logger.info("Email sent successfully");
-        }
-      } catch (IOException e) {
-        // TODO Auto-generated catch block
-        logger.error(e.getMessage());
-        e.printStackTrace();
+
+      if (propertiesvalue.isSendemail()) {
+        logger.info("Email method calling");
+        bc.emailTestResult();
+        logger.info("Email sent successfully");
       }
+      
+      ((ClassPathXmlApplicationContext) context).close();
     }
   }
 }
