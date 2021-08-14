@@ -41,9 +41,9 @@ public class Mainfunction {
       // TODO Auto-generated catch block
       logger.error(e);
       e.printStackTrace();
-      bc.extentReport.flushlog();
-      
     } finally {
+      
+      bc.extentReport.flushlog();
 
       if (propertiesvalue.isSendemail()) {
         logger.info("Email method calling");

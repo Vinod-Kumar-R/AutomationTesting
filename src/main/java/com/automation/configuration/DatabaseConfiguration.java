@@ -76,7 +76,7 @@ public class DatabaseConfiguration {
     sessionFactory.setAnnotatedClasses(RepositoryBean.class);
     Properties hibernateProperties = new Properties();
     hibernateProperties.put("jdbc.dialect", "org.hibernate.dialect.MySQLDialect");
-    hibernateProperties.put("hibernate.show_sql", "true");
+    hibernateProperties.put("hibernate.show_sql", "false");
     hibernateProperties.put("hibernate.connection.pool_size", "10");
     hibernateProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
     sessionFactory.setHibernateProperties(hibernateProperties);
@@ -93,7 +93,6 @@ public class DatabaseConfiguration {
     HibernateTransactionManager transactionManager = 
                     new HibernateTransactionManager(sessionFactory);
     return transactionManager;
-    
   }
 
  
@@ -109,7 +108,4 @@ public class DatabaseConfiguration {
     return hibernateTemplate;
     
   }
-  
-  
-    
 }

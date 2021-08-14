@@ -114,6 +114,7 @@ public final class BrowserInitialize {
         } catch (Exception e) {
           // TODO Auto-generated catch block
           e.printStackTrace();
+          logger.error(e.getMessage());
         }
 
         break;

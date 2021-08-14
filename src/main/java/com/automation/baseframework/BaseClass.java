@@ -118,6 +118,7 @@ public class BaseClass {
       logger.debug("Result update to jira complete");
     } else {
       //initialize the excel file for testdata and stored all the row number of testdata start
+      logger.info("Excel file name " + properties.getTestdata());
       testData.setExcelfilename(properties.getTestdata());
       testData.getExcelsheetindex(0);
       constantVariable.searchTestData();
