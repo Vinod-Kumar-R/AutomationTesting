@@ -1,0 +1,34 @@
+pipeline {
+	agent {
+    	label params['agent-name']
+	}
+parameters {
+    choice(name: 'Browser', choices: "CHROME","FIREFOX","OPERA","EDGE","IEXPLORER","SAFARI","ANDROID_CHROME","IOS_SAFARI","MOBILE_EMULATION","BROWSER_STACK", description: 'Select the specific browser for execution')
+    agentParameter name:'agent-name'
+    string(name: 'credential', defaultValue: 'staging', description: 'username and password')
+}
+stages {
+    
+    stage('Build'){
+        steps{
+           build 'Automation Build'
+        }
+    }
+    
+    stage('Execute Autoamtion'){
+    	steps{
+    
+    		if(isUnix()){
+    		    sh label: 'Download', returnStdout: true, script: 'curl --user "$credential:$credential" http://192.168.0.110:9090/job/Automation%20Execution/lastSuccessfulBuild/artifact/target/*zip*/target.zip --create-dirs --output "target.zip"'
+    		    //unzip the file 
+    		    sh label: 'start Automation', script: 'java -jar EncashAutomation.jar' 
+    		} else {
+    		     bat label: 'Download', returnStdout: true, script: 'curl --user "$credential:$credential" http://192.168.0.110:9090/job/Automation%20Execution/lastSuccessfulBuild/artifact/target/*zip*/target.zip --create-dirs --output "target.zip"'
+    		     //unzip the file
+    		     sh label: 'start Automation', script: 'java -jar EncashAutomation.jar'
+    		  }
+    	}
+    }
+}
+    
+}
