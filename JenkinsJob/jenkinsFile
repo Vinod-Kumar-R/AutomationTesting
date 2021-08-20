@@ -14,6 +14,9 @@ environment {
 stages {
     
     stage('Build'){
+        agent {
+         label 'master'
+        }
         steps{
           build 'Automation Build'
           //input id: 'StartScript', message: 'Run Automation Script', ok: 'Build Success', submitter: 'tester'
