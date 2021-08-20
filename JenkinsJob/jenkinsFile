@@ -3,30 +3,37 @@ pipeline {
     	label params['agent-name']
 	}
 parameters {
-    choice(name: 'Browser', choices: "CHROME","FIREFOX","OPERA","EDGE","IEXPLORER","SAFARI","ANDROID_CHROME","IOS_SAFARI","MOBILE_EMULATION","BROWSER_STACK", description: 'Select the specific browser for execution')
     agentParameter name:'agent-name'
-    string(name: 'credential', defaultValue: 'staging', description: 'username and password')
+    choice(name: 'Browser', choices: ['CHROME','FIREFOX','OPERA','EDGE','IEXPLORER','SAFARI','ANDROID_CHROME','IOS_SAFARI','MOBILE_EMULATION','BROWSER_STACK'], description: 'abcd');
+    text defaultValue: 'User input required ', description: 'This is used to set the configuration file for automation', name: 'InputParameter'
 }
+environment {
+  automation = "automation"
+}
+
 stages {
     
     stage('Build'){
         steps{
-           build 'Automation Build'
+          build 'Automation Build'
+          //input id: 'StartScript', message: 'Run Automation Script', ok: 'Build Success', submitter: 'tester'
         }
     }
     
     stage('Execute Autoamtion'){
     	steps{
-    
-    		if(isUnix()){
-    		    sh label: 'Download', returnStdout: true, script: 'curl --user "$credential:$credential" http://192.168.0.110:9090/job/Automation%20Execution/lastSuccessfulBuild/artifact/target/*zip*/target.zip --create-dirs --output "target.zip"'
-    		    //unzip the file 
-    		    sh label: 'start Automation', script: 'java -jar EncashAutomation.jar' 
-    		} else {
-    		     bat label: 'Download', returnStdout: true, script: 'curl --user "$credential:$credential" http://192.168.0.110:9090/job/Automation%20Execution/lastSuccessfulBuild/artifact/target/*zip*/target.zip --create-dirs --output "target.zip"'
-    		     //unzip the file
-    		     sh label: 'start Automation', script: 'java -jar EncashAutomation.jar'
+    	    script {
+    	        deleteDir()
+    	        if(isUnix()){
+    	           echo "this is used for linux or mac system" 
+    	             
+    		    } else {
+    		        copyArtifacts filter: 'target/EncashAutomation.jar,target/lib/*.jar,target/properties/*.*', projectName: 'Automation Build', selector: upstream(fallbackToLastSuccessful: true)
+    		        fileOperations([folderCreateOperation('automation'), folderCopyOperation(destinationFolderPath: 'automation/properties', sourceFolderPath: 'target/properties'), folderCopyOperation(destinationFolderPath: 'automation/extension', sourceFolderPath: 'target/extension')])
+    		        bat label: 'start Automation', script: "java -jar $InputParameter ./target/EncashAutomation.jar"
     		  }
+    	    }
+        	    
     	}
     }
 }

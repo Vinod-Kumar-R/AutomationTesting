@@ -328,7 +328,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<configuration>
-				<finalName>EncashAutomation</finalName>
+					<finalName>EncashAutomation</finalName>
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
@@ -348,7 +348,13 @@
 						<configuration>
 							<tasks>
 								<copy todir="${basedir}/target/properties">
-									<fileset dir="${basedir}/ConfigurationFolder/properties"
+									<fileset
+										dir="${basedir}/ConfigurationFolder/properties"
+										includes="**/*" />
+								</copy>
+								<copy todir="${basedir}/target/extension">
+									<fileset
+										dir="${basedir}/ConfigurationFolder/extension"
 										includes="**/*" />
 								</copy>
 							</tasks>
