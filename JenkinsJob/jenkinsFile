@@ -15,7 +15,7 @@ stages {
     
     stage('Build'){
         agent {
-         label 'master'
+        label 'master'
         }
         steps{
           build 'Automation Build'
@@ -24,6 +24,9 @@ stages {
     }
     
     stage('Execute Autoamtion'){
+        agent {
+        label 'vinodcomputer'
+        }
     	steps{
     	    script {
     	        deleteDir()
