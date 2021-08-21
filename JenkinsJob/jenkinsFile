@@ -11,6 +11,10 @@ environment {
   automation = "automation"
 }
 
+tools {
+      git 'Default'
+    }
+
 stages {
     
     stage('Build'){
@@ -24,9 +28,7 @@ stages {
     }
     
     stage('Execute Autoamtion'){
-        agent {
-        label 'vinodcomputer'
-        }
+        
     	steps{
     	    script {
     	        deleteDir()
