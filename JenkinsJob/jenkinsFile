@@ -48,7 +48,7 @@ pipeline {
             keepAll: true,
             reportDir: "${ResultLocation}",
             reportFiles: 'automation.html',
-            reportName: 'Automation Result',
+            reportName: 'AutomationResult',
             reportTitles: 'Result'
           ])
         }
