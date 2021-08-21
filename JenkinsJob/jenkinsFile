@@ -11,16 +11,9 @@ environment {
   automation = "automation"
 }
 
-tools {
-      git 'Default'
-    }
-
 stages {
     
     stage('Build'){
-        agent {
-        label 'master'
-        }
         steps{
           build 'Automation Build'
           //input id: 'StartScript', message: 'Run Automation Script', ok: 'Build Success', submitter: 'tester'
@@ -28,22 +21,18 @@ stages {
     }
     
     stage('Execute Autoamtion'){
-        
     	steps{
     	    script {
     	        deleteDir()
     	        if(isUnix()){
     	           echo "this is used for linux or mac system" 
-    	             
     		    } else {
-    		        copyArtifacts filter: 'target/EncashAutomation.jar,target/lib/*.jar,target/properties/*.*', projectName: 'Automation Build', selector: upstream(fallbackToLastSuccessful: true)
+    		        copyArtifacts filter: 'target/EncashAutomation.jar,target/lib/*.jar,target/properties/*.*,target/extension/*.*', projectName: 'Automation Build', selector: upstream(fallbackToLastSuccessful: true)
     		        fileOperations([folderCreateOperation('automation'), folderCopyOperation(destinationFolderPath: 'automation/properties', sourceFolderPath: 'target/properties'), folderCopyOperation(destinationFolderPath: 'automation/extension', sourceFolderPath: 'target/extension')])
     		        bat label: 'start Automation', script: "java -jar $InputParameter ./target/EncashAutomation.jar"
-    		  }
-    	    }
-        	    
+    		  		}
+    	    	}
+    		}
     	}
-    }
-}
-    
+	}
 }
