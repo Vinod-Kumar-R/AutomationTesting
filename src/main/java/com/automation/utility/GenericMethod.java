@@ -125,13 +125,14 @@ public class GenericMethod {
      * relative path is used only for attach the extent repor to email 
      * as of now report are not attach to email so comment out the below code
     */ 
-    /*
-    String relativePath = new File(ConstantVariable.ResultLocation).toURI().relativize(
+    
+    String relativePath = new File(ConstantVariable.resultLocation).toURI().relativize(
                     new File(absolutePath).toURI()).getPath();
     logger.debug(" relative path " + relativePath);
     return ".." + File.separator + relativePath;
-    */
-    return absolutePath;
+    
+    //uncomment the below comment when relativePath is commented
+    //return absolutePath;
   }
 
   /**

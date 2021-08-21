@@ -36,7 +36,7 @@ public class ConstantVariable {
   public static HashMap<String, Integer> TestDataRowNumber;
   private HashMap<String, List<String>> objects;
   private String resultBaseLocation;
-  private String resultLocation;
+  public static String resultLocation;
   private String resultLocation1;
   private String resultDatelocaton;
   public static String Foldername = "AutomationResult";
