@@ -11,7 +11,7 @@ Main method start from class "Mainfunction.java" under package "com.automation.b
  4. Integration bewteen JIRA and Automation Framwork
  5. Extent Report and KLOV Report (historical) for Test Result
  6. Summary status report of test script are send to mail id after complete execution.
- 7. Jenkins Integration for Continous CI/CD, in which Automation script through jenkins and result are stored in partiuclar build. 
+ 7. Jenkins Integration for Continous CI/CD, in which Automation script are executed through jenkins and result are stored in partiuclar build. 
 
 **Software Requirement**
 |   SlNo |   Software | Version |
@@ -59,7 +59,8 @@ Automation Script can be exeucted in 2 way's
 **Executing Script from MAVEN**
 1. Open the command prompt and navigate to source code
 2. Type below command
- ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/mvnstart.JPG?raw=true)
+
+	![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/mvnstart.JPG?raw=true)
 3. To override the properties, such as test_execution, sendemail, klov etc, then we have to use -DpropertieKey=propertieValue
   
     ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/mvnstartparameter.JPG?raw=true)
@@ -77,10 +78,13 @@ Automation Code read test case excel file in format ".xlsx" and executed each te
 
 1st row is a header consistence of 4 columns
 
-**Test Case ID**:- Is an Alpha numeric number used to identify the Test case. 
-**Test Case Description**:- is a short summary of Test case. 
-**Test Category**:- is used to category the test case it belong to such as “Regression”, “Smoke” etc 
-**Executed**:- It hold any one of the value i.e. “Yes” or “no”,
+ **Test Case ID**:- Is an Alpha numeric number used to identify the Test case.
+ 
+ **Test Case Description**:- is a short summary of Test case.
+ 
+ **Test Category**:- is used to category the test case it belong to such as “Regression”, “Smoke” etc
+ 
+ **Executed**:- It hold any one of the value i.e. “Yes” or “no”,
     - If particular test case row is set to “yes”, then corresponding automation script are execute in excel file “TestData.xlsx”.
     - if particular test case row is set to “no”, then that test script will not execute.
 
@@ -164,6 +168,7 @@ Categeory custom filed is used to know that, particular test case belongs to "Sm
 3. java doc are generated in .../target/apidocs/index.html
 
 **Jenkins Integration**
+
 Open the Jenkins URL and make sure below plugin are installed.
 |Sl No|Plugin|Version|
 |---|---|---|
@@ -198,7 +203,7 @@ Follow below step to create job.
 6. HTML result can be found in current build number as show in below image
  ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/jenkins_job8.JPG?raw=true)
 
-Note :- By default in html result CSS file are not loaded and report look ugle, so please follow below link to enable the CSS file to load in html file
+*Note* :- By default in html result CSS file are not loaded and report look ugle, so please follow below link to enable the CSS file to load in html file
  https://stackoverflow.com/questions/35783964/jenkins-html-publisher-plugin-no-css-is-displayed-when-report-is-viewed-in-j
 ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/jenkins_job7.JPG?raw=true)
 
