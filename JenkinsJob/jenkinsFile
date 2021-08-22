@@ -27,7 +27,7 @@ pipeline {
         //input id: 'StartScript', message: 'Run Automation Script', ok: 'Build Success', submitter: 'tester'
       }
     }
-    stage('Execute Autoamtion') {
+    stage('Execute Automation') {
       steps {
         script {
           deleteDir()
