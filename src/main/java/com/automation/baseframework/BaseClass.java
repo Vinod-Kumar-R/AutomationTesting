@@ -243,7 +243,8 @@ public class BaseClass {
         e.printStackTrace();
         extentReport.writeLog(Status.FAIL, "Failed executing Keyword ---> " + keyword);
         extentReport.writeLog(Status.FAIL, e);
-        extentReport.attachScreenshot(genericMethod.takeScreenshot());
+        //extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
+        extentReport.attachScreenshotPath(genericMethod.takeScreenshot());
         browserinitialize.quitBrowser();
         extentReport.flushlog();
         

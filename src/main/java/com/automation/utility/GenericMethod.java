@@ -98,11 +98,15 @@ public class GenericMethod {
     return "fail";
   }
 
+  
+  /*
+   * changing the image from path location to base 64 for that reason comment below code
+   */
   /**
    * This Method is used to take an WebBrowser Screenshot.
    * @return the file location in the String format
    */
-  public  String takeScreenshot()   {
+  public  String takeScreenshot() {
     WebDriver driver = browserinitialize.getWebDriverInstance();
     long filename = System.currentTimeMillis();
     if (driver instanceof TakesScreenshot) {
@@ -120,7 +124,7 @@ public class GenericMethod {
                     + filename + ".png";
     logger.debug("absolutepath " + absolutePath);
     
-    /*Block of code is comment becase in KLOV report required the absolute path rather 
+    /*Block of code is comment because in KLOV community report required the absolute path rather 
      * then relative path 
      * relative path is used only for attach the extent repor to email 
      * as of now report are not attach to email so comment out the below code
@@ -134,7 +138,22 @@ public class GenericMethod {
     //uncomment the below comment when relativePath is commented
     //return absolutePath;
   }
-
+  
+  /**
+   * Method is used to take screenshot in Base64 format.
+   * this can be used when KLOV community support Base64.  
+   * @return string in base 64 format
+   */
+  /*
+  public  String takeScreenshot() {
+    WebDriver driver = browserinitialize.getWebDriverInstance();
+    String tempFile = null;
+    if (driver instanceof TakesScreenshot) {
+      tempFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
+    }
+    return tempFile;
+  }
+*/
   /**
    * This Method is used to verify the Attributed Value contain.
    * @param dataParam

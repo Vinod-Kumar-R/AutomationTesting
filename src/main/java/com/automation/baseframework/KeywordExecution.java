@@ -107,7 +107,8 @@ public class KeywordExecution {
         break;
 
       case takescreenshot :
-        extentReport.attachScreenshot(genericMethod.takeScreenshot());
+        //extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
+        extentReport.attachScreenshotPath(genericMethod.takeScreenshot());
         status = "pass";
         logger.debug("taken the screen shot");
         testResult(status, keyword.toString());
@@ -354,7 +355,8 @@ public class KeywordExecution {
       extentReport.writeLog(Status.PASS, message);
     }
     if (status.equalsIgnoreCase("fail")) {
-      extentReport.attachScreenshot(genericMethod.takeScreenshot());
+      //extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
+      extentReport.attachScreenshotPath(genericMethod.takeScreenshot());
       extentReport.writeLog(Status.FAIL, message);
     }
 

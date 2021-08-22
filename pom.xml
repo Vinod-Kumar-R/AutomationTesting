@@ -2,7 +2,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>Encash</groupId>
@@ -57,12 +56,10 @@
 			<version>2.13.3</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>com.paulhammant</groupId>
 			<artifactId>ngwebdriver</artifactId>
 			<version>1.1.6</version>
-
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
@@ -135,7 +132,6 @@
 			<version>5.2.13.RELEASE</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>javax.mail-api</artifactId>
@@ -172,7 +168,7 @@
 		<dependency>
 			<groupId>com.aventstack</groupId>
 			<artifactId>klov-reporter</artifactId>
-			<version>5.0.6</version>
+			<version>5.0.8</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/io.appium/java-client -->
@@ -253,7 +249,6 @@
 
 	</dependencies>
 
-
 	<reporting>
 		<plugins>
 			<plugin>
@@ -264,9 +259,7 @@
 
 				</configuration>
 			</plugin>
-
 		</plugins>
-
 	</reporting>
 
 	<build>
@@ -281,7 +274,6 @@
 						<target>1.8</target>
 					</configuration>
 				</plugin>
-
 			</plugins>
 		</pluginManagement>
 		<plugins>

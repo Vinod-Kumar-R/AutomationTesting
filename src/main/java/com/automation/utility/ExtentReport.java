@@ -109,7 +109,11 @@ public class ExtentReport {
    */
   public void writeLog(Status status, String details, String imageFilelocation) {
     this.extenttest.log(status, details, 
-                    MediaEntityBuilder.createScreenCaptureFromPath(imageFilelocation).build());
+                    MediaEntityBuilder.createScreenCaptureFromPath(imageFilelocation).build()); 
+    /*                
+    this.extenttest.log(status, details, 
+                 MediaEntityBuilder.createScreenCaptureFromBase64String(imageFilelocation).build());
+     */            
   }
   
   /**
@@ -127,13 +131,22 @@ public class ExtentReport {
   public void flushlog() {
     this.extent.flush();
   }
+  
   /**
    * This method is used to attach the screen shot for execution test case.
    * @param imagePath capture image file location
    */
   
-  public void attachScreenshot(String imagePath)  {
+  public void attachScreenshotPath(String imagePath)  {
     this.extenttest.addScreenCaptureFromPath(imagePath);
+  }
+  
+  /**
+   * This method is used to attach the screen shot for execution test case.
+   * @param base64 are converted to base64
+   */
+  public void attachScreenshotBase64(String base64) {
+    this.extenttest.addScreenCaptureFromBase64String(base64);
   }
 
   /**
