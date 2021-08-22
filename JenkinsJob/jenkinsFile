@@ -38,9 +38,9 @@ pipeline {
             folderCopyOperation(destinationFolderPath: 'automation/extension', sourceFolderPath: 'target/extension')
           ])
           if (isUnix()) {
-            bat label: 'start Automation', script: "java -jar $InputParameter ./target/EncashAutomation.jar"
-          } else {
             sh label: 'start Automation', script: "java -jar $InputParameter ./target/EncashAutomation.jar"
+          } else {
+            bat label: 'start Automation', script: "java -jar $InputParameter ./target/EncashAutomation.jar"
           }
           def files = findFiles excludes: '', glob: '**/AutomationResult/automation.html'
           //echo """${files[0].name} ${files[0].path} ${files[0].directory} ${files[0].length} ${files[0].lastModified}"""
