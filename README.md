@@ -85,6 +85,7 @@ Automation Code read test case excel file in format ".xlsx" and executed each te
  **Test Category**:- is used to category the test case it belong to such as “Regression”, “Smoke” etc
  
  **Executed**:- It hold any one of the value i.e. “Yes” or “no”,
+ 
     - If particular test case row is set to “yes”, then corresponding automation script are execute in excel file “TestData.xlsx”.
     - if particular test case row is set to “no”, then that test script will not execute.
 
