@@ -8,7 +8,7 @@ Main method start from class "Mainfunction.java" under package "com.automation.b
  3. Object Repository for storing the DOM element are support in 2 way and it configurable
  
     1. CSV file
-    2.MySql Database
+	2. MySql Database
  4. Integration bewteen JIRA and Automation Framwork (where test script are fetched from Jira test management).
  5. Extent Report and KLOV Report (historical) for Autoamtion Test Result.
  6. Summary e-mail report of Automation Script.
