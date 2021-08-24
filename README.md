@@ -6,8 +6,9 @@ Main method start from class "Mainfunction.java" under package "com.automation.b
  1. Web Browser, Mobile Browser and Browser Stack
  2. Support all type of Browser
  3. Object Repository for storing the DOM element are support in 2 way and it configurable
-    i. CSV file
-    ii.MySql Database
+ 
+    1. CSV file
+    2.MySql Database
  4. Integration bewteen JIRA and Automation Framwork (where test script are fetched from Jira test management).
  5. Extent Report and KLOV Report (historical) for Autoamtion Test Result.
  6. Summary e-mail report of Automation Script.
