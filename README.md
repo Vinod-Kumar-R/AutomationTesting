@@ -1,17 +1,20 @@
 # Automation Framework for testing Web Application and Mobile Application using Selenium WebDriver 
-Keyword Driver Framework is a Test Data Driven (TDD) and it's been implemented using JAVA and Spring Core.
+Keyword Driver Framework is a Test Data Driven (TDD) and it's has been implemented using JAVA and Spring Core.
 Main method start from class "Mainfunction.java" under package "com.automation.baseframework"
 
-**Below feature are supported by framework**
- 1. Web Browser, Mobile Browser and Browser stack
+**Below feature are support by framework**
+ 1. Web Browser, Mobile Browser and Browser Stack
  2. Support all type of Browser
- 3. ObjectRepository for storing of DOM element are support in 2 way and it configurable 
-    i. CSV file are used to store ObjectRepository
-    ii.MySql Database are used to store ObjectRepository
- 4. Integration bewteen JIRA and Automation Framwork
- 5. Extent Report and KLOV Report (historical) for Test Result
- 6. Summary status report of test script are send to mail id after complete execution.
- 7. Jenkins Integration for Continous CI/CD, in which Automation script are executed through jenkins and result are stored in partiuclar build. 
+ 3. Object Repository for storing the DOM element are support in 2 way and it configurable
+ 
+    i. CSV file
+	
+    ii.MySql Database
+	
+ 4. Integration bewteen JIRA and Automation Framwork (where test script are fetched from Jira test management).
+ 5. Extent Report and KLOV Report (historical) for Autoamtion Test Result.
+ 6. Summary e-mail report of Automation Script.
+ 7. Jenkins Integration for Continous CI/CD. 
 
 **Software Requirement**
 |   SlNo |   Software | Version |
@@ -33,12 +36,14 @@ Main method start from class "Mainfunction.java" under package "com.automation.b
 ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/environment.JPG?raw=true)
 2. Open GIT Bash and change the current working directory to the location where you want cloned directory
 3. Type below command to clone the repository
-git clone https://github.com/Vinod-Kumar-R/AutomationTesting.git
-4. From window Explore navigate to the clone folder i.e.“<clone folder>/AutomationTesting/ConfigurationFolder/” and copy all the file and paste to new created environment variable folder
+
+	git clone https://github.com/Vinod-Kumar-R/AutomationTesting.git
+	
+4. From window Explorer navigate to the clone folder i.e.“<clone folder>/AutomationTesting/ConfigurationFolder/” and copy all the file and paste to newly created environment variable folder
 ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/folder.JPG?raw=true)
 5.  Inside the properties folder, open config.properties file and update folder location of testcase, testdata etc.
 ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/config.JPG?raw=true)
-6. update the other properites if you are required such mobile_device, if you want to test in Mobile. etc
+6. update the other properites file as per requirement such as Mobile,Jira,Sendemail etc.
 7. restart the system.
 
 **Configuration of ObjectRepository**
@@ -47,6 +52,7 @@ git clone https://github.com/Vinod-Kumar-R/AutomationTesting.git
 3. update "database.properties" with database username,password and IP address.
 
 **Automation Execution Step**
+
 Automation Script can be exeucted in 2 way's 
 - Executing Script from Eclipse IDE
 - Executing Script from MAVEN
@@ -61,7 +67,7 @@ Automation Script can be exeucted in 2 way's
 2. Type below command
 
 	![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/mvnstart.JPG?raw=true)
-3. To override the properties, such as test_execution, sendemail, klov etc, then we have to use -DpropertieKey=propertieValue
+3. To override the properties, such as test_execution, sendemail, klov etc, then we have to use \-DpropertieKey=propertieValue
   
     ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/mvnstartparameter.JPG?raw=true)
 
@@ -73,7 +79,8 @@ Below Diagram show High Level diagram of Autoamtion Framework
   ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/FrameworkDiagram.jpg?raw=true)
 
 - **Test Case Excel File**
-Automation Code read test case excel file in format ".xlsx" and executed each test case based on the condition, By default sheeet name should be "Sheet1"  
+
+	Automation Code read test case excel file in format ".xlsx" and executed each test case based on the condition, By default sheeet name should be "Sheet1"  
 ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/Testcase.JPG?raw=true)  
 
 1st row is a header consistence of 4 columns
@@ -91,21 +98,22 @@ Automation Code read test case excel file in format ".xlsx" and executed each te
 
 - **Test Scirpt Excel File**
 
-Automation code read the Test Script or Test Data file in the format “.xlsx” and executed the corresponding the test case ID script which is read from test case and by default sheet name should be “Sheet1”
+Automation code read the Test Script or Test Data file in format “.xlsx” and executed corresponding test case ID script which is read from test case and by default sheet name should be “Sheet1”
 ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/testscript.JPG?raw=true)
 
 In Test Script file,
 
-**Column A**:- is consider as Start and End of the Test script for particular Test case ID. The Test case ID column data in the Test Case Excel file should match in Test script file and it is considered as the start of the script. If column A contains the data as “End” then it considered as End of script for Test case ID.
+**Column A**:- is consider as Start and End of the Test script for particular Test case ID. The Test case ID column data in the Test Case Excel file should match in Test script file and it is considered as the start of the script. If column A contain the data as “End” then it considered as End of script for Test case ID.
 
 **Column B**:- is considering as Keyword and name should match the enum of class “KeywordType” in JAVA code. Refer java documentation for more understanding of keyword
-If keyword type is “comment” then we will ignore the particular column and this row is used the data type required for next row.
 
-**Rest of Column**:- From column C onwards we are consider as the data for the keyword. 
+If keyword type is “comment” then particular row is ignored.
+
+**Rest of Column**:- From column C onwards it consider as data for keyword. 
 
 - **Test Object CSV File**
 
-Test Object csv file is used as Object Repository file to store the DOM element which is used during automation script execution.
+Test Object csv file use as Object Repository to store DOM element and used during automation script execution.
 
 ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/testobject.JPG?raw=true)  
 
@@ -113,26 +121,27 @@ Test Object csv file is used as Object Repository file to store the DOM element 
 
 **ObjectName**:-  It consider as unique name in column and used to replace the ObjectName with ObjectValue in  Automation code.
 
-**ObjectType**:- It is consider as Locating element in an HTML page and should be any one locator of enum  of type class “ByMethod”.
+**ObjectType**:- It is consider as Locator element in an HTML page and it should be any one of enum type class “ByMethod”.
 xpath,id,name,classname,paritallinktext,linktext,tagname,angularbuttontext,repeater,exactrepeater,binding,exactbinding,model,options,partialbuttontext, csscontainingtext
 
-**ObjectValue**:- it has the DOM Element, which is used by the Selenium WebDriver during automation.
+**ObjectValue**:- it has DOM Element, which is used by the Selenium WebDriver during automation.
 
 **Automation Result**
 
-After completion of all test script execution, then automatically result are updated in location :-  <Environmentvarialbe>/Result/
-After execution of automation in console we can find the result location. 
+After completion of test script execution, then automatically result are updated in location :- \<Environmentvarialbe\>/Result/
+
+also location are printed in console. 
 
 **Configuration of Email**
-1. update the key value of "sendemail" to "true" in config.properties to enable mail to trigger.
+1. update the key value of "sendemail" to "true" in config.properties to trigger email.
 2. Open Mail.properties file and update corresponding values.
 
-*Important Note By default Gmail account is highly secured.*
+*Note:- By default Gmail account is highly secured.*
 1. Login to Gmail.
-2. Access the URL as https://www.google.com/settings/security/lesssecureapps
+2. Access the URL https://www.google.com/settings/security/lesssecureapps
 3. Select "Turn on"
 
-*Note* :- To change the email template or format, update the "mailTemplate.txt" file 
+*Note* :- To change email template or format, update the "mailTemplate.txt" file 
 **Configuration of KLOV**
 1. Update the key value of "klov" to "true" in config.properties to enable klov report
 2. Open klov.properties file and updated all value.
@@ -143,7 +152,7 @@ After execution of automation in console we can find the result location.
 1. update the key value of "jiraintegration" to true in config.properties to enable jira integration
 2. Open jira.properties file and update all the value.
 
-*Note* 1 :- jira should support the below API for integration and it should have Zephyr scale test management enable.
+*Note* 1 :- jira should support below API for integration and it should have Zephyr scale test management enable.
 https://support.smartbear.com/zephyr-scale-server/api-docs/v1/
 
 *Note* 2:- In jira, 2 custom field has to be created under testcase 
@@ -151,9 +160,9 @@ https://support.smartbear.com/zephyr-scale-server/api-docs/v1/
       i. **Automation**  (is single selection from dropdown)
      ii. **Categeory**   (is Multiple selection from dropdown)
 
-Automation custom filed is used to know, Particular test case has been automated or not (it is single selection from dorpdown and it value should be "DONE" or "NOT" ) and it's mandatary field
+"Automation" custom filed is used to know, Particular test case has been automated or not (it is single selection from dorpdown and it value should be "DONE" or "NOT" ) and it's mandatary field
 
-Categeory custom filed is used to know that, particular test case belongs to "Smoke test", or "Regression Test" etc ( it is multiple selection from dropdown and it value should be different type of test name). and it's mandatory field
+"Categeory" custom filed is used to know that, particular test case belongs to "Smoke test", or "Regression Test" etc ( it is multiple selection from dropdown and it value should be different type of test name). and it's mandatory field
 
 *Note* 3:- If particular test case are automated, then test case should have a attachment of test script in the name "Automation.xlsx".
  
@@ -188,23 +197,23 @@ Follow below step to create job.
  ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/jenkins_job2.JPG?raw=true)
 4. In post-build Actions, type the text as "target/EncashAutomation.jar,target/lib/\*.jar,target/properties/\*.\*,target/extension/\*.\*"
  ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/jenkins_job6.JPG?raw=true)
-5. click the "Save" button
+5. click on "Save" button
 
-- **Creating new Pipeline job**
+- **Create new Pipeline job**
 1. Create a new Pipeline by providing any job name 
-2. Go to the pipeline tab as show in below image and perform below step 
-    - from drop down list of "Definition", Select the 'Pipeline script from SCM'
+2. Go to pipeline tab as show in below image and perform below step 
+    - from drop down list of "Definition", Select 'Pipeline script from SCM'
     - in SCM, select 'GIT' by drop down
-    - In Repository URL, type the text as 'https://github.com/Vinod-Kumar-R/AutomationTesting.git'
+    - In Repository URL, type text as 'https://github.com/Vinod-Kumar-R/AutomationTesting.git'
  ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/jenkins_job4.JPG?raw=true)
-3. In Script Path, type the text as 'JenkinsJob/jenkinsFile'
+3. In Script Path, type text as 'JenkinsJob/jenkinsFile'
 ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/jenkins_job5.JPG?raw=true)
 4. click on 'Save' button
 5. Build newly created Pipeline job
 6. HTML result can be found in current build number as show in below image
  ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/jenkins_job8.JPG?raw=true)
 
-*Note* :- By default in html result CSS file are not loaded and report look ugle, so please follow below link to enable the CSS file to load in html file
+*Note* :- By default html result CSS file are not loaded and report look ugle, so please follow below link to enable the CSS file to load in html file
  https://stackoverflow.com/questions/35783964/jenkins-html-publisher-plugin-no-css-is-displayed-when-report-is-viewed-in-j
 ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/jenkins_job7.JPG?raw=true)
 
