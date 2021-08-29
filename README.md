@@ -8,7 +8,7 @@ Main method start from class "Mainfunction.java" under package "com.automation.b
  3. Object Repository for storing the DOM element are support in 2 way and it configurable 
     1. CSV file
 	2. MySql Database
- 4. Integration bewteen JIRA and Automation Framwork (where test script are fetched from Jira test management).
+ 4. Integration bewteen JIRA and Automation Framework (where test script are fetched from Jira test management).
  5. Extent Report and KLOV Report (historical) for Autoamtion Test Result.
  6. Summary e-mail report of Automation Script.
  7. Jenkins Integration for Continous CI/CD. 
@@ -214,4 +214,4 @@ Follow below step to create job.
  https://stackoverflow.com/questions/35783964/jenkins-html-publisher-plugin-no-css-is-displayed-when-report-is-viewed-in-j
 ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/jenkins_job7.JPG?raw=true)
 
-Any help required in setup framework, can reach out to me :- vinodraju26@gmail.com
+Any help in understanding of framework, can reach out to me :- vinodraju26@gmail.com

@@ -243,8 +243,8 @@ public class BaseClass {
         e.printStackTrace();
         extentReport.writeLog(Status.FAIL, "Failed executing Keyword ---> " + keyword);
         extentReport.writeLog(Status.FAIL, e);
-        //extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
-        extentReport.attachScreenshotPath(genericMethod.takeScreenshot());
+        extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
+        //extentReport.attachScreenshotPath(genericMethod.takeScreenshot());
         browserinitialize.quitBrowser();
         extentReport.flushlog();
         
@@ -299,7 +299,7 @@ public class BaseClass {
         for (TestCaseAttachment attachment : attachments) {
           if (attachment.getFilename().equalsIgnoreCase("Automation.xlsx") 
                           && attachment.getFilesize() > 0) {
-            logger.debug("testfile need to download need to download");
+            logger.debug("Script file need to download");
             //download the test script assuming file has download
             testscriptlocation = properties.getTemplocation() + File.separator 
                             + testcase.testcaseId.replace("-", "") + attachment.getFilename();

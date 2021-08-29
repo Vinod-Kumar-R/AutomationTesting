@@ -16,6 +16,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
     <context:property-placeholder location= "file:${automation}/properties/mail.properties,
     file:${automation}/properties/config.properties,
     file:${automation}/properties/jira.properties,
+    file:${automation}/properties/klov.properties,
     file:${automation}/properties/database.properties"
     />
     
@@ -62,5 +63,6 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
     <bean id="generalwait" class="com.automation.utility.GeneralWait"></bean>
     <bean id="repositoryDao" class="com.automation.dao.RepositoryDaoImpl"></bean>
     <bean id="dda" class="com.automation.configuration.DatabaseConfiguration"></bean>
+    <bean id="klov" class="com.automation.configuration.KlovConfiguration"></bean>
           
 </beans>

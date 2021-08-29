@@ -107,8 +107,8 @@ public class KeywordExecution {
         break;
 
       case takescreenshot :
-        //extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
-        extentReport.attachScreenshotPath(genericMethod.takeScreenshot());
+        extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
+        //extentReport.attachScreenshotPath(genericMethod.takeScreenshot());
         status = "pass";
         logger.debug("taken the screen shot");
         testResult(status, keyword.toString());
@@ -195,7 +195,6 @@ public class KeywordExecution {
       case newtab:
         genericMethod.newTab();
         logger.debug("crete new Tab in browser");
-        
         testResult("Pass", keyword.toString());
         break;
         
@@ -337,8 +336,6 @@ public class KeywordExecution {
         testResult(status, keyword.toString());
         break;
         
-      
-
       default: logger.debug("Invalid Keyword");
 
     }
@@ -355,8 +352,8 @@ public class KeywordExecution {
       extentReport.writeLog(Status.PASS, message);
     }
     if (status.equalsIgnoreCase("fail")) {
-      //extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
-      extentReport.attachScreenshotPath(genericMethod.takeScreenshot());
+      extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
+      //extentReport.attachScreenshotPath(genericMethod.takeScreenshot());
       extentReport.writeLog(Status.FAIL, message);
     }
 

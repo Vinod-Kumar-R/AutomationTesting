@@ -1,5 +1,6 @@
 package com.automation.utility;
 
+import com.automation.configuration.KlovConfiguration;
 import com.automation.configuration.PropertiesValue;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -12,8 +13,6 @@ import com.aventstack.extentreports.model.context.NamedAttributeContext;
 import com.aventstack.extentreports.model.context.NamedAttributeContextManager;
 import com.aventstack.extentreports.reporter.ExtentKlovReporter;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,6 +39,9 @@ public class ExtentReport {
                   + ".table td, .table th {vertical-align: middle; white-space: nowrap; }";
   @Autowired
   private PropertiesValue properties;
+  
+  @Autowired
+  private KlovConfiguration klovconfiguration;
 
 
   /**
@@ -54,8 +56,13 @@ public class ExtentReport {
     try {
       this.spark.loadXMLConfig(properties.getExtentReportsPropeties());
       if (properties.isKlov()) {
+        //this is comment because to get the control 
+        //on setting the properties value from command line parameter
+        /*
         this.klov.loadInitializationParams(new FileInputStream(
                         new File(properties.getklovrproperties())));
+        */
+        klovConfiguration();
       }
     } catch (IOException e) {
       // TODO Auto-generated catch block
@@ -73,6 +80,18 @@ public class ExtentReport {
     } else {
       this.extent.attachReporter(this.spark);
     }
+  }
+  
+  /**
+   * is used to configuration of KLOV report.
+   */
+  private void klovConfiguration() {
+    this.klov.initMongoDbConnection(klovconfiguration.getMongoUrl(),
+                    klovconfiguration.getMongoPort());
+    this.klov.initKlovServerConnection(klovconfiguration.getKlovUrl()
+                    + ":" + klovconfiguration.getKlovPort());
+    this.klov.setProjectName(klovconfiguration.getProjectName());
+    this.klov.setReportName(klovconfiguration.getReportName());
   }
 
   /**
@@ -108,12 +127,13 @@ public class ExtentReport {
    * @param imageFilelocation capture image file location
    */
   public void writeLog(Status status, String details, String imageFilelocation) {
-    this.extenttest.log(status, details, 
-                    MediaEntityBuilder.createScreenCaptureFromPath(imageFilelocation).build()); 
-    /*                
+    /*this.extenttest.log(status, details, 
+                    MediaEntityBuilder.createScreenCaptureFromPath(imageFilelocation).build());
+      */               
+                    
     this.extenttest.log(status, details, 
                  MediaEntityBuilder.createScreenCaptureFromBase64String(imageFilelocation).build());
-     */            
+                 
   }
   
   /**
@@ -146,7 +166,7 @@ public class ExtentReport {
    * @param base64 are converted to base64
    */
   public void attachScreenshotBase64(String base64) {
-    this.extenttest.addScreenCaptureFromBase64String(base64);
+    this.extenttest.addScreenCaptureFromBase64String(base64, "Error image");
   }
 
   /**
