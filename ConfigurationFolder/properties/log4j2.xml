@@ -53,7 +53,7 @@
             <AppenderRef ref="Console"  /> 
         </Logger>
 
-        <Root level="INFO">
+        <Root level="ALL">
            <!-- <AppenderRef ref="Console"/> -->
         </Root>
  

@@ -175,7 +175,7 @@
 		<dependency>
 			<groupId>io.appium</groupId>
 			<artifactId>java-client</artifactId>
-			<version>7.3.0</version>
+			<version>7.5.1</version>
 		</dependency>
 
 		<dependency>
@@ -347,6 +347,11 @@
 								<copy todir="${basedir}/target/extension">
 									<fileset
 										dir="${basedir}/ConfigurationFolder/extension"
+										includes="**/*" />
+								</copy>
+								<copy todir="${basedir}/target/docker">
+									<fileset
+										dir="${basedir}/docker"
 										includes="**/*" />
 								</copy>
 							</tasks>

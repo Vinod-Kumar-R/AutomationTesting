@@ -153,7 +153,6 @@ also location are printed in console.
 https://support.smartbear.com/zephyr-scale-server/api-docs/v1/
 
 *Note* 2:- In jira, 2 custom field has to be created under testcase 
-
       i. **Automation**  (is single selection from dropdown)
      ii. **Categeory**   (is Multiple selection from dropdown)
 
@@ -179,11 +178,11 @@ https://support.smartbear.com/zephyr-scale-server/api-docs/v1/
 Open the Jenkins URL and make sure below plugin are installed.
 |Sl No|Plugin|Version|
 |---|---|---|
-|1|Agent Server Parameter Plug-In|1.1|
-|2|Copy Artifact Plugin|1.46.1|
-|3|HTML Publisher plugin|1.25|
+|1|Agent Server Parameter |1.1|
+|2|Copy Artifact |1.46.1|
+|3|HTML Publisher |1.25|
 |4|Pipeline Utility Steps|2.8.0|
-|5|File Operations Plugin|1.11|
+|5|File Operations |1.11|
 
 Follow below step to create job. 
 1. Create new Freestyle Project by Job name as "Automation Build"
