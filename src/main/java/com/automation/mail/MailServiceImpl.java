@@ -95,6 +95,8 @@ public class MailServiceImpl {
   public String geFreeMarkerTemplateContent(Map<String, Object> model) {
     StringBuffer content = new StringBuffer();
     try {
+      logger.debug("debugging");
+      logger.debug(freemarkerConfiguration.getTemplateLoader().toString());
       content.append(FreeMarkerTemplateUtils.processTemplateIntoString(
                       freemarkerConfiguration.getTemplate("mailTemplate.txt"), model));
       return content.toString();
