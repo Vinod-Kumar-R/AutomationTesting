@@ -1,10 +1,10 @@
 /**
 Below are the plugin and its version has to be install before running the job
-Agent Server Parameter Plug-In : 1.1
-Copy Artifact Plugin : 1.46.1
-HTML Publisher plugin : 1.25
+Agent Server Parameter : 1.1
+Copy Artifact : 1.46.1
+HTML Publisher : 1.25
 Pipeline Utility Steps : 2.8.0
-File Operations Plugin : 1.11
+File Operations : 1.11
 **/
 def ResultLocation
 pipeline {

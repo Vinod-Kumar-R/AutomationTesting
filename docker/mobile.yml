@@ -1,13 +1,13 @@
 version: '2'
 services:
     appium:
-        image: appium/appium
+        image: appium/appium:v1.21.0-p1
         privileged: true
         container_name: container-appium
         ports:
             - 4723:4723
     emulator:
-        image: budtmo/docker-android-x86-11.0
+        image: budtmo/docker-android-x86-11.0:v1.10-p1
         privileged: true
         container_name : nexus5
         ports:

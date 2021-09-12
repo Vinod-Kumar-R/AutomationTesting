@@ -101,6 +101,10 @@ public class MailConfiguration {
   public FreeMarkerConfigurationFactoryBean getFreeMarkerConfiguration() {
     String location = "file://" +  properties.getConfigLocation()
                     + File.separator + "properties" + File.separator;
+    System.out.println("-----Debugstart--------");
+    System.out.println("location running from jenkins linux system");
+    System.out.println(location);
+    System.out.println("-----DebugEnd--------");
     FreeMarkerConfigurationFactoryBean bean = new FreeMarkerConfigurationFactoryBean();
     bean.setTemplateLoaderPath(location);
     return bean;
