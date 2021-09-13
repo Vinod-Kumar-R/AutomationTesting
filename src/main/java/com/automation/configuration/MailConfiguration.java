@@ -100,7 +100,7 @@ public class MailConfiguration {
   @Bean
   public FreeMarkerConfigurationFactoryBean getFreeMarkerConfiguration() {
     String location = "file:///" +  properties.getConfigLocation()
-                    + File.separator + "properties" + File.separator;
+                    + File.separator + "properties";
     System.out.println("-----Debugstart--------");
     System.out.println("location running from jenkins linux system");
     System.out.println(location);
