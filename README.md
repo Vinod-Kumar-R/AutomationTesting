@@ -1,5 +1,5 @@
 # Automation Framework for testing Web Application and Mobile Application using Selenium WebDriver 
-Keyword Driver Framework is a Test Data Driven (TDD) and it's has been implemented using JAVA and Spring Core.
+Keyword Driven Framework is a Test Data Driven (TDD) and it's has been implemented using JAVA and Spring Core.
 Main method start from class "Mainfunction.java" under package "com.automation.baseframework"
 
 **Below feature are support by framework**
@@ -138,12 +138,14 @@ also location are printed in console.
 2. Access the URL https://www.google.com/settings/security/lesssecureapps
 3. Select "Turn on"
 
-*Note* :- To change email template or format, update the "mailTemplate.txt" file 
+*Note* :- To change email template or format, update the "mailTemplate.txt" file.
+ 
 **Configuration of KLOV**
 1. Update the key value of "klov" to "true" in config.properties to enable klov report
 2. Open klov.properties file and updated all value.
 
-*Note* :- KLOV server has to up and running and it required mongo database
+*Note* :- KLOV server must be up and running and it required mongo database or use the docker compose file of "klov-server.yml" to start the klov server.
+klov-server.yml file are located in the "docker" folder in source code. 
 
 **Configuration of JIRA**
 1. update the key value of "jiraintegration" to true in config.properties to enable jira integration
@@ -152,7 +154,8 @@ also location are printed in console.
 *Note* 1 :- jira should support below API for integration and it should have Zephyr scale test management enable.
 https://support.smartbear.com/zephyr-scale-server/api-docs/v1/
 
-*Note* 2:- In jira, 2 custom field has to be created under testcase 
+*Note* 2:- In jira, 2 custom field has to be created under testcase
+ 
       i. **Automation**  (is single selection from dropdown)
      ii. **Categeory**   (is Multiple selection from dropdown)
 
