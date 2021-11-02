@@ -27,6 +27,7 @@ Main method start from class "Mainfunction.java" under package "com.automation.b
 |9|KLOV Server ( Optional )| |
 |10|MySql Server (Optional)|5.6 |
 |11|Jenkins (Optional)|2.289.3|
+|12|Docker in Ubuntu 20.04 (Optional)||
 
 **Setup Automation framework**
 1. Create a environment variable with **Variable Name** field **“automation”** and **Variable Value** field **“folder location”**
@@ -170,7 +171,19 @@ https://support.smartbear.com/zephyr-scale-server/api-docs/v1/
 2. Appium server should be installed and running. 
 3. update the Mobile_devices.properties which is key value pare (any new proprties can also be added)
 4. In config.properties file udpate the key value i.e "appiumServerurl" to Appium server detail for example :- http://&lt;IPADDRES&gt;:&lt;PORT&gt;/wd/hub
- 
+
+**Runing Android Mobile testing in Dokcer**
+1. This is supported and tested on Ubuntu 20.04 OS
+2. Docker has to be installed in Ubuntu 
+3. Create a pipe line job and configured the SCM with jenking file name "DockerMobileJenkinsFile"
+4. Run the job, then automatically all the required software i.e. andoroid SDK and mobile emulator (Nexus 5) are download. 
+5. Based on the condition mobile test case script are executed on Mobile Emulator
+
+*Note* :- 
+1. Docker and Mobile Emulator are supported only in Linux OS
+2. Make sure atleast one browser has to be install in Linux OS
+3. To access the Mobile Emulator UI :- http://&lt;IPADDRES&gt;:6080
+
 **Generated the JAVA doc** 
 1. Goto the folder where source code has been downloaded
 2. run the command  "mvn javadoc:javadoc"
