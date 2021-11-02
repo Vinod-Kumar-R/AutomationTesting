@@ -108,7 +108,8 @@ public class BaseClass {
     browserinitialize.browserInfo();
 
     if (properties.isJiraIntegration()) {
-      executetestcase(testdatapreparation());
+      String testScriptFile = testdatapreparation();
+      executetestcase(testScriptFile);
       //prepare test result
       Path jsonfile =   testresult.jiraresult("result.json");
       File resultfile = genericMethod.zipFile(properties.getTemplocation() 
@@ -213,7 +214,7 @@ public class BaseClass {
         //skipping the step if keyword is "comment"
         if (!keyword.equalsIgnoreCase("comment")) {
 
-          //Read the all the parameter for keyword and add delimiter ~
+          //Read the all the parameter for keyword
           int column = 2;
           String param = "";
           List<String> dataParam = new ArrayList<String>();

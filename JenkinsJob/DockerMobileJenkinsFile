@@ -6,6 +6,7 @@ HTML Publisher : 1.25
 Pipeline Utility Steps : 2.8.0
 File Operations : 1.11
 **/
+
 def ResultLocation
 pipeline {
   agent {
@@ -13,7 +14,6 @@ pipeline {
   }
   parameters {
     agentParameter name: 'agent-name'
-    choice(name: 'Browser', choices: ['CHROME', 'FIREFOX', 'OPERA', 'EDGE', 'IEXPLORER', 'SAFARI', 'ANDROID_CHROME', 'IOS_SAFARI', 'MOBILE_EMULATION', 'BROWSER_STACK'], description: 'Choose the browser in which Automation script has to executed');
     text defaultValue: 'User input required ', description: 'This is used to set the configuration file for automation', name: 'InputParameter'
   }
   environment {
@@ -27,16 +27,28 @@ pipeline {
       }
       steps {
         build 'Automation Build'
-        //input id: 'StartScript', message: 'Run Automation Script', ok: 'Build Success', submitter: 'tester'
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        script {
+          deleteDir()    
+          copyArtifacts projectName: 'Automation Build',
+            selector: upstream(fallbackToLastSuccessful: true)
+
+          sh 'sudo docker-compose -f target/docker/mobile.yml up -d'
+          sleep time: 2, unit: 'MINUTES'
+          sh 'sudo docker cp target/properties/chromedriver/chromedriver container-appium:/'
+          sh 'sudo docker exec container-appium chmod -R 777 /chromedriver'
+          sh 'sudo docker exec container-appium adb connect nexus5'
+        }
       }
     }
     stage('Execute Automation') {
       steps {
         script {
-          deleteDir()
-          copyArtifacts projectName: 'Automation Build',
-            selector: upstream(fallbackToLastSuccessful: true)
-          fileOperations([
+            fileOperations([
             folderCreateOperation('automation'),
             folderCopyOperation(destinationFolderPath: 'automation/properties', sourceFolderPath: 'target/properties'),
             folderCopyOperation(destinationFolderPath: 'automation/extension', sourceFolderPath: 'target/extension')
@@ -47,7 +59,6 @@ pipeline {
             bat label: 'start Automation', script: "java -jar $InputParameter ./target/EncashAutomation.jar"
           }
           def files = findFiles excludes: '', glob: '**/AutomationResult/automation.html'
-          //echo """${files[0].name} ${files[0].path} ${files[0].directory} ${files[0].length} ${files[0].lastModified}"""
           ResultLocation = "${files[0].path}"
           ResultLocation = ResultLocation.replaceAll("automation.html", "")
         }
