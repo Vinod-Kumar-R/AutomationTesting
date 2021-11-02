@@ -22,9 +22,6 @@ pipeline {
 
   stages {
     stage('Build') {
-      when {
-         changeRequest branch: 'master'
-      }
       steps {
         build 'Automation Build'
       }
