@@ -60,7 +60,8 @@ public class Desired {
   /**
    * This method is used configured the Firefox options before executing firefox.
    * @return the firefoxOptions for Firefox browser
-   */
+   */
+
   public FirefoxOptions firefoxDesired() {
 
     FirefoxOptions options = new FirefoxOptions();

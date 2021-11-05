@@ -64,5 +64,4 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
     <bean id="repositoryDao" class="com.automation.dao.RepositoryDaoImpl"></bean>
     <bean id="dda" class="com.automation.configuration.DatabaseConfiguration"></bean>
     <bean id="klov" class="com.automation.configuration.KlovConfiguration"></bean>
-          
-</beans>
+	</beans>

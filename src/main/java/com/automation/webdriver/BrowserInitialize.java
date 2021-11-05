@@ -36,6 +36,7 @@ public final class BrowserInitialize {
   private EventFiringWebDriver driver;
   private NgWebDriver ngwebdriver;
   private JavascriptExecutor jsDriver;
+  private WebDriverManager webDriverManager;
   @Autowired
   private  ExtentReport extentreport;
   @Autowired
@@ -52,10 +53,18 @@ public final class BrowserInitialize {
 
     BrowserExecutionType bt = BrowserExecutionType.valueOf(browserType);
     DriverManagerType driverManagerType = DriverManagerType.valueOf(bt.binaryBrower.toUpperCase());
-    WebDriverManager.getInstance(driverManagerType).setup();
-    
+    //checking the condition whether browser driver for system or Docker.
+    if (!browserType.contains("DOCKER")) {
+      WebDriverManager.getInstance(driverManagerType).setup();
+    } else {
+      webDriverManager = WebDriverManager.getInstance(driverManagerType);
+      webDriverManager.browserInDocker();
+      webDriverManager.enableVnc();
+      webDriverManager.browserVersion("latest");
+    }
+
     switch (bt) {
-      
+
       case CHROME:
 
         drivere = new ChromeDriver(desired.chromeDesired());
@@ -72,7 +81,7 @@ public final class BrowserInitialize {
         break;
 
       case EDGE:
-       
+
         drivere = new EdgeDriver(desired.edgeDesired());
         break;
 
@@ -104,7 +113,7 @@ public final class BrowserInitialize {
       case MOBILE_EMULATION:
         drivere = new ChromeDriver(desired.mobileSystembrowser());
         break;
-        
+
       case BROWSER_STACK:
 
         try {
@@ -117,6 +126,21 @@ public final class BrowserInitialize {
           logger.error(e.getMessage());
         }
 
+        break;
+
+      case DOCKER_CHROME:
+        drivere = webDriverManager.capabilities(desired.chromeDesired()).create();
+        logger.info("Browser URL :- " + webDriverManager.getDockerNoVncUrl());
+        break;
+        
+      case DOCKER_FIREFOX:
+        drivere = webDriverManager.capabilities(desired.firefoxDesired()).create();
+        logger.info("Browser URL :- " + webDriverManager.getDockerNoVncUrl());
+        break;
+        
+      case DOCKER_SAFARI:
+        drivere = webDriverManager.capabilities(desired.safariDesired()).create();
+        logger.info("Browser URL :- " + webDriverManager.getDockerNoVncUrl());
         break;
 
       default : 
