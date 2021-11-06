@@ -3,8 +3,8 @@ package com.automation.utility;
 import com.automation.custom.wait.CustomWait;
 import com.automation.webdriver.BrowserInitialize;
 import com.paulhammant.ngwebdriver.NgWebDriver;
+import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -383,7 +383,7 @@ public class WaitMethod {
   public String waitForimplicitWait() {
     
     WebDriver driver = browserinitialize.getWebDriverInstance();
-    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
     return "pass";
   }
   
@@ -394,7 +394,7 @@ public class WaitMethod {
   
   public void waitThread() {
     try {
-      Thread.sleep(2000);
+      Thread.sleep(30000);
     } catch (InterruptedException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

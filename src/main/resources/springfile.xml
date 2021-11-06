@@ -43,7 +43,6 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
     <bean id="wait" class="com.automation.utility.WaitMethod"></bean>
     <bean id="browser" class="com.automation.webdriver.BrowserInitialize"></bean>
     <bean id="desi" class="com.automation.webdriver.Desired"></bean>
-    <bean id="lister" class="com.automation.webdriver.EventListener"></bean>
     <bean id="mailService" class="com.automation.mail.MailServiceImpl"></bean>
     <bean id="firebase" class="com.automation.firebase.Firebase"></bean>
     <bean id="calender" class="com.automation.webelement.custom.Calendar"></bean>

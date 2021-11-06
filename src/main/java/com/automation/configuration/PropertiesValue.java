@@ -71,6 +71,17 @@ public class PropertiesValue {
   
   @Value("${repository}")
   private boolean isObjectRepository;
+  
+  @Value("${docker}")
+  private boolean isDocker;
+
+  public boolean isDocker() {
+    return isDocker;
+  }
+
+  public void setDocker(boolean isDocker) {
+    this.isDocker = isDocker;
+  }
 
   public boolean isObjectRepository() {
     return isObjectRepository;

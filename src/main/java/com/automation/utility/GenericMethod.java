@@ -31,7 +31,6 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -237,7 +236,7 @@ public class GenericMethod {
    * @param key contain the name in which it has to store.
    */
   public void currentDriver(String key) {
-    EventFiringWebDriver driver = (EventFiringWebDriver) browserinitialize.getWebDriverInstance();
+    WebDriver driver =  browserinitialize.getWebDriverInstance();
     storevalue.driverinstance.put(key, driver);
  
   }
@@ -247,7 +246,7 @@ public class GenericMethod {
    * @param key contain the name of instance key to which it has to set
    */
   public void switchDriver(String key) {
-    EventFiringWebDriver driver = storevalue.driverinstance.get(key);
+    WebDriver driver = storevalue.driverinstance.get(key);
     logger.debug("dirver instance restore " + driver);
     browserinitialize.setDriverInstance(driver);
   }

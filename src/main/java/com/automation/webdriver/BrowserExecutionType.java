@@ -12,10 +12,7 @@ public enum BrowserExecutionType {
   ANDROID_CHROME("CHROME"),
   IOS_SAFARI("SAFARI"),
   MOBILE_EMULATION("CHROME"),
-  BROWSER_STACK("CHROME"),
-  DOCKER_CHROME("CHROME"),
-  DOCKER_FIREFOX("FIREFOX"),
-  DOCKER_SAFARI("SAFARI");
+  BROWSER_STACK("CHROME");
   
   public final String binaryBrower;
   

@@ -2,7 +2,6 @@ package com.automation.webdriver;
 
 import com.automation.configuration.PropertiesValue;
 import com.automation.utility.ExtentReport;
-import com.microsoft.edge.seleniumtools.EdgeDriver;
 import com.paulhammant.ngwebdriver.NgWebDriver;
 import io.appium.java_client.AppiumDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -11,16 +10,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.safari.SafariDriver;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -32,8 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public final class BrowserInitialize {
 
   private static Logger logger = LogManager.getLogger(BrowserInitialize.class);
-  private WebDriver drivere;
-  private EventFiringWebDriver driver;
+  private WebDriver driver;
   private NgWebDriver ngwebdriver;
   private JavascriptExecutor jsDriver;
   private WebDriverManager webDriverManager;
@@ -53,52 +46,47 @@ public final class BrowserInitialize {
 
     BrowserExecutionType bt = BrowserExecutionType.valueOf(browserType);
     DriverManagerType driverManagerType = DriverManagerType.valueOf(bt.binaryBrower.toUpperCase());
+    
+    webDriverManager = WebDriverManager.getInstance(driverManagerType);
+    
     //checking the condition whether browser driver for system or Docker.
-    if (!browserType.contains("DOCKER")) {
-      WebDriverManager.getInstance(driverManagerType).setup();
-    } else {
-      webDriverManager = WebDriverManager.getInstance(driverManagerType);
+    if (properties.isDocker()) {
       webDriverManager.browserInDocker();
       webDriverManager.enableVnc();
       webDriverManager.browserVersion("latest");
+      webDriverManager.dockerTimezone("UTC+05:30");
     }
 
     switch (bt) {
 
       case CHROME:
-
-        drivere = new ChromeDriver(desired.chromeDesired());
+        driver = webDriverManager.capabilities(desired.chromeDesired()).create();
         break;
 
       case FIREFOX:
-
-        drivere = new FirefoxDriver(desired.firefoxDesired());
+        driver = webDriverManager.capabilities(desired.firefoxDesired()).create();
         break;
 
       case OPERA:
-
-        drivere = new OperaDriver(desired.operaDesired());
+        driver = webDriverManager.capabilities(desired.operaDesired()).create();
         break;
 
       case EDGE:
-
-        drivere = new EdgeDriver(desired.edgeDesired());
+        driver = webDriverManager.capabilities(desired.edgeDesired()).create();
         break;
 
       case IEXPLORER:
-
-        drivere = new InternetExplorerDriver(desired.internetExploreDesired());
+        driver = webDriverManager.capabilities(desired.internetExploreDesired()).create();
         break;
 
       case SAFARI:
-
-        drivere = new SafariDriver(desired.safariDesired());
+        driver = webDriverManager.capabilities(desired.safariDesired()).create();
         break;
 
       case ANDROID_CHROME :
 
         try {
-          drivere = new AppiumDriver<WebElement>(new URL(properties.getAppiumUrl()), 
+          driver = new AppiumDriver<WebElement>(new URL(properties.getAppiumUrl()), 
                           desired.androidDesired());
         } catch (MalformedURLException e) {
           // TODO Auto-generated catch block
@@ -111,15 +99,14 @@ public final class BrowserInitialize {
         break;
 
       case MOBILE_EMULATION:
-        drivere = new ChromeDriver(desired.mobileSystembrowser());
+        driver = webDriverManager.capabilities(desired.mobileSystembrowser()).create();
         break;
 
       case BROWSER_STACK:
-
         try {
-          drivere = new RemoteWebDriver(new URL(properties.getBrowserStackUrl()), 
+          driver = new RemoteWebDriver(new URL(properties.getBrowserStackUrl()), 
                           desired.browserStack());
-          drivere.manage().window().maximize();
+          driver.manage().window().maximize();
         } catch (Exception e) {
           // TODO Auto-generated catch block
           e.printStackTrace();
@@ -128,31 +115,15 @@ public final class BrowserInitialize {
 
         break;
 
-      case DOCKER_CHROME:
-        drivere = webDriverManager.capabilities(desired.chromeDesired()).create();
-        logger.info("Browser URL :- " + webDriverManager.getDockerNoVncUrl());
-        break;
-        
-      case DOCKER_FIREFOX:
-        drivere = webDriverManager.capabilities(desired.firefoxDesired()).create();
-        logger.info("Browser URL :- " + webDriverManager.getDockerNoVncUrl());
-        break;
-        
-      case DOCKER_SAFARI:
-        drivere = webDriverManager.capabilities(desired.safariDesired()).create();
-        logger.info("Browser URL :- " + webDriverManager.getDockerNoVncUrl());
-        break;
-
       default : 
-
         logger.debug("invalid browser selected");
         break;
     }
-
-
-    driver = new EventFiringWebDriver(drivere);
-    EventListener ei = new EventListener();
-    driver.register(ei);
+    
+    //print the port number used by the docker for VNC
+    if (properties.isDocker()) {
+      logger.info("Docker URL :- " + webDriverManager.getDockerNoVncUrl(driver));
+    }
 
     jsDriver = (JavascriptExecutor) driver;
     ngwebdriver = new NgWebDriver(jsDriver);
@@ -200,7 +171,7 @@ public final class BrowserInitialize {
    * This method is used to set the DriverInstance.
    * @param driver is of Type EventFiringWebDriver
    */
-  public void setDriverInstance(EventFiringWebDriver driver) {
+  public void setDriverInstance(WebDriver driver) {
     this.driver = driver;
     
   }
@@ -241,9 +212,10 @@ public final class BrowserInitialize {
    * this method is used the extend report for updating the browser instance used for testing.
    */
   public void browserInfo() {
-    extentreport.setSystemInfo("Browser Name", driver.getCapabilities().getBrowserName());
-    extentreport.setSystemInfo("Browser Version", driver.getCapabilities().getVersion());
-    extentreport.setSystemInfo("Platform", driver.getCapabilities().getPlatform().toString());
+    Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
+    extentreport.setSystemInfo("Browser Name", caps.getBrowserName());
+    extentreport.setSystemInfo("Browser Version", caps.getBrowserVersion());
+    extentreport.setSystemInfo("Platform", caps.getPlatformName().name());
   }
 
 }

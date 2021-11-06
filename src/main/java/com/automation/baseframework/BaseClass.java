@@ -105,7 +105,7 @@ public class BaseClass {
     }
     
     browserinitialize.getWebDriverInstance();
-    browserinitialize.browserInfo();
+    browserinitialize.browserInfo();    
 
     if (properties.isJiraIntegration()) {
       String testScriptFile = testdatapreparation();

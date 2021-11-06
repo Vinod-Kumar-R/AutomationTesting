@@ -53,6 +53,7 @@ public class AmazonItem {
       if (sidebar.getText().equals(text)) {
         logger.debug("found the element and clicking on it");
         sidebar.click();
+        waitmethod.waitThread();
         break;
       }
     }
