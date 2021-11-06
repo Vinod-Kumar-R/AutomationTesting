@@ -55,6 +55,7 @@ public final class BrowserInitialize {
       webDriverManager.enableVnc();
       webDriverManager.browserVersion("latest");
       webDriverManager.dockerTimezone("UTC+05:30");
+      webDriverManager.config().setUseBetaVersions(false);      
     }
 
     switch (bt) {
@@ -216,6 +217,8 @@ public final class BrowserInitialize {
     extentreport.setSystemInfo("Browser Name", caps.getBrowserName());
     extentreport.setSystemInfo("Browser Version", caps.getBrowserVersion());
     extentreport.setSystemInfo("Platform", caps.getPlatformName().name());
+    extentreport.setSystemInfo("OS Version number", 
+                    caps.getPlatformName().family().name());    
   }
 
 }
