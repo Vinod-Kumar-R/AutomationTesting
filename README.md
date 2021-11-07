@@ -1,4 +1,4 @@
-# Automation Framework for testing Web Application and Mobile Application using Selenium WebDriver 
+# Automation Framework for testing Web Application and Mobile Application using Selenium WebDriver  
 Keyword Driven Framework is a Test Data Driven (TDD) and it's has been implemented using JAVA and Spring Core.
 Main method start from class "Mainfunction.java" under package "com.automation.baseframework"
 
@@ -11,7 +11,8 @@ Main method start from class "Mainfunction.java" under package "com.automation.b
  4. Integration bewteen JIRA and Automation Framework (where test script are fetched from Jira test management).
  5. Extent Report and KLOV Report (historical) for Autoamtion Test Result.
  6. Summary e-mail report of Automation Script.
- 7. Jenkins Integration for Continous CI/CD. 
+ 7. Jenkins Integration for Continous CI/CD.
+ 8. Support Dokcer for automatically download required browser and execution of Automation script.
 
 **Software Requirement**
 |   SlNo |   Software | Version |
@@ -27,10 +28,12 @@ Main method start from class "Mainfunction.java" under package "com.automation.b
 |9|KLOV Server ( Optional )| |
 |10|MySql Server (Optional)|5.6 |
 |11|Jenkins (Optional)|2.289.3|
-|12|Docker in Ubuntu 20.04 (Optional)||
+|12|Docker in Ubuntu 20.04 (Optional) for Android Mobile testing||
+|13|Docker for automatic download Browser (Optional)||  
 
 **Setup Automation framework**
 1. Create a environment variable with **Variable Name** field **“automation”** and **Variable Value** field **“folder location”**
+
 ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/environment.JPG?raw=true)
 2. Open GIT Bash and change the current working directory to the location where you want cloned directory
 3. Type below command to clone the repository
@@ -72,6 +75,7 @@ Automation Script can be exeucted in 2 way's
 **Test Execution Control**
 
 There are 2 Excel file and 1 CSV file are input to automation framework and Excel file are used to maintain **"Test Case"**, **"Test Script"** and **"Object Repository"**  
+
 Below Diagram show High Level diagram of Autoamtion Framework  
   
   ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/FrameworkDiagram.jpg?raw=true)
@@ -172,7 +176,7 @@ https://support.smartbear.com/zephyr-scale-server/api-docs/v1/
 3. update the Mobile_devices.properties which is key value pare (any new proprties can also be added)
 4. In config.properties file udpate the key value i.e "appiumServerurl" to Appium server detail for example :- http://&lt;IPADDRES&gt;:&lt;PORT&gt;/wd/hub
 
-**Runing Android Mobile testing in Dokcer**
+**Running Android Mobile test in Dokcer**
 1. This is supported and tested on Ubuntu 20.04 OS
 2. Docker has to be installed in Ubuntu 
 3. Create a pipe line job and configured the SCM with jenking file name "DockerMobileJenkinsFile"
@@ -183,6 +187,15 @@ https://support.smartbear.com/zephyr-scale-server/api-docs/v1/
 1. Docker and Mobile Emulator are supported only in Linux OS
 2. Make sure atleast one browser has to be install in Linux OS
 3. To access the Mobile Emulator UI :- http://&lt;IPADDRES&gt;:6080
+
+**Running Automation Script in Docker**
+1. update the key value of "docker" to "true" in config.properties.
+2. make sure latest docker has been installed 
+3. if docker installed in window machine, make sure docker should run in linux container.
+4. update the value of "test_execution" with browser name.
+
+*Note:-*
+1. noVNC url are display in the console log (info) to view automation script execution in Docker.
 
 **Generated the JAVA doc** 
 1. Goto the folder where source code has been downloaded
