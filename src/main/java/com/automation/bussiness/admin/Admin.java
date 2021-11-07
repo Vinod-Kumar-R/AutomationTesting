@@ -244,6 +244,7 @@ public class Admin {
     
     WebElement element;
     logger.debug("click on the three dot  new competations");
+    waitmethod.waitForElementPresent("threedot");
     element = genericmethod.getElement("threedot");
     element.click();
 

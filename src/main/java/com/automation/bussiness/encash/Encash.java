@@ -357,9 +357,12 @@ public class Encash {
     element.sendKeys(dataParam.get(0));
 
     logger.debug("wait for result to update");
-    waitmethod.waitForElementLessThan("competiton_search_result", 5);
+    List<WebElement> resultcount = genericmethod.getElements("competiton_search_result");
+    waitmethod.waitForElementLessThan("competiton_search_result", resultcount.size() - 1);
     
     List<WebElement> elements = genericmethod.getElements("competiton_search_result");
+    
+    logger.debug("fetched result count " + elements.size());
     
     for (WebElement competations :elements) {
       logger.debug("get the list of search list data");

@@ -47,7 +47,7 @@ public final class BrowserInitialize {
     BrowserExecutionType bt = BrowserExecutionType.valueOf(browserType);
     DriverManagerType driverManagerType = DriverManagerType.valueOf(bt.binaryBrower.toUpperCase());
     
-    webDriverManager = WebDriverManager.getInstance(driverManagerType);
+    webDriverManager = WebDriverManager.getInstance(driverManagerType).avoidTmpFolder();
     
     //checking the condition whether browser driver for system or Docker.
     if (properties.isDocker()) {
@@ -216,9 +216,7 @@ public final class BrowserInitialize {
     Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
     extentreport.setSystemInfo("Browser Name", caps.getBrowserName());
     extentreport.setSystemInfo("Browser Version", caps.getBrowserVersion());
-    extentreport.setSystemInfo("Platform", caps.getPlatformName().name());
-    extentreport.setSystemInfo("OS Version number", 
-                    caps.getPlatformName().family().name());    
+    extentreport.setSystemInfo("Platform", caps.getPlatformName().name());    
   }
 
 }

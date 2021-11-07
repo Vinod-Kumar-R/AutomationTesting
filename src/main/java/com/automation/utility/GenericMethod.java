@@ -30,7 +30,10 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WindowType;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.locators.RelativeLocator;
+import org.openqa.selenium.support.locators.RelativeLocator.RelativeBy;
 import org.openqa.selenium.support.ui.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -64,21 +67,6 @@ public class GenericMethod {
   @Autowired
   private ConstantVariable constantVariable;
  
-
-  /**
-   * This is used to click on the WebElement on current html page.
-   * @param dataParam
-   *     dataParam is a array of String variable which hold data 
-   *     dataParam[0] contain the Object i.e xpath 
-   * @return it return the status "pass" if execution success else throw an exception 
-   */
-  public String click(String dataParam)  {
-    WebElement element = getElement(dataParam);
-    waitmethod.waitForElementClickable(element);
-    element.click();
-    return "pass";
-  }
-
   /**
    * This method is used to verify the text present for an WebElement.
    * @param dataParam
@@ -171,20 +159,6 @@ public class GenericMethod {
     } else {
       return "false";
     }
-  }
-
-  /**
-   * This Method is used to enter the text in the text filed.
-   * @param dataParam contain the text to enter in webpage <br>
-   *     dataParam[0] contain the Object Name<br>
-   *     dataParam[1] contain the text to enter.<br>
-   * @return the status as "Pass" if entertext in web page
-   */
-  public String entertext(List<String> dataParam) {
-
-    WebElement objectData = getElement(dataParam.get(0));
-    objectData.sendKeys(dataParam.get(1));
-    return "pass";
   }
 
   /**
@@ -342,6 +316,17 @@ public class GenericMethod {
     WebElement element = driver.findElement(byElement);
     return element;
   }
+  
+  /**
+   * This method accept the RelativeBy Class type and return webElement.
+   * @param relativeBy contain the DOM location 
+   * @return WebElement
+   */
+  public WebElement getElement(RelativeBy relativeBy) {
+    WebDriver driver = browserinitialize.getWebDriverInstance();
+    WebElement element = driver.findElement(relativeBy);
+    return element;
+  }
 
   /**
    * This Method is used to get the WebElements from an element.
@@ -377,6 +362,19 @@ public class GenericMethod {
     By byElement = byType(object);
     List<WebElement> elements = element.findElements(byElement);
     return elements;
+  }
+  
+  /**
+   * This method is used to get the RelativeLocatos, so that it can be use other 
+   * function such as below, above, leftof, Rightof.
+   * @param objectName is the nearest object 
+   * @return RelativeBy
+   */
+  public RelativeBy getRelativeLocators(String objectName) {
+    
+    By by = getBy(objectName);
+    return RelativeLocator.with(by);
+    
   }
   
   /**
@@ -418,8 +416,13 @@ public class GenericMethod {
   public void newTab() {
     WebDriver driver = browserinitialize.getWebDriverInstance();
     
+    //selenum 4 provde the way to create a tab in browser
+    driver.switchTo().newWindow(WindowType.TAB);
+    
+    /*
     String a = "window.open('about:blank','_blank');";
     ((JavascriptExecutor ) driver). executeScript(a);
+    */
     
     Set<String> handles = driver.getWindowHandles();
     String currentWindowHandle = driver.getWindowHandle();
