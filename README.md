@@ -35,6 +35,7 @@ Main method start from class "Mainfunction.java" under package "com.automation.b
 1. Create a environment variable with **Variable Name** field **“automation”** and **Variable Value** field **“folder location”**
 
 ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/environment.JPG?raw=true)
+
 2. Open GIT Bash and change the current working directory to the location where you want cloned directory
 3. Type below command to clone the repository
 
