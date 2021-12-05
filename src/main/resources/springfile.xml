@@ -1,66 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" 
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xmlns:context="http://www.springframework.org/schema/context"
-xmlns:tx="http://www.springframework.org/schema/tx"
-xsi:schemaLocation="http://www.springframework.org/schema/beans
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
         https://www.springframework.org/schema/context/spring-context.xsd
-        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
-        >
-    
-   <!--  <tx:annotation-driven />  -->
-    <context:component-scan base-package="com.automation.beanclass" />
-    <context:annotation-config />
-    <context:property-placeholder location= "file:${automation}/properties/mail.properties,
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+	<!-- <tx:annotation-driven /> -->
+	<context:component-scan
+		base-package="com.automation" />
+	<context:annotation-config />
+	<context:property-placeholder
+		location="file:${automation}/properties/mail.properties,
     file:${automation}/properties/config.properties,
     file:${automation}/properties/jira.properties,
     file:${automation}/properties/klov.properties,
-    file:${automation}/properties/database.properties"
-    />
-    
-    
-    <bean id="mailBean" class="com.automation.beanclass.ExtentReportBean"></bean>
-    <bean id="mailconfiguration" class="com.automation.configuration.MailConfiguration"></bean>
-    <bean id="mailconent" class="com.automation.mail.MailContent"></bean>
-    <bean id="properties" class="com.automation.configuration.PropertiesValue"></bean>
-    <bean id="mail" class="com.automation.mailinator.Mailinator"></bean>
-    <bean id="storedvalue" class="com.automation.configuration.ApplicationStoreValue"></bean>
-    <bean id="testdata" class="com.automation.utility.ExcelReader"></bean>
-    <bean id="createtestcase" class="com.automation.utility.ExcelReader"></bean>
-    <bean id="constantvariable" class="com.automation.configuration.ConstantVariable"></bean>
-    <bean id="base" class="com.automation.baseframework.BaseClass"></bean>
-    <bean id="keyword" class="com.automation.baseframework.KeywordExecution"></bean>
-    <bean id="repository" class="com.automation.beanclass.RepositoryBean"></bean>
-    <bean id ="adminlogin" class="com.automation.bussiness.admin.Admin"></bean>
-    <bean id="encashlogin" class="com.automation.bussiness.encash.Encash"></bean>
-    <bean id="configure" class="com.automation.configuration.ConfigurationReader"></bean>
-    <bean id="customwait" class="com.automation.custom.wait.CustomWait"></bean>
-    <bean id="mobilelogin" class="com.automation.mobile.encash.MobileEncash"></bean>
-    <bean id="report" class="com.automation.utility.ExtentReport" ></bean>
-    <bean id="generic" class="com.automation.utility.GenericMethod"></bean>
-    <bean id="wait" class="com.automation.utility.WaitMethod"></bean>
-    <bean id="browser" class="com.automation.webdriver.BrowserInitialize"></bean>
-    <bean id="desi" class="com.automation.webdriver.Desired"></bean>
-    <bean id="mailService" class="com.automation.mail.MailServiceImpl"></bean>
-    <bean id="firebase" class="com.automation.firebase.Firebase"></bean>
-    <bean id="calender" class="com.automation.webelement.custom.Calendar"></bean>
-    <bean id="competitionquestionnarie" class="com.automation.webelement.custom.CreateQuestionnaire"></bean>
-    <bean id="matoptions" class="com.automation.webelement.custom.MatOptions"></bean>
-    <bean id="mattable" class="com.automation.webelement.custom.MatTable"></bean>
-    <bean id="levels" class="com.automation.webelement.custom.Levels"></bean>
-    <bean id="competitionquestion" class="com.automation.webelement.custom.CompetitionQuestion"></bean>
-    <bean id="mandatoryquestion" class="com.automation.webelement.custom.MandatoryQuestion"></bean>
-    <bean id="table" class="com.automation.webelement.custom.Table"></bean>
-    <bean id="jiraauthentication" class="com.automation.jira.Authentication"></bean>
-    <bean id="jiraconfig" class="com.automation.configuration.JiraConfiguration"></bean>
-    <bean id="jiratestcase" class="com.automation.jira.zephyr.api.TestCaseapi"></bean>
-    <bean id="requsetbuilder" class="com.automation.jira.RequestBuilder"></bean>
-    <bean id="jiraresult" class="com.automation.jira.zephyr.api.AutomationResultapi"></bean>
-    <bean id="amazonitem" class= "com.automation.amazon.AmazonItem"></bean>
-    <bean id="generalwait" class="com.automation.utility.GeneralWait"></bean>
-    <bean id="repositoryDao" class="com.automation.dao.RepositoryDaoImpl"></bean>
-    <bean id="dda" class="com.automation.configuration.DatabaseConfiguration"></bean>
-    <bean id="klov" class="com.automation.configuration.KlovConfiguration"></bean>
-	</beans>
+    file:${automation}/properties/database.properties" />
+
+	<bean id="testdata" class="com.automation.utility.ExcelReader"></bean>
+	<bean id="createtestcase"
+		class="com.automation.utility.ExcelReader"></bean>
+</beans>

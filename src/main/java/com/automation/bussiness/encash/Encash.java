@@ -13,8 +13,10 @@ import java.util.Arrays;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.assertj.core.api.Assertions;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 
 /**
@@ -22,7 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Vinod Kumar R
  *
  */
-
+@Component
 public class Encash {
   private static Logger logger = LogManager.getLogger(Encash.class.getName());
   @Autowired
@@ -45,10 +47,9 @@ public class Encash {
    *     dataParam is a list of String variable which hold data 
    *     dataParam[0] contain the Object i.e xpath rest of the data 
    *     are text which need to verify in jishi page 
-   * @return it return the status "pass" if execution success else  "fail" 
    *
    */
-  public String jishitext(List<String> dataParam)  {
+  public void jishitext(List<String> dataParam)  {
 
     for (int i = 1; i < dataParam.size(); i++) {
       List<String> data = new ArrayList<String>();
@@ -60,7 +61,6 @@ public class Encash {
       logger.debug("Verified the test " + data.get(1));
     }
 
-    return "pass";
   }
 
   /**
@@ -73,10 +73,8 @@ public class Encash {
    *     
    *     This verified the order of banner displayed by comparing the data from excel sheet
    *     and order in the enchashoffer page
-   *
-   * @return the status as "pass" if script executed success else "fail"
    */
-  public String banner(List<String> dataParam)  {
+  public void banner(List<String> dataParam)  {
     //create an List which contain Banner name so that in the end order can be verified 
 
     List<String> acutalBanner = new ArrayList<String>();
@@ -106,24 +104,19 @@ public class Encash {
       extentReport.writeLog(Status.PASS, "verified the image " + dataParam.get(i));
     }
 
-
     //compare both Actual banner and Expected list are in same order
-    if (!acutalBanner.equals(expectedBanner)) {
-      logger.debug("Excel Order Banner is not matching with Expected order bannber in UI");
-      extentReport.writeLog(Status.FAIL, "Excel Order Banner is not matching with "
-                      + "Expected order bannber in UI");
-      return "fail";
-    }
-
-    return "Pass";
+    Assertions
+      .assertThat(acutalBanner)
+      .asList()
+      .as("Excel Order Banner is not matching with Expected order bannber in UI")
+        .containsExactly(expectedBanner);
   }
 
   /**
    * This method is used to create a new Registration in encash page.
    * @param dataParam contain all the required data for registration
-   * @return the status as "pass" if script executed success else "fail" 
    */
-  public String registrationForm(List<String> dataParam) {
+  public void registrationForm(List<String> dataParam) {
     logger.debug("waiting for loder class request complete");
     waitmethod.waitForElementInvisible("loderclass");
 
@@ -131,11 +124,11 @@ public class Encash {
     waitmethod.waitForElementVisible("persondetail_title");
 
     logger.debug("seleting the title from dorp down");
-    
+
     List<String> title = new ArrayList<String>();
     title.add("persondetail_title");
     title.add(dataParam.get(0));
-    
+
     genericmethod.selectByVisibleText(title);
 
     logger.debug("enter the frist Name");
@@ -161,26 +154,26 @@ public class Encash {
     }
 
     logger.debug("Select date from BirthDate");
-    
+
     List<String> date = new ArrayList<String>();
     date.add("personaldetail_date");
     date.add(dataParam.get(5));
-    
+
     genericmethod.selectByVisibleText(date);
 
     logger.debug("Select Month from BirthDate");
-    
+
     List<String> month = new ArrayList<String>();
     month.add("personaldetail_month");
     month.add(dataParam.get(6));
-    
+
     genericmethod.selectByVisibleText(month);
 
     logger.debug("Select Year from BirthDate");
     List<String> year = new ArrayList<String>();
     year.add("personaldetail_year");
     year.add(dataParam.get(7));
-    
+
     genericmethod.selectByVisibleText(year);
 
     logger.debug("Enter the Password");
@@ -207,36 +200,33 @@ public class Encash {
     waitmethod.waitForElementAttributeNotPresent("personaldetail_findadress", "disabled");
 
     logger.debug("select the address from visible text");
-   
+
     List<String> address = new ArrayList<String>();
     address.add("personaldetail_address");
     address.add(dataParam.get(12));
-   
+
     genericmethod.selectByVisibleText(address);
-    
+
     logger.debug("accept the consent");
     element = genericmethod.getElement("accept_consent");
     if (dataParam.get(13).equalsIgnoreCase("yes")) {
       element.click();
     }
-    
+
     logger.debug("save registration form");
     element = genericmethod.getElement("personaldetail_continue");
     element.click();
-    
+
     logger.debug("wait for save registration form");
     waitmethod.waitForElementInvisible("loderclass");
-    
 
-    return "pass";
   }
 
   /**
    * This method is used to register the new user through Mobile number.
    * @param dataParam contain the Mobile number and OTP
-   * @return the status as "pass" if script executed success else "fail"
    */
-  public String registerUsingMobileNumber(List<String> dataParam) {
+  public void registerUsingMobileNumber(List<String> dataParam) {
 
     logger.debug("waiting for register button enable");
     waitmethod.waitForElementClickable("register");
@@ -261,13 +251,13 @@ public class Encash {
     logger.debug("waiting for loder class request complete");
     waitmethod.waitForElementPresent("loderclass");
     waitmethod.waitForElementInvisible("loderclass");
-    
+
     char[] otp = dataParam.get(1).toCharArray();
-    
+
     logger.debug("wait for OTP element present");
     waitmethod.waitForElementEqualTo("otp", 6);
     List<WebElement> elements = genericmethod.getElements("otp");
- 
+
     int index = 0;
     for (WebElement otpElement : elements) {
       logger.debug("Entering the OPT for element " + otp[index]);
@@ -282,17 +272,13 @@ public class Encash {
     logger.debug("waiting for loder class request complete");
     waitmethod.waitForElementPresent("loderclass");
     waitmethod.waitForElementInvisible("loderclass");
-
-    return "pass";
-
   }
 
   /**
    * This method is used to check for consent for particular user.
-   * @param dataParam contain true or false to check all the consent are checked or unchecked
-   * @return the status as "pass" if script executed success else "fail" 
+   * @param dataParam contain true or false to check all the consent are checked or unchecked 
    */
-  public String consent(List<String> dataParam) {
+  public void consent(List<String> dataParam) {
     logger.debug("wait for Consent table visible");
     waitmethod.waitForElementPresent("consent_table");
 
@@ -313,9 +299,10 @@ public class Encash {
                           "consent_child_status");
           logger.debug(childstatus.getAttribute("aria-checked"));
           String status = childstatus.getAttribute("aria-checked");
-          if (!dataParam.get(0).equalsIgnoreCase(status)) {
-            return "fail"; 
-          }
+          Assertions
+              .assertThat(dataParam.get(0))
+              .as("Consent are not matching")
+              .isEqualToIgnoringCase(status);
         }
       }
     }
@@ -333,7 +320,6 @@ public class Encash {
       element.click();
     }
 
-    return "pass";
   }
 
 
@@ -344,9 +330,8 @@ public class Encash {
    * <br> dataParam[0] contain the text which need to enter in the search box in competition page
    *     in which user can enter a partial text in search box
    * <br> dataParam[1] contain the text which need to click on search result competition 
-   * @return the status as "pass" if script executed success else "fail" 
    */
-  public String searchcompetation(List<String> dataParam) {
+  public void searchcompetation(List<String> dataParam) {
 
     // wait for competition page load
     waitmethod.waitForElementInvisible("home_page");
@@ -359,11 +344,11 @@ public class Encash {
     logger.debug("wait for result to update");
     List<WebElement> resultcount = genericmethod.getElements("competiton_search_result");
     waitmethod.waitForElementLessThan("competiton_search_result", resultcount.size() - 1);
-    
+
     List<WebElement> elements = genericmethod.getElements("competiton_search_result");
-    
+
     logger.debug("fetched result count " + elements.size());
-    
+
     for (WebElement competations :elements) {
       logger.debug("get the list of search list data");
       List<WebElement> competation = genericmethod.getWebElements(competations, 
@@ -373,7 +358,7 @@ public class Encash {
       if (genericmethod.isMobileview()) {
         logger.debug("scorll to search result in mobile view");
         genericmethod.scrolltoelementBottom(competations);
-        
+
       }
 
       for (WebElement competate : competation) {
@@ -393,11 +378,10 @@ public class Encash {
 
       }
     }
-    
+
     logger.debug("waiting for the loadcontainer invisiable");
     waitmethod.waitForElementInvisible("lodercontainer");
 
-    return "pass";
 
   }
 
@@ -408,10 +392,9 @@ public class Encash {
    * @param dataParam
    * <br> dataParam[0] by default second answer options is choice
    * <br> dataParam[1] to dataParam[9] contain the answer option to select
-   * @return the status as "pass" if script executed success else "fail" 
    */
   @Deprecated
-  public String mandatoryquestion(List<String> dataParam) {
+  public void mandatoryquestion(List<String> dataParam) {
 
     //First question is drop down
     waitmethod.waitForElementClickable("mandatorydropdown");
@@ -449,8 +432,6 @@ public class Encash {
       }
 
     }
-
-    return "pass";
   }
 
 
@@ -519,43 +500,39 @@ public class Encash {
 
     return "pass";
   }
-  
+
   /**
    * This method is used to enter OTP which read from mailinator to encash UI.
-   * @return after successful it send "pass"
    */
-  public String enterEmailOtp() {
-    
+  public void enterEmailOtp() {
+
     //stored OTP which is read in mailinator
     char[] storedotp = storevalue.storedOtp.toCharArray();
-       
+
     logger.debug("wait for the Email OTP box");
     waitmethod.waitForElementPresent("encash_email_otp");
-    
+
     List<WebElement> otps = genericmethod.getElements("encash_email_otp");
     int index = 0;
     logger.debug("Enter all the OTP");
-    
+
     for (WebElement otp : otps) {
       String stringotp = Character.toString(storedotp[index]);
       otp.sendKeys(stringotp);
       index++;
     }
-    
+
     logger.debug("click on the verify Button");
     WebElement element = genericmethod.getElement("verify_email");
     element.click();
-    
-    return "pass";
   }
-  
+
   /**
    * This method is used to verify the email or skip the email verification.
    * @param dataParam contain any of the data i.e. "skip" or "verify"
-   * @return "pass" if execution is success
    */
-  public String emailEncash(List<String> dataParam) {
-    
+  public void emailEncash(List<String> dataParam) {
+
     WebElement element;
 
     if (dataParam.get(0).equalsIgnoreCase("skip")) {
@@ -568,142 +545,127 @@ public class Encash {
       enterEmailOtp();
 
     }
-
-    return "pass";
   }
-  
+
   /**
    * This method is used to click on the participate button.
-   * @return "pass" if execution is success
    */
-  public String competationparticpate() {
-    
+  public void competationparticpate() {
+
     logger.debug("Wait for Participate button present");
     waitmethod.waitForElementPresent("competition_play");
-    
+
     logger.debug("click on the Participate button");
     WebElement element = genericmethod.getElement("competition_play");
     waitmethod.waitForElementClickable(element);
     element.click();
-    
+
     logger.debug("Waiting for the lodercontainer invisiable");
     waitmethod.waitForElementInvisible("lodercontainer");
-    
-    return "pass";
   }
-  
+
   /**
    * This method is used to answer and verify the mandatory question.
    * @param dataParam dataParam[0] contain the question data 
    dataParam remaining contain answer
-   * @return "pass" if execution success else "fail" any verification not pass
    */
-  public String competitionQuesetion(List<String> dataParam) {
-    
+  public void competitionQuesetion(List<String> dataParam) {
+
     logger.debug("wait for to load question");
     waitmethod.waitForElementPresent("competition_question_base");
-    
+
     WebElement element = genericmethod.getElement("competition_question_base");
     competitionquestions.setElement(element);
-    
+
     Boolean status = competitionquestions.verifyQuestion(dataParam.get(0));
-    
-    if (!status) {
-      logger.debug("Question content are not correct");
-      return "fail";
-    }
-    
+
+    Assertions
+        .assertThat(status)
+        .as("Question contains does not match")
+        .isTrue();
+
     //remove the first element in the dataParam so that we will get only answer need to select
     List<String> answers = dataParam;
     answers.remove(0);
-    
+
     for (String answer : answers) {
       status = competitionquestions.selectAnswer(answer);
-      
-      if (!status) {
-        logger.debug("answer not found ");
-        return "fail";
-      }
+
+      Assertions.assertThat(status)
+          .as("Answer option not found")
+          .isTrue();
     }
-    
+
     competitionquestions.nextQuestion();
-    
-    return "pass";
   }
-  
+
   /**
    * This method is used to answer and verify the mandatory question.
    * @param dataParam dataParam[0] contain the question data 
    dataParam remaining contain answer
-   * @return "pass" if execution success else "fail" any verification not pass
    */
-  public String mandatoryQuesetion(List<String> dataParam) {
-    
+  public void mandatoryQuesetion(List<String> dataParam) {
+
     logger.debug("wait for to load question");
     waitmethod.waitForElementPresent("mandatory_question_base");
-    
+
     WebElement element = genericmethod.getElement("mandatory_question_base");
     mandatoryquestions.setElement(element);
-    
+
     Boolean status = mandatoryquestions.verifyQuestion(dataParam.get(0));
-    
-    if (!status) {
-      logger.debug("Question content are not correct");
-      return "fail";
-    }
-    
+
+    Assertions.assertThat(status)
+                  .as("Question Content are not correct")
+                   .isTrue();
+
     //remove the first element in the dataParam so that we will get only answer need to select
     List<String> answers = dataParam;
     answers.remove(0);
-    
+
     for (String answer : answers) {
-      
+
       status = mandatoryquestions.selectAnswer(answer);
-      
-      if (!status) {
-        logger.debug("answer not found ");
-        return "fail";
-      }
+
+      Assertions.assertThat(status)
+            .as("Answer option not found")
+            .isTrue();
     }
-    
+
     mandatoryquestions.nextQuestion();
-    
-    return "pass";
+
   }
-  
+
   /**
    * this method is used to login to encash application using email id and password.
    * @param dataParam contain 
    *     dataParam[0] :- emailid of the user
    *     dataParam[1] :- password for the user
-   * @return "pass" if executed success
    */
-  public String loginReisterUser(List<String> dataParam) {
-    
+  public void loginReisterUser(List<String> dataParam) {
+
     logger.debug("wait for login button visible");
     waitmethod.waitForElementPresent("login");
-    
+
     logger.debug("click on the login button");
     WebElement element = genericmethod.getElement("login");
     element.click();
-    
+
     logger.debug("wait for email text visible");
     waitmethod.waitForElementPresent("login_email");
-    
+
     logger.debug("enter the email id");
     element = genericmethod.getElement("login_email");
     element.sendKeys(dataParam.get(0));
-    
+
     logger.debug("enter the password");
     element = genericmethod.getElement("login_password");
     element.sendKeys(dataParam.get(1));
-    
+
     logger.debug("click on the continue button");
     element = genericmethod.getElement("login_continue");
     element.submit();
-     
-    return "pass";
+
   }
-  
-  
+
+
 }

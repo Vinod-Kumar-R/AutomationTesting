@@ -11,7 +11,9 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Firebase {
   private static Logger logger = LogManager.getLogger(Firebase.class);
 
@@ -30,9 +32,8 @@ public class Firebase {
   /**
    * This method is used to login to Gmail.
    * @param dataParam contain the login id and passsword
-   * @return "pass" if executed success
    */
-  public String gmaillogin(List<String> dataParam) {
+  public void gmaillogin(List<String> dataParam) {
     driver = browserinitialize.getWebDriverInstance();
     driver.get(properties.getGmailUrl());
 
@@ -54,15 +55,12 @@ public class Firebase {
     element = genericmethod.getElement("gmail_next");
     element.click();
 
-    return "pass";
-
   }
 
   /**
    * This method is used to open the firebase console.
-   * @return pass if execution success
    */
-  public String firebaselogin() {
+  public void firebaselogin() {
     driver = browserinitialize.getWebDriverInstance();
     driver.get(properties.getFirebaseUrl());
 
@@ -143,18 +141,13 @@ public class Firebase {
     element = genericmethod.getElement("firebase_phoneadd");
     waitmethod.waitForElementClickable(element);
     element.click();
-    
-    
-
-    return "pass";
   }
   
   /**
    * this method is used to login to firebase.
    * @param dataParam contain the login detail
-   * @return pass if execution success.
    */
-  public String firebaseLogin1(List<String> dataParam) {
+  public void firebaseLogin1(List<String> dataParam) {
     
     driver = browserinitialize.getWebDriverInstance();
     driver.get(properties.getFirebaseUrl());
@@ -163,10 +156,6 @@ public class Firebase {
     waitmethod.waitForElementVisible("firebaselogin");
     WebElement element = genericmethod.getElement("firebaselogin");
     element.click();
-    
-    
-    
-    return "pass";
   }
 
 }

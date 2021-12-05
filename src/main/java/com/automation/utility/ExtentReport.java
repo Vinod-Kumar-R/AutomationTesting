@@ -21,13 +21,14 @@ import java.util.Set;
 import org.joda.time.Interval;
 import org.joda.time.Period;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * This class is used to Generated the Extent report.
  * @author Vinod Kumar R
  *
  */
-
+@Component
 public class ExtentReport {
 
   public ExtentSparkReporter spark;

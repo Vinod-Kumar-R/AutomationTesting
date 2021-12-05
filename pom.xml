@@ -21,7 +21,7 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<version>4.0.0</version>			  
+			<version>4.1.0</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-configuration2 -->
@@ -246,6 +246,13 @@
 			<version>8.0.25</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>3.21.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<reporting>
@@ -344,14 +351,11 @@
 										includes="**/*" />
 								</copy>
 								<copy todir="${basedir}/target/extension">
-									<fileset
-										dir="${basedir}/ConfigurationFolder/extension"
+									<fileset dir="${basedir}/ConfigurationFolder/extension"
 										includes="**/*" />
 								</copy>
 								<copy todir="${basedir}/target/docker">
-									<fileset
-										dir="${basedir}/docker"
-										includes="**/*" />
+									<fileset dir="${basedir}/docker" includes="**/*" />
 								</copy>
 							</tasks>
 						</configuration>

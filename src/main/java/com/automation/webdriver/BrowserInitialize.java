@@ -16,6 +16,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 
 /**
@@ -23,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Vinod Kumar R
  *
  */
+@Component
 public final class BrowserInitialize {
 
   private static Logger logger = LogManager.getLogger(BrowserInitialize.class);
@@ -199,14 +201,12 @@ public final class BrowserInitialize {
 
   /**
    * This method is used to quit the browser instance. 
-   * @return status as "Pass" if execution completed 
    */
-  public String quitBrowser() {
+  public void quitBrowser() {
 
     driver.quit();
     driver = null;
     ngwebdriver = null;
-    return "pass";
   }
 
   /**

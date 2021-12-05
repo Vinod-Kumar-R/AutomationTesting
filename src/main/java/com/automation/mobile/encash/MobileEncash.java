@@ -8,8 +8,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class MobileEncash {
   
   private static Logger logger = LogManager.getLogger(MobileEncash.class.getName());
@@ -23,9 +24,8 @@ public class MobileEncash {
    * This method is used to register new user. 
    * @param dataParam dataParam[0] contain the Mobile number 
    *     dataParam[1] contain the OTP
-   * @return the status as "pass" if script executed success else "fail"
    */
-  public String registerUsingMobileNumber(List<String> dataParam) {
+  public void registerUsingMobileNumber(List<String> dataParam) {
 
     List<String> menu = new ArrayList<String>();
     menu.add("m_register");
@@ -69,9 +69,6 @@ public class MobileEncash {
 
     logger.debug("waiting for loder class request complete");
     waitmethod.waitForElementInvisible("loderclass");
-
-    return "pass";
-
   }
   
   /**
@@ -102,9 +99,8 @@ public class MobileEncash {
   
   /**
    * This method is used to click on the participate button.
-   * @return "pass" if execution is success
    */
-  public String competationparticpate() {
+  public void competationparticpate() {
     
     logger.debug("wait for competition button present");
     waitmethod.waitForElementPresent("competition_play");
@@ -121,8 +117,6 @@ public class MobileEncash {
     
     logger.debug("Waiting for the lodercontainer invisiable");
     waitmethod.waitForElementInvisible("lodercontainer");
-    
-    return "pass";
   }
   
 }

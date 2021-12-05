@@ -11,7 +11,9 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Mailinator {
   
   private static Logger logger = LogManager.getLogger(Mailinator.class.getName());
@@ -31,9 +33,8 @@ public class Mailinator {
   /**
    * This method is used to open the mailinator URL and open the given email id.
    * @param dataParam contain the email id to which need to open
-   * @return if success execution then return "pass"
    */
-  public String openUrl(List<String> dataParam) {
+  public void openUrl(List<String> dataParam) {
     
     driver = browserinitialize.getWebDriverInstance();
     driver.get(properties.getMailinatorUrl());
@@ -49,15 +50,12 @@ public class Mailinator {
     logger.debug("click on the Go button");
     element = genericmethod.getElement("email_id_go");
     element.click();
-    
-    return "pass";
   }
   
   /**
    * This method is used to read the OTP from mail and delete it.
-   * @return after read the OTP it will return pass status
    */
-  public String readEmailOtp() {
+  public void readEmailOtp() {
     
     logger.debug("wait for email to receive");
     //waitmethod.waitForElementPresent("open_first_email");
@@ -80,8 +78,7 @@ public class Mailinator {
     
     logger.debug("switch to parent frame");
     genericmethod.switchframedefault();
-    
-    return "pass";
+
   }
 
 }

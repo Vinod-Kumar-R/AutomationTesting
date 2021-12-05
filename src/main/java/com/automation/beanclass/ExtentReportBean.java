@@ -8,7 +8,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import org.joda.time.Period;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ExtentReportBean {
   
   private Date startExecutiontime;

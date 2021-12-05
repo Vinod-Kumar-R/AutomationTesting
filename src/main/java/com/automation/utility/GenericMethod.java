@@ -23,6 +23,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.assertj.core.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -36,6 +37,7 @@ import org.openqa.selenium.support.locators.RelativeLocator;
 import org.openqa.selenium.support.locators.RelativeLocator.RelativeBy;
 import org.openqa.selenium.support.ui.Select;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 
 /**
@@ -43,6 +45,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Vinod Kumar R
  *
  */
+@Component
 public class GenericMethod {
   static Logger logger = LogManager.getLogger(GenericMethod.class.getName());
 
@@ -148,61 +151,53 @@ public class GenericMethod {
    *     dataParam is a array of String variable which hold data 
    *     dataParam[0] contain the Object which need to compare the text  for an attribute value
    *     dataParam[1] contain the expected text when need to compare with text with 
-   *     attribute value 
-   * @return it return the status "pass" if execution success else throw an exception 
+   *     attribute value  
    */
-  public String verifyAttributedValue(List<String> dataParam)  {
+  public void verifyAttributedValue(List<String> dataParam)  {
 
     WebElement objectData = getElement(dataParam.get(0));
-    if (objectData.getAttribute(dataParam.get(1)).equalsIgnoreCase(dataParam.get(2))) {
-      return "pass";
-    } else {
-      return "false";
-    }
+    
+    Assertions
+      .assertThat(objectData.getAttribute(dataParam.get(1)))
+      .as("Both the attribute value are not equal")
+        .isEqualToIgnoringCase(dataParam.get(2));
   }
 
   /**
    * This method is used to select the option from drop down list.
    * @param dataParam contain the WebElement of Drop down and text to be form option
-   * @return the status as "Pass" if execution success else fail
    */
-  public String selectByVisibleText(List<String> dataParam) {
+  public void selectByVisibleText(List<String> dataParam) {
     WebElement objectData = getElement(dataParam.get(0));
     logger.debug("Selecting the text from drop down list " + dataParam.get(1));
 
     Select select = new Select(objectData);
     select.selectByVisibleText(dataParam.get(1));
 
-    return "pass";
   }
   
   /**
    * This method is used to override test execution script browser.
    * @param dataParam contain which browser need to switch
-   * @return if success then return "pass" else "fail"
    */
-  public String browsertype(String dataParam) {
+  public void browsertype(String dataParam) {
     
     if (dataParam.equalsIgnoreCase("config")) {
       browserinitialize.setWebDriverInstance(properties.getTestBrowser());
     } else {
       browserinitialize.setWebDriverInstance(dataParam);
     }
-    return "pass";
   }
   
   /**
    * This method is used to stored the current window information
    * and switch to newly created window of type browser.
    * @param dataParam contain the browser info
-   * @return "pass" if execution success
    */
-  public String browserSwtich(List<String> dataParam) {
+  public void browserSwtich(List<String> dataParam) {
     
     currentDriver(dataParam.get(0));
     browserinitialize.setSwitchDriverInstance(dataParam.get(1));
-  
-    return "pass";
   }
   
   /**
@@ -235,27 +230,24 @@ public class GenericMethod {
   /**
    * This method is used to scroll until WebElement is view in web page.
    * @param element is a WebElement of web page
-   * @return execution success then return pass
    */
-  public String scrolltoelementTop(WebElement element) {
+  public void scrolltoelementTop(WebElement element) {
     WebDriver driver = browserinitialize.getWebDriverInstance();
 
     JavascriptExecutor je = (JavascriptExecutor) driver;
     je.executeScript("arguments[0].scrollIntoView(true);", element);
-    return "pass";
+   
   }
   
   /**
    * This method is used to scroll until WebElement is view in web page.
    * @param element is a WebElement of web page
-   * @return execution success then return pass
    */
-  public String scrolltoelementBottom(WebElement element) {
+  public void scrolltoelementBottom(WebElement element) {
     WebDriver driver = browserinitialize.getWebDriverInstance();
 
     JavascriptExecutor je = (JavascriptExecutor) driver;
     je.executeScript("arguments[0].scrollIntoView(false);", element);
-    return "pass";
   }
   
   /**
@@ -263,9 +255,8 @@ public class GenericMethod {
    * negative value is used to scroll up and positive value is used scroll down
    * @param element is WebElement of element in which it has to scroll
    * @param offset is a int value in which it has to scroll.
-   * @return pass if execution success
    */
-  public String scrollToElementOffsetYaxix(WebElement element, int offset) {
+  public void scrollToElementOffsetYaxix(WebElement element, int offset) {
 
     WebDriver driver = browserinitialize.getWebDriverInstance();
 
@@ -273,7 +264,6 @@ public class GenericMethod {
 
     je.executeScript("window.scrollTo(" + element.getLocation().getX() + "," 
                     + (element.getLocation().getY() + offset) + ");");
-    return "pass";
   }
   
   /**

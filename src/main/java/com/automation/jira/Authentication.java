@@ -2,8 +2,9 @@ package com.automation.jira;
 
 import com.automation.configuration.JiraConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class Authentication {
   
   @Autowired

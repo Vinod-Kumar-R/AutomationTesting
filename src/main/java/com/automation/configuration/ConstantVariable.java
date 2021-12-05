@@ -23,12 +23,14 @@ import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.poi.EncryptedDocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 /**
  * This class the constant variable data which is used during execution of script. 
  * @author Vinod Kumar R
  *
  */
+@Component
 public class ConstantVariable {
 
   private String extentReportsLocation;

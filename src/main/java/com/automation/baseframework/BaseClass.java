@@ -28,6 +28,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.poi.EncryptedDocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 
 /**
@@ -37,7 +38,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
  * @author Vinod Kumar R
  * @version 1.0
  */
-
+@Component
 public class BaseClass {
   private static Logger logger = LogManager.getLogger(BaseClass.class);
   @Autowired
@@ -232,12 +233,17 @@ public class BaseClass {
           keywordExecution.setvalue(KeywordType.valueOf(keyword));
           logger.info("Executing the Keyword " + keyword);
           keywordExecution.executed(dataParam);
+          
+          /*After keyword execution successfully then only below statement is executed
+           else any exception are capture in catch block.
+           */
+          extentReport.writeLog(Status.PASS, KeywordType.valueOf(keyword).toString());
         } 
         //increment the row
         currentRow++;
       }
       testData.closeWorkbook();
-    } catch (Exception e) {
+    } catch (AssertionError | Exception e) {
       try {
         testData.closeWorkbook();
         logger.error("Got an exception while executing keyword --> " + keyword, e);

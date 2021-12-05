@@ -8,8 +8,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class Admin {
 
   private static Logger logger = LogManager.getLogger(Admin.class);
@@ -22,11 +23,10 @@ public class Admin {
   /**
    * This method is used to open the Admin URL page.
    * @param dataParam contain the parameter value
-   * @return the status of execution i.e. pass or fail
    *
    */
 
-  public String adminurlopen(List<String> dataParam)  {
+  public void adminurlopen(List<String> dataParam)  {
     //enter username and password 
     logger.debug("Enter the User name ");
     waitmethod.waitForElementPresent("admin_username");
@@ -40,17 +40,14 @@ public class Admin {
     logger.debug("click on login button");
     WebElement login = genericmethod.getElement("admin_login");
     login.click();
-    
-    return "pass";
   }
 
   /**
    * This method is used to create a new competition in admin page. 
    * @param dataParam contain the parameter value
-   * @return  the status of execution i.e. pass or fail
    * 
    */
-  public String competationForm(List<String> dataParam)  {
+  public void competationForm(List<String> dataParam)  {
     
     gotoCompetation();
     logger.debug("create new Competitions");
@@ -132,16 +129,14 @@ public class Admin {
     closeNotification();
     logger.debug("Wait for notification disappear");
     waitmethod.waitForNotificationDisAppear(element);
-    
-    return "pass";
+
   }
   
   /**
    * This method is used to fill the offers forms.
    * @param dataParam data required for form
-   * @return "pass" if executed success
    */
-  public String offersForm(List<String> dataParam) {
+  public void offersForm(List<String> dataParam) {
     gotoOffers();
     createNewCompetitions();
 
@@ -201,17 +196,12 @@ public class Admin {
     logger.debug("selecting the date from calendar");
     element = genericmethod.getElement("competition_calender2");
     genericmethod.dateSelection(element, "10", "FEB", "2026");
-    
-    
-    return "pass";
-    
   }
 
   /**
    * This the common method used when ever used to click on Competition.
-   * @return the status of execution i.e. pass or fail
    */
-  public String gotoCompetation() {
+  public void gotoCompetation() {
 
     logger.debug("Waiting for the Angular request completed");
     waitmethod.angularWait();
@@ -231,16 +221,13 @@ public class Admin {
 
     logger.debug("Waiting for the Angular request completed");
     waitmethod.angularWait();
-    
-    return "Pass";
   }
   
   
   /**
    * This method is used to create the new competitions.
-   * @return "pass" if executed success
    */
-  public String createNewCompetitions() {
+  public void createNewCompetitions() {
     
     WebElement element;
     logger.debug("click on the three dot  new competations");
@@ -255,15 +242,12 @@ public class Admin {
     element = genericmethod.getElement("competitions_queue");
     element.click();
     waitmethod.angularWait();
-    
-    return "Pass";
   }
   
   /**
    * This method is used to go to Offers.
-   * @return "pass" if executed success
    */
-  public String gotoOffers() {
+  public void gotoOffers() {
     
     logger.debug("Waiting for the Angular request completed");
     waitmethod.angularWait();
@@ -285,15 +269,12 @@ public class Admin {
     
     logger.debug("create new offers");
     //createNewCompetitions();
-    
-    return "pass";
   }
   
   /**
    * This method is used to logout from admin application.
-   * @return "pass" if executed success
    */
-  public String logoutAdmin() {
+  public void logoutAdmin() {
     
     logger.debug("clicking the on the user login name menu");
     WebElement element = genericmethod.getElement("logout_admin_menu");
@@ -305,17 +286,13 @@ public class Admin {
     element.click();
     
     genericmethod.refreshPage();
-    
-    return "pass";
-    
   }
  
   /**
   * This method is used to Search for particular competition.
   * @param dataParam contain competition name which need to search
-  * @return "pass" if executed success
   */
-  public String searchCompetition(List<String> dataParam) {
+  public void searchCompetition(List<String> dataParam) {
     logger.debug("Go to competatition ");
     gotoCompetation();
 
@@ -332,16 +309,13 @@ public class Admin {
     element = genericmethod.getElement("competititon_search_result");
     //waitmethod.waitThread();
     genericmethod.matTable(element, dataParam.get(0));
-    
-    return "pass";
   }
   
   /**
    * This method is used to click on the question tab and click on add button.  
    * @param dataParam , contain tab name in which it has to click
-   * @return "pass" if click on the question tab else false
    */
-  public String questionnairesTab(List<String> dataParam) {
+  public void questionnairesTab(List<String> dataParam) {
     
     logger.debug("click on the question tab");
     waitmethod.waitForElementPresent("competition_tab");
@@ -355,17 +329,14 @@ public class Admin {
       waitmethod.waitForElementClickable(element);
       element.click();
     }
-    
-    return "pass";
   }
   
   
   /**
    * This method is used to add the questionnaires in competition.
    * @param dataParam contain the data
-   * @return pass if execution success
    */
-  public String questionnariesCreate(List<String> dataParam) {
+  public void questionnariesCreate(List<String> dataParam) {
 
     WebElement element = genericmethod.getElement("competition_questionaries_list");
 
@@ -387,34 +358,26 @@ public class Admin {
     waitmethod.waitForNotificationAppear(element);
     closeNotification();
     waitmethod.waitForNotificationDisAppear(element);
-    
-
-    return "pass";
-
   }
   
   /**
    * This method is used to Delete the Questionnaires in Admin.
    * @param dataParam contain which questionnaires need to deleted
-   * @return "pass" if execution success
    */
-  public String questionnariesDelete(List<String> dataParam) {
+  public void questionnariesDelete(List<String> dataParam) {
     
     WebElement element = genericmethod.getElement("competition_questionaries_list");
     
     logger.debug("delete the questionnaries row");
     genericmethod.deleteQuestionnariesRow(element, dataParam.get(0));
-    
-    
-    return "pass";
+
   }
   
   /**
    * This method is used to select the Level tab.
    * @param dataParam a list of data which is required for clicking on level tab
-   * @return "pass" if execution success
    */
-  public String leveltab(List<String> dataParam) {
+  public void leveltab(List<String> dataParam) {
     
     logger.debug("click on the level tab");
     waitmethod.waitForElementPresent("competition_tab");
@@ -428,16 +391,13 @@ public class Admin {
       waitmethod.waitForElementVisible(element);
       element.click();
     }
-    
-    return "pass";
   }
   
   /**
    * This method is used to select the levels while creating the questionnaires.
    * @param dataParam contain the list of data required for creating levels
-   * @return "pass" if execution success.
    */
-  public String levels(List<String> dataParam) {
+  public void levels(List<String> dataParam) {
     
     logger.debug("getting the base element for levels");
     WebElement element = genericmethod.getElement("competition_levels_base");
@@ -460,8 +420,6 @@ public class Admin {
     waitmethod.waitForNotificationAppear(element);
     closeNotification();
     waitmethod.waitForNotificationDisAppear(element);
-
-    return "pass";
   }
   
   
@@ -476,7 +434,5 @@ public class Admin {
     WebElement element = genericmethod.getElement("closenotification");
     element.click();
   }
-  
-  
 
 }

@@ -14,10 +14,11 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.stereotype.Component;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 
-
+@Component
 public class MailServiceImpl {
 
   private static Logger logger = LogManager.getLogger(MailServiceImpl.class);

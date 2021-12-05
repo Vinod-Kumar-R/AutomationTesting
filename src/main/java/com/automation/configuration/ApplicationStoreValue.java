@@ -3,7 +3,9 @@ package com.automation.configuration;
 import java.util.HashMap;
 import java.util.Map;
 import org.openqa.selenium.WebDriver;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ApplicationStoreValue {
   
   /**

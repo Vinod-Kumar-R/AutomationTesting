@@ -27,8 +27,8 @@ public class Mainfunction {
     // TODO Auto-generated method stub
 
     ApplicationContext context = new ClassPathXmlApplicationContext("springfile.xml");
-    BaseClass bc = context.getBean("base", BaseClass.class);
-    PropertiesValue propertiesvalue = context.getBean("properties", PropertiesValue.class);
+    BaseClass bc = context.getBean(BaseClass.class);
+    PropertiesValue propertiesvalue = context.getBean(PropertiesValue.class);
     
     try {
       logger.debug("Start Executing Test cases");

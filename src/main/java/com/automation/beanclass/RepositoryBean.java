@@ -6,12 +6,14 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Component;
+
 /**
  * This is the Bean class to read Object file. 
  * @author Vinod Kumar R
  *
  */
-
+@Component
 @Entity
 @Table(name = "object")
 public class RepositoryBean {

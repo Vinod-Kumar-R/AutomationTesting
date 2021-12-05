@@ -10,18 +10,19 @@ import com.automation.mobile.encash.MobileEncash;
 import com.automation.utility.ExtentReport;
 import com.automation.utility.GenericMethod;
 import com.automation.webdriver.BrowserInitialize;
-import com.aventstack.extentreports.Status;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * This class contain the keyword which need to executed after reading from the test script file.
  * @author Vinod Kumar R
  *
  */
+@Component
 public class KeywordExecution {
   private static Logger logger = LogManager.getLogger(KeywordExecution.class.getName());
   private WebDriver driver;
@@ -37,7 +38,7 @@ public class KeywordExecution {
   private ExtentReport extentReport;
   @Autowired
   private MobileEncash mobileEncash;
-  private String status;
+  //private String status;
   private KeywordType keyword;
   @Autowired
   private BrowserInitialize browserinitialize;
@@ -74,266 +75,220 @@ public class KeywordExecution {
         logger.debug("Opening the URL " + properties.getEncashUrl());
         driver = browserinitialize.getWebDriverInstance();
         driver.get(properties.getEncashUrl());
-        status = "pass";
-        testResult(status, "Browser Open");
         break;
 
       case openadminurl : 
         logger.debug("Opening the URL " + properties.getAdminUrl());
         driver = browserinitialize.getWebDriverInstance();
         driver.get(properties.getAdminUrl());
-        status = admin.adminurlopen(dataParam);
-        testResult(status, "Browser Open");
+        admin.adminurlopen(dataParam);
         break;
         
       case openamazonurl : 
         logger.debug("Opening the URL " + properties.getAmazonurl());
         driver = browserinitialize.getWebDriverInstance();
         driver.get(properties.getAmazonurl());
-        status = "pass";
-        testResult(status, "Browser Open");
         break;
 
       case quitbrowser :
-        status = browserinitialize.quitBrowser();
+        browserinitialize.quitBrowser();
         logger.debug("QuiteBrowser");
-        testResult(status, keyword.toString());
         break;
 
       case jishitext :
-        status = encash.jishitext(dataParam);
+        encash.jishitext(dataParam);
         logger.debug("verified the text");
-        testResult(status, keyword.toString());
         break;
 
       case takescreenshot :
         extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
         //extentReport.attachScreenshotPath(genericMethod.takeScreenshot());
-        status = "pass";
         logger.debug("taken the screen shot");
-        testResult(status, keyword.toString());
         break;
 
       case banner :
-        status = encash.banner(dataParam);
+        encash.banner(dataParam);
         logger.debug("verifed the Banner");
-        testResult(status, keyword.toString());
         break;
 
       case competationform:
-        status = admin.competationForm(dataParam);
+        admin.competationForm(dataParam);
         logger.debug("complete create competation");
-        testResult(status, keyword.toString());
         break;
 
       case registrationform :
-        status = encash.registrationForm(dataParam);
+        encash.registrationForm(dataParam);
         logger.debug("completed entering all detail for New Registration");
-        testResult(status, keyword.toString());
         break;
 
       case registerUsingMobileNumber:
-        status = encash.registerUsingMobileNumber(dataParam);
+        encash.registerUsingMobileNumber(dataParam);
         logger.debug("complete entering registration");
-        testResult(status, keyword.toString());
         break;
 
       case consent:
-        status = encash.consent(dataParam);
+        encash.consent(dataParam);
         logger.debug("Expand all consent");
-        testResult(status, keyword.toString());
         break;
 
       case browsertype:
-        status = genericMethod.browsertype(dataParam.get(0));
+        genericMethod.browsertype(dataParam.get(0));
         logger.debug("Opening the browser");
-        testResult(status, keyword.toString());
         break;
         
       case mobileregisterUsingMobileNumber:
-        status = mobileEncash.registerUsingMobileNumber(dataParam);
+        mobileEncash.registerUsingMobileNumber(dataParam);
         logger.debug("complete entering registration");
-        testResult(status, keyword.toString());
         break;
         
       case searchcompetation:
-        status = encash.searchcompetation(dataParam);
+        encash.searchcompetation(dataParam);
         logger.debug("searching for competition and click on it");
-        testResult(status, keyword.toString());
         break;
         
       case competitionquesetion:
-        status = encash.competitionQuesetion(dataParam);
+        encash.competitionQuesetion(dataParam);
         logger.debug("searching for competition and click on it");
-        testResult(status, keyword.toString());
         break;
         
       case mandatoryquestion:
-        status = encash.mandatoryQuesetion(dataParam);
+        encash.mandatoryQuesetion(dataParam);
         logger.debug("Verifying the question and answer for competitions");
-        testResult(status, keyword.toString());
         break;
         
       case storewindow :
         genericMethod.currentWindow(dataParam.get(0));
         logger.debug("Storing the current window with key");
-        testResult("Pass", keyword.toString());
         break;
         
       case switchwindow:
         genericMethod.switchWindow(dataParam.get(0));
         logger.debug("swtich to the window by key name");
-        testResult("Pass", keyword.toString());
         break;
         
       case switchdriver:
         genericMethod.switchDriver(dataParam.get(0));
         logger.debug("swtich Driver instance");
-        testResult("Pass", keyword.toString());
         break;
         
       case newtab:
         genericMethod.newTab();
         logger.debug("crete new Tab in browser");
-        testResult("Pass", keyword.toString());
         break;
         
       case openmailinatorurl:
         logger.debug("Opening Mailinator URL");
-        status = mailinator.openUrl(dataParam);
-        testResult(status, keyword.toString());
+        mailinator.openUrl(dataParam);
         break;
         
       case reademailotpmailinator:
         logger.debug("Reading the OTP in mail");
-        status = mailinator.readEmailOtp();
-        testResult(status, keyword.toString());
+        mailinator.readEmailOtp();
         break;
         
       case enteremailotp:
         logger.debug("entering the OTP");
-        status = encash.enterEmailOtp();
-        testResult(status, keyword.toString());
+        encash.enterEmailOtp();
         break;
         
       case gmail:
         logger.debug("Opening the gmail URL");
-        status = firebase.gmaillogin(dataParam);
-        testResult(status, keyword.toString());
+        firebase.gmaillogin(dataParam);
         break;
         
       case firebaselogin:
         logger.debug("Opening the firebase URL");
-        status = firebase.firebaselogin();
-        testResult(status, keyword.toString());
+        firebase.firebaselogin();
         break;
         
       case logoutadmin:
         logger.debug("logging out the Admin URL");
-        status = admin.logoutAdmin();
-        testResult(status, keyword.toString());
+        admin.logoutAdmin();
         break;
         
       case offersform:
         logger.debug("entering the offers form ");
-        status = admin.offersForm(dataParam);
-        testResult(status, keyword.toString());
+        admin.offersForm(dataParam);
         break;
         
       case searchcompetition:
         logger.debug("search for the competation");
-        status = admin.searchCompetition(dataParam);
-        testResult(status, keyword.toString());
+        admin.searchCompetition(dataParam);
         break;
         
       case questionnaires:
         logger.debug("creating the new questionnaires");
-        status = admin.questionnariesCreate(dataParam);
-        testResult(status, keyword.toString());
+        admin.questionnariesCreate(dataParam);
         break;
         
       case questionnariesdelete:
         logger.debug("Deleting the questionnaries");
-        status = admin.questionnariesDelete(dataParam);
-        testResult(status, keyword.toString());
+        admin.questionnariesDelete(dataParam);
         break;
         
       case levels:
         logger.debug("creating the levels");
-        status = admin.levels(dataParam);
-        testResult(status, keyword.toString());
+        admin.levels(dataParam);
         break;
         
       case questionnairestab:
         logger.debug("questnnaires tab");
-        status = admin.questionnairesTab(dataParam);
-        testResult(status, keyword.toString());
+        admin.questionnairesTab(dataParam);
         break;
         
       case leveltab:
         logger.debug("Levels tab");
-        status = admin.leveltab(dataParam);
-        testResult(status, keyword.toString());
+        admin.leveltab(dataParam);
         break;
         
       case emailencash:
         logger.debug("Email encash");
-        status = encash.emailEncash(dataParam);
-        testResult(status, keyword.toString());
+        encash.emailEncash(dataParam);
         break;
      
       case firebaselogin1:
         logger.debug("firebase login");
-        status = firebase.firebaseLogin1(dataParam);
-        testResult(status, keyword.toString());
+        firebase.firebaseLogin1(dataParam);
         break;
       
       case browserswitch:
         logger.debug("Switching the browser");
-        status = genericMethod.browserSwtich(dataParam);
-        testResult(status, keyword.toString());
+        genericMethod.browserSwtich(dataParam);
         break;
         
       case closebrowser:
         logger.debug("closing the browser");
         genericMethod.browserClose();
-        testResult("pass", keyword.toString());
         break;
         
       case gotolink:
         logger.debug("clicking on the hyperlink");
         genericMethod.goToLink(dataParam.get(0));
-        testResult("pass", keyword.toString());
         break;
         
       case participate:
         logger.debug("clicking on the participate");
         encash.competationparticpate();
-        testResult("pass", keyword.toString());
         break;
       
       case mobileparticipate:
         logger.debug("clicking on the participate");
         mobileEncash.competationparticpate();
-        testResult("pass", keyword.toString());
         break;
         
       case encashmenu:
         logger.debug("click on the navibar and selecting the required option");
         mobileEncash.encashMenu(dataParam);
-        testResult("pass", keyword.toString());
         break;
         
       case loginemail:
         logger.debug("click on the login button and login to application");
         encash.loginReisterUser(dataParam);
-        testResult("pass", keyword.toString());
         break;
         
       case amazonitemadd:
         logger.debug("Select the item and add to basket");
-        status = amazon.addItem(dataParam);
-        testResult(status, keyword.toString());
+        amazon.addItem(dataParam);
         break;
         
       default: logger.debug("Invalid Keyword");
@@ -347,7 +302,7 @@ public class KeywordExecution {
    * @param status it contain pass or fail 
    * @param message Message contain information of the keyword executed
    */
-  public void testResult(String status, String message)   {
+ /* public void testResult(String status, String message)   {
     if (status.equalsIgnoreCase("Pass")) {
       extentReport.writeLog(Status.PASS, message);
     }
@@ -358,5 +313,5 @@ public class KeywordExecution {
     }
 
   }
-
+*/
 }

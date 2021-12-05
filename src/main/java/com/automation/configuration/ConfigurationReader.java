@@ -7,12 +7,14 @@ import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 /**
  * This Class is used to read the Configuration file. 
  * @author Vinod Kumar R
  *
  */
+@Component
 public class ConfigurationReader {
   private static Logger logger = LogManager.getLogger(ConfigurationReader.class.getName());
   private Configurations configs = new Configurations();
