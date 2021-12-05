@@ -5,7 +5,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Component;
 @Component
 @Entity
 @Table(name = "object")
+@Getter
+@Setter
 public class RepositoryBean {
 
   @Id
@@ -31,28 +34,4 @@ public class RepositoryBean {
   @CsvBindByName(column = "ObjectType", required = true)
   private String objectType;
 
-
-  public String getObjectName() {
-    return objectName;
-  }
-
-  public void setObjectName(String objectName) {
-    this.objectName = objectName;
-  }
-
-  public String getObjectValue() {
-    return objectValue;
-  }
-
-  public void setObjectValue(String objectValue) {
-    this.objectValue = objectValue;
-  }
-
-  public String getObjectType() {
-    return objectType;
-  }
-
-  public void setObjectType(String objectType) {
-    this.objectType = objectType;
-  }
 }

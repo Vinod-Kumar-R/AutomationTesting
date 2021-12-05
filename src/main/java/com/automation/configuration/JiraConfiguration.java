@@ -1,11 +1,13 @@
 package com.automation.configuration;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 @Configuration
 @Component
+@Getter
 public class JiraConfiguration {
   
   @Value("${jira.username}")
@@ -28,33 +30,4 @@ public class JiraConfiguration {
   
   @Value("${jira.projectkey}")
   private String jiraProjectkey;
-
-  public String getJiraUsername() {
-    return jiraUsername;
-  }
-
-  public String getJiraPassword() {
-    return jiraPassword;
-  }
-
-  public String getJiraurl() {
-    return jiraurl;
-  }
-
-  public String getJiratoken() {
-    return jiratoken;
-  }
-
-  public String getTestcaseQuery() {
-    return testcaseQuery;
-  }
-
-  public int getTestcaseMaxresult() {
-    return testcaseMaxresult;
-  }
-
-  public String getJiraProjectkey() {
-    return jiraProjectkey;
-  }
-
 }

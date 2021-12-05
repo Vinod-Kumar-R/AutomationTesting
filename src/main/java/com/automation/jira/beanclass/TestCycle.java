@@ -1,7 +1,11 @@
 package com.automation.jira.beanclass;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class TestCycle {
   
   @JsonProperty("id")
@@ -12,31 +16,4 @@ public class TestCycle {
   
   @JsonProperty("url")
   public String url;
-
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
-  }
-
-  public String getKey() {
-    return key;
-  }
-
-  public void setKey(String key) {
-    this.key = key;
-  }
-
-  public String getUrl() {
-    return url;
-  }
-
-  public void setUrl(String url) {
-    this.url = url;
-  }
-  
-  
-
 }

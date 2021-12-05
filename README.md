@@ -13,6 +13,7 @@ Main method start from class "Mainfunction.java" under package "com.automation.b
  6. Summary e-mail report of Automation Script.
  7. Jenkins Integration for Continous CI/CD.
  8. Support Dokcer for automatically download required browser and execution of Automation script.
+ 9. Assertion using assertj-core, support both Hard and Soft Assertion.
 
 **Software Requirement**
 |   SlNo |   Software | Version |
@@ -22,14 +23,15 @@ Main method start from class "Mainfunction.java" under package "com.automation.b
 |3|Eclipse|User choice|
 |4|Microsoft Office (Excel )|2007|
 |5|Browser ( Testing Application )|User choice|
-|6|Zephyr Scale Test Manager  in JIRA( Optional )| |
-|7|Android SDK  (Optional )| |
+|6|Zephyr Scale Test Manager  in JIRA( Optional )|
+|7|Android SDK  (Optional )|
 |8|Appium Server (Optional )|1.18.0 |
-|9|KLOV Server ( Optional )| |
+|9|KLOV Server ( Optional )|
 |10|MySql Server (Optional)|5.6 |
 |11|Jenkins (Optional)|2.289.3|
-|12|Docker in Ubuntu 20.04 (Optional) for Android Mobile testing||
-|13|Docker for automatic download Browser (Optional)||  
+|12|Docker in Ubuntu 20.04 (Optional) for Android Mobile testing|
+|13|Docker for automatic download Browser (Optional)|
+|14|Lombok (pluging to eclipse) required |1.18.22|
 
 **Setup Automation framework**
 1. Create a environment variable with **Variable Name** field **“automation”** and **Variable Value** field **“folder location”**

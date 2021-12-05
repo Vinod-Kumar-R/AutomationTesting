@@ -1,11 +1,15 @@
 package com.automation.configuration;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
+
 @Configuration
 @Component
+@Getter
 public class PropertiesValue {
   
   @Value("${encashurl}")
@@ -75,122 +79,12 @@ public class PropertiesValue {
   private boolean isObjectRepository;
   
   @Value("${docker}")
+  @Setter
   private boolean isDocker;
 
-  public boolean isDocker() {
-    return isDocker;
-  }
-
-  public void setDocker(boolean isDocker) {
-    this.isDocker = isDocker;
-  }
-
-  public boolean isObjectRepository() {
-    return isObjectRepository;
-  }
-
-  public String getAmazonurl() {
-    return amazonurl;
-  }
-
+  @Setter
   private String extentreportlocation;
   
+  @Setter
   private String templocation;
-  
-  public String getTemplocation() {
-    return templocation;
-  }
-
-  public void setTemplocation(String templocation) {
-    this.templocation = templocation;
-  }
-
-  public String getExtentreportlocation() {
-    return extentreportlocation;
-  }
-
-  public void setExtentreportlocation(String extentreportlocation) {
-    this.extentreportlocation = extentreportlocation;
-  }
-
-  public boolean isKlov() {
-    return isKlov;
-  }
-  
-  public boolean isJiraIntegration() {
-    return isJiraIntegration;
-  }
-  
-  public String getBrowserStackUrl() {
-    return browserStackUrl;
-  }
-
-  public String getklovrproperties() {
-    return klovrproperties;
-  }
-
-  public String getConfigLocation() {
-    return configLocation;
-  }
-
-  public String getExtentReportsPropeties() {
-    return extentReportsPropeties;
-  }
-
-  public String getFirebaseUrl() {
-    return firebaseUrl;
-  }
-
-  public String getGmailUrl() {
-    return gmailUrl;
-  }
-
-  public String getAdminUrl() {
-    return adminUrl;
-  }
-
-  public String getMailinatorUrl() {
-    return mailinatorUrl;
-  }
-
-  public String getAppiumUrl() {
-    return appiumUrl;
-  }
-
-  public String getTestcase() {
-    return testcase;
-  }
-
-  public String getTestdata() {
-    return testdata;
-  }
-
-  public String getTestobject() {
-    return testobject;
-  }
-
-  public String getTestBrowser() {
-    return testBrowser;
-  }
-
-  public Boolean getHeadlessBrowser() {
-    return headlessBrowser;
-  }
-
-  public int getExplictwait() {
-    return explictwait;
-  }
-
-  public int getPolling() {
-    return polling;
-  }
-
-  public String getEncashUrl() {
-    return encashUrl;
-  }
-
-  public boolean isSendemail() {
-    return sendemail;
-  }
-
 }

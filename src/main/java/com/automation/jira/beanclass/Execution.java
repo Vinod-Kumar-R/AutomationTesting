@@ -1,7 +1,11 @@
 package com.automation.jira.beanclass;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class Execution {
   
   @JsonProperty("result")
@@ -9,21 +13,4 @@ public class Execution {
   
   @JsonProperty("testCase") 
   public TestStatus teststatus;
-
-  public String getTestResult() {
-    return testResult;
-  }
-
-  public void setTestResult(String testResult) {
-    this.testResult = testResult;
-  }
-
-  public TestStatus getTeststatus() {
-    return teststatus;
-  }
-
-  public void setTeststatus(TestStatus teststatus) {
-    this.teststatus = teststatus;
-  }
-
 }

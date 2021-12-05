@@ -3,6 +3,7 @@ package com.automation.configuration;
 import com.automation.beanclass.RepositoryBean;
 import java.util.Properties;
 import javax.sql.DataSource;
+import lombok.Getter;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @Component
+@Getter
 @EnableTransactionManagement
 public class DatabaseConfiguration {
   
@@ -32,23 +34,7 @@ public class DatabaseConfiguration {
   
   @Value("${jdbc.driverClassName}")
   private String driverClassName;
-  
 
-  public String getUsername() {
-    return username;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public String getUrl() {
-    return url;
-  }
-
-  public String getDriverClassName() {
-    return driverClassName;
-  }
 
   /**
    * Method is used to setup the DataSource with user name and password.

@@ -2,6 +2,7 @@ package com.automation.configuration;
 
 import java.io.File;
 import java.util.Properties;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,7 @@ import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 
 @Configuration
 @Component
+@Getter
 public class MailConfiguration {
   
   @Value("${email.host}")
@@ -38,34 +40,7 @@ public class MailConfiguration {
   
   @Autowired
   private PropertiesValue properties;
-  
-  public String getHost() {
-    return host;
-  }
 
-  public int getPort() {
-    return port;
-  }
-
-  public String getFromEmailId() {
-    return fromEmailId;
-  }
-
-  public String getEmailpassword() {
-    return emailpassword;
-  }
-
-  public String getEmailSubject() {
-    return emailSubject;
-  }
-
-  public String getEmailUsername() {
-    return emailUsername;
-  }
-  
-  public String[] getToEmailid() {
-    return toEmailid;
-  }
 
   /**
    * This method is used to set the configuration of Email.

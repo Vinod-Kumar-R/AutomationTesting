@@ -1,7 +1,11 @@
 package com.automation.jira.beanclass;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class CustomFields {
 
   @JsonProperty("Automation") 
@@ -10,19 +14,4 @@ public class CustomFields {
   @JsonProperty("Categeory")
   public String categeory;
 
-  public String getCategeory() {
-    return categeory;
-  }
-
-  public void setCategeory(String categeory) {
-    this.categeory = categeory;
-  }
-
-  public String getAutomation() {
-    return automation;
-  }
-
-  public void setAutomation(String automation) {
-    this.automation = automation;
-  }
 }
