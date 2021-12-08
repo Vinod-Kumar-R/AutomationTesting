@@ -71,222 +71,222 @@ public class KeywordExecution {
 
     switch (keyword) {
 
-      case openencashurl : 
+      case OPENENCASHURL : 
         logger.debug("Opening the URL " + properties.getEncashUrl());
         driver = browserinitialize.getWebDriverInstance();
         driver.get(properties.getEncashUrl());
         break;
 
-      case openadminurl : 
+      case OPENADMINURL : 
         logger.debug("Opening the URL " + properties.getAdminUrl());
         driver = browserinitialize.getWebDriverInstance();
         driver.get(properties.getAdminUrl());
         admin.adminurlopen(dataParam);
         break;
         
-      case openamazonurl : 
+      case OPENAMAZONURL : 
         logger.debug("Opening the URL " + properties.getAmazonurl());
         driver = browserinitialize.getWebDriverInstance();
         driver.get(properties.getAmazonurl());
         break;
 
-      case quitbrowser :
+      case QUITBROWSER :
         browserinitialize.quitBrowser();
         logger.debug("QuiteBrowser");
         break;
 
-      case jishitext :
+      case JISHITEXT :
         encash.jishitext(dataParam);
         logger.debug("verified the text");
         break;
 
-      case takescreenshot :
+      case TAKESCREENSHOT :
         extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
         //extentReport.attachScreenshotPath(genericMethod.takeScreenshot());
         logger.debug("taken the screen shot");
         break;
 
-      case banner :
+      case BANNER :
         encash.banner(dataParam);
         logger.debug("verifed the Banner");
         break;
 
-      case competationform:
+      case COMPETATIONFORM:
         admin.competationForm(dataParam);
         logger.debug("complete create competation");
         break;
 
-      case registrationform :
+      case REGISTRATIONFORM :
         encash.registrationForm(dataParam);
         logger.debug("completed entering all detail for New Registration");
         break;
 
-      case registerUsingMobileNumber:
+      case REGISTERUSINGMOBILENUMBER:
         encash.registerUsingMobileNumber(dataParam);
         logger.debug("complete entering registration");
         break;
 
-      case consent:
+      case CONSENT:
         encash.consent(dataParam);
         logger.debug("Expand all consent");
         break;
 
-      case browsertype:
+      case BROWSERTYPE:
         genericMethod.browsertype(dataParam.get(0));
         logger.debug("Opening the browser");
         break;
         
-      case mobileregisterUsingMobileNumber:
+      case MOBILEREGISTERUSINGMOBILENUMBER:
         mobileEncash.registerUsingMobileNumber(dataParam);
         logger.debug("complete entering registration");
         break;
         
-      case searchcompetation:
+      case SEARCHCOMPETATION:
         encash.searchcompetation(dataParam);
         logger.debug("searching for competition and click on it");
         break;
         
-      case competitionquesetion:
+      case COMPETITIONQUESETION:
         encash.competitionQuesetion(dataParam);
         logger.debug("searching for competition and click on it");
         break;
         
-      case mandatoryquestion:
+      case MANDATORYQUESTION:
         encash.mandatoryQuesetion(dataParam);
         logger.debug("Verifying the question and answer for competitions");
         break;
         
-      case storewindow :
+      case STOREWINDOW :
         genericMethod.currentWindow(dataParam.get(0));
         logger.debug("Storing the current window with key");
         break;
         
-      case switchwindow:
+      case SWITCHWINDOW:
         genericMethod.switchWindow(dataParam.get(0));
         logger.debug("swtich to the window by key name");
         break;
         
-      case switchdriver:
+      case SWITCHDRIVER:
         genericMethod.switchDriver(dataParam.get(0));
         logger.debug("swtich Driver instance");
         break;
         
-      case newtab:
+      case NEWTAB:
         genericMethod.newTab();
         logger.debug("crete new Tab in browser");
         break;
         
-      case openmailinatorurl:
+      case OPENMAILINATORURL:
         logger.debug("Opening Mailinator URL");
         mailinator.openUrl(dataParam);
         break;
         
-      case reademailotpmailinator:
+      case READEMAILOTPMAILINATOR:
         logger.debug("Reading the OTP in mail");
         mailinator.readEmailOtp();
         break;
         
-      case enteremailotp:
+      case ENTEREMAILOTP:
         logger.debug("entering the OTP");
         encash.enterEmailOtp();
         break;
         
-      case gmail:
+      case GMAIL:
         logger.debug("Opening the gmail URL");
         firebase.gmaillogin(dataParam);
         break;
         
-      case firebaselogin:
+      case FIREBASELOGIN:
         logger.debug("Opening the firebase URL");
         firebase.firebaselogin();
         break;
         
-      case logoutadmin:
+      case LOGOUTADMIN:
         logger.debug("logging out the Admin URL");
         admin.logoutAdmin();
         break;
         
-      case offersform:
+      case OFFERSFORM:
         logger.debug("entering the offers form ");
         admin.offersForm(dataParam);
         break;
         
-      case searchcompetition:
+      case SEARCHCOMPETITION:
         logger.debug("search for the competation");
         admin.searchCompetition(dataParam);
         break;
         
-      case questionnaires:
+      case QUESTIONNAIRES:
         logger.debug("creating the new questionnaires");
         admin.questionnariesCreate(dataParam);
         break;
         
-      case questionnariesdelete:
+      case QUESTIONNARIESDELETE:
         logger.debug("Deleting the questionnaries");
         admin.questionnariesDelete(dataParam);
         break;
         
-      case levels:
+      case LEVELS:
         logger.debug("creating the levels");
         admin.levels(dataParam);
         break;
         
-      case questionnairestab:
+      case QUESTIONNAIRESTAB:
         logger.debug("questnnaires tab");
         admin.questionnairesTab(dataParam);
         break;
         
-      case leveltab:
+      case LEVELTAB:
         logger.debug("Levels tab");
         admin.leveltab(dataParam);
         break;
         
-      case emailencash:
+      case EMAILENCASH:
         logger.debug("Email encash");
         encash.emailEncash(dataParam);
         break;
      
-      case firebaselogin1:
+      case FIREBASELOGIN1:
         logger.debug("firebase login");
         firebase.firebaseLogin1(dataParam);
         break;
       
-      case browserswitch:
+      case BROWSERSWITCH:
         logger.debug("Switching the browser");
         genericMethod.browserSwtich(dataParam);
         break;
         
-      case closebrowser:
+      case CLOSEBROWSER:
         logger.debug("closing the browser");
         genericMethod.browserClose();
         break;
         
-      case gotolink:
+      case GOTOLINK:
         logger.debug("clicking on the hyperlink");
         genericMethod.goToLink(dataParam.get(0));
         break;
         
-      case participate:
+      case PARTICIPATE:
         logger.debug("clicking on the participate");
         encash.competationparticpate();
         break;
       
-      case mobileparticipate:
+      case MOBILEPARTICIPATE:
         logger.debug("clicking on the participate");
         mobileEncash.competationparticpate();
         break;
         
-      case encashmenu:
+      case ENCASHMENU:
         logger.debug("click on the navibar and selecting the required option");
         mobileEncash.encashMenu(dataParam);
         break;
         
-      case loginemail:
+      case LOGINEMAIL:
         logger.debug("click on the login button and login to application");
         encash.loginReisterUser(dataParam);
         break;
         
-      case amazonitemadd:
+      case AMAZONITEMADD:
         logger.debug("Select the item and add to basket");
         amazon.addItem(dataParam);
         break;

@@ -230,14 +230,14 @@ public class BaseClass {
             column++;
           }
 
-          keywordExecution.setvalue(KeywordType.valueOf(keyword));
-          logger.info("Executing the Keyword " + keyword);
+          keywordExecution.setvalue(KeywordType.valueOf(keyword.toUpperCase()));
+          logger.info("Executing the Keyword " + keyword.toUpperCase());
           keywordExecution.executed(dataParam);
           
           /*After keyword execution successfully then only below statement is executed
            else any exception are capture in catch block.
            */
-          extentReport.writeLog(Status.PASS, KeywordType.valueOf(keyword).toString());
+          extentReport.writeLog(Status.PASS, KeywordType.valueOf(keyword.toUpperCase()).toString());
         } 
         //increment the row
         currentRow++;
