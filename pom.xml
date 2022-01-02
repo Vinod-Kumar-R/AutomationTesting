@@ -25,6 +25,8 @@
 		<selenium.version>4.1.0</selenium.version>
 		<wdm.version>5.0.3</wdm.version>
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+		<httpclient5.version>5.0.3</httpclient5.version>
+		<httpcore5.version>5.0.2</httpcore5.version>
 	</properties>
 
 	<dependencies>
