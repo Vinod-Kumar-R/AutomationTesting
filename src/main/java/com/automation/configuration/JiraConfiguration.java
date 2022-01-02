@@ -29,5 +29,5 @@ public class JiraConfiguration {
   private int testcaseMaxresult;
   
   @Value("${jira.projectkey}")
-  private String jiraProjectkey;
+  private String jiraProjectkey; 
 }

@@ -10,12 +10,14 @@ import com.automation.webelement.custom.Levels;
 import com.automation.webelement.custom.MatOptions;
 import com.automation.webelement.custom.MatTable;
 import com.automation.webelement.custom.TabList;
+import com.google.gson.Gson;
 import com.paulhammant.ngwebdriver.ByAngular;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -37,6 +39,7 @@ import org.openqa.selenium.support.locators.RelativeLocator;
 import org.openqa.selenium.support.locators.RelativeLocator.RelativeBy;
 import org.openqa.selenium.support.ui.Select;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 
@@ -52,20 +55,26 @@ public class GenericMethod {
   @Autowired
   private ApplicationStoreValue storevalue;
   @Autowired
+  @Lazy
   private Calendar calendar;
   @Autowired
   private BrowserInitialize browserinitialize; 
   @Autowired
   private PropertiesValue properties;
   @Autowired
+  @Lazy
   private WaitMethod waitmethod;
   @Autowired
+  @Lazy
   private CreateQuestionnaire questinnaire;
   @Autowired
+  @Lazy
   private MatOptions options;
   @Autowired
+  @Lazy
   private MatTable mattable;
   @Autowired
+  @Lazy
   private Levels levels;
   @Autowired
   private ConstantVariable constantVariable;
@@ -501,8 +510,8 @@ public class GenericMethod {
    * @param year in YYYY i.e. 1986
    */
   public void dateSelection(WebElement element, String date, String month, String year) {
-    calendar.setCalendar(element);
-    calendar.selectDate(date, month, year);
+   // calendar.setCalendar(element);
+   // calendar.selectDate(date, month, year);
   }
   
   /**
@@ -615,6 +624,14 @@ public class GenericMethod {
     levels.setElement(element);
     levels.saveLevels();
   }
+  
+  public <T> T fromJson(String json, Class<T> clazz) {
+    return new Gson().fromJson(json, clazz);
+  }
+  
+  public <T> List<T> fromJsonAsList(String json, Class<T[]> clazz) {
+    return Arrays.asList(new Gson().fromJson(json, clazz));
+  } 
     
   /**
    * This method is used to zip a folder.

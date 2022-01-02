@@ -63,7 +63,7 @@ public class ConstantVariable {
    * This is the Constructor which is used to initialized the static variable.
    */
   public ConstantVariable()  {
-  
+
     String location = readEnvironmnetVariable(environment);
     //Setting the logger context
     LoggerContext context = (org.apache.logging.log4j.core.LoggerContext) 

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
@@ -41,6 +42,7 @@ public class DatabaseConfiguration {
    * @return DataSource
    */
   @Bean
+  @Lazy
   public DataSource getDataSource() {
     DriverManagerDataSource drivermanager = new DriverManagerDataSource();
     drivermanager.setDriverClassName(getDriverClassName());
@@ -56,6 +58,7 @@ public class DatabaseConfiguration {
    */
   @Autowired
   @Bean(name = "sessionFactory")
+  @Lazy
   public LocalSessionFactoryBean getSessionFactory() {
     
     LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -90,6 +93,7 @@ public class DatabaseConfiguration {
    */
   @Bean
   @Autowired
+  @Lazy
   public HibernateTemplate getHibernateTemplate() {
     HibernateTemplate hibernateTemplate = new HibernateTemplate(getSessionFactory().getObject());
     hibernateTemplate.setCheckWriteOperations(false);

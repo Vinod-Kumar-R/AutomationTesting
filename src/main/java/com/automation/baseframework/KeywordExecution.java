@@ -1,6 +1,7 @@
 package com.automation.baseframework;
 
 import com.automation.amazon.AmazonItem;
+import com.automation.api.service.PetStoreService;
 import com.automation.bussiness.admin.Admin;
 import com.automation.bussiness.encash.Encash;
 import com.automation.configuration.PropertiesValue;
@@ -48,6 +49,8 @@ public class KeywordExecution {
   private Firebase firebase;
   @Autowired
   private AmazonItem amazon;
+  @Autowired
+  private PetStoreService petStoreService;
 
 
   /**
@@ -289,6 +292,16 @@ public class KeywordExecution {
       case AMAZONITEMADD:
         logger.debug("Select the item and add to basket");
         amazon.addItem(dataParam);
+        break;
+        
+      case CREATEPET:
+        logger.debug("Creating the new Pet");
+        petStoreService.createPet(dataParam);
+        break;
+        
+      case GETPET:
+        logger.debug("get the particular Pet");
+        petStoreService.getPet(dataParam);
         break;
         
       default: logger.debug("Invalid Keyword");

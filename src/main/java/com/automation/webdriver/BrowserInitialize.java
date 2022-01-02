@@ -57,7 +57,7 @@ public final class BrowserInitialize {
       webDriverManager.enableVnc();
       webDriverManager.browserVersion("latest");
       webDriverManager.dockerTimezone("UTC+05:30");
-      webDriverManager.config().setUseBetaVersions(false);      
+      webDriverManager.config().setUseBetaVersions(false);
     }
 
     switch (bt) {
