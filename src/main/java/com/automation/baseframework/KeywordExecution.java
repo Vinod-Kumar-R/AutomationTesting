@@ -12,8 +12,7 @@ import com.automation.utility.ExtentReport;
 import com.automation.utility.GenericMethod;
 import com.automation.webdriver.BrowserInitialize;
 import java.util.List;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,8 +23,8 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
+@Log4j2
 public class KeywordExecution {
-  private static Logger logger = LogManager.getLogger(KeywordExecution.class.getName());
   private WebDriver driver;
   @Autowired
   private PropertiesValue properties;
@@ -75,236 +74,236 @@ public class KeywordExecution {
     switch (keyword) {
 
       case OPENENCASHURL : 
-        logger.debug("Opening the URL " + properties.getEncashUrl());
+        log.debug("Opening the URL " + properties.getEncashUrl());
         driver = browserinitialize.getWebDriverInstance();
         driver.get(properties.getEncashUrl());
         break;
 
       case OPENADMINURL : 
-        logger.debug("Opening the URL " + properties.getAdminUrl());
+        log.debug("Opening the URL " + properties.getAdminUrl());
         driver = browserinitialize.getWebDriverInstance();
         driver.get(properties.getAdminUrl());
         admin.adminurlopen(dataParam);
         break;
         
       case OPENAMAZONURL : 
-        logger.debug("Opening the URL " + properties.getAmazonurl());
+        log.debug("Opening the URL " + properties.getAmazonurl());
         driver = browserinitialize.getWebDriverInstance();
         driver.get(properties.getAmazonurl());
         break;
 
       case QUITBROWSER :
         browserinitialize.quitBrowser();
-        logger.debug("QuiteBrowser");
+        log.debug("QuiteBrowser");
         break;
 
       case JISHITEXT :
         encash.jishitext(dataParam);
-        logger.debug("verified the text");
+        log.debug("verified the text");
         break;
 
       case TAKESCREENSHOT :
         extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
         //extentReport.attachScreenshotPath(genericMethod.takeScreenshot());
-        logger.debug("taken the screen shot");
+        log.debug("taken the screen shot");
         break;
 
       case BANNER :
         encash.banner(dataParam);
-        logger.debug("verifed the Banner");
+        log.debug("verifed the Banner");
         break;
 
       case COMPETATIONFORM:
         admin.competationForm(dataParam);
-        logger.debug("complete create competation");
+        log.debug("complete create competation");
         break;
 
       case REGISTRATIONFORM :
         encash.registrationForm(dataParam);
-        logger.debug("completed entering all detail for New Registration");
+        log.debug("completed entering all detail for New Registration");
         break;
 
       case REGISTERUSINGMOBILENUMBER:
         encash.registerUsingMobileNumber(dataParam);
-        logger.debug("complete entering registration");
+        log.debug("complete entering registration");
         break;
 
       case CONSENT:
         encash.consent(dataParam);
-        logger.debug("Expand all consent");
+        log.debug("Expand all consent");
         break;
 
       case BROWSERTYPE:
         genericMethod.browsertype(dataParam.get(0));
-        logger.debug("Opening the browser");
+        log.debug("Opening the browser");
         break;
         
       case MOBILEREGISTERUSINGMOBILENUMBER:
         mobileEncash.registerUsingMobileNumber(dataParam);
-        logger.debug("complete entering registration");
+        log.debug("complete entering registration");
         break;
         
       case SEARCHCOMPETATION:
         encash.searchcompetation(dataParam);
-        logger.debug("searching for competition and click on it");
+        log.debug("searching for competition and click on it");
         break;
         
       case COMPETITIONQUESETION:
         encash.competitionQuesetion(dataParam);
-        logger.debug("searching for competition and click on it");
+        log.debug("searching for competition and click on it");
         break;
         
       case MANDATORYQUESTION:
         encash.mandatoryQuesetion(dataParam);
-        logger.debug("Verifying the question and answer for competitions");
+        log.debug("Verifying the question and answer for competitions");
         break;
         
       case STOREWINDOW :
         genericMethod.currentWindow(dataParam.get(0));
-        logger.debug("Storing the current window with key");
+        log.debug("Storing the current window with key");
         break;
         
       case SWITCHWINDOW:
         genericMethod.switchWindow(dataParam.get(0));
-        logger.debug("swtich to the window by key name");
+        log.debug("swtich to the window by key name");
         break;
         
       case SWITCHDRIVER:
         genericMethod.switchDriver(dataParam.get(0));
-        logger.debug("swtich Driver instance");
+        log.debug("swtich Driver instance");
         break;
         
       case NEWTAB:
         genericMethod.newTab();
-        logger.debug("crete new Tab in browser");
+        log.debug("crete new Tab in browser");
         break;
         
       case OPENMAILINATORURL:
-        logger.debug("Opening Mailinator URL");
+        log.debug("Opening Mailinator URL");
         mailinator.openUrl(dataParam);
         break;
         
       case READEMAILOTPMAILINATOR:
-        logger.debug("Reading the OTP in mail");
+        log.debug("Reading the OTP in mail");
         mailinator.readEmailOtp();
         break;
         
       case ENTEREMAILOTP:
-        logger.debug("entering the OTP");
+        log.debug("entering the OTP");
         encash.enterEmailOtp();
         break;
         
       case GMAIL:
-        logger.debug("Opening the gmail URL");
+        log.debug("Opening the gmail URL");
         firebase.gmaillogin(dataParam);
         break;
         
       case FIREBASELOGIN:
-        logger.debug("Opening the firebase URL");
+        log.debug("Opening the firebase URL");
         firebase.firebaselogin();
         break;
         
       case LOGOUTADMIN:
-        logger.debug("logging out the Admin URL");
+        log.debug("logging out the Admin URL");
         admin.logoutAdmin();
         break;
         
       case OFFERSFORM:
-        logger.debug("entering the offers form ");
+        log.debug("entering the offers form ");
         admin.offersForm(dataParam);
         break;
         
       case SEARCHCOMPETITION:
-        logger.debug("search for the competation");
+        log.debug("search for the competation");
         admin.searchCompetition(dataParam);
         break;
         
       case QUESTIONNAIRES:
-        logger.debug("creating the new questionnaires");
+        log.debug("creating the new questionnaires");
         admin.questionnariesCreate(dataParam);
         break;
         
       case QUESTIONNARIESDELETE:
-        logger.debug("Deleting the questionnaries");
+        log.debug("Deleting the questionnaries");
         admin.questionnariesDelete(dataParam);
         break;
         
       case LEVELS:
-        logger.debug("creating the levels");
+        log.debug("creating the levels");
         admin.levels(dataParam);
         break;
         
       case QUESTIONNAIRESTAB:
-        logger.debug("questnnaires tab");
+        log.debug("questnnaires tab");
         admin.questionnairesTab(dataParam);
         break;
         
       case LEVELTAB:
-        logger.debug("Levels tab");
+        log.debug("Levels tab");
         admin.leveltab(dataParam);
         break;
         
       case EMAILENCASH:
-        logger.debug("Email encash");
+        log.debug("Email encash");
         encash.emailEncash(dataParam);
         break;
      
       case FIREBASELOGIN1:
-        logger.debug("firebase login");
+        log.debug("firebase login");
         firebase.firebaseLogin1(dataParam);
         break;
       
       case BROWSERSWITCH:
-        logger.debug("Switching the browser");
+        log.debug("Switching the browser");
         genericMethod.browserSwtich(dataParam);
         break;
         
       case CLOSEBROWSER:
-        logger.debug("closing the browser");
+        log.debug("closing the browser");
         genericMethod.browserClose();
         break;
         
       case GOTOLINK:
-        logger.debug("clicking on the hyperlink");
+        log.debug("clicking on the hyperlink");
         genericMethod.goToLink(dataParam.get(0));
         break;
         
       case PARTICIPATE:
-        logger.debug("clicking on the participate");
+        log.debug("clicking on the participate");
         encash.competationparticpate();
         break;
       
       case MOBILEPARTICIPATE:
-        logger.debug("clicking on the participate");
+        log.debug("clicking on the participate");
         mobileEncash.competationparticpate();
         break;
         
       case ENCASHMENU:
-        logger.debug("click on the navibar and selecting the required option");
+        log.debug("click on the navibar and selecting the required option");
         mobileEncash.encashMenu(dataParam);
         break;
         
       case LOGINEMAIL:
-        logger.debug("click on the login button and login to application");
+        log.debug("click on the login button and login to application");
         encash.loginReisterUser(dataParam);
         break;
         
       case AMAZONITEMADD:
-        logger.debug("Select the item and add to basket");
+        log.debug("Select the item and add to basket");
         amazon.addItem(dataParam);
         break;
         
       case CREATEPET:
-        logger.debug("Creating the new Pet");
+        log.debug("Creating the new Pet");
         petStoreService.createPet(dataParam);
         break;
         
       case GETPET:
-        logger.debug("get the particular Pet");
+        log.debug("get the particular Pet");
         petStoreService.getPet(dataParam);
         break;
         
-      default: logger.debug("Invalid Keyword");
+      default: log.debug("Invalid Keyword");
 
     }
   }

@@ -4,16 +4,15 @@ import com.automation.utility.GenericMethod;
 import com.automation.utility.WaitMethod;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@Log4j2
 public class MobileEncash {
-  
-  private static Logger logger = LogManager.getLogger(MobileEncash.class.getName());
+
   @Autowired
   private WaitMethod waitmethod;
   @Autowired
@@ -29,45 +28,45 @@ public class MobileEncash {
 
     List<String> menu = new ArrayList<String>();
     menu.add("m_register");
-    logger.debug("click on the menu button");
+    log.debug("click on the menu button");
     encashMenu(menu);
 
 
-    logger.debug("waiting for mobile number visiable");
+    log.debug("waiting for mobile number visiable");
     waitmethod.waitForElementPresent("mobilenumber");
     
-    logger.debug("Entering the mobile number");
+    log.debug("Entering the mobile number");
     WebElement element = genericmethod.getElement("mobilenumber");
     element.sendKeys(dataParam.get(0));
 
 
-    logger.debug("clicking on the continue button");
+    log.debug("clicking on the continue button");
     element = genericmethod.getElement("continue");
     element.click();
 
-    logger.debug("waiting for loder class request complete");
+    log.debug("waiting for loder class request complete");
     //waitMethod.waitForElementPresent("loderclass");
     waitmethod.waitForElementInvisible("loderclass");
 
     char[] otp = dataParam.get(1).toCharArray();
 
-    logger.debug("Waiting for the OTP element");
+    log.debug("Waiting for the OTP element");
     waitmethod.waitForElementPresent("otp");
     
     List<WebElement> elements = genericmethod.getElements("otp");
     int index = 0;
     for (WebElement otpElement : elements) {
-      logger.debug("Entering the OPT for element " + otp[index]);
+      log.debug("Entering the OPT for element " + otp[index]);
       
       otpElement.sendKeys(Character.toString(otp[index]));
       index++;
     }
 
-    logger.debug("click on the continue Button");
+    log.debug("click on the continue Button");
     element = genericmethod.getElement("otpcontinue");
     element.click();
 
-    logger.debug("waiting for loder class request complete");
+    log.debug("waiting for loder class request complete");
     waitmethod.waitForElementInvisible("loderclass");
   }
   
@@ -78,18 +77,18 @@ public class MobileEncash {
    */
   public void encashMenu(List<String> dataParam) {
     
-    logger.debug("waiting for the navibar button");
+    log.debug("waiting for the navibar button");
     waitmethod.waitForElementVisible("navibar");
     
-    logger.debug("click on the navibar button");
+    log.debug("click on the navibar button");
     WebElement element = genericmethod.getElement("navibar");
     element.click();
     
-    logger.debug("waiting for button enable " + dataParam.get(0));
+    log.debug("waiting for button enable " + dataParam.get(0));
     waitmethod.waitForElementPresent("mobile_listmenu");
     waitmethod.waitThread();
     
-    logger.debug("click on the button " + dataParam.get(0));
+    log.debug("click on the button " + dataParam.get(0));
     element = genericmethod.getElement(dataParam.get(0));
     waitmethod.waitForElementClickable(element);
     element.click();
@@ -102,20 +101,20 @@ public class MobileEncash {
    */
   public void competationparticpate() {
     
-    logger.debug("wait for competition button present");
+    log.debug("wait for competition button present");
     waitmethod.waitForElementPresent("competition_play");
     
-    logger.debug("click on the Participate button");
+    log.debug("click on the Participate button");
     WebElement element = genericmethod.getElement("competition_play");
     
-    logger.debug("scroll to element view");
+    log.debug("scroll to element view");
     genericmethod.scrolltoelementBottom(element);
     
-    logger.debug("click on the Participate button");
+    log.debug("click on the Participate button");
     waitmethod.waitForElementClickable(element);
     element.click();
     
-    logger.debug("Waiting for the lodercontainer invisiable");
+    log.debug("Waiting for the lodercontainer invisiable");
     waitmethod.waitForElementInvisible("lodercontainer");
   }
   

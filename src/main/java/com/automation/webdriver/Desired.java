@@ -7,8 +7,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerOptions;
@@ -19,9 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@Log4j2
 public class Desired {
 
-  private static Logger logger = LogManager.getLogger(Desired.class.getName());
   @Autowired
   private PropertiesValue properties;
   private String headless = "headless";
@@ -214,8 +213,8 @@ public class Desired {
     while (browserkeys.hasNext()) {
       String key = browserkeys.next();
       String value = cr.getConfigurationStringValue(key);
-      logger.debug("key " + key);
-      logger.debug("value " + value);
+      log.debug("key " + key);
+      log.debug("value " + value);
       dc.setCapability(key, value);
     }
     return dc;

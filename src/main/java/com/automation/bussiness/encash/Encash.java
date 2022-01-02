@@ -11,8 +11,7 @@ import com.aventstack.extentreports.Status;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +24,9 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
+@Log4j2
 public class Encash {
-  private static Logger logger = LogManager.getLogger(Encash.class.getName());
+
   @Autowired
   private WaitMethod waitmethod;
   @Autowired
@@ -58,7 +58,7 @@ public class Encash {
       waitmethod.waitForTexttVisible(data);
       extentReport.writeLog(Status.PASS, "Taken the screenshot", genericmethod.takeScreenshot());
       genericmethod.verifyText(data);
-      logger.debug("Verified the test " + data.get(1));
+      log.debug("Verified the test " + data.get(1));
     }
 
   }
@@ -117,13 +117,13 @@ public class Encash {
    * @param dataParam contain all the required data for registration
    */
   public void registrationForm(List<String> dataParam) {
-    logger.debug("waiting for loder class request complete");
+    log.debug("waiting for loder class request complete");
     waitmethod.waitForElementInvisible("loderclass");
 
-    logger.debug("Wait for element presnet");
+    log.debug("Wait for element presnet");
     waitmethod.waitForElementVisible("persondetail_title");
 
-    logger.debug("seleting the title from dorp down");
+    log.debug("seleting the title from dorp down");
 
     List<String> title = new ArrayList<String>();
     title.add("persondetail_title");
@@ -131,19 +131,19 @@ public class Encash {
 
     genericmethod.selectByVisibleText(title);
 
-    logger.debug("enter the frist Name");
+    log.debug("enter the frist Name");
     WebElement element = genericmethod.getElement("persondetail_firstname");
     element.sendKeys(dataParam.get(1));
 
-    logger.debug("enter the last Name");
+    log.debug("enter the last Name");
     element = genericmethod.getElement("personaldetail_lastname");
     element.sendKeys(dataParam.get(2));
 
-    logger.debug("Enter the Email address");
+    log.debug("Enter the Email address");
     element = genericmethod.getElement("personaldetail_email");
     element.sendKeys(dataParam.get(3));
 
-    logger.debug("Select the Geneder");
+    log.debug("Select the Geneder");
 
     if (dataParam.get(4).equalsIgnoreCase("male")) {
       element = genericmethod.getElement("personaldetail_male");
@@ -153,7 +153,7 @@ public class Encash {
       element.click();
     }
 
-    logger.debug("Select date from BirthDate");
+    log.debug("Select date from BirthDate");
 
     List<String> date = new ArrayList<String>();
     date.add("personaldetail_date");
@@ -161,7 +161,7 @@ public class Encash {
 
     genericmethod.selectByVisibleText(date);
 
-    logger.debug("Select Month from BirthDate");
+    log.debug("Select Month from BirthDate");
 
     List<String> month = new ArrayList<String>();
     month.add("personaldetail_month");
@@ -169,37 +169,37 @@ public class Encash {
 
     genericmethod.selectByVisibleText(month);
 
-    logger.debug("Select Year from BirthDate");
+    log.debug("Select Year from BirthDate");
     List<String> year = new ArrayList<String>();
     year.add("personaldetail_year");
     year.add(dataParam.get(7));
 
     genericmethod.selectByVisibleText(year);
 
-    logger.debug("Enter the Password");
+    log.debug("Enter the Password");
     element = genericmethod.getElement("personaldetail_password");
     element.sendKeys(dataParam.get(8));
 
-    logger.debug("Enter the confirm password");
+    log.debug("Enter the confirm password");
     element = genericmethod.getElement("personaldetail_cofirmpassword");
     element.sendKeys(dataParam.get(9));
 
-    logger.debug("Enter the Display name");
+    log.debug("Enter the Display name");
     element = genericmethod.getElement("personaldetail_displayname");
     element.sendKeys(dataParam.get(10));
 
-    logger.debug("Enter the Postal code");
+    log.debug("Enter the Postal code");
     element = genericmethod.getElement("personaldetail_postalcode");
     element.sendKeys(dataParam.get(11));
 
-    logger.debug("click on the find address");
+    log.debug("click on the find address");
     element = genericmethod.getElement("personaldetail_findadress");
     element.click();
 
-    logger.debug("wait for load all the address");
+    log.debug("wait for load all the address");
     waitmethod.waitForElementAttributeNotPresent("personaldetail_findadress", "disabled");
 
-    logger.debug("select the address from visible text");
+    log.debug("select the address from visible text");
 
     List<String> address = new ArrayList<String>();
     address.add("personaldetail_address");
@@ -207,17 +207,17 @@ public class Encash {
 
     genericmethod.selectByVisibleText(address);
 
-    logger.debug("accept the consent");
+    log.debug("accept the consent");
     element = genericmethod.getElement("accept_consent");
     if (dataParam.get(13).equalsIgnoreCase("yes")) {
       element.click();
     }
 
-    logger.debug("save registration form");
+    log.debug("save registration form");
     element = genericmethod.getElement("personaldetail_continue");
     element.click();
 
-    logger.debug("wait for save registration form");
+    log.debug("wait for save registration form");
     waitmethod.waitForElementInvisible("loderclass");
 
   }
@@ -228,48 +228,48 @@ public class Encash {
    */
   public void registerUsingMobileNumber(List<String> dataParam) {
 
-    logger.debug("waiting for register button enable");
+    log.debug("waiting for register button enable");
     waitmethod.waitForElementClickable("register");
 
-    logger.debug("clicking on the Register button");
+    log.debug("clicking on the Register button");
     WebElement element = genericmethod.getElement("register");
     element.click();
 
 
-    logger.debug("waiting for mobile number visiable");
+    log.debug("waiting for mobile number visiable");
     waitmethod.waitForElementVisible("mobilenumber");
 
-    logger.debug("Entering the mobile number");
+    log.debug("Entering the mobile number");
     element = genericmethod.getElement("mobilenumber");
     element.sendKeys(dataParam.get(0));
 
 
-    logger.debug("clicking on the continue button");
+    log.debug("clicking on the continue button");
     element = genericmethod.getElement("continue");
     element.click();
 
-    logger.debug("waiting for loder class request complete");
+    log.debug("waiting for loder class request complete");
     waitmethod.waitForElementPresent("loderclass");
     waitmethod.waitForElementInvisible("loderclass");
 
     char[] otp = dataParam.get(1).toCharArray();
 
-    logger.debug("wait for OTP element present");
+    log.debug("wait for OTP element present");
     waitmethod.waitForElementEqualTo("otp", 6);
     List<WebElement> elements = genericmethod.getElements("otp");
 
     int index = 0;
     for (WebElement otpElement : elements) {
-      logger.debug("Entering the OPT for element " + otp[index]);
+      log.debug("Entering the OPT for element " + otp[index]);
       otpElement.sendKeys(Character.toString(otp[index]));
       index++;
     }
 
-    logger.debug("click on the continue Button");
+    log.debug("click on the continue Button");
     element = genericmethod.getElement("otpcontinue");
     element.click();
 
-    logger.debug("waiting for loder class request complete");
+    log.debug("waiting for loder class request complete");
     waitmethod.waitForElementPresent("loderclass");
     waitmethod.waitForElementInvisible("loderclass");
   }
@@ -279,7 +279,7 @@ public class Encash {
    * @param dataParam contain true or false to check all the consent are checked or unchecked 
    */
   public void consent(List<String> dataParam) {
-    logger.debug("wait for Consent table visible");
+    log.debug("wait for Consent table visible");
     waitmethod.waitForElementPresent("consent_table");
 
     List<WebElement> elements = genericmethod.getElements("consent_table");
@@ -287,17 +287,17 @@ public class Encash {
     for (WebElement element: elements) {
       element.click();
       List<WebElement> child = genericmethod.getWebElements(element, "consent_child");
-      logger.debug("no of child row " + child.size());
+      log.debug("no of child row " + child.size());
       //each row has number of client information 
       for (WebElement ele :child) {
         List<WebElement> childconsent = genericmethod.getWebElements(ele, "consent_child_type");
-        logger.debug("child consent type count " + childconsent.size());
+        log.debug("child consent type count " + childconsent.size());
         //each client information has different consent
         for (WebElement consentchild :childconsent) {
-          logger.debug(consentchild.getText());
+          log.debug(consentchild.getText());
           WebElement childstatus = genericmethod.getWebElement(consentchild, 
                           "consent_child_status");
-          logger.debug(childstatus.getAttribute("aria-checked"));
+          log.debug(childstatus.getAttribute("aria-checked"));
           String status = childstatus.getAttribute("aria-checked");
           Assertions
               .assertThat(dataParam.get(0))
@@ -337,40 +337,40 @@ public class Encash {
     waitmethod.waitForElementInvisible("home_page");
     waitmethod.waitForElementVisible("competition_search");
 
-    logger.debug("Enter in the search text box");
+    log.debug("Enter in the search text box");
     WebElement element = genericmethod.getElement("competition_search");
     element.sendKeys(dataParam.get(0));
 
-    logger.debug("wait for result to update");
+    log.debug("wait for result to update");
     List<WebElement> resultcount = genericmethod.getElements("competiton_search_result");
     waitmethod.waitForElementLessThan("competiton_search_result", resultcount.size() - 1);
 
     List<WebElement> elements = genericmethod.getElements("competiton_search_result");
 
-    logger.debug("fetched result count " + elements.size());
+    log.debug("fetched result count " + elements.size());
 
     for (WebElement competations :elements) {
-      logger.debug("get the list of search list data");
+      log.debug("get the list of search list data");
       List<WebElement> competation = genericmethod.getWebElements(competations, 
                       "competition_search_data");
       genericmethod.scrolltoelementTop(competations);
 
       if (genericmethod.isMobileview()) {
-        logger.debug("scorll to search result in mobile view");
+        log.debug("scorll to search result in mobile view");
         genericmethod.scrolltoelementBottom(competations);
 
       }
 
       for (WebElement competate : competation) {
 
-        logger.debug("waiting for the element visible");
+        log.debug("waiting for the element visible");
         waitmethod.waitForElementVisible(competate);
-        logger.debug("waiting for some text present");
+        log.debug("waiting for some text present");
         waitmethod.waitForSomeTextPresent(competate);
 
-        logger.debug("Feached text ----> " + competate.getText());
+        log.debug("Feached text ----> " + competate.getText());
         if (competate.getText().equals(dataParam.get(1))) {
-          logger.debug("found matching and clicking on");
+          log.debug("found matching and clicking on");
           waitmethod.waitForElementVisible(competate);
           waitmethod.waitForElementClickable(competate);
           competate.click();
@@ -379,7 +379,7 @@ public class Encash {
       }
     }
 
-    logger.debug("waiting for the loadcontainer invisiable");
+    log.debug("waiting for the loadcontainer invisiable");
     waitmethod.waitForElementInvisible("lodercontainer");
 
 
@@ -411,18 +411,18 @@ public class Encash {
 
     for (int i = 0; i < 9; i++) {
 
-      logger.debug("wait for next question load");
+      log.debug("wait for next question load");
       waitmethod.waitForElementAttributeNotPresent("waitnextquestion", "data-loading");
 
       List<WebElement> elements = genericmethod.getElements("answeroption");
       for (WebElement answer : elements) {
-        logger.debug("Answer options is " + answer.getText());
+        log.debug("Answer options is " + answer.getText());
         if (answer.getText().equalsIgnoreCase(dataParam.get(i + 1))) {
 
-          logger.debug("clicked on the Answer Options");
+          log.debug("clicked on the Answer Options");
           answer.click();
 
-          logger.debug("click on Next button");
+          log.debug("click on Next button");
           element = genericmethod.getElement("next");
           element.click();
 
@@ -444,22 +444,22 @@ public class Encash {
   @Deprecated
   public String competationquestion(List<String> dataParam) {
 
-    logger.debug("wait for next question to load");
+    log.debug("wait for next question to load");
     waitmethod.waitForElementInvisible("competition_next_question_wait");
 
     //Single choice question and answer
     if (dataParam.get(0).equalsIgnoreCase("SingleChoice")) {
-      logger.debug("Single Choice question and answer");
+      log.debug("Single Choice question and answer");
       WebElement element = genericmethod.getElement("competition_single_choice_question");
       waitmethod.waitForElementVisible(element);
-      logger.debug("question is -------> " + element.getText());
+      log.debug("question is -------> " + element.getText());
       if (dataParam.get(1).equals(element.getText())) {
         //Answer options
         List<WebElement> elements = genericmethod.getElements("competition_single_choice_answer");
         for (WebElement answer : elements) {
-          logger.debug("Answer choice are -----> " + answer.getText());
+          log.debug("Answer choice are -----> " + answer.getText());
           if (answer.getText().equals(dataParam.get(2))) {
-            logger.debug("clicked on answer options --------> " + answer.getText());
+            log.debug("clicked on answer options --------> " + answer.getText());
             answer.click();
             break;
           }
@@ -470,20 +470,20 @@ public class Encash {
     }
 
     if (dataParam.get(0).equalsIgnoreCase("MultipleChoice")) {
-      logger.debug("Multiple Choice question and answer");
+      log.debug("Multiple Choice question and answer");
       waitmethod.waitForElementPresent("competition_multiple_choice_question");
       WebElement element = genericmethod.getElement("competition_multiple_choice_question");
-      logger.debug("question is -------> " + element.getText());
+      log.debug("question is -------> " + element.getText());
       if (dataParam.get(1).equals(element.getText())) {
         //Answer options
         List<WebElement> elements = genericmethod.getElements("competition_multiple_choice_answer");
         for (WebElement answer : elements) {
-          logger.debug("Answer choice are -----> " + answer.getText());
+          log.debug("Answer choice are -----> " + answer.getText());
           List<String> answerselect = Arrays.asList(dataParam.get(2).split("`"));
 
           for (String answerse : answerselect) {
             if (answer.getText().equals(answerse)) {
-              logger.debug("clicked on answer options --------> " + answer.getText());
+              log.debug("clicked on answer options --------> " + answer.getText());
               answer.click();
             }
           }
@@ -494,7 +494,7 @@ public class Encash {
     }
 
     // click on next button
-    logger.debug("click on the next button");
+    log.debug("click on the next button");
     WebElement element = genericmethod.getElement("competition_next_question");
     element.click();
 
@@ -509,12 +509,12 @@ public class Encash {
     //stored OTP which is read in mailinator
     char[] storedotp = storevalue.storedOtp.toCharArray();
 
-    logger.debug("wait for the Email OTP box");
+    log.debug("wait for the Email OTP box");
     waitmethod.waitForElementPresent("encash_email_otp");
 
     List<WebElement> otps = genericmethod.getElements("encash_email_otp");
     int index = 0;
-    logger.debug("Enter all the OTP");
+    log.debug("Enter all the OTP");
 
     for (WebElement otp : otps) {
       String stringotp = Character.toString(storedotp[index]);
@@ -522,7 +522,7 @@ public class Encash {
       index++;
     }
 
-    logger.debug("click on the verify Button");
+    log.debug("click on the verify Button");
     WebElement element = genericmethod.getElement("verify_email");
     element.click();
   }
@@ -552,15 +552,15 @@ public class Encash {
    */
   public void competationparticpate() {
 
-    logger.debug("Wait for Participate button present");
+    log.debug("Wait for Participate button present");
     waitmethod.waitForElementPresent("competition_play");
 
-    logger.debug("click on the Participate button");
+    log.debug("click on the Participate button");
     WebElement element = genericmethod.getElement("competition_play");
     waitmethod.waitForElementClickable(element);
     element.click();
 
-    logger.debug("Waiting for the lodercontainer invisiable");
+    log.debug("Waiting for the lodercontainer invisiable");
     waitmethod.waitForElementInvisible("lodercontainer");
   }
 
@@ -571,7 +571,7 @@ public class Encash {
    */
   public void competitionQuesetion(List<String> dataParam) {
 
-    logger.debug("wait for to load question");
+    log.debug("wait for to load question");
     waitmethod.waitForElementPresent("competition_question_base");
 
     WebElement element = genericmethod.getElement("competition_question_base");
@@ -606,7 +606,7 @@ public class Encash {
    */
   public void mandatoryQuesetion(List<String> dataParam) {
 
-    logger.debug("wait for to load question");
+    log.debug("wait for to load question");
     waitmethod.waitForElementPresent("mandatory_question_base");
 
     WebElement element = genericmethod.getElement("mandatory_question_base");
@@ -643,25 +643,25 @@ public class Encash {
    */
   public void loginReisterUser(List<String> dataParam) {
 
-    logger.debug("wait for login button visible");
+    log.debug("wait for login button visible");
     waitmethod.waitForElementPresent("login");
 
-    logger.debug("click on the login button");
+    log.debug("click on the login button");
     WebElement element = genericmethod.getElement("login");
     element.click();
 
-    logger.debug("wait for email text visible");
+    log.debug("wait for email text visible");
     waitmethod.waitForElementPresent("login_email");
 
-    logger.debug("enter the email id");
+    log.debug("enter the email id");
     element = genericmethod.getElement("login_email");
     element.sendKeys(dataParam.get(0));
 
-    logger.debug("enter the password");
+    log.debug("enter the password");
     element = genericmethod.getElement("login_password");
     element.sendKeys(dataParam.get(1));
 
-    logger.debug("click on the continue button");
+    log.debug("click on the continue button");
     element = genericmethod.getElement("login_continue");
     element.submit();
 

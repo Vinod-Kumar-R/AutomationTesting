@@ -23,8 +23,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -49,8 +48,8 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
+@Log4j2
 public class GenericMethod {
-  static Logger logger = LogManager.getLogger(GenericMethod.class.getName());
 
   @Autowired
   private ApplicationStoreValue storevalue;
@@ -88,7 +87,7 @@ public class GenericMethod {
    * @return it return the status "pass" if execution success else throw an exception 
    */
   public String verifyText(List<String> dataParam)  {
-    logger.debug("Verifying the text-------> " + dataParam.get(1));
+    log.debug("Verifying the text-------> " + dataParam.get(1));
     WebElement element = getElement(dataParam.get(0));
     if (element.getText().equalsIgnoreCase(dataParam.get(1))) {
       return "pass";
@@ -178,7 +177,7 @@ public class GenericMethod {
    */
   public void selectByVisibleText(List<String> dataParam) {
     WebElement objectData = getElement(dataParam.get(0));
-    logger.debug("Selecting the text from drop down list " + dataParam.get(1));
+    log.debug("Selecting the text from drop down list " + dataParam.get(1));
 
     Select select = new Select(objectData);
     select.selectByVisibleText(dataParam.get(1));
@@ -225,7 +224,7 @@ public class GenericMethod {
    */
   public void switchDriver(String key) {
     WebDriver driver = storevalue.driverinstance.get(key);
-    logger.debug("dirver instance restore " + driver);
+    log.debug("dirver instance restore " + driver);
     browserinitialize.setDriverInstance(driver);
   }
   
@@ -440,7 +439,7 @@ public class GenericMethod {
   public void switchframe(WebElement element) {
     WebDriver driver = browserinitialize.getWebDriverInstance();
     
-    logger.debug("Switch to frame " + element);
+    log.debug("Switch to frame " + element);
     driver.switchTo().frame(element);
   }
   
@@ -450,7 +449,7 @@ public class GenericMethod {
   public void switchframedefault() {
     WebDriver driver = browserinitialize.getWebDriverInstance();
 
-    logger.debug("Switch to parent frame ");
+    log.debug("Switch to parent frame ");
     driver.switchTo().defaultContent();
   }
   
@@ -472,7 +471,7 @@ public class GenericMethod {
    */
   public void goToLink(String dataParam) {
     
-    logger.debug("waite for overlay backdrop invisiable");
+    log.debug("waite for overlay backdrop invisiable");
     waitmethod.waitForElementInvisible("overlaybackdrop");
     
     WebElement element = getElement(dataParam);
@@ -487,7 +486,7 @@ public class GenericMethod {
   public void matOption(WebElement element, String textSelect) {
     
     options.setOptions(element);
-    logger.debug("Selecting the options from dropdown " + textSelect);
+    log.debug("Selecting the options from dropdown " + textSelect);
     options.selectVisibleText(textSelect);
   }
   
@@ -665,7 +664,7 @@ public class GenericMethod {
       });
     }
 
-    logger.debug("Zip is created at : " + zipFile);
+    log.debug("Zip is created at : " + zipFile);
     
     return zipFile;
   }
@@ -770,7 +769,7 @@ public class GenericMethod {
         break;
       }
       default :
-        logger.info("Invalid By Class");
+        log.info("Invalid By Class");
     }
     return byElement;
 

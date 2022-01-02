@@ -2,12 +2,12 @@ package com.automation.configuration;
 
 import java.io.File;
 import java.util.Iterator;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.configuration2.Configuration;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.configuration2.ex.ConfigurationException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
+
 
 /**
  * This Class is used to read the Configuration file. 
@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
+@Log4j2
 public class ConfigurationReader {
-  private static Logger logger = LogManager.getLogger(ConfigurationReader.class.getName());
   private Configurations configs = new Configurations();
   private Configuration config;
 
@@ -26,7 +26,7 @@ public class ConfigurationReader {
    */
   public void readConfig(String filename) {
     try {
-      logger.debug("Reading the Configuration file from location ");
+      log.debug("Reading the Configuration file from location ");
       config = configs.properties(new File(filename));
     } catch (ConfigurationException e) {
       // TODO Auto-generated catch block
@@ -40,7 +40,7 @@ public class ConfigurationReader {
    * @return the value for the specified key
    */
   public String getConfigurationStringValue(String key) {
-    logger.debug("Value for the key " + key + " ------> " + config.getString(key));
+    log.debug("Value for the key " + key + " ------> " + config.getString(key));
     return config.getString(key);
 
   }
@@ -51,7 +51,7 @@ public class ConfigurationReader {
    * @return the value for the specified key
    */
   public Integer getConfigurationIntValue(String key) {
-    logger.debug("Value for the key " + key + " ------> " + config.getInt(key));
+    log.debug("Value for the key " + key + " ------> " + config.getInt(key));
     return config.getInt(key);
   }
 
@@ -61,7 +61,7 @@ public class ConfigurationReader {
    * @return the value for the specified key
    */
   public Boolean getConfigurationBooleanValue(String key) {
-    logger.debug("Value for the key " + key + " ------> " + config.getBoolean(key));
+    log.debug("Value for the key " + key + " ------> " + config.getBoolean(key));
     return config.getBoolean(key);
   }
 

@@ -7,8 +7,7 @@ import freemarker.template.Configuration;
 import java.util.HashMap;
 import java.util.Map;
 import javax.mail.internet.MimeMessage;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -19,9 +18,8 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 
 @Component
+@Log4j2
 public class MailServiceImpl {
-
-  private static Logger logger = LogManager.getLogger(MailServiceImpl.class);
   
   @Autowired
   private JavaMailSender mailSender;
@@ -44,10 +42,10 @@ public class MailServiceImpl {
 
     try {
       mailSender.send(preparator);
-      logger.debug("Message has been sent.............................");
+      log.debug("Message has been sent.............................");
       
     } catch (MailException ex) {
-      logger.error(ex.getMessage());
+      log.error(ex.getMessage());
       
     }
   }
@@ -70,7 +68,7 @@ public class MailServiceImpl {
 
         String text = geFreeMarkerTemplateContent(model);
         //System.out.println("Template content : " + text);
-        logger.debug("Template content : " + text);
+        log.debug("Template content : " + text);
 
         /*
          * use the true flag to indicate you need a multipart message
@@ -96,16 +94,16 @@ public class MailServiceImpl {
   public String geFreeMarkerTemplateContent(Map<String, Object> model) {
     StringBuffer content = new StringBuffer();
     try {
-      logger.debug("debugging");
-      logger.debug(freemarkerConfiguration.getTemplateLoader().toString());
+      log.debug("debugging");
+      log.debug(freemarkerConfiguration.getTemplateLoader().toString());
       content.append(FreeMarkerTemplateUtils.processTemplateIntoString(
                       freemarkerConfiguration.getTemplate("mailTemplate.txt"), model));
       return content.toString();
     } catch (Exception e) {
-      logger.error(e.getMessage());
+      log.error(e.getMessage());
       e.printStackTrace();
     }
-    logger.debug("Email message body content is empty due to some error");
+    log.debug("Email message body content is empty due to some error");
     return "";
   }
 

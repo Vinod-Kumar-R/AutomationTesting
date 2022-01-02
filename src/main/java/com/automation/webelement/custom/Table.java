@@ -1,17 +1,15 @@
 package com.automation.webelement.custom;
 
 import com.automation.utility.WaitMethod;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@Log4j2
 public class Table {
-  
-  private static Logger logger = LogManager.getLogger(Table.class);
 
   @Autowired
   private WaitMethod waitmethod;
@@ -27,7 +25,7 @@ public class Table {
    * @return the int value
    */
   public int getRowCount() {
-    logger.debug("wait for the table row to present");
+    log.debug("wait for the table row to present");
     waitmethod.waitForNestedElementPresence(this.table, By.tagName("tr"));
     int row = table.findElements(By.tagName("tr")).size();
     return row;
@@ -59,13 +57,13 @@ public class Table {
   public void selectdata(String data) {
     
     WebElement celldata;
-    logger.debug("row count " + getRowCount());
-    logger.debug("column count " + getColumnCount());
+    log.debug("row count " + getRowCount());
+    log.debug("column count " + getColumnCount());
     row:
     for (int r = 1; r <= getRowCount(); r++) {
       for (int c = 1; c <= getColumnCount(r); c++) {
         celldata = table.findElement(By.xpath("//tr[" + r + "]/td[" + c + "]"));
-        logger.debug(" row " + r + " column " + c + " data " + celldata.getText());
+        log.debug(" row " + r + " column " + c + " data " + celldata.getText());
         if (celldata.getText().equals(data)) {
           celldata.click();
           break row;

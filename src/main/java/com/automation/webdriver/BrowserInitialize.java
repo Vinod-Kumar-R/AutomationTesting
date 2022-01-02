@@ -8,8 +8,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 import java.net.MalformedURLException;
 import java.net.URL;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -25,9 +24,9 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
+@Log4j2
 public final class BrowserInitialize {
 
-  private static Logger logger = LogManager.getLogger(BrowserInitialize.class);
   private WebDriver driver;
   private NgWebDriver ngwebdriver;
   private JavascriptExecutor jsDriver;
@@ -113,19 +112,19 @@ public final class BrowserInitialize {
         } catch (Exception e) {
           // TODO Auto-generated catch block
           e.printStackTrace();
-          logger.error(e.getMessage());
+          log.error(e.getMessage());
         }
 
         break;
 
       default : 
-        logger.debug("invalid browser selected");
+        log.debug("invalid browser selected");
         break;
     }
     
     //print the port number used by the docker for VNC
     if (properties.isDocker()) {
-      logger.info("Docker URL :- " + webDriverManager.getDockerNoVncUrl(driver));
+      log.info("Docker URL :- " + webDriverManager.getDockerNoVncUrl(driver));
     }
 
     jsDriver = (JavascriptExecutor) driver;

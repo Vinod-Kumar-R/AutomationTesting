@@ -1,15 +1,13 @@
 package com.automation.custom.wait;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
+@Log4j2
 public class AttributedPresent implements ExpectedCondition<Boolean> {
-  
-  private static Logger logger = LogManager.getLogger(AttributedPresent.class.getName());
 
   private By byType;
   private String attributeName;
@@ -36,8 +34,8 @@ public class AttributedPresent implements ExpectedCondition<Boolean> {
       element = this.element;
     }
     String status = element.getAttribute(this.attributeName);
-    logger.debug("xpath " + this.byType);
-    logger.debug("custom wait implated by " + status);
+    log.debug("xpath " + this.byType);
+    log.debug("custom wait implated by " + status);
     if (null != status) {
       return true;
     }

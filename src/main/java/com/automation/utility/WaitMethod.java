@@ -5,8 +5,7 @@ import com.automation.webdriver.BrowserInitialize;
 import com.paulhammant.ngwebdriver.NgWebDriver;
 import java.time.Duration;
 import java.util.List;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,8 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@Log4j2
 public class WaitMethod {
-  private static Logger logger = LogManager.getLogger(WaitMethod.class.getName());
     
   @Autowired
   private GenericMethod genericMethod;
@@ -38,7 +37,7 @@ public class WaitMethod {
 
     By objectName = genericMethod.getBy(dataParam);
     Wait<WebDriver> wait = generalwait.fluenttimeoutwait();
-    logger.debug("Waiting for the Element Visibility " + objectName);
+    log.debug("Waiting for the Element Visibility " + objectName);
     wait.until(ExpectedConditions.visibilityOfElementLocated(objectName));
     return "pass";
   }
@@ -51,7 +50,7 @@ public class WaitMethod {
    */
   public  String waitForElementVisible(WebElement element) {
     Wait<WebDriver> wait = generalwait.fluentwait();
-    logger.debug("Waiting for the WebElement Visibility " + element);
+    log.debug("Waiting for the WebElement Visibility " + element);
     wait.until(ExpectedConditions.visibilityOf(element));
     return "pass";
   }
@@ -67,7 +66,7 @@ public class WaitMethod {
   public  String waitForAllElementVisible(List<WebElement> elements) {
 
     Wait<WebDriver> wait = generalwait.fluentwait();   
-    logger.debug("Waiting for All WebElement Visibility " + elements);
+    log.debug("Waiting for All WebElement Visibility " + elements);
     wait.until(ExpectedConditions.visibilityOfAllElements(elements));
     return "pass";
   }
@@ -85,7 +84,7 @@ public class WaitMethod {
     
     By objectName = genericMethod.getBy(dataParam.get(0)); 
     Wait<WebDriver> wait = generalwait.fluentwait();    
-    logger.debug("Waiting for the Text to be present " + objectName);
+    log.debug("Waiting for the Text to be present " + objectName);
     wait.until(ExpectedConditions.textToBePresentInElementLocated(objectName, dataParam.get(1)));
     return "pass";
   }
@@ -103,9 +102,9 @@ public class WaitMethod {
 
   public  String waitForAttributedContain(List<String> dataParam) {
     By objectName = genericMethod.getBy(dataParam.get(0));
-    logger.debug("Waiting for the attributed presnt and value " + objectName);
-    logger.debug("attribute --------->" + dataParam.get(1));
-    logger.debug("Value --------->" + dataParam.get(2));
+    log.debug("Waiting for the attributed presnt and value " + objectName);
+    log.debug("attribute --------->" + dataParam.get(1));
+    log.debug("Value --------->" + dataParam.get(2));
     Wait<WebDriver> wait = generalwait.fluentwait();    
     wait.until(ExpectedConditions.attributeContains(objectName, dataParam.get(1),
                     dataParam.get(2)));
@@ -132,7 +131,7 @@ public class WaitMethod {
 
     By objectName = genericMethod.getBy(dataParam); 
     Wait<WebDriver> wait = generalwait.fluentwait();
-    logger.debug("Waiting for the element to be present " + objectName);
+    log.debug("Waiting for the element to be present " + objectName);
     wait.until(ExpectedConditions.presenceOfElementLocated(objectName));
     return "pass";
   }
@@ -146,7 +145,7 @@ public class WaitMethod {
 
     By objectName = genericMethod.getBy(dataParam); 
     Wait<WebDriver> wait = generalwait.fluentwait();    
-    logger.debug("Waiting element invisible " + objectName);
+    log.debug("Waiting element invisible " + objectName);
     wait.until(ExpectedConditions.invisibilityOfElementLocated(objectName));
     return "pass";
 
@@ -162,7 +161,7 @@ public class WaitMethod {
 
     By objectName = genericMethod.getBy(locator); 
     Wait<WebDriver> wait = generalwait.fluentwait();    
-    logger.debug("Waiting element attribute not present " + objectName);
+    log.debug("Waiting element attribute not present " + objectName);
     wait.until(CustomWait.attributedNotPresent(objectName, attributeName));
     return "pass";
   }
@@ -178,7 +177,7 @@ public class WaitMethod {
   public String waitForElementAttributeNotPresent(WebElement element, String attributeName) {
 
     Wait<WebDriver> wait = generalwait.fluentwait();    
-    logger.debug("Waiting element attribute not present " + element);
+    log.debug("Waiting element attribute not present " + element);
     wait.until(CustomWait.attributedNotPresent(element, attributeName));
     return "pass";
   }
@@ -192,7 +191,7 @@ public class WaitMethod {
   public String waitForElementAttributePresent(WebElement element, String attributeName) {
 
     Wait<WebDriver> wait = generalwait.fluentwait();    
-    logger.debug("Waiting element attribute not present " + element);
+    log.debug("Waiting element attribute not present " + element);
     wait.until(CustomWait.attributedPresent(element, attributeName));
     return "pass";
   }
@@ -207,7 +206,7 @@ public class WaitMethod {
     
     By objectName = genericMethod.getBy(dataParam); 
     Wait<WebDriver> wait = generalwait.fluentwait();    
-    logger.debug("Waiting element clickable " + objectName);
+    log.debug("Waiting element clickable " + objectName);
     wait.until(ExpectedConditions.elementToBeClickable(objectName));
     return "pass";
   }
@@ -221,7 +220,7 @@ public class WaitMethod {
   public String waitForElementClickable(WebElement element) {
     
     Wait<WebDriver> wait = generalwait.fluentwait();    
-    logger.debug("Waiting for element to be clickable " + element);
+    log.debug("Waiting for element to be clickable " + element);
     wait.until(ExpectedConditions.elementToBeClickable(element));
     return "pass";
   }
@@ -235,7 +234,7 @@ public class WaitMethod {
   public String waitForSomeTextPresent(WebElement element) {
 
     Wait<WebDriver> wait = generalwait.fluentwait();    
-    logger.debug("Waiting for the Text to be present " + element);
+    log.debug("Waiting for the Text to be present " + element);
     wait.until(CustomWait.someTextPresent(element));
     return "pass";
   }
@@ -247,7 +246,7 @@ public class WaitMethod {
   public String waitForAlertPresent() {
 
     Wait<WebDriver> wait = generalwait.fluentwait();    
-    logger.debug("Waiting for the Alert present");
+    log.debug("Waiting for the Alert present");
     wait.until(ExpectedConditions.alertIsPresent());
     return "pass";
   }
@@ -260,7 +259,7 @@ public class WaitMethod {
   public String waitForStalenessElement(WebElement element) {
 
     Wait<WebDriver> wait = generalwait.fluentwait();    
-    logger.debug("Waiting for the staleness element");
+    log.debug("Waiting for the staleness element");
     wait.until(ExpectedConditions.stalenessOf(element));
     return "pass";
   }
@@ -274,7 +273,7 @@ public class WaitMethod {
   public String waitForNotificationDisAppear(WebElement element) {
     
     Wait<WebDriver> wait = generalwait.fluentwait();    
-    logger.debug("Waiting for the Notification disappear " + element);
+    log.debug("Waiting for the Notification disappear " + element);
     wait.until(CustomWait.notification(element));
     return "pass";
   }
@@ -288,7 +287,7 @@ public class WaitMethod {
   public String waitForNotificationAppear(WebElement element) {
 
     Wait<WebDriver> wait = generalwait.fluentwait();    
-    logger.debug("Waiting for the Notification appear " + element);
+    log.debug("Waiting for the Notification appear " + element);
     wait.until(CustomWait.notificationappear(element));
     return "pass";
   }
@@ -302,7 +301,7 @@ public class WaitMethod {
   public String waitForNestedElementsPresence(By parent, By childLocator) {
     
     Wait<WebDriver> wait = generalwait.fluentwait();    
-    logger.debug("Waiting for the child elements " + childLocator);
+    log.debug("Waiting for the child elements " + childLocator);
     wait.until(ExpectedConditions.presenceOfNestedElementsLocatedBy(parent, childLocator));
     return "pass";
   }
@@ -316,7 +315,7 @@ public class WaitMethod {
   public String waitForNestedElementPresence(WebElement element, By childLocator) {
     
     Wait<WebDriver> wait = generalwait.fluentwait();    
-    logger.debug("Waiting for the child elements " + childLocator);
+    log.debug("Waiting for the child elements " + childLocator);
     wait.until(ExpectedConditions.presenceOfNestedElementLocatedBy(element, childLocator));
     return "pass";
   }
@@ -331,7 +330,7 @@ public class WaitMethod {
 
     By by = genericMethod.getBy(byObject);
     Wait<WebDriver> wait = generalwait.fluentwait();    
-    logger.debug("Waiting for the locators elements " + by);
+    log.debug("Waiting for the locators elements " + by);
     wait.until(ExpectedConditions.numberOfElementsToBeLessThan(by, number));
     return "pass";
   }
@@ -345,7 +344,7 @@ public class WaitMethod {
   public String waitForElementLessThan(By byObject, int number) {
 
     Wait<WebDriver> wait = generalwait.fluentwait();    
-    logger.debug("Waiting for the locators elements " + byObject);
+    log.debug("Waiting for the locators elements " + byObject);
     wait.until(ExpectedConditions.numberOfElementsToBeLessThan(byObject, number));
     return "pass";
   }
@@ -360,7 +359,7 @@ public class WaitMethod {
 
     By by = genericMethod.getBy(byObject);
     Wait<WebDriver> wait = generalwait.fluentwait();    
-    logger.debug("Waiting for the locators elements " + by);
+    log.debug("Waiting for the locators elements " + by);
     wait.until(ExpectedConditions.numberOfElementsToBe(by, number));
     return "pass";
   }

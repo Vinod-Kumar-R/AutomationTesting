@@ -5,8 +5,7 @@ import com.automation.configuration.PropertiesValue;
 import com.automation.utility.ExtentReport;
 import com.aventstack.extentreports.Status;
 import java.io.IOException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +13,8 @@ import org.springframework.stereotype.Component;
  * used for creating the Mail content preparation.
  */
 @Component
+@Log4j2
 public class MailContent {
-  
-  private static Logger logger = LogManager.getLogger(MailContent.class);
   
   @Autowired
   private ExtentReport extentreport;
@@ -32,7 +30,7 @@ public class MailContent {
    */
   public ExtentReportBean maildata() {
 
-    logger.debug("Setting the Email body content");
+    log.debug("Setting the Email body content");
     
     // zip the result file
     /*Path resultfile = genericMethod.zip(ConstantVariable.ResultLocation, 

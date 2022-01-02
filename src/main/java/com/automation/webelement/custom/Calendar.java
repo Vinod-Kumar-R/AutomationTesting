@@ -2,15 +2,14 @@ package com.automation.webelement.custom;
 
 import com.automation.utility.GenericMethod;
 import com.automation.utility.WaitMethod;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@Log4j2
 public class Calendar {
-  private static Logger logger = LogManager.getLogger(Calendar.class);
   @Autowired
   private GenericMethod genericmethod;
   @Autowired
@@ -30,12 +29,12 @@ public class Calendar {
    * This method is used to click on the Year to display it.
    */
   private void monthYearview() {
-    logger.debug("click on the montyyearview button");
+    log.debug("click on the montyyearview button");
     waitmethod.waitForElementPresent("calender_monthyearview");
     WebElement monthyearview = genericmethod.getWebElement(calendar, "calender_monthyearview");
     waitmethod.waitForElementClickable(monthyearview);
     monthyearview.click();
-    logger.debug("click on the month year view button");
+    log.debug("click on the month year view button");
   }
   
   
@@ -44,7 +43,7 @@ public class Calendar {
    * @param year should me in YYYY
    */
   private void yearSelect(String year) {
-    logger.debug("click on the year table");
+    log.debug("click on the year table");
     waitmethod.waitForElementPresent("calender_years");
     WebElement yeartable = genericmethod.getWebElement(calendar, "calender_years");
     waitmethod.waitForElementClickable(yeartable);
@@ -58,7 +57,7 @@ public class Calendar {
    * @param month should be in MMM i.e. JAN
    */
   private void monthSelect(String month) {
-    logger.debug("click on the Month table");
+    log.debug("click on the Month table");
     waitmethod.waitForElementPresent("calender_month");
     WebElement monthtable = genericmethod.getWebElement(calendar, "calender_month");
     table.setTable(monthtable);
@@ -70,7 +69,7 @@ public class Calendar {
    * @param date should be in D i.e 1, 5 or 10
    */
   private void dateSelect(String date) {
-    logger.debug("clicking on the date table");
+    log.debug("clicking on the date table");
     waitmethod.waitForElementPresent("calender_date");
     WebElement datetable = genericmethod.getWebElement(calendar, "calender_date");
     table.setTable(datetable);

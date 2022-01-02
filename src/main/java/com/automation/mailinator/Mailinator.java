@@ -6,17 +6,16 @@ import com.automation.utility.GenericMethod;
 import com.automation.utility.WaitMethod;
 import com.automation.webdriver.BrowserInitialize;
 import java.util.List;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@Log4j2
 public class Mailinator {
   
-  private static Logger logger = LogManager.getLogger(Mailinator.class.getName());
   private WebDriver driver;
 
   @Autowired
@@ -40,14 +39,14 @@ public class Mailinator {
     driver.get(properties.getMailinatorUrl());
     
     //wait for element present
-    logger.debug("Waiting for the element present email_id ");
+    log.debug("Waiting for the element present email_id ");
     waitmethod.waitForElementPresent("email_id");
     
-    logger.debug("enter the email id " + dataParam.get(0));
+    log.debug("enter the email id " + dataParam.get(0));
     WebElement element = genericmethod.getElement("email_id");
     element.sendKeys(dataParam.get(0));
     
-    logger.debug("click on the Go button");
+    log.debug("click on the Go button");
     element = genericmethod.getElement("email_id_go");
     element.click();
   }
@@ -57,26 +56,26 @@ public class Mailinator {
    */
   public void readEmailOtp() {
     
-    logger.debug("wait for email to receive");
+    log.debug("wait for email to receive");
     //waitmethod.waitForElementPresent("open_first_email");
     waitmethod.waitForElementVisible("open_first_email");
     
-    logger.debug("click on the first email received");
+    log.debug("click on the first email received");
     WebElement element = genericmethod.getElement("open_first_email");
     element.click();
     
-    logger.debug("switch to frame for message body");
+    log.debug("switch to frame for message body");
     element = genericmethod.getElement("email_content_frame");
     genericmethod.switchframe(element);
     
-    logger.debug("wait for completed email to open");
+    log.debug("wait for completed email to open");
     waitmethod.waitForElementPresent("mailinator_email_otp");
     
-    logger.debug("Read the OTP from mail");
+    log.debug("Read the OTP from mail");
     element = genericmethod.getElement("mailinator_email_otp");
     storevalue.storedOtp = element.getText();
     
-    logger.debug("switch to parent frame");
+    log.debug("switch to parent frame");
     genericmethod.switchframedefault();
 
   }

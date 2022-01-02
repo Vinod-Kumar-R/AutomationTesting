@@ -21,14 +21,13 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@Log4j2
 public class AutomationResultapi {
-  private static Logger logger = LogManager.getLogger(AutomationResultapi.class);
   @Autowired
   private RequestBuilder requestBuilder;
   @Autowired
@@ -47,8 +46,8 @@ public class AutomationResultapi {
     RequestSpecification rs = requestBuilder.postDataResult(ApiEndPoints.TEST_AUTOMATION_RESULT,
                     file, jc.getJiraProjectkey());
     Response res = RestAssured.given(rs).post();
-    logger.debug(res.asString());
-    logger.info("Result are posted to Jira " + res.getStatusCode());
+    log.debug(res.asString());
+    log.info("Result are posted to Jira " + res.getStatusCode());
     
   }
 

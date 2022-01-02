@@ -1,16 +1,14 @@
 package com.automation.webelement.custom;
 
 import java.util.List;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+@Log4j2
 public class TabList {
   
   WebElement element;
-  private static Logger logger = LogManager.getLogger(TabList.class);
-  
   
   public TabList(WebElement element) {
     super();
@@ -27,10 +25,10 @@ public class TabList {
     List<WebElement> tabs = this.element.findElements(By.xpath("div"));
     
     for (WebElement tab : tabs) {
-      logger.debug("tab name is " + tab.getText());
+      log.debug("tab name is " + tab.getText());
       if (tab.getText().equals(tabname)) {
         tab.click();
-        logger.debug("clicked on the tab name");
+        log.debug("clicked on the tab name");
         break;
       }
     }

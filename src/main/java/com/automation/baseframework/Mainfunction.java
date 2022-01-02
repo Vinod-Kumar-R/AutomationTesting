@@ -3,8 +3,7 @@ package com.automation.baseframework;
 import com.automation.configuration.PropertiesValue;
 import com.automation.custom.exception.DuplicateValueException;
 import java.io.IOException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.apache.poi.EncryptedDocumentException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,9 +21,8 @@ import org.springframework.context.annotation.ImportResource;
 @ImportResource("classpath:springfile.xml")
 @ComponentScan(basePackages = "com.automation")
 @EnableFeignClients(basePackages = "com.automation.api")
+@Log4j2
 public class Mainfunction {
-
-  private static Logger logger = LogManager.getLogger(Mainfunction.class);
   
   /**
    * This is the main method.
@@ -38,24 +36,24 @@ public class Mainfunction {
     PropertiesValue propertiesvalue = context.getBean(PropertiesValue.class);
 
     try {
-      logger.debug("Start Executing Test cases");
+      log.debug("Start Executing Test cases");
       bc.startRun();
-      logger.debug("Complete Executing Test cases");
+      log.debug("Complete Executing Test cases");
       System.gc();
 
     } catch (EncryptedDocumentException | IOException 
                     | DuplicateValueException  e) {
       // TODO Auto-generated catch block
-      logger.error(e);
+      log.error(e);
       e.printStackTrace();
     } finally {
       
       bc.extentReport.flushlog();
 
       if (propertiesvalue.isSendemail()) {
-        logger.info("Email method calling");
+        log.info("Email method calling");
         bc.emailTestResult();
-        logger.info("Email sent successfully");
+        log.info("Email sent successfully");
       } 
     }
   }

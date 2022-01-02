@@ -14,14 +14,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.List;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@Log4j2
 public class TestCaseapi {
-  private static Logger logger = LogManager.getLogger(TestCaseapi.class);
   @Autowired
   private RequestBuilder requestBuilder;
   
@@ -33,7 +32,7 @@ public class TestCaseapi {
     RequestSpecification rs = requestBuilder.setSingleTestCase(ApiEndPoints.TEST_CASE_FETCH,
                     testCase);
     Response res = RestAssured.given(rs).get();
-    logger.debug("fetch test case " + res.asString());
+    log.debug("fetch test case " + res.asString());
     //System.out.println(res.asPrettyString());
   }
 
@@ -49,7 +48,7 @@ public class TestCaseapi {
     RequestSpecification rs = requestBuilder.setAllTestCase(ApiEndPoints.TEST_CASE_SEARCH,
                     queryParam, startIndex, limit);
     Response res = RestAssured.given(rs).get();
-    logger.debug("testcase respone " + res.asString());
+    log.debug("testcase respone " + res.asString());
     Type type = new TypeToken<List<TestCase>>() {}.getType();
     List<TestCase> testcase   = res.as(type);
     return testcase;
@@ -65,7 +64,7 @@ public class TestCaseapi {
     RequestSpecification rs = requestBuilder.setSingleTestCase(ApiEndPoints.TEST_CASE_ATTACHMENT,
                     testCase);
     Response res = RestAssured.given(rs).get();
-    logger.debug(res.asString());
+    log.debug(res.asString());
     Type type = new TypeToken<List<TestCaseAttachment>>() {}.getType();
     List<TestCaseAttachment> testcaseattachment = res.as(type);
     return testcaseattachment;
@@ -103,7 +102,7 @@ public class TestCaseapi {
       }
       fileOS.close();
     } catch (IOException e) {
-      logger.error(e.getMessage());
+      log.error(e.getMessage());
       System.out.println(e.getMessage());
     }
 

@@ -23,8 +23,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.apache.poi.EncryptedDocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -39,8 +38,8 @@ import org.springframework.stereotype.Component;
  * @version 1.0
  */
 @Component
+@Log4j2
 public class BaseClass {
-  private static Logger logger = LogManager.getLogger(BaseClass.class);
   @Autowired
   private ConstantVariable constantVariable;
   @Autowired
@@ -115,12 +114,12 @@ public class BaseClass {
       Path jsonfile =   testresult.jiraresult("result.json");
       File resultfile = genericMethod.zipFile(properties.getTemplocation() 
                       + File.separator + "result.zip", jsonfile);
-      logger.debug("updating result to jira");
+      log.debug("updating result to jira");
       testresult.postTestResult(resultfile);
-      logger.debug("Result update to jira complete");
+      log.debug("Result update to jira complete");
     } else {
       //initialize the excel file for testdata and stored all the row number of testdata start
-      logger.info("Excel file name " + properties.getTestdata());
+      log.info("Excel file name " + properties.getTestdata());
       testData.setExcelfilename(properties.getTestdata());
       testData.getExcelsheetindex(0);
       constantVariable.searchTestData();
@@ -137,15 +136,15 @@ public class BaseClass {
     int testDatarownumber = 0;
 
     //Read the Test case data
-    logger.debug("Test Case File name " + testfile);
+    log.debug("Test Case File name " + testfile);
     List<TestExcelBean> testcases = Poiji.fromExcel(new File(testfile),
                     TestExcelBean.class);  
     for (TestExcelBean testcase : testcases) {
       if (testcase.getTestExecute().equalsIgnoreCase("yes")) {
-        logger.info("Started Executing Test Case ID " + testcase.getTestcaseId());
-        logger.debug("Test Case ID " + testcase.getTestcaseId());
-        logger.debug("Test Case Description " + testcase.getTestcaseDescription());
-        logger.debug("Test Case Categeory " + testcase.getTestCatgeory());
+        log.info("Started Executing Test Case ID " + testcase.getTestcaseId());
+        log.debug("Test Case ID " + testcase.getTestcaseId());
+        log.debug("Test Case Description " + testcase.getTestcaseDescription());
+        log.debug("Test Case Categeory " + testcase.getTestCatgeory());
 
         extentReport.createTest(testcase.getTestcaseId(), testcase.getTestcaseDescription());
         extentReport.categeory(testcase.getTestCatgeory());
@@ -153,28 +152,28 @@ public class BaseClass {
         //check if jira integration is enable then from first row is the testcaseID
         if (properties.isJiraIntegration()) {
           //Execute the Test case ID
-          logger.debug("Test Case ID found and started executing " + testcase.getTestcaseId());
+          log.debug("Test Case ID found and started executing " + testcase.getTestcaseId());
           testRunId(0, testcase.getTestDatalocation());
           extentReport.flushlog();
         } else {
-          logger.debug("Test case found in the test data file at----> "
+          log.debug("Test case found in the test data file at----> "
                           + ConstantVariable.TestDataRowNumber.get(testcase.getTestcaseId()));
           testDatarownumber = ConstantVariable.TestDataRowNumber.get(testcase.getTestcaseId());
 
           //Execute the Test case ID
-          logger.debug("Test Case ID found and started executing " + testcase.getTestcaseId());
+          log.debug("Test Case ID found and started executing " + testcase.getTestcaseId());
           testRunId(testDatarownumber, properties.getTestdata());
           extentReport.flushlog();
         }
       } else {
-        logger.info("Skiped the Test case " + testcase.getTestcaseId());
+        log.info("Skiped the Test case " + testcase.getTestcaseId());
         extentReport.skipTest(testcase.getTestcaseId(), testcase.getTestcaseDescription());
         extentReport.categeory(testcase.getTestCatgeory());
       }
     }
     extentReport.flushlog();
-    logger.info("Completed Exeuction of all the Test Case i.e " + testcases.size());
-    logger.info("Result file are located in :- " + properties.getExtentreportlocation());
+    log.info("Completed Exeuction of all the Test Case i.e " + testcases.size());
+    log.info("Result file are located in :- " + properties.getExtentreportlocation());
   }
 
   /**
@@ -210,7 +209,7 @@ public class BaseClass {
       while (testData.getCellData(currentRow, 0) == null
                       || !testData.getCellData(currentRow, 0).equalsIgnoreCase("End")) {
         keyword = testData.getCellData(currentRow, currentCol);
-        logger.debug("Got the Key word from excel sheet " + keyword);
+        log.debug("Got the Key word from excel sheet " + keyword);
 
         //skipping the step if keyword is "comment"
         if (!keyword.equalsIgnoreCase("comment")) {
@@ -221,8 +220,8 @@ public class BaseClass {
           List<String> dataParam = new ArrayList<String>();
 
           while (testData.getCellData(currentRow, column) != null) {
-            logger.debug("current row number " + currentRow + " Column number " + column);
-            logger.debug("Data from Cell " + testData.getCellData(currentRow, column));
+            log.debug("current row number " + currentRow + " Column number " + column);
+            log.debug("Data from Cell " + testData.getCellData(currentRow, column));
 
             param = testData.getCellData(currentRow, column);
             dataParam.add(param);
@@ -231,7 +230,7 @@ public class BaseClass {
           }
 
           keywordExecution.setvalue(KeywordType.valueOf(keyword.toUpperCase()));
-          logger.info("Executing the Keyword " + keyword.toUpperCase());
+          log.info("Executing the Keyword " + keyword.toUpperCase());
           keywordExecution.executed(dataParam);
           
           /*After keyword execution successfully then only below statement is executed
@@ -246,7 +245,7 @@ public class BaseClass {
     } catch (AssertionError | Exception e) {
       try {
         testData.closeWorkbook();
-        logger.error("Got an exception while executing keyword --> " + keyword, e);
+        log.error("Got an exception while executing keyword --> " + keyword, e);
         e.printStackTrace();
         extentReport.writeLog(Status.FAIL, "Failed executing Keyword ---> " + keyword);
         extentReport.writeLog(Status.FAIL, e);
@@ -256,7 +255,7 @@ public class BaseClass {
         extentReport.flushlog();
         
       } catch (IOException e1) {
-        logger.error("Problem while closing the TestData.xlsx file " + e);
+        log.error("Problem while closing the TestData.xlsx file " + e);
         e1.printStackTrace();
       }
     }
@@ -299,20 +298,20 @@ public class BaseClass {
       for (TestCase testcase : testcases) {
 
         //download the testscript from jira
-        logger.debug("testcase ID " + testcase.getTestcaseId()
+        log.debug("testcase ID " + testcase.getTestcaseId()
             + "-----" + "projectID " + testcase.getProjectId());
         List<TestCaseAttachment> attachments = 
                         testcaseapi.getTestCaseAttachmentList(testcase.getTestcaseId());
         for (TestCaseAttachment attachment : attachments) {
           if (attachment.getFilename().equalsIgnoreCase("Automation.xlsx") 
                           && attachment.getFilesize() > 0) {
-            logger.debug("Script file need to download");
+            log.debug("Script file need to download");
             //download the test script assuming file has download
             testscriptlocation = properties.getTemplocation() + File.separator 
                             + testcase.testcaseId.replace("-", "") + attachment.getFilename();
             testcaseapi.getDownloadTestCaseFile(attachment.getUrl(), testscriptlocation);
             // write to exel sheet 
-            logger.debug("writing to excel sheet");
+            log.debug("writing to excel sheet");
             testcaseCreation.setCreateRow(cellrow);
             testcaseCreation.setCellData(0, testcase.getTestcaseId());
             testcaseCreation.setCellData(1, testcase.getTestCaseDescription());

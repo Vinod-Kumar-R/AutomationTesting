@@ -3,14 +3,14 @@ package com.automation.webelement.custom;
 import com.automation.utility.GenericMethod;
 import com.automation.utility.WaitMethod;
 import java.util.List;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@Log4j2
 public class CreateQuestionnaire {
 
   @Autowired
@@ -18,7 +18,6 @@ public class CreateQuestionnaire {
   @Autowired
   private WaitMethod waitmethod;
   WebElement element;
-  private static Logger logger = LogManager.getLogger(CreateQuestionnaire.class);
 
   public void setElement(WebElement element) {
     this.element = element;
@@ -46,15 +45,15 @@ public class CreateQuestionnaire {
 
     List<WebElement> buttons =  create.findElements(By.xpath("button"));
 
-    logger.debug("Number of button are " + buttons.size());
+    log.debug("Number of button are " + buttons.size());
     
     butto:
       for (WebElement button : buttons) {
-        logger.debug("button text " + button.getText());
+        log.debug("button text " + button.getText());
         if (button.getText().equalsIgnoreCase("add")) {
           waitmethod.waitForElementClickable(button);
           button.click();
-          logger.debug("click on the add button");
+          log.debug("click on the add button");
           break butto;
         }
       }
@@ -74,7 +73,7 @@ public class CreateQuestionnaire {
     WebElement selectquestion = genericmethod.getWebElement(create, 
                     "competition_questionnaries_dropdown");
     waitmethod.waitForElementVisible(selectquestion);
-    logger.debug("clicking on the questionnaries dropdown to show");
+    log.debug("clicking on the questionnaries dropdown to show");
     selectquestion.click();
     
   }
@@ -96,10 +95,10 @@ public class CreateQuestionnaire {
                     "competition_questionnaries_save_lists");
 
     for (WebElement save : buttonlist) {
-      logger.debug("Competition button text name : " + save.getText());
+      log.debug("Competition button text name : " + save.getText());
       if (save.getText().equals("SAVE")) {
         waitmethod.waitForElementClickable(save);
-        logger.debug("click on the Save button");
+        log.debug("click on the Save button");
         save.click();
       }
     }
@@ -122,15 +121,15 @@ public class CreateQuestionnaire {
 
         List<WebElement> buttons = list.findElements(By.xpath("button"));
 
-        logger.debug("questionnaries select " + selectquestionnaries.getText());
+        log.debug("questionnaries select " + selectquestionnaries.getText());
         if (selectquestionnaries.getText().equals(deleteText)) {
 
 
           for (WebElement button : buttons) {
-            logger.debug("button text " + button.getText());
+            log.debug("button text " + button.getText());
             if (button.getText().equalsIgnoreCase("delete")) {
               button.click();
-              logger.debug("click on the delete button");
+              log.debug("click on the delete button");
               break outerloop;
             }
           }

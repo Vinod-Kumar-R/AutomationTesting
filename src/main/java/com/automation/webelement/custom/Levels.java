@@ -3,16 +3,15 @@ package com.automation.webelement.custom;
 import com.automation.utility.GenericMethod;
 import com.automation.utility.WaitMethod;
 import java.util.List;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@Log4j2
 public class Levels {
 
-  private static Logger logger = LogManager.getLogger(Levels.class);
   WebElement element;
   @Autowired
   private GenericMethod genericmethod;
@@ -31,7 +30,7 @@ public class Levels {
 
     List<WebElement> numberofLevels = genericmethod.getWebElements(this.element, 
                     "competition_levels_questionnaries_base");
-    logger.debug("number of levels are " + numberofLevels.size());
+    log.debug("number of levels are " + numberofLevels.size());
     return numberofLevels.size();
 
   }
@@ -49,14 +48,14 @@ public class Levels {
 
     List<WebElement> buttons = genericmethod.getWebElements(level, "competition_new_levels");
 
-    logger.debug("Number of button are " + buttons.size());
+    log.debug("Number of button are " + buttons.size());
 
     butto:
       for (WebElement button : buttons) {
-        logger.debug("button text " + button.getText());
+        log.debug("button text " + button.getText());
         if (button.getText().equalsIgnoreCase("add")) {
           button.click();
-          logger.debug("click on the add button");
+          log.debug("click on the add button");
           break butto;
         }
       }
@@ -72,10 +71,10 @@ public class Levels {
 
     WebElement level = levels.get(numbetOfLevels() - 1);
 
-    logger.debug("getting the questionnairesbutton");
+    log.debug("getting the questionnairesbutton");
     WebElement questionnairesbutton = genericmethod.getWebElement(level,
                     "competition_levels_select_questionnaires");
-    logger.debug("click on the questionnairesbutton");
+    log.debug("click on the questionnairesbutton");
     questionnairesbutton.click();
     
   }
