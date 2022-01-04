@@ -9,6 +9,7 @@ import io.github.bonigarcia.wdm.config.DriverManagerType;
 import java.net.MalformedURLException;
 import java.net.URL;
 import lombok.extern.log4j.Log4j2;
+import org.assertj.core.api.Assertions;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -126,6 +127,11 @@ public final class BrowserInitialize {
     if (properties.isDocker()) {
       log.info("Docker URL :- " + webDriverManager.getDockerNoVncUrl(driver));
     }
+    
+    Assertions
+      .assertThat(driver)
+      .as("WebDriver instance is null")
+        .isNotNull();
 
     jsDriver = (JavascriptExecutor) driver;
     ngwebdriver = new NgWebDriver(jsDriver);
