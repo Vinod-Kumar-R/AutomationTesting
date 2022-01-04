@@ -188,7 +188,7 @@
 		<dependency>
 			<groupId>com.aventstack</groupId>
 			<artifactId>klov-reporter</artifactId>
-			<version>5.0.8</version>
+			<version>5.0.9</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/io.appium/java-client -->
@@ -253,8 +253,6 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
-
-
 	</dependencies>
 
 	<dependencyManagement>
@@ -266,6 +264,18 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			<!-- https://mvnrepository.com/artifact/org.mongodb/bson -->
+			<dependency>
+				<groupId>org.mongodb</groupId>
+				<artifactId>bson</artifactId>
+				<version>3.6.4</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mongodb</groupId>
+				<artifactId>mongodb-driver-core</artifactId>
+				<version>3.6.4</version>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 
