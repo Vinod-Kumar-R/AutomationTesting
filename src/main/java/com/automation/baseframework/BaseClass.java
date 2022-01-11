@@ -269,8 +269,8 @@ public class BaseClass {
         e.printStackTrace();
         extentReport.writeLog(Status.FAIL, "Failed executing Keyword ---> " + keyword);
         extentReport.writeLog(Status.FAIL, e);
-        extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
-        //extentReport.attachScreenshotPath(genericMethod.takeScreenshot());
+        //extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
+        extentReport.attachScreenshotPath(genericMethod.takeScreenshot());
         //need to think how to add the video link to extent report
         browserinitialize.browserRecording(recordingFilename, true);
         browserinitialize.quitBrowser();

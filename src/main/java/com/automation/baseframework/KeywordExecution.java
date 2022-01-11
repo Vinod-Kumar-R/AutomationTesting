@@ -103,8 +103,8 @@ public class KeywordExecution {
         break;
 
       case TAKESCREENSHOT :
-        extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
-        //extentReport.attachScreenshotPath(genericMethod.takeScreenshot());
+        //extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
+        extentReport.attachScreenshotPath(genericMethod.takeScreenshot());
         log.debug("taken the screen shot");
         break;
 

@@ -30,6 +30,7 @@ import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.io.FileUtils;
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -105,11 +106,11 @@ public class GenericMethod {
   /*
    * changing the image from path location to base 64 for that reason comment below code
    */
-  /*
+  /**
    * This Method is used to take an WebBrowser Screenshot.
    * @return the file location in the String format
    */
-  /* 
+   
   public  String takeScreenshot() {
     WebDriver driver = browserinitialize.getWebDriverInstance();
     long filename = System.currentTimeMillis();
@@ -120,36 +121,36 @@ public class GenericMethod {
                         + File.separator + filename + ".png"));
       } catch (IOException e) {
         e.printStackTrace();
-        logger.error(e.getStackTrace());
+        log.error(e.getStackTrace());
       }
     }
     String absolutePath = ConstantVariable.ScreenShotlocation +  File.separator
                     + filename + ".png";
-    logger.debug("absolutepath " + absolutePath);
+    log.debug("absolutepath " + absolutePath);
     
     //Block of code is comment because in KLOV community report required the absolute path rather 
-     // then relative path 
-     // relative path is used only for attach the extent repor to email 
-     // as of now report are not attach to email so comment out the below code
+    // then relative path 
+    // relative path is used only for attach the extent repor to email 
+    // as of now report are not attach to email so comment out the below code
     // 
     
     String relativePath = new File(ConstantVariable.resultLocation).toURI().relativize(
                     new File(absolutePath).toURI()).getPath();
-    logger.debug(" relative path " + relativePath);
+    log.debug(" relative path " + relativePath);
     return ".." + File.separator + relativePath;
     
     //uncomment the below comment when relativePath is commented
     //return absolutePath;
   }
 
-*/
+
   /**
    * Method is used to take screenshot in Base64 format.
    * this can be used when KLOV community support Base64.  
    * @return string in base 64 format
    */
   
-  public  String takeScreenshot() {
+  public  String takeScreenshot64() {
     WebDriver driver = browserinitialize.getWebDriverInstance();
     String tempFile = null;
     if (driver instanceof TakesScreenshot) {
