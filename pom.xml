@@ -374,7 +374,7 @@
 					<execution>
 						<phase>package</phase>
 						<configuration>
-							<tasks>
+							<target>
 								<copy todir="${basedir}/target/properties">
 									<fileset
 										dir="${basedir}/ConfigurationFolder/properties"
@@ -387,7 +387,7 @@
 								<copy todir="${basedir}/target/docker">
 									<fileset dir="${basedir}/docker" includes="**/*" />
 								</copy>
-							</tasks>
+							</target>
 						</configuration>
 						<goals>
 							<goal>run</goal>
