@@ -87,4 +87,10 @@ public class PropertiesValue {
   
   @Setter
   private String templocation;
+  
+  @Setter
+  private String resultfolder;
+  
+  @Value("${docker_video_recording}")
+  private boolean isRecording;
 }

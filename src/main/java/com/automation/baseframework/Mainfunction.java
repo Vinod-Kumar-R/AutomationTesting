@@ -3,6 +3,7 @@ package com.automation.baseframework;
 import com.automation.configuration.PropertiesValue;
 import com.automation.custom.exception.DuplicateValueException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import lombok.extern.log4j.Log4j2;
 import org.apache.poi.EncryptedDocumentException;
 import org.springframework.boot.SpringApplication;
@@ -42,7 +43,7 @@ public class Mainfunction {
       System.gc();
 
     } catch (EncryptedDocumentException | IOException 
-                    | DuplicateValueException  e) {
+                    | DuplicateValueException | URISyntaxException  e) {
       // TODO Auto-generated catch block
       log.error(e);
       e.printStackTrace();

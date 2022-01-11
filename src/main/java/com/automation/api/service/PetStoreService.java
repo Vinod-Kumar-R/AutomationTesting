@@ -1,15 +1,9 @@
 package com.automation.api.service;
 
 import com.automation.api.controller.PetStoreController;
-import com.automation.api.model.Category;
 import com.automation.api.model.Pet;
-import com.automation.api.model.Statuss;
-import com.automation.api.model.Tag;
 import com.automation.utility.GenericMethod;
-
 import feign.FeignException;
-
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

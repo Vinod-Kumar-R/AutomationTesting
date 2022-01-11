@@ -6,9 +6,13 @@ import com.paulhammant.ngwebdriver.NgWebDriver;
 import io.appium.java_client.AppiumDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Path;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.io.FileUtils;
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.JavascriptExecutor;
@@ -58,6 +62,13 @@ public final class BrowserInitialize {
       webDriverManager.browserVersion("latest");
       webDriverManager.dockerTimezone("UTC+05:30");
       webDriverManager.config().setUseBetaVersions(false);
+      //check docker is enable and video recording enable 
+      if (properties.isRecording()) {
+        webDriverManager.enableRecording();
+        webDriverManager.recordingOutput(
+                        properties.getResultfolder() 
+                        + File.separator + "Recorder");
+      }
     }
 
     switch (bt) {
@@ -213,6 +224,10 @@ public final class BrowserInitialize {
     driver = null;
     ngwebdriver = null;
   }
+  
+  public WebDriverManager getWebDriverManager() {
+    return webDriverManager;
+  }
 
   /**
    * this method is used the extend report for updating the browser instance used for testing.
@@ -222,6 +237,35 @@ public final class BrowserInitialize {
     extentreport.setSystemInfo("Browser Name", caps.getBrowserName());
     extentreport.setSystemInfo("Browser Version", caps.getBrowserVersion());
     extentreport.setSystemInfo("Platform", caps.getPlatformName().name());    
+  }
+  
+  /**
+   * This method is used for recording of browser execution.
+   * @param newFilename is the test case id name
+   * @param saveFile is boolean value, to decide save the file or no
+   * @throws IOException IO Exception.
+   */
+  public Path browserRecording(String newFilename, boolean saveFile) throws IOException {
+
+    //stop docker recording for successfully executed
+    if (properties.isDocker() && properties.isRecording()) {
+      webDriverManager.stopDockerRecording();
+      Path recordingPath = webDriverManager.getDockerRecordingPath();
+      Path destinationPath = new File(properties.getResultfolder() 
+                      + File.separator + "Recorder" 
+                      + File.separator + newFilename + ".mp4").toPath();
+      if (saveFile) {
+        FileUtils.moveFile(
+                        FileUtils.getFile(recordingPath.toAbsolutePath().toString()),
+                        FileUtils.getFile(destinationPath.toAbsolutePath().toString()));
+        return destinationPath;
+      } else {
+        FileUtils.deleteQuietly(recordingPath.toFile());
+      }
+      
+    }
+    return null;
+    
   }
 
 }

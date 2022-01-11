@@ -86,6 +86,7 @@ public class ConstantVariable {
     resultDatelocaton = dateTime(date, resultBaseLocation);
     resultLocation = dateTime(time, resultDatelocaton);
     resultLocation1 = resultLocation + File.separator + Foldername;
+    properties.setResultfolder(resultLocation1);
     extentReportsLocation = resultLocation1 + File.separator + "automation.html";
     properties.setExtentreportlocation(extentReportsLocation);
     ScreenShotlocation = folderCreation(resultLocation1, "ScreenShot");
@@ -248,7 +249,7 @@ public class ConstantVariable {
   }
   
  
-  /**
+  /*
    * method is used to insert the data to database and when every it required uncomment it.
    * @throws FileNotFoundException file not found
    */

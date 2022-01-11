@@ -308,13 +308,13 @@ public class KeywordExecution {
     }
   }
 
-  /**
+  /*
    * This method capture the status of each keyword by saying pass or fail.
    * 
    * @param status it contain pass or fail 
    * @param message Message contain information of the keyword executed
    */
- /* public void testResult(String status, String message)   {
+  /*public void testResult(String status, String message)   {
     if (status.equalsIgnoreCase("Pass")) {
       extentReport.writeLog(Status.PASS, message);
     }

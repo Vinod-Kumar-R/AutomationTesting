@@ -2,6 +2,9 @@ package com.automation.utility;
 
 import com.automation.configuration.KlovConfiguration;
 import com.automation.configuration.PropertiesValue;
+import com.automation.jira.beanclass.Execution;
+import com.automation.jira.beanclass.TestResult;
+import com.automation.jira.beanclass.TestStatus;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
@@ -54,6 +57,7 @@ public class ExtentReport {
     this.spark = new ExtentSparkReporter(properties.getExtentreportlocation());
     this.spark.config().setCss(css1);
     
+    
     try {
       this.spark.loadXMLConfig(properties.getExtentReportsPropeties());
       if (properties.isKlov()) {
@@ -71,7 +75,7 @@ public class ExtentReport {
     }
     this.extent = new ExtentReports();
     this.extent.setSystemInfo("Organization", "Automation");
-   // this.extent.setSystemInfo("OS Version number", System.getProperty("os.version"));
+    // this.extent.setSystemInfo("OS Version number", System.getProperty("os.version"));
     this.extent.setSystemInfo("Build Number", "Need to fetch the Build Number");
     this.extent.setSystemInfo("Encash URL", properties.getEncashUrl());
     this.extent.setSystemInfo("Admin URL", properties.getAdminUrl());
@@ -295,9 +299,33 @@ public class ExtentReport {
     }
     return testStatus;
   }
-  
-  public List<Test> getTestDetail() {
-    List<Test> tests = this.spark.getReport().getTestList();
-    return tests;
+    
+  /**
+   * Method is used to get the Jira Result format type.
+   * @return TestResult of Java Object
+   */
+  public TestResult getJiraResult() {
+
+    List<Test> tests =  this.spark.getReport().getTestList();
+    List<Execution> executions = new ArrayList<>();
+
+    for (Test test : tests) {
+      Execution execution = new Execution();
+      if (test.getStatus().equals(Status.PASS)) {
+        execution.setTestResult("Passed");
+      } else {
+        execution.setTestResult("Failed");
+      }
+      TestStatus testStatus = new TestStatus();
+      testStatus.setTestcaseId(test.getName());
+
+      execution.setTeststatus(testStatus);
+      executions.add(execution);
+    }
+    TestResult result = new TestResult();
+    result.setVersion(1);
+    result.setExecutions(executions);
+
+    return result;
   }
 }

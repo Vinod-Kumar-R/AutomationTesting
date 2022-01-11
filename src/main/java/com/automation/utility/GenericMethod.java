@@ -11,9 +11,15 @@ import com.automation.webelement.custom.MatOptions;
 import com.automation.webelement.custom.MatTable;
 import com.automation.webelement.custom.TabList;
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 import com.paulhammant.ngwebdriver.ByAngular;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -99,11 +105,11 @@ public class GenericMethod {
   /*
    * changing the image from path location to base 64 for that reason comment below code
    */
-  /**
+  /*
    * This Method is used to take an WebBrowser Screenshot.
    * @return the file location in the String format
    */
- /* 
+  /* 
   public  String takeScreenshot() {
     WebDriver driver = browserinitialize.getWebDriverInstance();
     long filename = System.currentTimeMillis();
@@ -113,7 +119,6 @@ public class GenericMethod {
         FileUtils.copyFile(tempFile, new File(ConstantVariable.ScreenShotlocation 
                         + File.separator + filename + ".png"));
       } catch (IOException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
         logger.error(e.getStackTrace());
       }
@@ -624,13 +629,43 @@ public class GenericMethod {
     levels.saveLevels();
   }
   
+  /**
+   * Method is used to convert the Json to particular JAVA object.
+   * @param json , Json Data 
+   * @param clazz is the generic Type to which it need to convert to JAVA object. 
+   * @return generic Type of Class T
+   */
   public <T> T fromJson(String json, Class<T> clazz) {
     return new Gson().fromJson(json, clazz);
   }
   
+  /**
+   * Method is used to convert the Json Array to particular JAVA object.
+   * @param json , Json Data 
+   * @param clazz is the generic Type to which it need to convert to JAVA object.
+   * @return generic Type of Class T
+   */
   public <T> List<T> fromJsonAsList(String json, Class<T[]> clazz) {
     return Arrays.asList(new Gson().fromJson(json, clazz));
-  } 
+  }
+  
+  /**
+   * Method is used to convert JAVA object to Json file.
+   * @param object is a java object  to which it has to convert.
+   * @param filePath complete file location in which it has to write.
+   */
+  public void toJsonFile(Object object, String filePath) {
+    Gson gson = new Gson();
+    
+    try {
+      Writer writer = new FileWriter(filePath);
+      gson.toJson(object, writer);
+      writer.flush();
+      writer.close();
+    } catch (JsonIOException | IOException e) {
+      e.printStackTrace();
+    }
+  }
     
   /**
    * This method is used to zip a folder.
@@ -650,18 +685,18 @@ public class GenericMethod {
     try (ZipOutputStream zipOutputStream = new ZipOutputStream(Files.newOutputStream(zipFile));
                     Stream<Path> paths = Files.walk(sourceDirPath)) {
       paths
-      .filter(path -> !Files.isDirectory(path))
-      .forEach(path -> {
+          .filter(path -> !Files.isDirectory(path))
+          .forEach(path -> {
 
-        ZipEntry zipEntry = new ZipEntry(sourceDirPath.relativize(path).toString());
-        try {
-          zipOutputStream.putNextEntry(zipEntry);
-          Files.copy(path, zipOutputStream);
-          zipOutputStream.closeEntry();
-        } catch (IOException e) {
-          System.err.println(e);
-        }
-      });
+            ZipEntry zipEntry = new ZipEntry(sourceDirPath.relativize(path).toString());
+            try {
+              zipOutputStream.putNextEntry(zipEntry);
+              Files.copy(path, zipOutputStream);
+              zipOutputStream.closeEntry();
+            } catch (IOException e) {
+              System.err.println(e);
+            }
+          });
     }
 
     log.debug("Zip is created at : " + zipFile);
@@ -687,6 +722,26 @@ public class GenericMethod {
 
     return zipFile.toFile();
   }
+  
+  /**
+   * Method used to copy the file form InputStream to file.
+   * @param dowloadedFile file in InputStream.
+   * @param filename name of the file 
+   */
+  public void copyfile(InputStream dowloadedFile, String filename) {
+    try {
+      BufferedInputStream inputStream = new BufferedInputStream(dowloadedFile);
+      FileOutputStream fileOS = new FileOutputStream(filename); 
+      byte[] data = new byte[1024];
+      int byteContent;
+      while ((byteContent = inputStream.read(data, 0, 1024)) != -1) {
+        fileOS.write(data, 0, byteContent);
+      }
+      fileOS.close();
+    } catch (IOException e) {
+      log.error(e.getMessage());
+    }
+  } 
   
   /**
    * This method is used for generic way of getting By class type
@@ -772,7 +827,5 @@ public class GenericMethod {
         log.info("Invalid By Class");
     }
     return byElement;
-
   }
-
 }

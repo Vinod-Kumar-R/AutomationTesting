@@ -1,15 +1,16 @@
 package com.automation.baseframework;
 
 
+import com.automation.api.jira.Zephyr;
 import com.automation.beanclass.TestExcelBean;
 import com.automation.configuration.ConstantVariable;
 import com.automation.configuration.JiraConfiguration;
 import com.automation.configuration.PropertiesValue;
 import com.automation.custom.exception.DuplicateValueException;
+import com.automation.jira.beanclass.QueryParamSearch;
 import com.automation.jira.beanclass.TestCase;
 import com.automation.jira.beanclass.TestCaseAttachment;
-import com.automation.jira.zephyr.api.AutomationResultapi;
-import com.automation.jira.zephyr.api.TestCaseapi;
+import com.automation.jira.beanclass.TestResult;
 import com.automation.mail.MailContent;
 import com.automation.mail.MailServiceImpl;
 import com.automation.utility.ExcelReader;
@@ -18,16 +19,21 @@ import com.automation.utility.GenericMethod;
 import com.automation.webdriver.BrowserInitialize;
 import com.aventstack.extentreports.Status;
 import com.poiji.bind.Poiji;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.EncryptedDocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -63,11 +69,10 @@ public class BaseClass {
   @Autowired
   private PropertiesValue properties;
   @Autowired
-  private TestCaseapi testcaseapi;
-  @Autowired
-  private AutomationResultapi testresult;
-  @Autowired
   private JiraConfiguration jiraconfiguration;
+  @Autowired
+  private Zephyr zephyr;
+  private String recordingFilename;
 
 
   /**
@@ -94,8 +99,10 @@ public class BaseClass {
    * @throws EncryptedDocumentException file has been excypted  
    * <pre> this is the main which accept all the Exception </pre>
    * @throws DuplicateValueException duplicate key are found in ObjectRepository file
+   * @throws URISyntaxException is used to form the download URL.
    */
-  public void startRun() throws DuplicateValueException, EncryptedDocumentException, IOException  {
+  public void startRun() throws DuplicateValueException, EncryptedDocumentException,
+          IOException, URISyntaxException  {
 
     constantVariable.initializeVariable();
     extentReport.initializeExtentReport();
@@ -111,11 +118,20 @@ public class BaseClass {
       String testScriptFile = testdatapreparation();
       executetestcase(testScriptFile);
       //prepare test result
-      Path jsonfile =   testresult.jiraresult("result.json");
-      File resultfile = genericMethod.zipFile(properties.getTemplocation() 
-                      + File.separator + "result.zip", jsonfile);
+      TestResult jiraResult = extentReport.getJiraResult();
+      
+      File jsonFile = new File(properties.getTemplocation() + File.separator + "result.json");
+      String jiraResultLocation = properties.getTemplocation() + File.separator + "result.zip";
+      
+      genericMethod.toJsonFile(jiraResult, jsonFile.getAbsolutePath());
+      
+      File jiraResultZip = genericMethod.zipFile(jiraResultLocation, jsonFile.toPath());
       log.debug("updating result to jira");
-      testresult.postTestResult(resultfile);
+      
+      MultipartFile multipart = new MockMultipartFile("file", 
+                      FileUtils.readFileToByteArray(jiraResultZip));
+      zephyr.uploadAutomationResult(jiraconfiguration.getJiraProjectkey(),
+                      multipart); 
       log.debug("Result update to jira complete");
     } else {
       //initialize the excel file for testdata and stored all the row number of testdata start
@@ -146,6 +162,7 @@ public class BaseClass {
         log.debug("Test Case Description " + testcase.getTestcaseDescription());
         log.debug("Test Case Categeory " + testcase.getTestCatgeory());
 
+        recordingFilename = testcase.getTestcaseId();
         extentReport.createTest(testcase.getTestcaseId(), testcase.getTestcaseDescription());
         extentReport.categeory(testcase.getTestCatgeory());
 
@@ -241,7 +258,10 @@ public class BaseClass {
         //increment the row
         currentRow++;
       }
+      
       testData.closeWorkbook();
+      browserinitialize.browserRecording(recordingFilename, false);
+      
     } catch (AssertionError | Exception e) {
       try {
         testData.closeWorkbook();
@@ -251,6 +271,8 @@ public class BaseClass {
         extentReport.writeLog(Status.FAIL, e);
         extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
         //extentReport.attachScreenshotPath(genericMethod.takeScreenshot());
+        //need to think how to add the video link to extent report
+        browserinitialize.browserRecording(recordingFilename, true);
         browserinitialize.quitBrowser();
         extentReport.flushlog();
         
@@ -266,8 +288,9 @@ public class BaseClass {
    * Method is used to create a test case excel file based on the result fetch from jira.
    * @return the file location of the created test case excel file 
    * @throws IOException not able to write to file
+   * @throws URISyntaxException is used to form the download URL.
    */
-  private String testdatapreparation() throws IOException {
+  private String testdatapreparation() throws IOException, URISyntaxException {
 
     //Prepare the test date
     //create a excel sheet with header and close the workbook
@@ -287,10 +310,15 @@ public class BaseClass {
     int startindex = 0;
     
     do {
+      QueryParamSearch query =  QueryParamSearch
+                       .builder()
+                       .withMaxResults(jiraconfiguration.getTestcaseMaxresult())
+                       .withQuery(jiraconfiguration.getTestcaseQuery())
+                       .withStartAt(startindex)
+                       .build();
+      
       //make a request call to Jira to fetch the list of testcase
-      testcases = testcaseapi.getAllTestCase(
-                      jiraconfiguration.getTestcaseQuery(), startindex, 
-                      jiraconfiguration.getTestcaseMaxresult());
+      testcases = zephyr.fetchSearchTestCase(query).getBody();
       //for next loop increase the start index 
       startindex = startindex + jiraconfiguration.getTestcaseMaxresult();
       String testscriptlocation;
@@ -301,7 +329,7 @@ public class BaseClass {
         log.debug("testcase ID " + testcase.getTestcaseId()
             + "-----" + "projectID " + testcase.getProjectId());
         List<TestCaseAttachment> attachments = 
-                        testcaseapi.getTestCaseAttachmentList(testcase.getTestcaseId());
+                        zephyr.fetchTestcaseAttachment(testcase.getTestcaseId()).getBody();
         for (TestCaseAttachment attachment : attachments) {
           if (attachment.getFilename().equalsIgnoreCase("Automation.xlsx") 
                           && attachment.getFilesize() > 0) {
@@ -309,7 +337,8 @@ public class BaseClass {
             //download the test script assuming file has download
             testscriptlocation = properties.getTemplocation() + File.separator 
                             + testcase.testcaseId.replace("-", "") + attachment.getFilename();
-            testcaseapi.getDownloadTestCaseFile(attachment.getUrl(), testscriptlocation);
+            byte[] filedownload = zephyr.dowloadfile(new URI(attachment.getUrl())).getBody();
+            genericMethod.copyfile(new ByteArrayInputStream(filedownload), testscriptlocation);
             // write to exel sheet 
             log.debug("writing to excel sheet");
             testcaseCreation.setCreateRow(cellrow);
