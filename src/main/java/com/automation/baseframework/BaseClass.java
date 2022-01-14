@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.log4j.Log4j2;
@@ -366,6 +367,8 @@ public class BaseClass {
   * @throws IOException through an exception if file not found
   */
   public void emailTestResult() {
-    mail.sendEmail(content.maildata());
+    Path excelreport = content.excelReport();
+    Object object = content.maildata(excelreport);
+    mail.sendEmail(object);
   }
 }

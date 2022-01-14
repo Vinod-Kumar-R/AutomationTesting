@@ -299,6 +299,10 @@ public class ExtentReport {
     }
     return testStatus;
   }
+  
+  public List<Test> getTestDetail() {
+    return this.spark.getReport().getTestList();
+  }
     
   /**
    * Method is used to get the Jira Result format type.

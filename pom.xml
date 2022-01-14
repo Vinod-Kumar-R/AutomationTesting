@@ -282,7 +282,6 @@
 				<artifactId>mongodb-driver-core</artifactId>
 				<version>3.6.4</version>
 			</dependency>
-
 		</dependencies>
 	</dependencyManagement>
 
@@ -395,7 +394,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
 	</build>
 </project>

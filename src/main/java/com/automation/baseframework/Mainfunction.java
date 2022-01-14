@@ -31,7 +31,6 @@ public class Mainfunction {
    */
 
   public static void main(String[] args) {
-    // TODO Auto-generated method stub
     ApplicationContext context = SpringApplication.run(Mainfunction.class, args);
     BaseClass bc = context.getBean(BaseClass.class);
     PropertiesValue propertiesvalue = context.getBean(PropertiesValue.class);
@@ -44,7 +43,6 @@ public class Mainfunction {
 
     } catch (EncryptedDocumentException | IOException 
                     | DuplicateValueException | URISyntaxException  e) {
-      // TODO Auto-generated catch block
       log.error(e);
       e.printStackTrace();
     } finally {

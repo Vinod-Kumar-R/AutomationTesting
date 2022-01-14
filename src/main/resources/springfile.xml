@@ -23,4 +23,6 @@
 	<bean id="testdata" class="com.automation.utility.ExcelReader"></bean>
 	<bean id="createtestcase"
 		class="com.automation.utility.ExcelReader"></bean>
+	<bean id="excelresult"
+		class="com.automation.utility.ExcelReader"></bean>
 </beans>
