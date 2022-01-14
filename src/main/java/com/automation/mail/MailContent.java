@@ -69,7 +69,7 @@ public class MailContent {
     report.setOs(System.getProperty("os.name"));
     report.setCategeorys(extentreport.categeoryctx());
     //report.setPassTest(extentreport.getTestDetail(Status.PASS));
-    //report.setFailTest(extentreport.getTestDetail(Status.FAIL));
+    report.setFailTest(extentreport.getTestDetail(Status.FAIL));
     //report.setSkipTest(extentreport.getTestDetail(Status.SKIP));
     
     return report;

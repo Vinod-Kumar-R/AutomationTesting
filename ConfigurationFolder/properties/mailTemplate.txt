@@ -135,75 +135,9 @@
 </tr>
 </tbody>
 </table>
-</#if>
-<#--  check the size of the table is greater then 1 the   -->
-<#if report.passTest?size gt 0>
-<p>&nbsp;</p>
-<table style="border-collapse: collapse; width: 75%; height: 52px;" border="1">
-<tbody>
-<tr>
-<td style="width: 100%; background-color: #14fa0f; text-align: center;">
-<h1><span style="color: #ffffff;">PASS TEST CASES</span></h1>
-</td>
-</tr>
-<tr>
-<td style="width: 100%;">
-<table style="border-collapse: collapse; width: 100%;" border="1">
-<tbody>
-<tr style="background-color: #a9a89a;">
-<td style="width: 23%; text-align: center;"><strong>TEST CASE ID</strong></td>
-<td style="width: 64%; text-align: center;"><strong>TEST DESCRIPTION</strong></td>
-<td style="width: 13%; text-align: center;"><strong>STATUS</strong></td>
-</tr>
-<#list report.passTest as test>
-<tr>
-<td style="width: 23%;">${test.getFullName()}</td>
-<td style="width: 64%;">${test.getDescription()}</td>
-<td style="width: 13%;"><span style="color: #339966;">${test.getStatus()}</span></td>
-</tr>
-</#list>
-</tbody>
-</table>
-</td>
-</tr>
-</tbody>
-</table
-</#if>
-<#--  check the size of the table is greater then 1 the   -->
-<#if report.skipTest?size gt 0>
-<p>&nbsp;</p>
-<table style="border-collapse: collapse; width: 75%; height: 37px;" border="1">
-<tbody>
-<tr>
-<td style="width: 100%; background-color: #140ffa; text-align: center;">
-<h1><span style="color: #ffffff;">SKIPPED TEST CASES</span></h1>
-</td>
-</tr>
-<tr>
-<td style="width: 100%;">
-<table style="border-collapse: collapse; width: 100%;" border="1">
-<tbody>
-<tr style="background-color: #a9a89a;">
-<td style="width: 23%; text-align: center;"><strong>TEST CASE ID</strong></td>
-<td style="width: 64%; text-align: center;"><strong>TEST DESCRIPTION</strong></td>
-<td style="width: 13%; text-align: center;"><strong>STATUS</strong></td>
-</tr>
-<#list report.skipTest as test>
-<tr>
-<td style="width: 23%;">${test.getFullName()}</td>
-<td style="width: 64%;">${test.getDescription()}</td>
-<td style="width: 13%;"><span style="color: #0000ff;">${test.getStatus()}</span></td>
-</tr>
-</#list>
-</tbody>
-</table>
-</td>
-</tr>
-</tbody>
-</table>
 <p>&nbsp;</p>
 </#if>
-<p>Please don't replay to this email, it been genreated by automation script.</p>
+<p>Please find the Attachment for detail report and don't replay to this email, it been genreated by automation script.</p>
 <p>Regards</p>
 <p>Automation Script</p>
 </body>
