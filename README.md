@@ -1,9 +1,9 @@
-# Automation Framework for testing Web Application and Mobile Application using Selenium WebDriver  
-Keyword Driven Framework is a Test Data Driven (TDD) and it's has been implemented using JAVA and Spring Core.
+# Automation Framework for testing Web Application, Mobile Application and API Testing using Selenium WebDriver, Appium and Spring cloud open feign.  
+Keyword Driven Framework is a Test Data Driven (TDD) and it's has been implemented using JAVA and Spring boot.
 Main method start from class "Mainfunction.java" under package "com.automation.baseframework"
 
 **Below feature are support by framework**
- 1. Web Browser, Mobile Browser and Browser Stack
+ 1. Web Browser, Mobile Browser, Browser Stack and API
  2. Support all type of Browser
  3. Object Repository for storing the DOM element are support in 2 way and it configurable 
     1. CSV file
@@ -14,6 +14,7 @@ Main method start from class "Mainfunction.java" under package "com.automation.b
  7. Jenkins Integration for Continous CI/CD.
  8. Support Dokcer for automatically download required browser and execution of Automation script.
  9. Assertion using assertj-core, support both Hard and Soft Assertion.
+ 10. Video Recording of test execution for failed test case using Docker.
 
 **Software Requirement**
 |   SlNo |   Software | Version |
