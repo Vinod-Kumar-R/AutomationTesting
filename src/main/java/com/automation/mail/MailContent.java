@@ -81,6 +81,14 @@ public class MailContent {
    */
   public Path excelReport() {
 
+    int testIdColumn = 0;
+    int descriptionColumn = 1;
+    int categoryColumn = 2;
+    int statusColumn = 3;
+    int starttimeColumn = 4;
+    int endtimeColumn = 5;
+    int executionColumn = 6;
+    
     try {
       excelreport.createExcelFile(true);
       excelreport.setExcelSheet("Sheet1");
@@ -89,17 +97,18 @@ public class MailContent {
       CellStyle passStyle = excelreport.getStatusCell(Status.PASS);
       CellStyle failStyle = excelreport.getStatusCell(Status.FAIL);
       CellStyle skipStyle = excelreport.getStatusCell(Status.SKIP);
+      CellStyle generalStyle = excelreport.generalStyle();
+      CellStyle generalTextStyle = excelreport.generalTextStyle();
 
       //Excel header name
       excelreport.setCreateRow(0);
-      excelreport.setCellData(0, "Test Case ID", headerstyle);
-      excelreport.setCellData(1, "Description", headerstyle);
-      excelreport.setCellData(2, "Categeory", headerstyle);
-      excelreport.setCellData(3, "Status", headerstyle);
-      excelreport.setCellData(4, "Image Available", headerstyle);
-      excelreport.setCellData(5, "Start Time", headerstyle);
-      excelreport.setCellData(6, "End Time", headerstyle);
-      excelreport.setCellData(7, "Execution Time", headerstyle);
+      excelreport.setCellData(testIdColumn, "Test Case ID", headerstyle);
+      excelreport.setCellData(descriptionColumn, "Description", headerstyle);
+      excelreport.setCellData(categoryColumn, "Categeory", headerstyle);
+      excelreport.setCellData(statusColumn, "Status", headerstyle);
+      excelreport.setCellData(starttimeColumn, "Start Time", headerstyle);
+      excelreport.setCellData(endtimeColumn, "End Time", headerstyle);
+      excelreport.setCellData(executionColumn, "Execution Time", headerstyle);
       int row = 1;
       Set<NamedAttributeContext<Category>> categoryctx = extentreport.categeoryctx();
 
@@ -108,23 +117,25 @@ public class MailContent {
         List<Test> tests = category.getTestList();
         for (Test test : tests) {
           excelreport.setCreateRow(row);
-          excelreport.setCellData(0, test.getName());
-          excelreport.setCellData(1, test.getDescription());
-          excelreport.setCellData(2, category.getAttr().getName());
+          excelreport.setCellData(testIdColumn, test.getName(), generalStyle);
+          excelreport.setCellData(descriptionColumn, test.getDescription(), generalTextStyle);
+          excelreport.setCellData(categoryColumn, category.getAttr().getName(), generalStyle);
           
           if (test.getStatus().equals(Status.PASS)) {
-            excelreport.setCellData(3, test.getStatus().getName(), passStyle);            
+            excelreport.setCellData(statusColumn, test.getStatus().getName(),
+                            passStyle);            
           }
           if (test.getStatus().equals(Status.FAIL)) {
-            excelreport.setCellData(3, test.getStatus().getName(), failStyle);            
+            excelreport.setCellData(statusColumn, test.getStatus().getName(),
+                            failStyle);            
           }
           if (test.getStatus().equals(Status.SKIP)) {
-            excelreport.setCellData(3, test.getStatus().getName(), skipStyle);            
+            excelreport.setCellData(statusColumn, test.getStatus().getName(),
+                            skipStyle);            
           }
           
-          excelreport.setCellData(4, Boolean.toString(test.hasScreenCapture()));
-          excelreport.setCellData(5, test.getStartTime(), datetimeStyle);
-          excelreport.setCellData(6, test.getEndTime(), datetimeStyle);
+          excelreport.setCellData(starttimeColumn, test.getStartTime(), datetimeStyle);
+          excelreport.setCellData(endtimeColumn, test.getEndTime(), datetimeStyle);
 
           Interval interval = new Interval(test.getStartTime().getTime(),
                           test.getEndTime().getTime());
@@ -132,10 +143,13 @@ public class MailContent {
                           + interval.toPeriod().getMinutes() + " M "
                           + interval.toPeriod().getSeconds() + " S";
 
-          excelreport.setCellData(7, diff);
+          excelreport.setCellData(executionColumn, diff, generalStyle);
           row++;
         }
       }
+      excelreport.setWidthHeight();
+      excelreport.freezePane(0, 1);
+      excelreport.setBorder(0, row - 1, 0, 6);
       File excelfilename = new File(properties.getResultfolder() 
                       + File.separator 
                       + "AutomatonResult.xlsx");

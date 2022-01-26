@@ -127,13 +127,13 @@ public class BaseClass {
       genericMethod.toJsonFile(jiraResult, jsonFile.getAbsolutePath());
       
       File jiraResultZip = genericMethod.zipFile(jiraResultLocation, jsonFile.toPath());
-      log.debug("updating result to jira");
+      log.debug("updating result to jira " + jiraResultZip.getAbsolutePath());
       
       MultipartFile multipart = new MockMultipartFile("file", 
                       FileUtils.readFileToByteArray(jiraResultZip));
       zephyr.uploadAutomationResult(jiraconfiguration.getJiraProjectkey(),
                       multipart); 
-      log.debug("Result update to jira complete");
+      log.debug("Result uploaded to jira complete");
     } else {
       //initialize the excel file for testdata and stored all the row number of testdata start
       log.info("Excel file name " + properties.getTestdata());
@@ -296,7 +296,7 @@ public class BaseClass {
     //Prepare the test date
     //create a excel sheet with header and close the workbook
     testcaseCreation.createExcelFile(true);
-    testcaseCreation.setExcelSheet("Sheet1");
+    testcaseCreation.setExcelSheet("Report");
     //Excel header name
     testcaseCreation.setCreateRow(0);
     testcaseCreation.setCellData(0, "Test Case ID");

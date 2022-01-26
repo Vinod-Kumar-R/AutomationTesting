@@ -31,7 +31,6 @@ public class JiraApiConfiguration {
       
       @Override
       public void apply(RequestTemplate template) {
-        // TODO Auto-generated method stub
         template.header(HttpHeaders.AUTHORIZATION, jiraConfiguration.getJiratoken());
       }
     };
@@ -45,7 +44,6 @@ public class JiraApiConfiguration {
     return new SpringFormEncoder(new SpringEncoder(new ObjectFactory<HttpMessageConverters>() {
       @Override
       public HttpMessageConverters getObject() throws BeansException {
-        // TODO Auto-generated method stub
         return new HttpMessageConverters(new RestTemplate().getMessageConverters());
       }
     }));

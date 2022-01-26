@@ -204,12 +204,6 @@
 			<version>[3.141.0,)</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
-		<dependency>
-			<groupId>io.rest-assured</groupId>
-			<artifactId>rest-assured</artifactId>
-		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/com.github.ozlerhakan/poiji -->
 		<dependency>
 			<groupId>com.github.ozlerhakan</groupId>

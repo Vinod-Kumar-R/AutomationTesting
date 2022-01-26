@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.BorderExtent;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
@@ -21,8 +23,11 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.ss.util.PropertyTemplate;
 
 /**
  * This Class the generic method for Read an excel file. 
@@ -182,6 +187,9 @@ public class ExcelReader {
     font.setColor(HSSFColor.HSSFColorPredefined.BLACK.getIndex());
     style.setFont(font);
     style.setAlignment(HorizontalAlignment.CENTER_SELECTION);
+    //style.setFillBackgroundColor(IndexedColors.BLUE.index);
+    style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+    style.setFillForegroundColor(IndexedColors.BLUE_GREY.index);
     return style;
   }
   
@@ -206,20 +214,71 @@ public class ExcelReader {
         break;
       default : 
         style.setFillForegroundColor(IndexedColors.WHITE.getIndex());
-        font.setColor(IndexedColors.BLACK.getIndex());
+        font.setColor(IndexedColors.BLACK.getIndex());        
         break;
     }
     style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
     style.setFont(font);
+    style.setAlignment(HorizontalAlignment.CENTER_SELECTION);
+    style.setVerticalAlignment(VerticalAlignment.CENTER);
     return style;
   }
   
+  /**
+   * Method is used to set the date format style.
+   * @return CellStyle
+   */
   public CellStyle getdatetimeCell() {
     CellStyle style = this.workbook.createCellStyle();
     CreationHelper creationHelper = workbook.getCreationHelper();
     style.setDataFormat(creationHelper.createDataFormat().getFormat(
                     "dd/mm/yyyy hh:mm:ss"));
+    style.setAlignment(HorizontalAlignment.CENTER_SELECTION);
+    style.setVerticalAlignment(VerticalAlignment.CENTER);
     return style;
+  }
+  
+  /**
+   * Method is used to set the style for Cell of generic.
+   * 
+   */
+  public CellStyle generalStyle() {
+    CellStyle style = this.workbook.createCellStyle();
+    style.setAlignment(HorizontalAlignment.CENTER_SELECTION);
+    style.setVerticalAlignment(VerticalAlignment.CENTER);
+    style.setWrapText(true);
+    return style;   
+  }
+  
+  /**
+   * Method is used to set the text style of generic.
+   * @return CellStyle
+   */
+  public CellStyle generalTextStyle() {
+    CellStyle style = this.workbook.createCellStyle();
+    style.setAlignment(HorizontalAlignment.LEFT);
+    style.setVerticalAlignment(VerticalAlignment.CENTER);
+    style.setWrapText(true);
+    return style;   
+  }
+  
+  public void freezePane(int colSplit, int rowSplit) {
+    this.sheet.createFreezePane(colSplit, rowSplit);
+  }
+  
+  /**
+   * Method is used to set the Border for cell Range.
+   * @param firstRow - start of first row cell.
+   * @param lastRow - End of the Last row cell.
+   * @param firstCol - start of First Column cell.
+   * @param lastCol - End of last column cell.
+   */
+  public void setBorder(int firstRow, int lastRow, int firstCol, int lastCol) {
+    CellRangeAddress region = new CellRangeAddress(firstRow, lastRow, firstCol, lastCol);
+    PropertyTemplate propertyTemplate = new PropertyTemplate();
+    propertyTemplate.drawBorders(region, BorderStyle.THIN, BorderExtent.ALL);
+    propertyTemplate.applyBorders(this.sheet);
+    
   }
 
   /**
@@ -251,8 +310,20 @@ public class ExcelReader {
     this.workbook.write(fileOut);
     fileOut.close();
   }
-
-
+  
+  /**
+   * Method is used to set the ColumnWidth for Result Excel sheet.
+   */
+  public void setWidthHeight() {
+    this.sheet.setColumnWidth(0, 13 * 256);
+    this.sheet.setColumnWidth(1, 80 * 256);
+    this.sheet.setColumnWidth(2, 13 * 256);
+    this.sheet.setColumnWidth(3, 10 * 256);
+    this.sheet.setColumnWidth(4, 20 * 256);
+    this.sheet.setColumnWidth(5, 20 * 256);
+    this.sheet.setColumnWidth(6, 20 * 256); 
+  }
+  
   /**
    * This function return particular Row Data in format of Map&lt;Integer,String&gt;.
    * @param row this contain the row number in which data has to read
