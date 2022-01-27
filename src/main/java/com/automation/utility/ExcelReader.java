@@ -184,7 +184,7 @@ public class ExcelReader {
     CellStyle style = this.workbook.createCellStyle();
     Font font = this.workbook.createFont();
     font.setBold(true);
-    font.setColor(HSSFColor.HSSFColorPredefined.BLACK.getIndex());
+    font.setColor(HSSFColor.HSSFColorPredefined.WHITE.getIndex());
     style.setFont(font);
     style.setAlignment(HorizontalAlignment.CENTER_SELECTION);
     //style.setFillBackgroundColor(IndexedColors.BLUE.index);
