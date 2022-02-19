@@ -38,10 +38,10 @@ public class MailContent {
  
   
   /**
-   * This method is used to set the Mail content data.
-   * @return Pojo file content of ExtentReportBean
-   * @throws IOException if file not found
-   */
+  * This method is used to set the Mail content data.
+  * @param excelreport :- location of Excel report file
+  * @return Pojo file content of ExtentReportBean
+  */
   public ExtentReportBean maildata(Path excelreport) {
 
     log.debug("Setting the Email body content");

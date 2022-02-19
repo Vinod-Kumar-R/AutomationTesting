@@ -1,6 +1,5 @@
 package com.automation.baseframework;
 
-
 import com.automation.api.jira.Zephyr;
 import com.automation.beanclass.TestExcelBean;
 import com.automation.configuration.ConstantVariable;
@@ -364,7 +363,6 @@ public class BaseClass {
 
   /**
   * This method is used to prepare for email content configuration and send email.
-  * @throws IOException through an exception if file not found
   */
   public void emailTestResult() {
     Path excelreport = content.excelReport();

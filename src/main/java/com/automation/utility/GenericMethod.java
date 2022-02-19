@@ -20,6 +20,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
+import java.net.InetAddress;
+import java.net.URL;
+import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -632,8 +635,9 @@ public class GenericMethod {
   
   /**
    * Method is used to convert the Json to particular JAVA object.
-   * @param json , Json Data 
-   * @param clazz is the generic Type to which it need to convert to JAVA object. 
+   * @param json : Json Data
+   * @param clazz is the generic Type to which it need to convert to JAVA object.
+   * @param <T> is used for generic
    * @return generic Type of Class T
    */
   public <T> T fromJson(String json, Class<T> clazz) {
@@ -644,6 +648,7 @@ public class GenericMethod {
    * Method is used to convert the Json Array to particular JAVA object.
    * @param json , Json Data 
    * @param clazz is the generic Type to which it need to convert to JAVA object.
+   * @param <T> is used for generic
    * @return generic Type of Class T
    */
   public <T> List<T> fromJsonAsList(String json, Class<T[]> clazz) {
@@ -742,7 +747,30 @@ public class GenericMethod {
     } catch (IOException e) {
       log.error(e.getMessage());
     }
-  } 
+  }
+  
+  /**
+   * Method is used to convert the local host to IP Address.
+   * @param url address
+   * @return IP address. 
+   */
+  public String ipaddress(URL url) {
+    
+    InetAddress ipaddress;
+    String address = null;
+    try {
+      ipaddress = InetAddress.getLocalHost();
+      address = url.toExternalForm();
+      address = address.replaceAll("localhost", ipaddress.getHostAddress());
+      
+    } catch (UnknownHostException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+      log.error(e.getMessage());
+    }
+    
+    return address;
+  }
   
   /**
    * This method is used for generic way of getting By class type

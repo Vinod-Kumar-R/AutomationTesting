@@ -48,7 +48,6 @@ public class Mainfunction {
     } finally {
       
       bc.extentReport.flushlog();
-
       if (propertiesvalue.isSendemail()) {
         log.info("Email method calling");
         bc.emailTestResult();

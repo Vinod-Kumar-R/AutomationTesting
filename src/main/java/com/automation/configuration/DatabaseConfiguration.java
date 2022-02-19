@@ -89,7 +89,7 @@ public class DatabaseConfiguration {
  
   /**
    * Method used to initializing the HibernateTemplate.
-   * @return
+   * @return Hibernate Template.
    */
   @Bean
   @Autowired

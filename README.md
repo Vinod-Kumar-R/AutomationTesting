@@ -204,7 +204,7 @@ https://support.smartbear.com/zephyr-scale-server/api-docs/v1/
 **Generated the JAVA doc** 
 1. Goto the folder where source code has been downloaded
 2. run the command  "mvn javadoc:javadoc"
-3. java doc are generated in .../target/apidocs/index.html
+3. java doc are generated in .../target/site/apidocs/index.html
 
 **Jenkins Integration**
 

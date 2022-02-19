@@ -37,7 +37,8 @@ public class JiraApiConfiguration {
   }
   
   /**
-   * multipartFormEncoder.
+   * Method is used uploading the file using multipartform.
+   * @return Encoder
    */
   @Bean
   public Encoder multipartFormEncoder() {

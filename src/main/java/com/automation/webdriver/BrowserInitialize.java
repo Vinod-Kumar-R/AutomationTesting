@@ -2,6 +2,7 @@ package com.automation.webdriver;
 
 import com.automation.configuration.PropertiesValue;
 import com.automation.utility.ExtentReport;
+import com.automation.utility.GenericMethod;
 import com.paulhammant.ngwebdriver.NgWebDriver;
 import io.appium.java_client.AppiumDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -20,6 +21,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 
@@ -42,6 +44,9 @@ public final class BrowserInitialize {
   private PropertiesValue properties;
   @Autowired
   private Desired desired;
+  @Autowired
+  @Lazy
+  private GenericMethod genericMethod;
 
 
   /**
@@ -50,9 +55,9 @@ public final class BrowserInitialize {
    */
   private void createInstance(String browserType) {
 
-    BrowserExecutionType bt = BrowserExecutionType.valueOf(browserType);
-    DriverManagerType driverManagerType = DriverManagerType.valueOf(bt.binaryBrower.toUpperCase());
-    
+    BrowserExecutionType browserExecutionType = BrowserExecutionType.valueOf(browserType);
+    DriverManagerType driverManagerType = DriverManagerType
+                    .valueOf(browserExecutionType.binaryBrower.toUpperCase());
     webDriverManager = WebDriverManager.getInstance(driverManagerType).avoidTmpFolder();
     
     //checking the condition whether browser driver for system or Docker.
@@ -62,16 +67,15 @@ public final class BrowserInitialize {
       webDriverManager.browserVersion("latest");
       webDriverManager.dockerTimezone("UTC+05:30");
       webDriverManager.config().setUseBetaVersions(false);
-      //check docker is enable and video recording enable 
+      //check docker video recording enable 
       if (properties.isRecording()) {
         webDriverManager.enableRecording();
-        webDriverManager.recordingOutput(
-                        properties.getResultfolder() 
+        webDriverManager.dockerRecordingOutput(properties.getResultfolder() 
                         + File.separator + "Recorder");
       }
     }
 
-    switch (bt) {
+    switch (browserExecutionType) {
 
       case CHROME:
         driver = webDriverManager.capabilities(desired.chromeDesired()).create();
@@ -136,7 +140,12 @@ public final class BrowserInitialize {
     
     //print the port number used by the docker for VNC
     if (properties.isDocker()) {
-      log.info("Docker URL :- " + webDriverManager.getDockerNoVncUrl(driver));
+      URL vncUrl = webDriverManager.getDockerNoVncUrl(driver);
+      if (vncUrl.getHost().equalsIgnoreCase("localhost")) {
+        log.info("Docker VNC URL :- " + genericMethod.ipaddress(vncUrl));
+      } else {
+        log.info("Docker VNC URL :- " + vncUrl);
+      }
     }
     
     Assertions
@@ -243,6 +252,7 @@ public final class BrowserInitialize {
    * This method is used for recording of browser execution.
    * @param newFilename is the test case id name
    * @param saveFile is boolean value, to decide save the file or no
+   * @return file location of recording file.
    * @throws IOException IO Exception.
    */
   public Path browserRecording(String newFilename, boolean saveFile) throws IOException {
@@ -262,10 +272,8 @@ public final class BrowserInitialize {
       } else {
         FileUtils.deleteQuietly(recordingPath.toFile());
       }
-      
     }
     return null;
     
   }
-
 }

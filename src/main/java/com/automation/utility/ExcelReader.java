@@ -240,7 +240,7 @@ public class ExcelReader {
   
   /**
    * Method is used to set the style for Cell of generic.
-   * 
+   * @return CellStyle
    */
   public CellStyle generalStyle() {
     CellStyle style = this.workbook.createCellStyle();
