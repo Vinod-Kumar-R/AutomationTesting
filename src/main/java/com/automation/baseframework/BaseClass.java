@@ -76,25 +76,8 @@ public class BaseClass {
 
 
   /**
-   * This Method start reading the Test case xlsx file  row by row.
-   * 
-   * <pre> Test case file contain column header i.e. </pre>
-   * <table>
-   * <caption>Test Case file format</caption>
-   * <tr>
-   * <th> Test case ID </th>
-   * <th> Test Case Description </th>
-   * <th> Test Category </th>
-   * </tr>
-   * <tr>
-   * <td> Test case ID </td>
-   * <td> Test Case Description </td>
-   * <td> Test Category </td>
-   * </tr>
-   * 
-   * </table>
-   * <pre>and last row of first column should contain the text as "END" to indicate
-   * that there is no more test case to executed </pre> 
+   * This Method initialize all variable and classes such as extent, excel etc. 
+   *  
    * @throws IOException  File not found exception 
    * @throws EncryptedDocumentException file has been excypted  
    * <pre> this is the main which accept all the Exception </pre>
@@ -146,6 +129,24 @@ public class BaseClass {
 
   /**
   * This method read the test data excel file row by row and execute the test case.
+  * 
+  * <pre> Test case file contain column header i.e. </pre>
+  * <table>
+  * <caption>Test Case file format</caption>
+  * <tr>
+  * <th> Test case ID </th>
+  * <th> Test Case Description </th>
+  * <th> Test Category </th>
+  * </tr>
+  * <tr>
+  * <td> Test case ID </td>
+  * <td> Test Case Description </td>
+  * <td> Test Category </td>
+  * </tr>
+  * 
+  * </table>
+  * <pre>and last row of first column should contain the text as "END" to indicate
+  * that there is no more test case to executed </pre>
   * @param testfile is a location of test data file in which is read
   */
   private void executetestcase(String testfile) {
