@@ -32,12 +32,12 @@ public class Mainfunction {
 
   public static void main(String[] args) {
     ApplicationContext context = SpringApplication.run(Mainfunction.class, args);
-    BaseClass bc = context.getBean(BaseClass.class);
+    BaseClass baseClass = context.getBean(BaseClass.class);
     PropertiesValue propertiesvalue = context.getBean(PropertiesValue.class);
 
     try {
       log.debug("Start Executing Test cases");
-      bc.startRun();
+      baseClass.startRun();
       log.debug("Complete Executing Test cases");
       System.gc();
 
@@ -47,10 +47,10 @@ public class Mainfunction {
       e.printStackTrace();
     } finally {
       
-      bc.extentReport.flushlog();
+      baseClass.extentReport.flushlog();
       if (propertiesvalue.isSendemail()) {
         log.info("Email method calling");
-        bc.emailTestResult();
+        baseClass.emailTestResult();
         log.info("Email sent successfully");
       } 
     }

@@ -187,6 +187,7 @@ public class ExcelReader {
     font.setColor(HSSFColor.HSSFColorPredefined.WHITE.getIndex());
     style.setFont(font);
     style.setAlignment(HorizontalAlignment.CENTER_SELECTION);
+    style.setVerticalAlignment(VerticalAlignment.CENTER);
     //style.setFillBackgroundColor(IndexedColors.BLUE.index);
     style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
     style.setFillForegroundColor(IndexedColors.BLUE_GREY.index);
@@ -280,6 +281,12 @@ public class ExcelReader {
     propertyTemplate.applyBorders(this.sheet);
     
   }
+  
+  //Merged the cell using CellRangeAddress
+  public void setMergecell(int startRow, int endRow, int startColumn, int endColumn) {
+    CellRangeAddress region = new CellRangeAddress(startRow, endRow, startColumn, endColumn);
+    this.sheet.addMergedRegion(region);
+  }
 
   /**
    * This method is used to close the workbook.
@@ -314,14 +321,8 @@ public class ExcelReader {
   /**
    * Method is used to set the ColumnWidth for Result Excel sheet.
    */
-  public void setWidthHeight() {
-    this.sheet.setColumnWidth(0, 13 * 256);
-    this.sheet.setColumnWidth(1, 80 * 256);
-    this.sheet.setColumnWidth(2, 13 * 256);
-    this.sheet.setColumnWidth(3, 10 * 256);
-    this.sheet.setColumnWidth(4, 20 * 256);
-    this.sheet.setColumnWidth(5, 20 * 256);
-    this.sheet.setColumnWidth(6, 20 * 256); 
+  public void setWidthHeight(int column, int width) {
+    this.sheet.setColumnWidth(column, width);
   }
   
   /**

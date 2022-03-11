@@ -17,6 +17,8 @@ import com.aventstack.extentreports.model.context.NamedAttributeContextManager;
 import com.aventstack.extentreports.reporter.ExtentKlovReporter;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -331,5 +333,16 @@ public class ExtentReport {
     result.setExecutions(executions);
 
     return result;
+  }
+  
+  /**
+   * Convert Date to String. 
+   * @param date Date.
+   * @return String format Date.
+   */
+  public String dateToString(Date date) {
+    DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+    String strDate = dateFormat.format(date);
+    return strDate;
   }
 }

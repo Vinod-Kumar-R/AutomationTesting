@@ -59,7 +59,7 @@ public class BaseClass {
   @Qualifier("createtestcase")
   private ExcelReader testcaseCreation;
   @Autowired
-  public ExtentReport extentReport;
+  protected ExtentReport extentReport;
   @Autowired
   private BrowserInitialize browserinitialize;
   @Autowired
@@ -187,6 +187,7 @@ public class BaseClass {
         log.info("Skiped the Test case " + testcase.getTestcaseId());
         extentReport.skipTest(testcase.getTestcaseId(), testcase.getTestcaseDescription());
         extentReport.categeory(testcase.getTestCatgeory());
+        extentReport.flushlog();
       }
     }
     extentReport.flushlog();
@@ -299,12 +300,10 @@ public class BaseClass {
     testcaseCreation.setExcelSheet("Report");
     //Excel header name
     testcaseCreation.setCreateRow(0);
-    testcaseCreation.setCellData(0, "Test Case ID");
-    testcaseCreation.setCellData(1, "Test Case Description");
-    testcaseCreation.setCellData(2, "Test Categeory");
-    testcaseCreation.setCellData(3, "Executed");
-    testcaseCreation.setCellData(4, "Test Data Location");
-
+    for (TestCreation creation : TestCreation.values()) {
+      testcaseCreation.setCellData(creation.getColumn(), creation.getHeader());
+    }
+    
     List<TestCase> testcases = new ArrayList<>();
     int cellrow = 1;
     //check whether all test case are read from api 
@@ -343,11 +342,14 @@ public class BaseClass {
             // write to exel sheet 
             log.debug("writing to excel sheet");
             testcaseCreation.setCreateRow(cellrow);
-            testcaseCreation.setCellData(0, testcase.getTestcaseId());
-            testcaseCreation.setCellData(1, testcase.getTestCaseDescription());
-            testcaseCreation.setCellData(2, testcase.getCustomField().getCategeory());
-            testcaseCreation.setCellData(3, "Yes");
-            testcaseCreation.setCellData(4, testscriptlocation);
+            testcaseCreation.setCellData(TestCreation.TESTCASEID.getColumn(), 
+                            testcase.getTestcaseId());
+            testcaseCreation.setCellData(TestCreation.TESTDESCRIPTION.getColumn(), 
+                            testcase.getTestCaseDescription());
+            testcaseCreation.setCellData(TestCreation.TESTCATEGEORY.getColumn(), 
+                            testcase.getCustomField().getCategeory());
+            testcaseCreation.setCellData(TestCreation.TESTEXECUTE.getColumn(), "Yes");
+            testcaseCreation.setCellData(TestCreation.TESTLOCATION.getColumn(), testscriptlocation);
             cellrow++;
           } 
         }

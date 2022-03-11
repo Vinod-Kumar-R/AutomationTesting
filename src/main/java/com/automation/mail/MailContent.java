@@ -16,6 +16,7 @@ import java.util.Set;
 import lombok.extern.log4j.Log4j2;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.joda.time.Interval;
+import org.joda.time.Period;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -35,7 +36,7 @@ public class MailContent {
   @Autowired
   @Qualifier("excelresult")
   private ExcelReader excelreport;
- 
+  
   
   /**
   * This method is used to set the Mail content data.
@@ -80,76 +81,11 @@ public class MailContent {
    * @return file location in Path.
    */
   public Path excelReport() {
-
-    int testIdColumn = 0;
-    int descriptionColumn = 1;
-    int categoryColumn = 2;
-    int statusColumn = 3;
-    int starttimeColumn = 4;
-    int endtimeColumn = 5;
-    int executionColumn = 6;
-    
     try {
       excelreport.createExcelFile(true);
-      excelreport.setExcelSheet("Sheet1");
-      CellStyle headerstyle = excelreport.getHeaderCellStyle();
-      CellStyle datetimeStyle = excelreport.getdatetimeCell();
-      CellStyle passStyle = excelreport.getStatusCell(Status.PASS);
-      CellStyle failStyle = excelreport.getStatusCell(Status.FAIL);
-      CellStyle skipStyle = excelreport.getStatusCell(Status.SKIP);
-      CellStyle generalStyle = excelreport.generalStyle();
-      CellStyle generalTextStyle = excelreport.generalTextStyle();
+      summaryReport();
+      testReport();
 
-      //Excel header name
-      excelreport.setCreateRow(0);
-      excelreport.setCellData(testIdColumn, "Test Case ID", headerstyle);
-      excelreport.setCellData(descriptionColumn, "Description", headerstyle);
-      excelreport.setCellData(categoryColumn, "Categeory", headerstyle);
-      excelreport.setCellData(statusColumn, "Status", headerstyle);
-      excelreport.setCellData(starttimeColumn, "Start Time", headerstyle);
-      excelreport.setCellData(endtimeColumn, "End Time", headerstyle);
-      excelreport.setCellData(executionColumn, "Execution Time", headerstyle);
-      int row = 1;
-      Set<NamedAttributeContext<Category>> categoryctx = extentreport.categeoryctx();
-
-      for (NamedAttributeContext<Category> category : categoryctx) {
-
-        List<Test> tests = category.getTestList();
-        for (Test test : tests) {
-          excelreport.setCreateRow(row);
-          excelreport.setCellData(testIdColumn, test.getName(), generalStyle);
-          excelreport.setCellData(descriptionColumn, test.getDescription(), generalTextStyle);
-          excelreport.setCellData(categoryColumn, category.getAttr().getName(), generalStyle);
-          
-          if (test.getStatus().equals(Status.PASS)) {
-            excelreport.setCellData(statusColumn, test.getStatus().getName(),
-                            passStyle);            
-          }
-          if (test.getStatus().equals(Status.FAIL)) {
-            excelreport.setCellData(statusColumn, test.getStatus().getName(),
-                            failStyle);            
-          }
-          if (test.getStatus().equals(Status.SKIP)) {
-            excelreport.setCellData(statusColumn, test.getStatus().getName(),
-                            skipStyle);            
-          }
-          
-          excelreport.setCellData(starttimeColumn, test.getStartTime(), datetimeStyle);
-          excelreport.setCellData(endtimeColumn, test.getEndTime(), datetimeStyle);
-
-          Interval interval = new Interval(test.getStartTime().getTime(),
-                          test.getEndTime().getTime());
-          String diff =  interval.toPeriod().getHours() + " H " 
-                          + interval.toPeriod().getMinutes() + " M "
-                          + interval.toPeriod().getSeconds() + " S";
-
-          excelreport.setCellData(executionColumn, diff, generalStyle);
-          row++;
-        }
-      }
-      excelreport.setWidthHeight();
-      excelreport.freezePane(0, 1);
-      excelreport.setBorder(0, row - 1, 0, 6);
       File excelfilename = new File(properties.getResultfolder() 
                       + File.separator 
                       + "AutomatonResult.xlsx");
@@ -161,6 +97,329 @@ public class MailContent {
       e.printStackTrace();
     }
     return null;
+  }
+  
+  /**
+   * Method is used to write the summary data to excel sheet.
+   */
+  private void summaryReport() {
+    
+    CellStyle passStyle = excelreport.getStatusCell(Status.PASS);
+    CellStyle failStyle = excelreport.getStatusCell(Status.FAIL);
+    CellStyle skipStyle = excelreport.getStatusCell(Status.SKIP);
+    CellStyle headerstyle = excelreport.getHeaderCellStyle();
+    CellStyle generalStyle = excelreport.generalStyle();
+    int summaryReportRow = 0;
+    
+    //Excel Header for Sheet Summary Report
+    excelreport.setExcelSheet("Summary Report");
+    //comment the Build info data
+    /*
+    //Build Info Header
+    excelreport.setCreateRow(summaryReportRow);
+    excelreport.setMergecell(summaryReportRow, ++summaryReportRow, 0, 6);
+    excelreport.setCellData(0, "BuildInfo", generalStyle);
+
+    excelreport.setCreateRow(++summaryReportRow);
+
+    for (BuildInfo build : BuildInfo.values()) {
+      excelreport.setCellData(build.getcolumn(), build.name(), generalStyle);
+    }
+
+    excelreport.setCreateRow(++summaryReportRow);
+    excelreport.setCellData(BuildInfo.Module.getcolumn(), "CEM", generalStyle);
+    excelreport.setCellData(BuildInfo.BuildNo.getcolumn(), "Build no", generalStyle);
+    excelreport.setCellData(BuildInfo.Branch.getcolumn(), "Avenger", generalStyle);
+    excelreport.setCellData(BuildInfo.Environment.getcolumn(), "Stagging", generalStyle);
+    excelreport.setCellData(BuildInfo.URL.getcolumn(), "DEV2", generalStyle);
+     */
+    //TEST Summary
+    //Leave the 2 row blank     
+    //summaryReportRow = summaryReportRow + 2;
+    int startBroderRow = 0;
+    startBroderRow = summaryReportRow;
+    excelreport.setCreateRow(summaryReportRow);
+    excelreport.setMergecell(summaryReportRow, ++summaryReportRow, 0, 11);
+    excelreport.setCellData(0, "TEST SUMMARY", headerstyle);
+
+    int i = 0;
+    for (TestSummary summary : TestSummary.values()) {
+      if (i % 2 == 0) {
+        excelreport.setCreateRow(++summaryReportRow);
+      }
+      excelreport.setMergecell(summaryReportRow, summaryReportRow,
+                      summary.getColumn(), summary.getColumn() + 2);
+      excelreport.setCellData(summary.getColumn(), summary.getName(), generalStyle);
+
+      summaryData(summary, summaryReportRow, summary.getNextColumn());
+      i++;
+    }
+
+    //end broder 
+    int endBroderRow = summaryReportRow;
+    excelreport.setBorder(startBroderRow, endBroderRow, 0, 11);
+
+    //Test Category
+    //Leave the 2 row blank
+    summaryReportRow = summaryReportRow + 3;
+    startBroderRow = summaryReportRow;
+    excelreport.setCreateRow(summaryReportRow);
+    excelreport.setMergecell(summaryReportRow, ++summaryReportRow, 0, 7);
+    excelreport.setCellData(0, "TEST CATEGORY", headerstyle);
+
+    //header for Test Category
+    excelreport.setCreateRow(++summaryReportRow);
+    for (TestCategory testCategory : TestCategory.values()) {
+      if (testCategory.getColumn() == 0) {
+        excelreport.setMergecell(summaryReportRow, summaryReportRow, 
+                        testCategory.getColumn(), testCategory.getColumn() + 1);
+        excelreport.setCellData(testCategory.getColumn(), 
+                        testCategory.getColumnHeader(), headerstyle);
+      } else {
+        excelreport.setCellData(testCategory.getColumn(), 
+                        testCategory.getColumnHeader(), headerstyle);
+      }
+
+    }
+    
+    //for loop
+    float totalTestCaseCategory = 0;
+    int pass = 0;
+    int fail = 0;
+    int skip = 0;
+    Set<NamedAttributeContext<Category>> categoryct = extentreport.categeoryctx();
+    for (NamedAttributeContext<Category> category : categoryct) {
+      excelreport.setCreateRow(++summaryReportRow);
+      pass = category.getPassed();
+      fail = category.getFailed();
+      skip = category.getSkipped();
+      totalTestCaseCategory = pass + fail + skip;
+
+      excelreport.setMergecell(summaryReportRow, summaryReportRow, 
+                      TestCategory.NAME.getColumn(), TestCategory.NAME.getColumn() + 1);
+      excelreport.setCellData(TestCategory.NAME.getColumn(), 
+                      category.getAttr().getName(), generalStyle);
+
+      if (pass > 0) {
+
+        excelreport.setCellData(TestCategory.PASSED.getColumn(), 
+                        Integer.toString(pass), passStyle);
+
+        excelreport.setCellData(TestCategory.PASSED_PERCENTAGE.getColumn(), 
+                        Float.toString((pass / totalTestCaseCategory) * 100),
+                        passStyle);
+      } else {
+        
+        excelreport.setCellData(TestCategory.PASSED.getColumn(), 
+                        Integer.toString(pass), generalStyle);
+
+        excelreport.setCellData(TestCategory.PASSED_PERCENTAGE.getColumn(), 
+                        Float.toString((pass / totalTestCaseCategory) * 100),
+                        generalStyle);
+      }
+
+      if (fail > 0) {
+
+        excelreport.setCellData(TestCategory.FAILED.getColumn(), 
+                        Integer.toString(fail), failStyle);
+
+        excelreport.setCellData(TestCategory.FAILED_PERCENTAGE.getColumn(), 
+                        Float.toString((fail / totalTestCaseCategory) * 100), 
+                        failStyle);
+      } else {
+        
+        excelreport.setCellData(TestCategory.FAILED.getColumn(), 
+                        Integer.toString(fail), generalStyle);
+
+        excelreport.setCellData(TestCategory.FAILED_PERCENTAGE.getColumn(), 
+                        Float.toString((fail / totalTestCaseCategory) * 100), 
+                        generalStyle);
+      }
+
+      if (skip > 0) {
+        excelreport.setCellData(TestCategory.SKIPPED.getColumn(), 
+                        Integer.toString(skip), skipStyle);
+
+        excelreport.setCellData(TestCategory.SKIPPED_PERCENTAGE.getColumn(), 
+                        Float.toString((skip / totalTestCaseCategory) * 100), 
+                        skipStyle);
+      } else {
+        
+        excelreport.setCellData(TestCategory.SKIPPED.getColumn(), 
+                        Integer.toString(skip), generalStyle);
+
+        excelreport.setCellData(TestCategory.SKIPPED_PERCENTAGE.getColumn(), 
+                        Float.toString((skip / totalTestCaseCategory) * 100), 
+                        generalStyle);
+      }
+    }
+    endBroderRow = summaryReportRow;
+    excelreport.setBorder(startBroderRow, endBroderRow, 0, 7);
+    
+  }
+  
+  /**
+   * Method is used to write the test case detail to excel sheet.
+   */
+  private void testReport() {
+    
+    CellStyle passStyle = excelreport.getStatusCell(Status.PASS);
+    CellStyle failStyle = excelreport.getStatusCell(Status.FAIL);
+    CellStyle skipStyle = excelreport.getStatusCell(Status.SKIP);
+    CellStyle headerstyle = excelreport.getHeaderCellStyle();
+    CellStyle generalStyle = excelreport.generalStyle();
+    CellStyle generalTextStyle = excelreport.generalTextStyle();
+    CellStyle datetimeStyle = excelreport.getdatetimeCell();
+    
+    //sheet name
+    excelreport.setExcelSheet("Test Report");
+    
+    excelreport.setCreateRow(0);
+    //Excel header name for Test Report
+    for (Report report : Report.values()) {
+      excelreport.setCellData(report.getColumn(), report.getHeader(), headerstyle);
+      excelreport.setWidthHeight(report.getColumn(), report.getWidth());
+    }
+    
+    int row = 1;
+    Set<NamedAttributeContext<Category>> categoryctx = extentreport.categeoryctx();
+
+    //Excel Data.
+    for (NamedAttributeContext<Category> category : categoryctx) {
+
+      List<Test> tests = category.getTestList();
+      for (Test test : tests) {
+        excelreport.setCreateRow(row);
+        excelreport.setCellData(Report.TESTCASEID.getColumn(), test.getName(), generalStyle);
+        excelreport.setCellData(Report.DESCRIPTION.getColumn(), 
+                        test.getDescription(), generalTextStyle);
+        excelreport.setCellData(Report.CATEGEORY.getColumn(), 
+                        category.getAttr().getName(), generalStyle);
+
+        if (test.getStatus().equals(Status.PASS)) {
+          excelreport.setCellData(Report.STATUS.getColumn(), test.getStatus().getName(),
+                          passStyle);            
+        }
+        if (test.getStatus().equals(Status.FAIL)) {
+          excelreport.setCellData(Report.STATUS.getColumn(), test.getStatus().getName(),
+                          failStyle);            
+        }
+        if (test.getStatus().equals(Status.SKIP)) {
+          excelreport.setCellData(Report.STATUS.getColumn(), test.getStatus().getName(),
+                          skipStyle);            
+        }
+
+        excelreport.setCellData(Report.STARTTIME.getColumn(), test.getStartTime(), datetimeStyle);
+        excelreport.setCellData(Report.ENDTIME.getColumn(), test.getEndTime(), datetimeStyle);
+
+        Interval interval = new Interval(test.getStartTime().getTime(),
+                        test.getEndTime().getTime());
+        String diff =  interval.toPeriod().getHours() + " H " 
+                        + interval.toPeriod().getMinutes() + " M "
+                        + interval.toPeriod().getSeconds() + " S";
+
+        excelreport.setCellData(Report.EXECUTIONTIME.getColumn(), diff, generalStyle);
+        row++;
+      }
+    }
+    excelreport.freezePane(0, 1);
+    excelreport.setBorder(0, row - 1, 0, 6);
+  }
+  
+  private void summaryData(TestSummary summar, int row, int column) {
+
+    String data;
+    int passFailSkip = 0;
+    CellStyle passStyle = excelreport.getStatusCell(Status.PASS);
+    CellStyle failStyle = excelreport.getStatusCell(Status.FAIL);
+    CellStyle skipStyle = excelreport.getStatusCell(Status.SKIP);
+    CellStyle generalStyle = excelreport.generalStyle();
+
+    switch (summar) {
+      case TotalTestcaseExecuted : 
+        data = Integer.toString(extentreport.getTotalTestcase());
+        excelreport.setMergecell(row, row, column, column + 1);
+        excelreport.setCellData(column, data, generalStyle);
+        break;
+
+      case TotalDuration:
+        Period period = extentreport.getDurationTime();
+        data = period.getHours() + " H "
+                        +  period.getMinutes() + " M " 
+                        + period.getSeconds() + " S";
+        excelreport.setMergecell(row, row, column, column + 2);
+        excelreport.setCellData(column, data, generalStyle);
+        break;
+
+      case TotalTestcasePass:
+        passFailSkip = extentreport.getTotalTestPasscase(Status.PASS);
+        data = Integer.toString(passFailSkip);
+        excelreport.setMergecell(row, row, column, column + 1);
+        if (passFailSkip > 0) {
+          excelreport.setCellData(column, data, passStyle);          
+        } else {
+          excelreport.setCellData(column, data, generalStyle);
+        }
+        break;
+
+      case TotalTestcaseFail:
+        passFailSkip = extentreport.getTotalTestPasscase(Status.FAIL);
+        data = Integer.toString(passFailSkip);
+        excelreport.setMergecell(row, row, column, column + 1);
+        if (passFailSkip > 0) {
+          excelreport.setCellData(column, data, failStyle);          
+        } else {
+          excelreport.setCellData(column, data, generalStyle);
+        }
+        break;
+
+      case TotalSkipTestcase:
+        passFailSkip = extentreport.getTotalTestPasscase(Status.SKIP);
+        data = Integer.toString(passFailSkip);
+        excelreport.setMergecell(row, row, column, column + 1);
+        if (passFailSkip > 0) {
+          excelreport.setCellData(column, data, skipStyle);          
+        } else {
+          excelreport.setCellData(column, data, generalStyle);
+        }
+        break;
+
+      case StartTime:
+        data = extentreport.dateToString(extentreport.getStartTime());
+        excelreport.setMergecell(row, row, column, column + 2);
+        excelreport.setCellData(column, data, generalStyle);
+        break;
+
+      case EndTime:
+        data = extentreport.dateToString(extentreport.getEndTime());
+        excelreport.setMergecell(row, row, column, column + 2);
+        excelreport.setCellData(column, data, generalStyle);
+        break;
+
+      case Browser:
+        data =  extentreport.getSystemInfo("Browser Name");
+        excelreport.setMergecell(row, row, column, column + 2);
+        excelreport.setCellData(column, data, generalStyle);
+        break;
+
+      case OSVersion:
+        data = System.getProperty("os.name");
+        excelreport.setMergecell(row, row, column, column + 1);
+        excelreport.setCellData(column, data, generalStyle);
+        break;
+
+      case BrowserVersion:
+        data = extentreport.getSystemInfo("Browser Version");
+        excelreport.setMergecell(row, row, column, column + 2);
+        excelreport.setCellData(column, data, generalStyle);
+        break;
+
+      default:
+        data = "NULL";
+        excelreport.setCellData(column, data, generalStyle);
+        break;          
+    }
+
   }
 
 }
