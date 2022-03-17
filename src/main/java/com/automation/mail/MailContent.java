@@ -141,6 +141,7 @@ public class MailContent {
     excelreport.setCreateRow(summaryReportRow);
     excelreport.setMergecell(summaryReportRow, ++summaryReportRow, 0, 11);
     excelreport.setCellData(0, "TEST SUMMARY", headerstyle);
+    int mergeRowColumn = summaryReportRow;
 
     int i = 0;
     for (TestSummary summary : TestSummary.values()) {
@@ -154,10 +155,14 @@ public class MailContent {
       summaryData(summary, summaryReportRow, summary.getNextColumn());
       i++;
     }
-
+    
+    
     //end broder 
-    int endBroderRow = summaryReportRow;
-    excelreport.setBorder(startBroderRow, endBroderRow, 0, 11);
+    int middleColumn = TestSummary.TotalTestcaseExecuted.getNextColumn() + 2;
+    //Merge the column.
+    excelreport.setMergecell(mergeRowColumn + 1, summaryReportRow, middleColumn, middleColumn);
+
+    excelreport.setBorder(startBroderRow, summaryReportRow, 0, 11);
 
     //Test Category
     //Leave the 2 row blank
@@ -253,8 +258,8 @@ public class MailContent {
                         generalStyle);
       }
     }
-    endBroderRow = summaryReportRow;
-    excelreport.setBorder(startBroderRow, endBroderRow, 0, 7);
+
+    excelreport.setBorder(startBroderRow, summaryReportRow, 0, 7);
     
   }
   
