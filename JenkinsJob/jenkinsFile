@@ -61,7 +61,8 @@ pipeline {
           fileOperations([
             folderCreateOperation('automation'),
             folderCopyOperation(destinationFolderPath: 'automation/properties', sourceFolderPath: 'target/properties'),
-            folderCopyOperation(destinationFolderPath: 'automation/extension', sourceFolderPath: 'target/extension')
+            folderCopyOperation(destinationFolderPath: 'automation/extension', sourceFolderPath: 'target/extension'),
+            folderCopyOperation(destinationFolderPath: 'automation/testscript', sourceFolderPath: 'target/testscript')
           ])
           
           //assign parameter 
