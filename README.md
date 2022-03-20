@@ -244,6 +244,14 @@ Follow below step to create job.
 
 *Note* :- By default html result CSS file are not loaded and report look ugle, so please follow below link to enable the CSS file to load in html file
  https://stackoverflow.com/questions/35783964/jenkins-html-publisher-plugin-no-css-is-displayed-when-report-is-viewed-in-j
-![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/jenkins_job7.JPG?raw=true)
+
+To relax this rule, go to
+1.  Manage Jenkins->
+2.  Manage Nodes->
+3.  Click settings(gear icon)->
+4.  click Script console on left and type in the following command:
+System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")
+
+and Press Run. If you see the output as 'Result:' below "Result" header then the protection disabled. Re-Run your build and you can see that the new HTML files archived will have the CSS enabled.
 
 Any help in understanding of framework, can reach out to me:- vinodraju26@gmail.com
