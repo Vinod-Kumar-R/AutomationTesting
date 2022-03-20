@@ -46,7 +46,7 @@ public class AmazonItem {
   private void sidebar(String element, String text) {
     waitmethod.waitForElementPresent(element);
     List<WebElement> elements = genericmethod.getElements(element);
-    for (WebElement sidebar :elements) {
+    for (WebElement sidebar : elements) {
       log.debug(sidebar.getText());
       if (sidebar.getText().equals(text)) {
         log.debug("found the element and clicking on it");

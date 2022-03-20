@@ -73,7 +73,7 @@ public class KeywordExecution {
 
     switch (keyword) {
 
-      case OPENENCASHURL : 
+      case OPENENCASHURL: 
         log.debug("Opening the URL " + properties.getEncashUrl());
         driver = browserinitialize.getWebDriverInstance();
         driver.get(properties.getEncashUrl());

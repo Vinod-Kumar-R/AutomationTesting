@@ -162,6 +162,13 @@ public class BaseClass {
         log.debug("Test Case ID " + testcase.getTestcaseId());
         log.debug("Test Case Description " + testcase.getTestcaseDescription());
         log.debug("Test Case Categeory " + testcase.getTestCatgeory());
+        
+        //check if browser is closed or quite due to some exception then start the browser
+        if (browserinitialize.browserStatus()) {
+          browserinitialize.getWebDriverInstance();
+        }
+        //print the Docker URL for each test case
+        browserinitialize.dockerUrl();
 
         recordingFilename = testcase.getTestcaseId();
         extentReport.createTest(testcase.getTestcaseId(), testcase.getTestcaseDescription());

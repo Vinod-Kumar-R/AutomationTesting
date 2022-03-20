@@ -1,0 +1,5 @@
+ObjectName,ObjectType,ObjectValue
+amazonall,linktext,All
+amazonsidebar,xpath,//*[@id='hmenu-content']/ul[@class='hmenu hmenu-visible']/li
+amazonsidebartwo,xpath,//*[@id='hmenu-content']/ul[@class='hmenu hmenu-visible hmenu-translateX']/li
+amazonaddtocart,id,add-to-cart-button

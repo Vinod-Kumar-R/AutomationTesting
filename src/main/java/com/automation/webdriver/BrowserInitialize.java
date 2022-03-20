@@ -138,16 +138,6 @@ public final class BrowserInitialize {
         break;
     }
     
-    //print the port number used by the docker for VNC
-    if (properties.isDocker()) {
-      URL vncUrl = webDriverManager.getDockerNoVncUrl(driver);
-      if (vncUrl.getHost().equalsIgnoreCase("localhost")) {
-        log.info("Docker VNC URL :- " + genericMethod.ipaddress(vncUrl));
-      } else {
-        log.info("Docker VNC URL :- " + vncUrl);
-      }
-    }
-    
     Assertions
       .assertThat(driver)
       .as("WebDriver instance is null")
@@ -275,5 +265,31 @@ public final class BrowserInitialize {
     }
     return null;
     
+  }
+  
+  /**
+   * Method is used to check the status of the browser instance is up, quite or close.
+   * @return true if browser is quite or close else false
+   */
+  public boolean browserStatus() {
+    if (driver == null) {
+      return true;
+    }
+    return false;
+  }
+  
+  /**
+   * Method is used to print the Docker URL with port number.
+   */
+  public void dockerUrl() {
+    //print the port number used by the docker for VNC
+    if (properties.isDocker()) {
+      URL vncUrl = webDriverManager.getDockerNoVncUrl(driver);
+      if (vncUrl.getHost().equalsIgnoreCase("localhost")) {
+        log.info("Docker VNC URL :- " + genericMethod.ipaddress(vncUrl));
+      } else {
+        log.info("Docker VNC URL :- " + vncUrl);
+      }
+    }
   }
 }

@@ -27,13 +27,13 @@ public class PropertiesValue {
   @Value("${browserstackurl}")
   private String browserStackUrl;
   
-  @Value("${testcase}")
+  @Value("${testcase:${automation}/testscript/Testcase.xlsx}")
   private String testcase;
   
-  @Value("${testData}")
+  @Value("${testData:${automation}/testscript/TestData.xlsx}")
   private String testdata;
   
-  @Value("${testobject}")
+  @Value("${testobject:${automation}/testscript/TestObject.csv}")
   private String testobject;
   
   @Value("${test_execution}")
