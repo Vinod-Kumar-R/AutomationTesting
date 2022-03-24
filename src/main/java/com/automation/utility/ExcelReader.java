@@ -2,8 +2,10 @@ package com.automation.utility;
 
 import com.aventstack.extentreports.Status;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -302,7 +304,7 @@ public class ExcelReader {
    * @throws IOException if file not able to write
    */
   public void writeWorkbook(String fileName) throws IOException {
-    FileOutputStream fileOut  = new FileOutputStream(fileName);
+    OutputStream fileOut = Files.newOutputStream(Paths.get(fileName));
     this.workbook.write(fileOut);
     fileOut.close();
   }
@@ -313,7 +315,7 @@ public class ExcelReader {
    * @throws IOException if file not able to write
    */
   public void writeWorkbook(File fileName) throws IOException {
-    FileOutputStream fileOut  = new FileOutputStream(fileName);
+    OutputStream fileOut = Files.newOutputStream(Paths.get(fileName.toURI()));
     this.workbook.write(fileOut);
     fileOut.close();
   }

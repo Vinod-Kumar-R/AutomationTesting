@@ -5,10 +5,11 @@ import com.automation.custom.exception.DuplicateValueException;
 import com.automation.dao.RepositoryDao;
 import com.automation.utility.ExcelReader;
 import com.opencsv.bean.CsvToBeanBuilder;
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,9 +17,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.poi.EncryptedDocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,19 +32,19 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
+@Log4j2
 public class ConstantVariable {
 
   private String extentReportsLocation;
-  public static String ScreenShotlocation;
-  public static HashMap<String, Integer> TestDataRowNumber;
+  public static String screenShotlocation;
+  public static HashMap<String, Integer> testDataRowNumber;
   private HashMap<String, List<String>> objects;
   private String resultBaseLocation;
   public static String resultLocation;
   private String resultLocation1;
   private String resultDatelocaton;
-  public static String Foldername = "AutomationResult";
+  public static String foldername = "AutomationResult";
   private String environment = "automation";
-  private static Logger logger = LogManager.getLogger(ConstantVariable.class.getName());
   private String dateformat = "dd_MMM_yyyy";
   private String timeformat = "HH_mm_ss";
   private String date;
@@ -85,11 +86,11 @@ public class ConstantVariable {
     resultBaseLocation = properties.getConfigLocation() + File.separator + "Result";
     resultDatelocaton = dateTime(date, resultBaseLocation);
     resultLocation = dateTime(time, resultDatelocaton);
-    resultLocation1 = resultLocation + File.separator + Foldername;
+    resultLocation1 = resultLocation + File.separator + foldername;
     properties.setResultfolder(resultLocation1);
     extentReportsLocation = resultLocation1 + File.separator + "automation.html";
     properties.setExtentreportlocation(extentReportsLocation);
-    ScreenShotlocation = folderCreation(resultLocation1, "ScreenShot");
+    screenShotlocation = folderCreation(resultLocation1, "ScreenShot");
     
     //create temp folder 
     if (properties.isJiraIntegration()) {
@@ -110,19 +111,19 @@ public class ConstantVariable {
 
   public void searchTestData() throws EncryptedDocumentException, IOException   {
 
-    ConstantVariable.TestDataRowNumber = new HashMap<String, Integer>();
+    ConstantVariable.testDataRowNumber = new HashMap<String, Integer>();
     
     for (int i = 0; i < std.rowCout(0); i++) {
       if (std.getCellData(i, 0) != null 
                       && !std.getCellData(i, 0).equalsIgnoreCase("End")
                       && !std.getCellData(i, 0).equalsIgnoreCase("EndTestCase")) {
-        ConstantVariable.TestDataRowNumber.put(std.getCellData(i, 0), i);
-        logger.debug(std.getCellData(i, 0));
+        ConstantVariable.testDataRowNumber.put(std.getCellData(i, 0), i);
+        log.debug(std.getCellData(i, 0));
       }
     }
 
     std.closeWorkbook();
-    logger.debug("found the testcase in the TestDatas" + properties.getTestdata() 
+    log.debug("found the testcase in the TestDatas" + properties.getTestdata() 
                     + "in the row number ");
   }
 
@@ -135,17 +136,16 @@ public class ConstantVariable {
    *
    *<p>csv file are read the stored in the HashMap&lt;String,String&gt; so that during execution
    * we will get the xpath for an element 
-   * @throws FileNotFoundException , if excel file is not found in specified location 
-   *     then it throw FileNotFoundException 
    * @throws DuplicateValueException duplicate value are found in the Repository file
+   * @throws IOException , excel file not found i.e. FileNotFoundException
    */
-  public void objectRepository() throws FileNotFoundException, DuplicateValueException  {
+  public void objectRepository() throws DuplicateValueException, IOException  {
 
     String key;
     Set<String> duplicateValue = new HashSet<String>();
     objects = new HashMap<String, List<String>>();
     
-    FileReader file = new FileReader(properties.getTestobject());
+    BufferedReader file = Files.newBufferedReader(Paths.get(properties.getTestobject()));
 
     List<RepositoryBean> repositoryobject = new CsvToBeanBuilder<RepositoryBean>(file)
                     .withType(RepositoryBean.class).build().parse();
@@ -156,7 +156,7 @@ public class ConstantVariable {
       object.add(ro.getObjectType());
       object.add(ro.getObjectValue());
       
-      logger.debug("Key ---> " + key + "  Type ----> " + ro.getObjectType() 
+      log.debug("Key ---> " + key + "  Type ----> " + ro.getObjectType() 
           + "  Value-----> " + ro.getObjectValue());
       
       if (!duplicateValue.contains(key)) {
@@ -194,9 +194,9 @@ public class ConstantVariable {
     File file = new File(baseLocation + File.separator + foldername);
     try {
       FileUtils.forceMkdir(file);
-      logger.debug("Folder created at location " + file.getAbsolutePath());
+      log.debug("Folder created at location " + file.getAbsolutePath());
     } catch (IOException e) {
-      logger.error("Folder cann't be created", e);
+      log.error("Folder cann't be created", e);
     }
 
     return file.getAbsolutePath();
@@ -214,10 +214,10 @@ public class ConstantVariable {
     File file = new File(baseLocation + File.separator + foldername);
     try {
       FileUtils.forceMkdir(file);
-      logger.debug("Folder created at location " + file.getAbsolutePath());
+      log.debug("Folder created at location " + file.getAbsolutePath());
     } catch (IOException e) {
      
-      logger.error("Folder cann't be created", e);
+      log.error("Folder cann't be created", e);
     }
 
     return file.getAbsolutePath();

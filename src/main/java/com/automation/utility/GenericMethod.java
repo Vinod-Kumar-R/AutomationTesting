@@ -120,14 +120,14 @@ public class GenericMethod {
     if (driver instanceof TakesScreenshot) {
       File tempFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
       try {
-        FileUtils.copyFile(tempFile, new File(ConstantVariable.ScreenShotlocation 
+        FileUtils.copyFile(tempFile, new File(ConstantVariable.screenShotlocation 
                         + File.separator + filename + ".png"));
       } catch (IOException e) {
         e.printStackTrace();
         log.error(e.getStackTrace());
       }
     }
-    String absolutePath = ConstantVariable.ScreenShotlocation +  File.separator
+    String absolutePath = ConstantVariable.screenShotlocation +  File.separator
                     + filename + ".png";
     log.debug("absolutepath " + absolutePath);
     
@@ -700,7 +700,7 @@ public class GenericMethod {
               Files.copy(path, zipOutputStream);
               zipOutputStream.closeEntry();
             } catch (IOException e) {
-              System.err.println(e);
+              log.error(e);
             }
           });
     }
@@ -824,7 +824,7 @@ public class GenericMethod {
         byElement = ByAngular.repeater(expression);
         break;
       }
-      case exactrepeater : {
+      case exactrepeater: {
         byElement = ByAngular.exactRepeater(expression);
         break;
       }
@@ -852,7 +852,7 @@ public class GenericMethod {
         byElement = ByAngular.cssContainingText(expression, "searchText");
         break;
       }
-      default :
+      default:
         log.info("Invalid By Class");
     }
     return byElement;

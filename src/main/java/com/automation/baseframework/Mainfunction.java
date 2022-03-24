@@ -39,7 +39,6 @@ public class Mainfunction {
       log.debug("Start Executing Test cases");
       baseClass.startRun();
       log.debug("Complete Executing Test cases");
-      System.gc();
 
     } catch (EncryptedDocumentException | IOException 
                     | DuplicateValueException | URISyntaxException  e) {

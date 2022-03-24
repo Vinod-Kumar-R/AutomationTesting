@@ -9,6 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+/**
+ * Class contain the Service layer of PetStore.
+ * @author Vinod Kumar R
+ *
+ */
 @Component
 public class PetStoreService {
   

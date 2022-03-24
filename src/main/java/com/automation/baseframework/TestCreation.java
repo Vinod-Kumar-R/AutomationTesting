@@ -1,5 +1,10 @@
 package com.automation.baseframework;
 
+/**
+ * Class contain the ENUM detail about Test Case Excel.
+ * @author Vinod Kumar R
+ *
+ */
 public enum TestCreation {
 
   TESTCASEID(0, "Test Case ID"),

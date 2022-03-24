@@ -216,19 +216,9 @@ Open the Jenkins URL and make sure below plug-in are installed.
 |3|HTML Publisher |1.25|
 |4|Pipeline Utility Steps|2.8.0|
 |5|File Operations |1.11|
+|6|Warnings Next Generation Plugin |9.11.1|
 
-Follow below step to create job. 
-1. Create new Freestyle Project by Job name as "Automation Build"
- ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/jenkins_job0.JPG?raw=true)
-2. In source code management, select Git radio button and enter the Repository URL as "https://github.com/Vinod-Kumar-R/AutomationTesting" 
- ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/jenkins_job1.JPG?raw=true) 
-3. In Build section, select the Maven version (Which need to be configured in Jenkins Global configuration) and in Goals type the text as "clean compile install"
- ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/jenkins_job2.JPG?raw=true)
-4. In post-build Actions, type the text as "target/EncashAutomation.jar, target/lib/\*.jar, target/properties/\*.\*, target/extension/\*.\*"
- ![alt text](https://github.com/Vinod-Kumar-R/AutomationTesting/blob/master/ConfigurationFolder/images/jenkins_job6.JPG?raw=true)
-5. Click on "Save" button
-
-- **Create new Pipeline job**
+Follow below step to create Pipeline Job
 1. Create a new Pipeline by providing any job name 
 2. Go to pipeline tab as show in below image and perform below step 
     - from drop down list of "Definition", Select 'Pipeline script from SCM'

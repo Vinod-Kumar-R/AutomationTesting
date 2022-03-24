@@ -5,6 +5,7 @@ Copy Artifact : 1.46.1
 HTML Publisher : 1.25
 Pipeline Utility Steps : 2.8.0
 File Operations : 1.11
+Warnings Next Generation Plugin : 9.11.1
 **/
 def ResultLocation
 def param
@@ -45,20 +46,87 @@ pipeline {
     automation = 'automation'
   }
 
+  options {
+    buildDiscarder logRotator(
+        artifactDaysToKeepStr: '10', 
+        artifactNumToKeepStr: '10', 
+        daysToKeepStr: '10', 
+        numToKeepStr: '10'
+        )
+    timestamps()    
+  }
+
   stages {
-    stage('Build') {
+    stage('Clone & Build') {
       steps {
-        build 'Automation Build'
-        //input id: 'StartScript', message: 'Run Automation Script', ok: 'Build Success', submitter: 'tester'
+        script {
+          // One or more steps need to be included within the steps block.
+          git poll: false, url: 'https://github.com/Vinod-Kumar-R/AutomationTesting.git'
+          if (isUnix()) {
+            sh 'mvn clean compile install'
+          } else {
+            bat 'mvn clean compile install'
+          }
+        }
+      }
+      post {
+        success {
+          // One or more steps need to be included within each condition's block.
+          archiveArtifacts artifacts: 'target/EncashAutomation.jar,target/lib/*.jar,target/properties/*.*,target/extension/*.*,target/docker/*.*,target/properties/chromedriver/chromedriver,target/testscript/*.*',
+          followSymlinks: true
+        }
+      }
+      agent {
+        label 'master'
+      }
+    }
+    stage('Static code Analysis') {
+      steps {
+        script {
+          if (isUnix()) {
+            sh 'mvn checkstyle:checkstyle'
+          } else {
+            bat 'mvn checkstyle:checkstyle'
+          }
+          recordIssues (
+              enabledForFailure: true,
+              failOnError: true,
+              healthy: 1,
+              tools: [checkStyle(reportEncoding: 'UTF-8')],
+              unhealthy: 2
+              )
+        }
+      }
+      agent {
+        label 'master'
+      }
+    }
+    stage('Publish Java doc') {
+      steps {
+        script {
+          // One or more steps need to be included within the steps block.
+          if (isUnix()) {
+            sh 'mvn javadoc:javadoc'
+          } else {
+            bat sh 'mvn javadoc:javadoc'
+          }
+          javadoc javadocDir: './target/site/apidocs', keepAll: false
+          recordIssues (
+              failOnError: true, 
+              healthy: 1, 
+              tools: [javaDoc(reportEncoding: 'UTF-8')], 
+              unhealthy: 2)
+        }
+      }
+      agent {
+        label 'master'
       }
     }
     stage('Copy Automation Script') {
       steps {
         script {
           deleteDir()
-          copyArtifacts projectName: 'Automation Build',
-            selector: upstream(fallbackToLastSuccessful: true)
-
+          copyArtifacts projectName: '${JOB_NAME}', selector: specific('${BUILD_NUMBER}')
           fileOperations([
             folderCreateOperation('automation'),
             folderCopyOperation(destinationFolderPath: 'automation/properties', sourceFolderPath: 'target/properties'),

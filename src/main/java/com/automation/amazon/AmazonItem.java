@@ -8,6 +8,11 @@ import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * This class is used for writing method related to Amazon Web site.
+ * @author Vinod Kumar R
+ *
+ */
 @Component
 @Log4j2
 public class AmazonItem {
@@ -43,6 +48,11 @@ public class AmazonItem {
 
   }
 
+  /**
+   * Method is used to select the side bar on Amazon main web page.
+   * @param element is name of Object.
+   * @param text is content on which user is used to click on it. 
+   */
   private void sidebar(String element, String text) {
     waitmethod.waitForElementPresent(element);
     List<WebElement> elements = genericmethod.getElements(element);

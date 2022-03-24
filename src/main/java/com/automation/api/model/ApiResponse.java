@@ -5,6 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Class contain POJO detail of API Response.
+ * @author Vinod Kumar R
+ *
+ */
 @Data
 @Builder
 @AllArgsConstructor

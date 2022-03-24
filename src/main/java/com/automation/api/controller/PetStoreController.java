@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * Class contain the method signature of PET Web site.
+ * @author Vinod Kumar R
+ *
+ */
 @FeignClient(name = "test", url = "https://petstore.swagger.io/v2")
 public interface PetStoreController {
 

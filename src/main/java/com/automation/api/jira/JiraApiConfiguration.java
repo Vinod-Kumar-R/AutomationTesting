@@ -14,7 +14,11 @@ import org.springframework.cloud.openfeign.support.SpringEncoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
-
+/**
+ * Class contain configuration of Jira API.
+ * @author Vinod Kumar R
+ *
+ */
 public class JiraApiConfiguration {
 
   

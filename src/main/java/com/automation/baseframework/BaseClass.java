@@ -182,8 +182,8 @@ public class BaseClass {
           extentReport.flushlog();
         } else {
           log.debug("Test case found in the test data file at----> "
-                          + ConstantVariable.TestDataRowNumber.get(testcase.getTestcaseId()));
-          testDatarownumber = ConstantVariable.TestDataRowNumber.get(testcase.getTestcaseId());
+                          + ConstantVariable.testDataRowNumber.get(testcase.getTestcaseId()));
+          testDatarownumber = ConstantVariable.testDataRowNumber.get(testcase.getTestcaseId());
 
           //Execute the Test case ID
           log.debug("Test Case ID found and started executing " + testcase.getTestcaseId());

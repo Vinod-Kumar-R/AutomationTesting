@@ -16,6 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * Class contain the Method Signature of JIRA API.
+ * @author Vinod Kumar R
+ *
+ */
 @FeignClient(url = "${jira.url}", name = "jira", configuration = JiraApiConfiguration.class)
 public interface Zephyr {
 
