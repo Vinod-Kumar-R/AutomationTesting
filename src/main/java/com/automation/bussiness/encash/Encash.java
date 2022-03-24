@@ -284,16 +284,16 @@ public class Encash {
 
     List<WebElement> elements = genericmethod.getElements("consent_table");
     //Get the number of row in the parent consent table
-    for (WebElement element: elements) {
+    for (WebElement element : elements) {
       element.click();
       List<WebElement> child = genericmethod.getWebElements(element, "consent_child");
       log.debug("no of child row " + child.size());
       //each row has number of client information 
-      for (WebElement ele :child) {
+      for (WebElement ele : child) {
         List<WebElement> childconsent = genericmethod.getWebElements(ele, "consent_child_type");
         log.debug("child consent type count " + childconsent.size());
         //each client information has different consent
-        for (WebElement consentchild :childconsent) {
+        for (WebElement consentchild : childconsent) {
           log.debug(consentchild.getText());
           WebElement childstatus = genericmethod.getWebElement(consentchild, 
                           "consent_child_status");
@@ -327,9 +327,9 @@ public class Encash {
    * This method is used to click on the competition page, 
    * where user searched for competition and then click matched text competition. 
    * @param dataParam 
-   * <br> dataParam[0] contain the text which need to enter in the search box in competition page
-   *     in which user can enter a partial text in search box
-   * <br> dataParam[1] contain the text which need to click on search result competition 
+   <br> dataParam[0] contain the text which need to enter in the search box in competition page
+        in which user can enter a partial text in search box
+   <br> dataParam[1] contain the text which need to click on search result competition 
    */
   public void searchcompetation(List<String> dataParam) {
 
@@ -349,7 +349,7 @@ public class Encash {
 
     log.debug("fetched result count " + elements.size());
 
-    for (WebElement competations :elements) {
+    for (WebElement competations : elements) {
       log.debug("get the list of search list data");
       List<WebElement> competation = genericmethod.getWebElements(competations, 
                       "competition_search_data");
@@ -390,8 +390,8 @@ public class Encash {
    * <br>By default there are 10 Mandatory question in which first question is drop down 
    * and rest 9 question single choice answer
    * @param dataParam
-   * <br> dataParam[0] by default second answer options is choice
-   * <br> dataParam[1] to dataParam[9] contain the answer option to select
+   <br> dataParam[0] by default second answer options is choice
+   <br> dataParam[1] to dataParam[9] contain the answer option to select
    */
   @Deprecated
   public void mandatoryquestion(List<String> dataParam) {

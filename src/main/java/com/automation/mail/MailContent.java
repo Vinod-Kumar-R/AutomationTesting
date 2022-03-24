@@ -21,8 +21,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-/*
- * used for creating the Mail content preparation.
+/**
+ * Class is used for creating content of email report.
+ * @author Vinod Kumar R
+ *
  */
 @Component
 @Log4j2
@@ -107,7 +109,7 @@ public class MailContent {
     CellStyle passStyle = excelreport.getStatusCell(Status.PASS);
     CellStyle failStyle = excelreport.getStatusCell(Status.FAIL);
     CellStyle skipStyle = excelreport.getStatusCell(Status.SKIP);
-    CellStyle headerstyle = excelreport.getHeaderCellStyle();
+    final CellStyle headerstyle = excelreport.getHeaderCellStyle();
     CellStyle generalStyle = excelreport.generalStyle();
     int summaryReportRow = 0;
     
@@ -331,6 +333,12 @@ public class MailContent {
     excelreport.setBorder(0, row - 1, 0, 6);
   }
   
+  /**
+   * method is used to update the summary report in excel. 
+   * @param summar is an Enum of type TestSummary.
+   * @param row number in which data has to write.
+   * @param column number in which data has to write.
+   */
   private void summaryData(TestSummary summar, int row, int column) {
 
     String data;
@@ -341,7 +349,7 @@ public class MailContent {
     CellStyle generalStyle = excelreport.generalStyle();
 
     switch (summar) {
-      case TotalTestcaseExecuted : 
+      case TotalTestcaseExecuted: 
         data = Integer.toString(extentreport.getTotalTestcase());
         excelreport.setMergecell(row, row, column, column + 1);
         excelreport.setCellData(column, data, generalStyle);

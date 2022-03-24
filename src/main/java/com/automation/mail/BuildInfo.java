@@ -1,5 +1,10 @@
 package com.automation.mail;
 
+/**
+ * This class is used to capture detail about the Build info in which automation script are running.
+ * @author Vinod Kumar R
+ *
+ */
 public enum BuildInfo {
 
   Module(0),

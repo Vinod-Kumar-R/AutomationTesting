@@ -322,6 +322,8 @@ public class ExcelReader {
   
   /**
    * Method is used to set the ColumnWidth for Result Excel sheet.
+   * @param column number 
+   * @param width size to set
    */
   public void setWidthHeight(int column, int width) {
     this.sheet.setColumnWidth(column, width);
