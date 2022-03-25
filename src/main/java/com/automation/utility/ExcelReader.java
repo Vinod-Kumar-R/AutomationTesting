@@ -103,7 +103,6 @@ public class ExcelReader {
 */
   /**
    * This method is used to get the number of row count in an sheet.
-   * @param sheetindex read the integer value of sheet
    * @return the total number of row are used 
    */
   public int rowCout(int sheetindex) {
@@ -215,7 +214,7 @@ public class ExcelReader {
       case SKIP: 
         style.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
         break;
-      default : 
+      default: 
         style.setFillForegroundColor(IndexedColors.WHITE.getIndex());
         font.setColor(IndexedColors.BLACK.getIndex());        
         break;
@@ -367,16 +366,16 @@ public class ExcelReader {
 
     switch (cell.getCellType()) {
 
-      case BLANK : cellvalue = null;
+      case BLANK: cellvalue = null;
       break;
-      case _NONE : cellvalue = null;
+      case _NONE: cellvalue = null;
       break;
-      case BOOLEAN : cellvalue = Boolean.toString(cell.getBooleanCellValue());
+      case BOOLEAN: cellvalue = Boolean.toString(cell.getBooleanCellValue());
       break;
-      case ERROR :   break;
-      case FORMULA : cellvalue =  cell.getStringCellValue();
+      case ERROR:   break;
+      case FORMULA: cellvalue =  cell.getStringCellValue();
       break;
-      case NUMERIC : 
+      case NUMERIC: 
         if (DateUtil.isCellDateFormatted(cell)) {
           cellvalue = cell.getDateCellValue().toString();
         } else {
@@ -384,7 +383,7 @@ public class ExcelReader {
           cellvalue = fmt.formatCellValue(cell);
         }
         break;
-      case STRING : cellvalue =  cell.getStringCellValue();
+      case STRING: cellvalue =  cell.getStringCellValue();
       break;
 
       default: break;

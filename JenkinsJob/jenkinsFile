@@ -92,7 +92,12 @@ pipeline {
               enabledForFailure: true,
               failOnError: true,
               healthy: 1,
-              tools: [checkStyle(reportEncoding: 'UTF-8')],
+              tools: [
+              	checkStyle(
+              		pattern: '**/target/site/checkstyle/checkstyle.xml', 
+              		reportEncoding: 'UTF-8'
+              			)
+              		],
               unhealthy: 2
               )
         }
@@ -110,7 +115,7 @@ pipeline {
           } else {
             bat sh 'mvn javadoc:javadoc'
           }
-          javadoc javadocDir: './target/site/apidocs', keepAll: false
+          javadoc javadocDir: './target/site/javadoc', keepAll: false
           recordIssues (
               failOnError: true, 
               healthy: 1, 

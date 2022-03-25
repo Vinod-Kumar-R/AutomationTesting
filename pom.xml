@@ -318,8 +318,8 @@
 						<configLocation>${project.basedir}/src/main/resources/google_checks.xml</configLocation>
 						<encoding>UTF-8</encoding>
 						<consoleOutput>true</consoleOutput>
-						<failsOnError>false</failsOnError>
-						<linkXRef>false</linkXRef>
+						<outputFile>${project.build.directory}/site/checkstyle/checkstyle.xml</outputFile>
+						<outputFileFormat>xml</outputFileFormat>
 					</configuration>
 					<executions>
 						<execution>
@@ -350,6 +350,8 @@
 					<show>private</show>
 					<nohelp>true</nohelp>
 					<additionalOptions>-html5</additionalOptions>
+					<reportOutputDirectory>${project.build.directory}/site</reportOutputDirectory>
+					<destDir>javadoc</destDir>
 				</configuration>
 			</plugin>
 			<plugin>
