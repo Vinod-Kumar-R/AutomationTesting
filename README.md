@@ -201,10 +201,15 @@ https://support.smartbear.com/zephyr-scale-server/api-docs/v1/
 *Note:-*
 1. noVNC url are display in the console log (info) to view automation script execution in Docker.
 
-**Generated the JAVA doc** 
+**Generation of JAVA doc** 
 1. Go to the folder where source code has been downloaded
 2. run the command  "mvn javadoc:javadoc"
 3. java doc are generated in .../target/site/apidocs/index.html
+
+**Generation of CheckStyle Report** 
+1. Go to the folder where source code has been downloaded
+2. run the command  "mvn checkstyle:checkstyle"
+3. java doc are generated in .../target/site/checkstyle.html
 
 **Jenkins Integration**
 
