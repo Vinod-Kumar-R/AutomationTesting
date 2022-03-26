@@ -6,6 +6,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
+/**
+ * This is used to create customer wait for particular element not present.
+ * @author Vinod Kumar R
+ *
+ */
 @Log4j2
 public class AttributedNotPresent implements ExpectedCondition<Boolean> {
 

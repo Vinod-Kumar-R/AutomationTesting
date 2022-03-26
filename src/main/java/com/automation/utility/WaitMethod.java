@@ -14,6 +14,11 @@ import org.openqa.selenium.support.ui.Wait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * In this class, all related to wait method are written.
+ * @author Vinod Kumar R
+ *
+ */
 @Component
 @Log4j2
 public class WaitMethod {
@@ -123,8 +128,8 @@ public class WaitMethod {
 
   /**
    * This method is used to wait until required element is present in DOM.
-   * @param dataParam contain Object location in DOM
-   * <br> dataParam[0] contain the object Name which need to wait
+   * @param dataParam contain Object location in DOM <br> 
+   dataParam[0] contain the object Name which need to wait
    * @return it return the status "pass" if execution success else fail
    */
   public String waitForElementPresent(String dataParam) {

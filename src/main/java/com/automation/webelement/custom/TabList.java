@@ -5,6 +5,11 @@ import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+/**
+ * This class is used to create a custom tab.
+ * @author Vinod Kumar R
+ *
+ */
 @Log4j2
 public class TabList {
   

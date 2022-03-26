@@ -9,6 +9,11 @@ import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * This class is related to encash Admin page.
+ * @author Vinod Kumar R
+ *
+ */
 @Component
 @Log4j2
 public class Admin {

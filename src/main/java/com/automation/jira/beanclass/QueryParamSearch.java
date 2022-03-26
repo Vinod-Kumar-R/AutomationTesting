@@ -5,6 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * This class is used to convert the JSON to Object and wise versa.
+ * @author Vinod Kumar R
+ *
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

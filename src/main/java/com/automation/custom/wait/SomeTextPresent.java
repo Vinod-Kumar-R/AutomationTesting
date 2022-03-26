@@ -5,7 +5,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
-
+/**
+ * This class is used to wait for some text on element.
+ * @author Vinod Kumar R
+ *
+ */
 @Log4j2
 public class SomeTextPresent implements ExpectedCondition<Boolean> {
   private WebElement element;

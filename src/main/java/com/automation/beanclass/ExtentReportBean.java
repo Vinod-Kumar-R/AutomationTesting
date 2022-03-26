@@ -11,6 +11,11 @@ import lombok.Data;
 import org.joda.time.Period;
 import org.springframework.stereotype.Component;
 
+/**
+ * This class is used to set the value to email report.
+ * @author Vinod Kumar R
+ *
+ */
 @Component
 @Data
 public class ExtentReportBean {

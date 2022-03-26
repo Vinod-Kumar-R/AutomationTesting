@@ -65,7 +65,7 @@ public class MailContent {
     report.setPlatform(extentreport.getSystemInfo("Platform"));
     report.setEncashUrl(properties.getEncashUrl());
     report.setAdminUrl(properties.getAdminUrl());
-    report.setBuildnumber("XXXX");
+    report.setBuildnumber(properties.getAutomationBuildInfo());
     report.setAutomationresult(excelreport.toFile());
     report.setBrowsername(extentreport.getSystemInfo("Browser Name"));
     report.setBrowserversion(extentreport.getSystemInfo("Browser Version"));

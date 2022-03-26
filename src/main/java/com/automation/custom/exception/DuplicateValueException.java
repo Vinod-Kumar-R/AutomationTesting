@@ -1,5 +1,10 @@
 package com.automation.custom.exception;
 
+/**
+ * This used for custom exception for duplicate value.
+ * @author Vinod Kumar R
+ *
+ */
 public class DuplicateValueException extends Exception {
   
   /**

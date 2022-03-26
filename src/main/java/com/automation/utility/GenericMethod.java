@@ -4,7 +4,6 @@ import com.automation.configuration.ApplicationStoreValue;
 import com.automation.configuration.ConstantVariable;
 import com.automation.configuration.PropertiesValue;
 import com.automation.webdriver.BrowserInitialize;
-import com.automation.webelement.custom.Calendar;
 import com.automation.webelement.custom.CreateQuestionnaire;
 import com.automation.webelement.custom.Levels;
 import com.automation.webelement.custom.MatOptions;
@@ -63,9 +62,6 @@ public class GenericMethod {
 
   @Autowired
   private ApplicationStoreValue storevalue;
-  @Autowired
-  @Lazy
-  private Calendar calendar;
   @Autowired
   private BrowserInitialize browserinitialize; 
   @Autowired
@@ -737,13 +733,13 @@ public class GenericMethod {
   public void copyfile(InputStream dowloadedFile, String filename) {
     try {
       BufferedInputStream inputStream = new BufferedInputStream(dowloadedFile);
-      FileOutputStream fileOS = new FileOutputStream(filename); 
+      FileOutputStream fileOs = new FileOutputStream(filename); 
       byte[] data = new byte[1024];
       int byteContent;
       while ((byteContent = inputStream.read(data, 0, 1024)) != -1) {
-        fileOS.write(data, 0, byteContent);
+        fileOs.write(data, 0, byteContent);
       }
-      fileOS.close();
+      fileOs.close();
     } catch (IOException e) {
       log.error(e.getMessage());
     }

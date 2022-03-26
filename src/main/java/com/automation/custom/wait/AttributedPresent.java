@@ -6,6 +6,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
+/**
+ * This class is used to create a custom wait for particular attribute are present.
+ * @author Vinod Kumar R
+ *
+ */
 @Log4j2
 public class AttributedPresent implements ExpectedCondition<Boolean> {
 

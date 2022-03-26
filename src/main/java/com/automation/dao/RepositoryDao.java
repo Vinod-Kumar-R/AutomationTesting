@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface RepositoryDao {
 
-  public  List<String> searchValue(String name);
+  List<String> searchValue(String name);
   
-  public void insertValue(RepositoryBean respository);
+  void insertValue(RepositoryBean respository);
 }

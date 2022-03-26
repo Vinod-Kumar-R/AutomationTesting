@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public interface PetStoreController {
 
   @RequestMapping(method = RequestMethod.POST, value = "/pet")
-  public ResponseEntity<Pet> newPet(@RequestBody Pet pet);
+  ResponseEntity<Pet> newPet(@RequestBody Pet pet);
   
   @RequestMapping(method = RequestMethod.GET, value = "/pet/{petId}")
-  public ResponseEntity<Pet> fetchPet(@PathVariable int petid);
+  ResponseEntity<Pet> fetchPet(@PathVariable int petid);
 }

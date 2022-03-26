@@ -17,6 +17,11 @@ import org.openqa.selenium.safari.SafariOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * This class is related to Desired capability of each browser.
+ * @author Vinod Kumar R
+ *
+ */
 @Component
 @Log4j2
 public class Desired {

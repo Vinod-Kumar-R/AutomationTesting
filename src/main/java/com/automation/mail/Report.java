@@ -1,5 +1,10 @@
 package com.automation.mail;
 
+/**
+ * this enum is used to set the column number, width and header name.
+ * @author Vinod Kumar R
+ *
+ */
 public enum Report {
 
   TESTCASEID(0, 13 * 256, "Test Case ID"),
@@ -14,6 +19,12 @@ public enum Report {
   private String header;
   private int width;
 
+  /**
+   * constructor is used to set the value of column, width and header.
+   * @param column number.
+   * @param width of the column
+   * @param header of column
+   */
   Report(int column, int width, String header) {
     this.column = column;
     this.header = header;

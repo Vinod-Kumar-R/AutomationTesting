@@ -1,5 +1,10 @@
 package com.automation.webdriver;
 
+/**
+ * In this Enum releated to browser support by selenium.
+ * @author Vinod Kumar R
+ *
+ */
 public enum BrowserExecutionType {
 
   CHROME("CHROME"),
@@ -16,7 +21,7 @@ public enum BrowserExecutionType {
   
   public final String binaryBrower;
   
-  private BrowserExecutionType(String binaryBrower) {
+  BrowserExecutionType(String binaryBrower) {
     this.binaryBrower = binaryBrower;
   }
 

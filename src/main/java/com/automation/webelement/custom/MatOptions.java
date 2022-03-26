@@ -9,7 +9,11 @@ import org.openqa.selenium.support.ui.Quotes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
+/**
+ * This class is used to create custom for Mat Options.
+ * @author Vinod Kumar R
+ *
+ */
 @Component
 @Log4j2
 public class MatOptions {

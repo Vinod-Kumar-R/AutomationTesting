@@ -5,7 +5,11 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import lombok.Data;
 
-
+/**
+ * This class is used to convert the JSON to Object and wise versa.
+ * @author Vinod Kumar R
+ *
+ */
 @Data
 public class TestResult {
   

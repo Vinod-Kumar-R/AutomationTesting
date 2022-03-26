@@ -9,6 +9,11 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * In this class, related to fluent wait is written.
+ * @author Vinod Kumar R
+ *
+ */
 @Component
 public class GeneralWait {
   

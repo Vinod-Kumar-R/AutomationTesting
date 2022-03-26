@@ -8,6 +8,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
+/**
+ * This class is used to wait for particular element present.
+ * @author Vinod Kumar R
+ *
+ */
 @Log4j2
 public class NotificationAppear implements ExpectedCondition<Boolean> {
   private WebElement element;

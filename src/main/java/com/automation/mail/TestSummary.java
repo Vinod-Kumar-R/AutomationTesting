@@ -1,5 +1,10 @@
 package com.automation.mail;
 
+/**
+ * This enum is used to set the summary data in excel of column name and column data.
+ * @author Vinod Kumar R
+ *
+ */
 public enum TestSummary {
   
   TotalTestcaseExecuted(0, 3, "Total Test case Executed"),
@@ -18,6 +23,12 @@ public enum TestSummary {
   private final int column;
   private final int nextcolumn;
   
+  /**
+   * constructor is used to set the value of column,nextcolumn and summar data.
+   * @param column number
+   * @param nextcolumn number
+   * @param summar column data.
+   */
   TestSummary(int column, int nextcolumn, String summar) {
     this.summar = summar;
     this.column = column;

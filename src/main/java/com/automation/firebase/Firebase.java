@@ -12,6 +12,11 @@ import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * in this class, releated to google firebase method are written.
+ * @author Vinod Kumar R
+ *
+ */
 @Component
 @Log4j2
 public class Firebase {

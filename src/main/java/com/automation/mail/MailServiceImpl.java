@@ -16,7 +16,11 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
-
+/**
+ * In this class, configuration of Mail setting and data sending.
+ * @author Vinod Kumar R
+ *
+ */
 @Component
 @Log4j2
 public class MailServiceImpl {
@@ -50,6 +54,11 @@ public class MailServiceImpl {
     }
   }
 
+  /**
+   * This method is used to set the body content of mail.
+   * @param report is the data in email body.
+   * @return MimeMessagePreparator
+   */
   private MimeMessagePreparator getMessagePreparator(final ExtentReportBean report) {
 
     MimeMessagePreparator preparator = new MimeMessagePreparator() {

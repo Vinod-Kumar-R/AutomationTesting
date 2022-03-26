@@ -43,7 +43,6 @@ public class Mainfunction {
     } catch (EncryptedDocumentException | IOException 
                     | DuplicateValueException | URISyntaxException  e) {
       log.error(e);
-      e.printStackTrace();
     } finally {
       
       baseClass.extentReport.flushlog();

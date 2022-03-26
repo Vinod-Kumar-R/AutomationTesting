@@ -5,6 +5,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
+/**
+ * This class is used to add all the customer wait method.
+ * @author Vinod Kumar R
+ *
+ */
 @Log4j2
 public class CustomWait {
 

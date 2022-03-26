@@ -101,14 +101,13 @@ public final class BrowserInitialize {
         driver = webDriverManager.capabilities(desired.safariDesired()).create();
         break;
 
-      case ANDROID_CHROME :
+      case ANDROID_CHROME:
 
         try {
           driver = new AppiumDriver<WebElement>(new URL(properties.getAppiumUrl()), 
                           desired.androidDesired());
         } catch (MalformedURLException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
+          log.error(e.getMessage());
         }
 
         break;
@@ -126,14 +125,12 @@ public final class BrowserInitialize {
                           desired.browserStack());
           driver.manage().window().maximize();
         } catch (Exception e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
           log.error(e.getMessage());
         }
 
         break;
 
-      default : 
+      default: 
         log.debug("invalid browser selected");
         break;
     }

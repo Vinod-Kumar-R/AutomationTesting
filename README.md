@@ -204,12 +204,12 @@ https://support.smartbear.com/zephyr-scale-server/api-docs/v1/
 **Generation of JAVA doc** 
 1. Go to the folder where source code has been downloaded
 2. run the command  "mvn javadoc:javadoc"
-3. java doc are generated in .../target/site/apidocs/index.html
+3. java doc are generated in .../target/site/javadoc/index.html
 
 **Generation of CheckStyle Report** 
 1. Go to the folder where source code has been downloaded
 2. run the command  "mvn checkstyle:checkstyle"
-3. java doc are generated in .../target/site/checkstyle.html
+3. checkstyle report are generated in .../target/site/checkstyle/checkstyle.html
 
 **Jenkins Integration**
 

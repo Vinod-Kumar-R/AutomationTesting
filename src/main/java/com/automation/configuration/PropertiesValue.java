@@ -6,7 +6,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
-
+/**
+ * this class is used for general properties file configuration. 
+ * @author Vinod Kumar R
+ *
+ */
 @Configuration
 @Component
 @Getter
@@ -90,6 +94,10 @@ public class PropertiesValue {
   
   @Setter
   private String resultfolder;
+  
+  @Value("${buildInfo:XXX}")
+  @Setter
+  private String automationBuildInfo;
   
   @Value("${docker_video_recording}")
   private boolean isRecording;

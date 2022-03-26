@@ -80,7 +80,7 @@ public class BaseClass {
    *  
    * @throws IOException  File not found exception 
    * @throws EncryptedDocumentException file has been excypted  
-   * <pre> this is the main which accept all the Exception </pre>
+   <pre> this is the main which accept all the Exception </pre>
    * @throws DuplicateValueException duplicate key are found in ObjectRepository file
    * @throws URISyntaxException is used to form the download URL.
    */

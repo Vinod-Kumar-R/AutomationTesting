@@ -1,5 +1,10 @@
 package com.automation.mail;
 
+/**
+ * This enum is used to set the column name and number in which data are represented in excel.
+ * @author Vinod Kumar R
+ *
+ */
 public enum TestCategory {
   NAME(0, "NAME"),
   PASSED(2, "PASS"),

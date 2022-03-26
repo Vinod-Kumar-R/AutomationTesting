@@ -79,36 +79,36 @@ public class KeywordExecution {
         driver.get(properties.getEncashUrl());
         break;
 
-      case OPENADMINURL : 
+      case OPENADMINURL: 
         log.debug("Opening the URL " + properties.getAdminUrl());
         driver = browserinitialize.getWebDriverInstance();
         driver.get(properties.getAdminUrl());
         admin.adminurlopen(dataParam);
         break;
         
-      case OPENAMAZONURL : 
+      case OPENAMAZONURL: 
         log.debug("Opening the URL " + properties.getAmazonurl());
         driver = browserinitialize.getWebDriverInstance();
         driver.get(properties.getAmazonurl());
         break;
 
-      case QUITBROWSER :
+      case QUITBROWSER:
         browserinitialize.quitBrowser();
         log.debug("QuiteBrowser");
         break;
 
-      case JISHITEXT :
+      case JISHITEXT:
         encash.jishitext(dataParam);
         log.debug("verified the text");
         break;
 
-      case TAKESCREENSHOT :
+      case TAKESCREENSHOT:
         //extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
         extentReport.attachScreenshotPath(genericMethod.takeScreenshot());
         log.debug("taken the screen shot");
         break;
 
-      case BANNER :
+      case BANNER:
         encash.banner(dataParam);
         log.debug("verifed the Banner");
         break;
@@ -118,7 +118,7 @@ public class KeywordExecution {
         log.debug("complete create competation");
         break;
 
-      case REGISTRATIONFORM :
+      case REGISTRATIONFORM:
         encash.registrationForm(dataParam);
         log.debug("completed entering all detail for New Registration");
         break;
@@ -158,7 +158,7 @@ public class KeywordExecution {
         log.debug("Verifying the question and answer for competitions");
         break;
         
-      case STOREWINDOW :
+      case STOREWINDOW:
         genericMethod.currentWindow(dataParam.get(0));
         log.debug("Storing the current window with key");
         break;

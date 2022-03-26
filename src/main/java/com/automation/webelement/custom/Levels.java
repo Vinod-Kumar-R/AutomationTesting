@@ -8,6 +8,11 @@ import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * This class is used to create a custom level.
+ * @author Vinod Kumar R
+ *
+ */
 @Component
 @Log4j2
 public class Levels {
