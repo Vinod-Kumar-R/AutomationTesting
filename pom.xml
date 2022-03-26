@@ -287,6 +287,12 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>3.2.0</version>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<version>3.2.0</version>
+			</plugin>
+
 		</plugins>
 	</reporting>
 
@@ -331,6 +337,20 @@
 						</execution>
 					</executions>
 				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-pmd-plugin</artifactId>
+					<version>3.16.0</version>
+					<configuration>
+						<rulesets>
+							<ruleset>${project.basedir}/src/main/resources/pmd-ruleset.xml</ruleset>
+						</rulesets>
+						<outputDirectory>${project.build.directory}/site/pmd</outputDirectory>
+						<targetDirectory>${project.build.directory}/site/pmd</targetDirectory>
+						<format>xml</format>
+					</configuration>
+				</plugin>
+
 			</plugins>
 		</pluginManagement>
 		<plugins>

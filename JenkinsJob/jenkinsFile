@@ -87,8 +87,10 @@ pipeline {
         script {
           if (isUnix()) {
             sh 'mvn checkstyle:checkstyle'
+            sh 'mvn pmd:pmd'
           } else {
             bat 'mvn checkstyle:checkstyle'
+            bat 'mvn pmd:pmd'
           }
           recordIssues(
             enabledForFailure: true,
@@ -97,6 +99,10 @@ pipeline {
             tools: [
               checkStyle(
                 pattern: '**/target/site/checkstyle/checkstyle.xml',
+                reportEncoding: 'UTF-8'
+              ),
+              pmdParser(
+                pattern: '**/target/site/pmd/pmd.xml',
                 reportEncoding: 'UTF-8'
               )
             ],
