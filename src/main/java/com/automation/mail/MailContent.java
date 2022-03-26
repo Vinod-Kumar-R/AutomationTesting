@@ -74,6 +74,7 @@ public class MailContent {
     //report.setPassTest(extentreport.getTestDetail(Status.PASS));
     report.setFailTest(extentreport.getTestDetail(Status.FAIL));
     //report.setSkipTest(extentreport.getTestDetail(Status.SKIP));
+    report.setReportLink(properties.getJenkinsReport());
     
     return report;
   }

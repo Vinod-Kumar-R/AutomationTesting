@@ -39,5 +39,6 @@ public class ExtentReportBean {
   private List<Test> failTest;
   private List<Test> passTest;
   private List<Test> skipTest;
+  private String reportLink;
 
 }

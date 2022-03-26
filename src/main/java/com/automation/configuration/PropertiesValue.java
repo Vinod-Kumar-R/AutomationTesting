@@ -99,6 +99,10 @@ public class PropertiesValue {
   @Setter
   private String automationBuildInfo;
   
+  @Value("${reportlink:Report}")
+  @Setter
+  private String jenkinsReport;
+  
   @Value("${docker_video_recording}")
   private boolean isRecording;
 }

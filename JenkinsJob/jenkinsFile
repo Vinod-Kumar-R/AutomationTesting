@@ -44,16 +44,18 @@ pipeline {
   }
   environment {
     automation = 'automation'
+    ENV_ReportURL = "${BUILD_URL}"
+    ENV_ReportName = 'AutomationResult'
   }
 
   options {
     buildDiscarder logRotator(
-        artifactDaysToKeepStr: '10', 
-        artifactNumToKeepStr: '10', 
-        daysToKeepStr: '10', 
-        numToKeepStr: '10'
-        )
-    timestamps()    
+      artifactDaysToKeepStr: '10',
+      artifactNumToKeepStr: '10',
+      daysToKeepStr: '10',
+      numToKeepStr: '10'
+    )
+    timestamps()
   }
 
   stages {
@@ -73,7 +75,7 @@ pipeline {
         success {
           // One or more steps need to be included within each condition's block.
           archiveArtifacts artifacts: 'target/EncashAutomation.jar,target/lib/*.jar,target/properties/*.*,target/extension/*.*,target/docker/*.*,target/properties/chromedriver/chromedriver,target/testscript/*.*',
-          followSymlinks: true
+            followSymlinks: true
         }
       }
       agent {
@@ -88,18 +90,18 @@ pipeline {
           } else {
             bat 'mvn checkstyle:checkstyle'
           }
-          recordIssues (
-              enabledForFailure: true,
-              failOnError: true,
-              healthy: 1,
-              tools: [
-              	checkStyle(
-              		pattern: '**/target/site/checkstyle/checkstyle.xml', 
-              		reportEncoding: 'UTF-8'
-              			)
-              		],
-              unhealthy: 2
+          recordIssues(
+            enabledForFailure: true,
+            failOnError: true,
+            healthy: 1,
+            tools: [
+              checkStyle(
+                pattern: '**/target/site/checkstyle/checkstyle.xml',
+                reportEncoding: 'UTF-8'
               )
+            ],
+            unhealthy: 2
+          )
         }
       }
       agent {
@@ -116,11 +118,11 @@ pipeline {
             bat sh 'mvn javadoc:javadoc'
           }
           javadoc javadocDir: './target/site/javadoc', keepAll: false
-          recordIssues (
-              failOnError: true, 
-              healthy: 1, 
-              tools: [javaDoc(reportEncoding: 'UTF-8')], 
-              unhealthy: 2)
+          recordIssues(
+            failOnError: true,
+            healthy: 1,
+            tools: [javaDoc(reportEncoding: 'UTF-8')],
+            unhealthy: 2)
         }
       }
       agent {
@@ -147,6 +149,9 @@ pipeline {
         script {
           //browser
           param = " -Dtest_execution=${Browser}"
+          //build info
+          param = "${param} -DbuildInfo=\"${JOB_NAME} ${BUILD_NUMBER}\""
+          param = "${param} -DreportLink=\"${ENV_ReportURL}${ENV_ReportName}\""
           //docker
           if ("${Docker}") {
             param = "${param} -Ddocker=${Docker}"
@@ -179,7 +184,7 @@ pipeline {
             keepAll: true,
             reportDir: "${ResultLocation}",
             reportFiles: 'automation.html',
-            reportName: 'AutomationResult',
+            reportName: "${ENV_ReportName}",
             reportTitles: 'Result'
           ])
         }
