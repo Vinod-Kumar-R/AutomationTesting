@@ -81,11 +81,13 @@ public class Firebase {
     log.debug("clicking on the authenication page");
     waitmethod.waitForElementPresent("firebase_authentication_all");
     List<WebElement> groups = genericmethod.getElements("firebase_authentication_all");
-    for (WebElement group : groups) {
+    /*for (WebElement group : groups) {
       log.debug(group.getText());
       group.click();
       break;
     }
+    */
+    groups.get(0).click();
 
     log.debug("clicking on the sign in method");
     waitmethod.waitForElementPresent("firebase_signmethod");

@@ -224,7 +224,7 @@ Open the Jenkins URL and make sure below plug-in are installed.
 |6|Warnings Next Generation Plugin |9.11.1|
 
 Follow below step to create Pipeline Job
-1. Create a new Pipeline by providing any job name 
+1. Create a new Pipeline by providing any job name (job name should not contain space) 
 2. Go to pipeline tab as show in below image and perform below step 
     - from drop down list of "Definition", Select 'Pipeline script from SCM'
     - in SCM, select 'GIT' by drop down
