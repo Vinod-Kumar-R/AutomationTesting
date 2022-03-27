@@ -180,12 +180,13 @@ pipeline {
       }
       post {
         always {
-          
-          def files = findFiles excludes: '', glob: '**/AutomationResult/automation.html'
-          //echo """${files[0].name} ${files[0].path} ${files[0].directory} ${files[0].length} ${files[0].lastModified}"""
-          ResultLocation = "${files[0].path}"
-          ResultLocation = ResultLocation.replaceAll("automation.html", "")
-          
+          script {
+            def files = findFiles excludes: '', glob: '**/AutomationResult/automation.html'
+            //echo """${files[0].name} ${files[0].path} ${files[0].directory} ${files[0].length} ${files[0].lastModified}"""
+            ResultLocation = "${files[0].path}"
+            ResultLocation = ResultLocation.replaceAll("automation.html", "")
+          }
+
           publishHTML([
             allowMissing: false,
             alwaysLinkToLastBuild: false,
