@@ -195,7 +195,9 @@ public final class BrowserInitialize {
    * This method is used to close the current Browser.
    */
   public void closeBrowser() {
-    driver.close();
+    if (driver.getWindowHandles().size() > 1) {
+      driver.close();
+    }   
   }
   
   /**
@@ -215,7 +217,6 @@ public final class BrowserInitialize {
    * This method is used to quit the browser instance. 
    */
   public void quitBrowser() {
-
     driver.quit();
     driver = null;
     ngwebdriver = null;

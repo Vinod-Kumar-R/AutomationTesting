@@ -198,6 +198,7 @@ public class BaseClass {
       }
     }
     extentReport.flushlog();
+    browserinitialize.quitBrowser();
     log.info("Completed Exeuction of all the Test Case i.e " + testcases.size());
     log.info("Result file are located in :- " + properties.getExtentreportlocation());
   }

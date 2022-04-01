@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 /**
  * This class is used for Pojo converting the JSON to object and vice-versa for pet store.
  */
+
 @Data
 @Builder
 @AllArgsConstructor
