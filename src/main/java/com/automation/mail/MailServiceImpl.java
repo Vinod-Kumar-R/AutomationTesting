@@ -110,7 +110,6 @@ public class MailServiceImpl {
       return content.toString();
     } catch (Exception e) {
       log.error(e.getMessage());
-      e.printStackTrace();
     }
     log.debug("Email message body content is empty due to some error");
     return "";

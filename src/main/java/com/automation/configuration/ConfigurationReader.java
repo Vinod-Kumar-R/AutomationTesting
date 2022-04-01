@@ -30,7 +30,7 @@ public class ConfigurationReader {
       config = configs.properties(new File(filename));
     } catch (ConfigurationException e) {
       // TODO Auto-generated catch block
-      e.printStackTrace();
+      log.error(e.getMessage());
     }
   }
 

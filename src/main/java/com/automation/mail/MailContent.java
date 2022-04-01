@@ -97,7 +97,7 @@ public class MailContent {
       return excelfilename.toPath();
 
     } catch (IOException e) {
-      e.printStackTrace();
+      log.error(e.getMessage());
     }
     return null;
   }

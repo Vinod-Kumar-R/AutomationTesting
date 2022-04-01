@@ -275,7 +275,6 @@ public class BaseClass {
       try {
         testData.closeWorkbook();
         log.error("Got an exception while executing keyword --> " + keyword, e);
-        e.printStackTrace();
         extentReport.writeLog(Status.FAIL, "Failed executing Keyword ---> " + keyword);
         extentReport.writeLog(Status.FAIL, e);
         //extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
@@ -287,7 +286,6 @@ public class BaseClass {
         
       } catch (IOException e1) {
         log.error("Problem while closing the TestData.xlsx file " + e);
-        e1.printStackTrace();
       }
     }
   }

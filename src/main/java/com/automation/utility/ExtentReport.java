@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import lombok.extern.log4j.Log4j2;
 import org.joda.time.Interval;
 import org.joda.time.Period;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
+@Log4j2
 public class ExtentReport {
 
   public ExtentSparkReporter spark;
@@ -72,8 +74,7 @@ public class ExtentReport {
         klovConfiguration();
       }
     } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      log.error(e.getMessage());
     }
     this.extent = new ExtentReports();
     this.extent.setSystemInfo("Organization", "Automation");

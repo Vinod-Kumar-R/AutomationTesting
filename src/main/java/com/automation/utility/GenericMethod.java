@@ -119,7 +119,6 @@ public class GenericMethod {
         FileUtils.copyFile(tempFile, new File(ConstantVariable.screenShotlocation 
                         + File.separator + filename + ".png"));
       } catch (IOException e) {
-        e.printStackTrace();
         log.error(e.getStackTrace());
       }
     }
@@ -665,7 +664,7 @@ public class GenericMethod {
       writer.flush();
       writer.close();
     } catch (JsonIOException | IOException e) {
-      e.printStackTrace();
+      log.error(e.getMessage());
     }
   }
     
@@ -760,8 +759,6 @@ public class GenericMethod {
       address = address.replaceAll("localhost", ipaddress.getHostAddress());
       
     } catch (UnknownHostException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
       log.error(e.getMessage());
     }
     

@@ -19,8 +19,6 @@ import java.util.List;
 import java.util.Set;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.poi.EncryptedDocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -44,7 +42,6 @@ public class ConstantVariable {
   private String resultLocation1;
   private String resultDatelocaton;
   public static String foldername = "AutomationResult";
-  private String environment = "automation";
   private String dateformat = "dd_MMM_yyyy";
   private String timeformat = "HH_mm_ss";
   private String date;
@@ -59,21 +56,6 @@ public class ConstantVariable {
   @Autowired
   private RepositoryDao respository;
 
-
-  /**
-   * This is the Constructor which is used to initialized the static variable.
-   */
-  public ConstantVariable()  {
-
-    String location = readEnvironmnetVariable(environment);
-    //Setting the logger context
-    LoggerContext context = (org.apache.logging.log4j.core.LoggerContext) 
-                    LogManager.getContext(false);
-    File file = new File(location + File.separator + "properties" 
-                    + File.separator + "log4j2.xml");
-    context.setConfigLocation(file.toURI());
-    //initializeVariable();
-  }
   
   /**
    * This method is used to initialize the environment variable.
