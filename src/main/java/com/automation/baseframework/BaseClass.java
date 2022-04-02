@@ -198,7 +198,6 @@ public class BaseClass {
       }
     }
     extentReport.flushlog();
-    browserinitialize.quitBrowser();
     log.info("Completed Exeuction of all the Test Case i.e " + testcases.size());
     log.info("Result file are located in :- " + properties.getExtentreportlocation());
   }
@@ -271,6 +270,7 @@ public class BaseClass {
       
       testData.closeWorkbook();
       browserinitialize.browserRecording(recordingFilename, false);
+      browserinitialize.quitBrowser();
       
     } catch (AssertionError | Exception e) {
       try {
@@ -278,15 +278,15 @@ public class BaseClass {
         log.error("Got an exception while executing keyword --> " + keyword, e);
         extentReport.writeLog(Status.FAIL, "Failed executing Keyword ---> " + keyword);
         extentReport.writeLog(Status.FAIL, e);
-        //extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
-        extentReport.attachScreenshotPath(genericMethod.takeScreenshot());
         //need to think how to add the video link to extent report
         browserinitialize.browserRecording(recordingFilename, true);
+        //extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
+        extentReport.attachScreenshotPath(genericMethod.takeScreenshot());
         browserinitialize.quitBrowser();
         extentReport.flushlog();
         
       } catch (IOException e1) {
-        log.error("Problem while closing the TestData.xlsx file " + e);
+        log.error("Problem while " + e1);
       }
     }
   }
