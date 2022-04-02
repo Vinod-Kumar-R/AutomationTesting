@@ -41,6 +41,36 @@
             </Policies>
             <DefaultRolloverStrategy max="5"/>
         </RollingFile>
+		
+		<RollingFile name="infoLogApplication" fileName="${APP_LOG_ROOT}/nonapplication-info.log"
+            filePattern="${APP_LOG_ROOT}/nonapplication-info-%d{yyyy-MM-dd}-%i.log" >
+            <LevelRangeFilter minLevel="INFO" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="5"/>
+        </RollingFile>
+		
+		<RollingFile name="debugLogApplication" fileName="${APP_LOG_ROOT}/nonapplication-debug.log"
+            filePattern="${APP_LOG_ROOT}/nonapplication-debug-%d{yyyy-MM-dd}-%i.log">
+            <LevelRangeFilter minLevel="DEBUG" maxLevel="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="5"/>
+        </RollingFile>
+		
+		<RollingFile name="errorLogApplication" fileName="${APP_LOG_ROOT}/nonapplication-error.log"
+            filePattern="${APP_LOG_ROOT}/nonapplication-error-%d{yyyy-MM-dd}-%i.log" >
+            <LevelRangeFilter minLevel="ERROR" maxLevel="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="5"/>
+        </RollingFile>
 
     </Appenders>
  
@@ -54,7 +84,10 @@
         </Logger>
 
         <Root level="INFO">
-           <!-- <AppenderRef ref="Console"/> -->
+       <!-- <AppenderRef ref="Console"/> -->
+		    <AppenderRef ref="errorLogApplication" />
+			<AppenderRef ref="infoLogApplication"  />
+			<AppenderRef ref="debugLogApplication" /> 
         </Root>
  
     </Loggers>

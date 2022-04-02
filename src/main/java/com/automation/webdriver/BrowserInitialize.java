@@ -217,11 +217,13 @@ public final class BrowserInitialize {
    * This method is used to quit the browser instance. 
    */
   public void quitBrowser() {
-    driver.quit();
-    driver = null;
-    ngwebdriver = null;
+    if (driver != null) {
+      driver.quit();
+      driver = null;
+      ngwebdriver = null;
+    }
   }
-  
+
   public WebDriverManager getWebDriverManager() {
     return webDriverManager;
   }
