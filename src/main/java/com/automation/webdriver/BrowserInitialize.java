@@ -18,7 +18,6 @@ import org.assertj.core.api.Assertions;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -104,7 +103,7 @@ public final class BrowserInitialize {
       case ANDROID_CHROME:
 
         try {
-          driver = new AppiumDriver<WebElement>(new URL(properties.getAppiumUrl()), 
+          driver = new AppiumDriver(new URL(properties.getAppiumUrl()), 
                           desired.androidDesired());
         } catch (MalformedURLException e) {
           log.error(e.getMessage());

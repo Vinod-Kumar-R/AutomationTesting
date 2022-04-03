@@ -105,4 +105,8 @@ public class PropertiesValue {
   
   @Value("${docker_video_recording}")
   private boolean isRecording;
+  
+  @Value("${automation_type:true}")
+  @Setter
+  private boolean automationType;
 }

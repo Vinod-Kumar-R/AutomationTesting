@@ -90,12 +90,15 @@ public class BaseClass {
     constantVariable.initializeVariable();
     extentReport.initializeExtentReport();
    
-    if (!properties.isObjectRepository()) {
+    if (!properties.isObjectRepository() 
+                    && properties.isAutomationType()) {
       constantVariable.objectRepository();
     }
     
-    browserinitialize.getWebDriverInstance();
-    browserinitialize.browserInfo();    
+    if (properties.isAutomationType()) {
+      browserinitialize.getWebDriverInstance();
+      browserinitialize.browserInfo();    
+    }
 
     if (properties.isJiraIntegration()) {
       String testScriptFile = testdatapreparation();
@@ -163,12 +166,15 @@ public class BaseClass {
         log.debug("Test Case Description " + testcase.getTestcaseDescription());
         log.debug("Test Case Categeory " + testcase.getTestCatgeory());
         
-        //check if browser is closed or quite due to some exception then start the browser
-        if (browserinitialize.browserStatus()) {
-          browserinitialize.getWebDriverInstance();
-        }
-        //print the Docker URL for each test case
-        browserinitialize.dockerUrl();
+        //check API or WEB Automation 
+        if (properties.isAutomationType()) {
+          //check if browser is closed or quite due to some exception then start the browser
+          if (browserinitialize.browserStatus()) {
+            browserinitialize.getWebDriverInstance();
+          }
+          //print the Docker URL for each test case
+          browserinitialize.dockerUrl();
+        } 
 
         recordingFilename = testcase.getTestcaseId();
         extentReport.createTest(testcase.getTestcaseId(), testcase.getTestcaseDescription());
@@ -269,8 +275,10 @@ public class BaseClass {
       }
       
       testData.closeWorkbook();
-      browserinitialize.browserRecording(recordingFilename, false);
-      browserinitialize.quitBrowser();
+      if (properties.isAutomationType()) {
+        browserinitialize.browserRecording(recordingFilename, false);
+        browserinitialize.quitBrowser();
+      }
       
     } catch (AssertionError | Exception e) {
       try {
@@ -278,11 +286,13 @@ public class BaseClass {
         log.error("Got an exception while executing keyword --> " + keyword, e);
         extentReport.writeLog(Status.FAIL, "Failed executing Keyword ---> " + keyword);
         extentReport.writeLog(Status.FAIL, e);
-        //need to think how to add the video link to extent report
-        browserinitialize.browserRecording(recordingFilename, true);
-        //extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
-        extentReport.attachScreenshotPath(genericMethod.takeScreenshot());
-        browserinitialize.quitBrowser();
+        if (properties.isAutomationType()) {
+          //need to think how to add the video link to extent report
+          browserinitialize.browserRecording(recordingFilename, true);
+          //extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
+          extentReport.attachScreenshotPath(genericMethod.takeScreenshot());
+          browserinitialize.quitBrowser();
+        }
         extentReport.flushlog();
         
       } catch (IOException e1) {
