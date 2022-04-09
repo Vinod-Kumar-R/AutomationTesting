@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.mail.internet.MimeMessage;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -29,6 +30,7 @@ public class MailServiceImpl {
   private JavaMailSender mailSender;
 
   @Autowired
+  @Qualifier("MailFreeMarker")
   private Configuration freemarkerConfiguration;
   
   @Autowired

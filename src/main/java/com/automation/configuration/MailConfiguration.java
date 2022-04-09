@@ -76,7 +76,7 @@ public class MailConfiguration {
    * This method is used to FreeMarker configuration.
    * @return the bean for FreeMarker configuration
    */
-  @Bean
+  @Bean(name = "MailFreeMarker")
   public FreeMarkerConfigurationFactoryBean getFreeMarkerConfiguration() {
     String location = "file:" +  properties.getConfigLocation()
                     + File.separator + "properties";

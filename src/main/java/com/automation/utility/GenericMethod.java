@@ -420,12 +420,7 @@ public class GenericMethod {
     
     //selenum 4 provde the way to create a tab in browser
     driver.switchTo().newWindow(WindowType.TAB);
-    
-    /*
-    String a = "window.open('about:blank','_blank');";
-    ((JavascriptExecutor ) driver). executeScript(a);
-    */
-    
+        
     Set<String> handles = driver.getWindowHandles();
     String currentWindowHandle = driver.getWindowHandle();
     for (String handle : handles) {
@@ -626,6 +621,18 @@ public class GenericMethod {
     
     levels.setElement(element);
     levels.saveLevels();
+  }
+  
+  /**
+   * Method is used to convert the Json to particular JAVA object.
+   * @param json : Json Data
+   * @param clazz is the generic Type to which it need to convert to JAVA object.
+   * @param <T> is used for generic
+   * @return generic Type of Class T
+   */
+  public <T> T toJson(String json, Class<T> clazz) {
+
+    return (T) new Gson().toJson(json, clazz);
   }
   
   /**

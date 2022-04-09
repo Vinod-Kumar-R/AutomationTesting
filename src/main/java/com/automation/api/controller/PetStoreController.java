@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author Vinod Kumar R
  *
  */
-@FeignClient(name = "test", url = "https://petstore.swagger.io/v2")
+@FeignClient(name = "test", url = "https://petstore.swagger.io/v2", configuration = PetStoreConfiguration.class)
 public interface PetStoreController {
 
   @RequestMapping(method = RequestMethod.POST, value = "/pet")
   ResponseEntity<Pet> newPet(@RequestBody Pet pet);
   
   @RequestMapping(method = RequestMethod.GET, value = "/pet/{petId}")
-  ResponseEntity<Pet> fetchPet(@PathVariable int petid);
+  ResponseEntity<Pet> fetchPet(@PathVariable int petId);
 }

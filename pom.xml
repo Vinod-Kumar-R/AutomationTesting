@@ -185,7 +185,8 @@
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
-		<!-- This is dependency for selenium so please check when every selenium version are updated. -->
+		<!-- This is dependency for selenium so please check when every selenium 
+			version are updated. -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
@@ -261,6 +262,14 @@
 			<artifactId>spring-mock</artifactId>
 			<version>2.0.8</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.netflix.feign/feign-gson -->
+		<dependency>
+			<groupId>com.netflix.feign</groupId>
+			<artifactId>feign-gson</artifactId>
+			<version>8.18.0</version>
+		</dependency>
+
 
 	</dependencies>
 

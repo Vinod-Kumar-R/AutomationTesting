@@ -5,6 +5,12 @@ import java.util.Map;
 import org.openqa.selenium.WebDriver;
 import org.springframework.stereotype.Component;
 
+/**
+ * This class is used to store the variable data 
+ * in particular data structure required in automation.
+ * @author Vinod Kumar R
+ *
+ */
 @Component
 public class ApplicationStoreValue {
   

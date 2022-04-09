@@ -16,7 +16,11 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-
+/**
+ * This class is used to configuration the data base related.
+ * @author Vinod Kumar R
+ *
+ */
 @Configuration
 @Getter
 @EnableTransactionManagement

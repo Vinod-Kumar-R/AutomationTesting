@@ -5,6 +5,11 @@ import com.poiji.annotation.ExcelSheet;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * This pojo class is used to read the test case excel file.
+ * @author Vinod Kumar R
+ *
+ */
 @ExcelSheet("Sheet1")
 @Getter
 @Setter
