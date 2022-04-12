@@ -35,8 +35,20 @@ public class PetStoreService {
 
     Pet pet =  genericMethod.fromJson(data.get(0), Pet.class);
 
-    ResponseEntity<Pet> response =  petStoreController.newPet(pet);
-    log.info("Pet Store status code " + response.getStatusCode());
+    try {
+      ResponseEntity<Pet> response =  petStoreController.newPet(pet);
+      
+      assertThat(response.getStatusCodeValue())
+      .as("status code is not 200")
+          .isEqualTo(HttpStatus.OK);
+      
+    } catch (PetStoreException e) {
+      assertThat(e.getResponse().status())
+      .as(" checking the status code is not %s ", data.get(1))
+          .isEqualTo(data.get(1));
+    }
+    
+    
   }
 
   /**
