@@ -33,4 +33,16 @@ public class RepositoryDaoImpl implements RepositoryDao {
     data.getHibernateTemplate().save(respository);
   }
 
+  @Override
+  public List<String> searchAttribute(String name) {
+    
+    // TODO Auto-generated method stub
+    RepositoryBean bean = data.getHibernateTemplate().get(RepositoryBean.class, name);
+    List<String> object = new ArrayList<String>();
+    object.add(bean.getAttributeName());
+    object.add(bean.getAttributeValue());
+    return object;
+  }
+
+
 }

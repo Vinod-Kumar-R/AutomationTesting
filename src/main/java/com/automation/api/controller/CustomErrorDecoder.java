@@ -5,6 +5,11 @@ import feign.codec.Decoder;
 import feign.codec.ErrorDecoder;
 import java.io.IOException;
 
+/**
+ * Class is used to created a custom Error Decoder class.
+ * @author Vinod Kumar R
+ *
+ */
 public class CustomErrorDecoder implements ErrorDecoder {
 
   final Decoder decoder;

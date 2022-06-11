@@ -18,7 +18,8 @@
     file:${automation}/properties/config.properties,
     file:${automation}/properties/jira.properties,
     file:${automation}/properties/klov.properties,
-    file:${automation}/properties/database.properties" />
+    file:${automation}/properties/database.properties,
+    file:${automation}/properties/applicationdatabase.properties" />
 
 	<bean id="testdata" class="com.automation.utility.ExcelReader"></bean>
 	<bean id="createtestcase"

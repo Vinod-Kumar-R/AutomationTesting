@@ -12,6 +12,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.opera.OperaOptions;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariOptions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,8 @@ public class Desired {
 
     chrome.setHeadless(properties.getHeadlessBrowser());
     chrome.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+    chrome.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
+    chrome.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
     
     File chromeextion = new File(properties.getConfigLocation() 
                     + File.separator + "extension" 

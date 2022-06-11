@@ -11,3 +11,5 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 # ignore the .checkstyle file created by eclipse
 .checkstyle
+# ignore eclipse setting file
+.settings

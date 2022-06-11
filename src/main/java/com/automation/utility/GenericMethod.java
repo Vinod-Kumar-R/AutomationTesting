@@ -25,6 +25,7 @@ import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -185,6 +186,16 @@ public class GenericMethod {
 
     Select select = new Select(objectData);
     select.selectByVisibleText(dataParam.get(1));
+
+  }
+  
+  /**
+   * This method is used to select the option from drop down list.
+   * @param dataParam contain the WebElement of Drop down and text to be form option
+   */
+  public void selectByVisibleText(WebElement element, String text) {
+    Select select = new Select(element);
+    select.selectByVisibleText(text);
 
   }
   
@@ -364,6 +375,10 @@ public class GenericMethod {
     By byElement = byType(object);
     List<WebElement> elements = element.findElements(byElement);
     return elements;
+  }
+  
+  public List<String> getAttribute(String object) {
+    return constantVariable.getObjectAttibute(object);
   }
   
   /**
@@ -621,6 +636,36 @@ public class GenericMethod {
     
     levels.setElement(element);
     levels.saveLevels();
+  }
+  
+  /**
+   * Method is used to double click on the WebElement.
+   * @param element WebElement
+   */
+  public void doubleClick(WebElement element) {
+    WebDriver driver = browserinitialize.getWebDriverInstance();
+
+    Actions action = new Actions(driver);
+    action = action.doubleClick(element);
+    waitmethod.waitForElementClickable(element);
+    action.build().perform();
+  }
+  
+  /**
+   * Method is used to check if particular Element present in html page.
+   * @param element is of type String
+   * @return true if element present else false
+   */
+  public Boolean isElementPresent(String element) {
+    Boolean present;
+    try {
+      getElement(element);
+      present = true;
+    } catch (Exception e) {
+      present = false;
+    }
+    return present;
+   
   }
   
   /**

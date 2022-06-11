@@ -33,5 +33,13 @@ public class RepositoryBean {
   @Column(name = "ObjectType", nullable = false)
   @CsvBindByName(column = "ObjectType", required = true)
   private String objectType;
+  
+  @Column(name = "AttributeName", nullable = true)
+  @CsvBindByName(column = "AttributeName", required = false)
+  private String attributeName;
+  
+  @Column(name = "AttributeValue", nullable = true)
+  @CsvBindByName(column = "AttributeValue", required = false)
+  private String attributeValue;
 
 }

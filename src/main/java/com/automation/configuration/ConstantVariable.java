@@ -137,9 +137,13 @@ public class ConstantVariable {
       key = ro.getObjectName();
       object.add(ro.getObjectType());
       object.add(ro.getObjectValue());
+      object.add(ro.getAttributeName());
+      object.add(ro.getAttributeValue());
       
       log.debug("Key ---> " + key + "  Type ----> " + ro.getObjectType() 
-          + "  Value-----> " + ro.getObjectValue());
+          + "  Value-----> " + ro.getObjectValue() 
+          + " AttributeName------> " + ro.getAttributeName()
+          + " AttributeValue ---------> " + ro.getAttributeValue());
       
       if (!duplicateValue.contains(key)) {
         duplicateValue.add(key);
@@ -230,12 +234,29 @@ public class ConstantVariable {
     }
   }
   
+  /**
+   * Method is used to fetch the attribute name and attribute value for given object
+   * @param object is unique in object repository csv file or database
+   * @return List contain attribute name and attribute value
+   */
+  public List<String> getObjectAttibute(String object) {
+
+    if (properties.isObjectRepository()) {
+      return respository.searchAttribute(object);
+    } else  {
+      List<String> attribute = new ArrayList<>();
+      attribute.add(this.objects.get(object).get(2));
+      attribute.add(this.objects.get(object).get(3));
+      return attribute;
+    }
+  }
+  
  
   /*
    * method is used to insert the data to database and when every it required uncomment it.
    * @throws FileNotFoundException file not found
    */
-  /*
+  /**
   public void writetodata() throws FileNotFoundException {
     FileReader file = new FileReader(properties.getTestobject());
 
@@ -246,6 +267,6 @@ public class ConstantVariable {
       respository.insertValue(csvobject);
     }
     
-  }*/
-  
+  }
+ */ 
 }

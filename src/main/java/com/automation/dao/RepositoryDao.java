@@ -8,4 +8,6 @@ public interface RepositoryDao {
   List<String> searchValue(String name);
   
   void insertValue(RepositoryBean respository);
+  
+  List<String> searchAttribute(String name);
 }
