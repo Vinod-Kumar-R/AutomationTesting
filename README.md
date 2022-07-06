@@ -58,9 +58,10 @@ Main method start from class "Mainfunction.java" under package "com.automation.b
 
 **Automation Execution Step**
 
-Automation Script can be executed in 2 ways 
-- Executing Script from Eclipse IDE
-- Executing Script from MAVEN
+Automation Script can be executed in 3 ways 
+- Eclipse IDE
+- MAVEN
+- Jenkins
 
 **Executing Script from Eclipse IDE**
 1. From eclipse, import the existing maven project

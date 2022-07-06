@@ -86,14 +86,6 @@ public class BaseClass {
    */
   public void startRun() throws DuplicateValueException, EncryptedDocumentException,
           IOException, URISyntaxException  {
-
-    constantVariable.initializeVariable();
-    extentReport.initializeExtentReport();
-   
-    if (!properties.isObjectRepository() 
-                    && properties.isAutomationType()) {
-      constantVariable.objectRepository();
-    }
     
     if (properties.isAutomationType()) {
       browserinitialize.getWebDriverInstance();

@@ -38,6 +38,7 @@ public final class BrowserInitialize {
   private JavascriptExecutor jsDriver;
   private WebDriverManager webDriverManager;
   @Autowired
+  @Lazy
   private  ExtentReport extentreport;
   @Autowired
   private PropertiesValue properties;

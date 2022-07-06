@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import javax.annotation.PostConstruct;
 import lombok.extern.log4j.Log4j2;
 import org.joda.time.Interval;
 import org.joda.time.Period;
@@ -55,6 +56,7 @@ public class ExtentReport {
   /**
    * This method is used to initialize extent report.
    */
+  @PostConstruct
   public void initializeExtentReport() {
  
     this.klov = new ExtentKlovReporter();

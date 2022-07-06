@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.annotation.PostConstruct;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.EncryptedDocumentException;
@@ -59,8 +60,11 @@ public class ConstantVariable {
   
   /**
    * This method is used to initialize the environment variable.
+   * @throws IOException 
+   * @throws DuplicateValueException 
    */
-  public void initializeVariable() {
+  @PostConstruct
+  public void initializeVariable() throws DuplicateValueException, IOException {
 
     //setting the properties value 
     date = dateTime(dateformat);
@@ -80,6 +84,11 @@ public class ConstantVariable {
       String tempDateLocation = dateTime(date, tempBaseLocation);
       String templocation = dateTime(time, tempDateLocation);
       properties.setTemplocation(templocation);
+    }
+    
+    if (!properties.isObjectRepository() 
+                    && properties.isAutomationType()) {
+      objectRepository();
     }
   }
 
