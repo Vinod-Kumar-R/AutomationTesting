@@ -65,7 +65,7 @@ Automation Script can be executed in 3 ways
 
 **Executing Script from Eclipse IDE**
 1. From eclipse, import the existing maven project
-2. From project explore, Open file “Mainfuncation.java” under the package **“com.automation.baseframework”**
+2. In project explore, Open file “Mainfuncation.java” under the package **“com.automation.baseframework”**
 3. Right click on the eclipse editor and select “Run As” as “Java Application”
 
 **Executing Script from MAVEN**
@@ -145,8 +145,8 @@ Also location is printed in console.
 
 *Note: - By default Gmail account is highly secured.*
 1. Login to Gmail.
-2. Access the URL https://www.google.com/settings/security/lesssecureapps
-3. Select "Turn on"
+2. make sure app password are enable
+3. use the generated app password value in "email.password" (Mail.properties file)  
 
 *Note* :- To change email template or format, update the "mailTemplate.txt" file.
  
