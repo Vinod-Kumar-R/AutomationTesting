@@ -70,6 +70,18 @@ public class PropertiesValue {
   @Value("${automation}/properties/klov.properties")
   private String klovrproperties;
   
+  @Value("${automation}/properties/javamailconfig.properties")
+  private String mailSetting;
+  
+  @Value("${automation}/properties/mobile_device.properties")
+  private String mobiledevices;
+  
+  @Value("${automation}/extension/chrompath.crx")
+  private String chromeextension;
+  
+  @Value("${automation}/properties/browserstack.properties")
+  private String browserStack;
+  
   @Value("${klov}")
   private boolean isKlov;
   

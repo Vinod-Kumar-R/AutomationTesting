@@ -72,7 +72,7 @@ public class BaseClass {
   private JiraConfiguration jiraconfiguration;
   @Autowired
   private Zephyr zephyr;
-  private String recordingFilename;
+  public static String recordingFilename;
 
 
   /**
@@ -267,10 +267,10 @@ public class BaseClass {
       }
       
       testData.closeWorkbook();
-      if (properties.isAutomationType()) {
+     /* if (properties.isAutomationType()) {
         browserinitialize.browserRecording(recordingFilename, false);
         browserinitialize.quitBrowser();
-      }
+      }*/
       
     } catch (AssertionError | Exception e) {
       try {
@@ -280,10 +280,10 @@ public class BaseClass {
         extentReport.writeLog(Status.FAIL, e);
         if (properties.isAutomationType()) {
           //need to think how to add the video link to extent report
-          browserinitialize.browserRecording(recordingFilename, true);
+          //browserinitialize.browserRecording(recordingFilename, true);
           //extentReport.attachScreenshotBase64(genericMethod.takeScreenshot());
           extentReport.attachScreenshotPath(genericMethod.takeScreenshot());
-          browserinitialize.quitBrowser();
+          browserinitialize.quitBrowser(true);
         }
         extentReport.flushlog();
         

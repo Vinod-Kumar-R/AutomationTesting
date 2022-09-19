@@ -43,11 +43,7 @@ public class Desired {
     chrome.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
     chrome.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
     chrome.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-    
-    File chromeextion = new File(properties.getConfigLocation() 
-                    + File.separator + "extension" 
-                    + File.separator + "chrompath.crx");
-    chrome.addExtensions(chromeextion);
+    chrome.addExtensions(new File(properties.getChromeextension()));
     
     //chrome.add_argument("--enable-javascript");
     if (properties.getHeadlessBrowser()) {
@@ -86,12 +82,8 @@ public class Desired {
   public  DesiredCapabilities androidDesired() {
     DesiredCapabilities dc = new DesiredCapabilities();
 
-    //read the configuration file for mobile devices
-    String mobileproperties = properties.getConfigLocation() + File.separator + "properties" 
-                    + File.separator + "mobile_device.properties";
-
     ConfigurationReader cr = new ConfigurationReader();
-    cr.readConfig(mobileproperties);
+    cr.readConfig(properties.getMobiledevices());
 
     Iterator<String> androidkeys = cr.getAllKeys();
 
@@ -185,12 +177,7 @@ public class Desired {
     chromeOptions.setExperimentalOption("mobileEmulation", mobileemulation);
     
     chromeOptions.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
-    
-    File chromeextion = new File(properties.getConfigLocation() 
-                    + File.separator + "extension" 
-                    + File.separator + "chrompath.crx");
-    
-    chromeOptions.addExtensions(chromeextion);
+    chromeOptions.addExtensions(new File(properties.getChromeextension()));
     
     Map<String, Object> prefs = new HashMap<String, Object>();
     prefs.put("credentials_enable_service", false);
@@ -209,12 +196,8 @@ public class Desired {
     
     DesiredCapabilities dc = new DesiredCapabilities();
 
-    //read the configuration file for browser stacks
-    String browserstackproperties = properties.getConfigLocation() + File.separator + "properties" 
-                    + File.separator + "browserstack.properties";
-
     ConfigurationReader cr = new ConfigurationReader();
-    cr.readConfig(browserstackproperties);
+    cr.readConfig(properties.getBrowserStack());
 
     Iterator<String> browserkeys = cr.getAllKeys();
 

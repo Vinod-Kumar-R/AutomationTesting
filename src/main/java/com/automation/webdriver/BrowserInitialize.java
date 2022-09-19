@@ -1,5 +1,6 @@
 package com.automation.webdriver;
 
+import com.automation.baseframework.BaseClass;
 import com.automation.configuration.PropertiesValue;
 import com.automation.utility.ExtentReport;
 import com.automation.utility.GenericMethod;
@@ -47,6 +48,9 @@ public final class BrowserInitialize {
   @Autowired
   @Lazy
   private GenericMethod genericMethod;
+  @Autowired
+  @Lazy
+  private BaseClass baseClass;
 
 
   /**
@@ -212,13 +216,28 @@ public final class BrowserInitialize {
     ngwebdriver = new NgWebDriver(jsDriver);
     return ngwebdriver;
   }
+  
+  /**
+   * This method is used to quit the browser with saving the recording.
+   */
+  public void quitBrowser() {
+    quitBrowser(false);
+  }
 
   /**
    * This method is used to quit the browser instance. 
    */
-  public void quitBrowser() {
+  public void quitBrowser(boolean recordingsaving) {
     if (driver != null) {
-      driver.quit();
+      try {
+        if (properties.isAutomationType()) {
+          browserRecording(baseClass.recordingFilename, recordingsaving);
+        }
+      } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      webDriverManager.quit();
       driver = null;
       ngwebdriver = null;
     }

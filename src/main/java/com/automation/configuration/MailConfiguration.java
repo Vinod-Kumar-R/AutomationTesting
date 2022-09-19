@@ -1,6 +1,7 @@
 package com.automation.configuration;
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.Properties;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,13 +62,18 @@ public class MailConfiguration {
     mailSender.setPassword(getEmailpassword());
 
     Properties javaMailProperties = new Properties();
-    javaMailProperties.put("mail.smtp.starttls.enable", "true");
-    javaMailProperties.put("mail.smtp.auth", "true");
-    javaMailProperties.put("mail.transport.protocol", "smtp");
-    javaMailProperties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-    javaMailProperties.put("mail.debug", "false");
-    javaMailProperties.put("mail.smtp.ssl.protocols", "TLSv1.2");
+    
+    ConfigurationReader cr = new ConfigurationReader();
+    cr.readConfig(properties.getMailSetting());
 
+    Iterator<String> mailkeys = cr.getAllKeys();
+
+    while (mailkeys.hasNext()) {
+      String key = mailkeys.next();
+      String value = cr.getConfigurationStringValue(key);
+      javaMailProperties.put(key, value);
+    }
+    
     mailSender.setJavaMailProperties(javaMailProperties);
     return mailSender;
   }
