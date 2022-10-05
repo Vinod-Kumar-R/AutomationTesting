@@ -56,7 +56,6 @@ public class ExtentReport {
   /**
    * This method is used to initialize extent report.
    */
-  @PostConstruct
   public void initializeExtentReport() {
  
     this.klov = new ExtentKlovReporter();

@@ -63,7 +63,7 @@ public class ConstantVariable {
    * @throws IOException 
    * @throws DuplicateValueException 
    */
-  @PostConstruct
+
   public void initializeVariable() throws DuplicateValueException, IOException {
 
     //setting the properties value 

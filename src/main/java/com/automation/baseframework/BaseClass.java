@@ -87,6 +87,10 @@ public class BaseClass {
   public void startRun() throws DuplicateValueException, EncryptedDocumentException,
           IOException, URISyntaxException  {
     
+    //initialize the variables.
+    constantVariable.initializeVariable();
+    extentReport.initializeExtentReport();
+    
     if (properties.isAutomationType()) {
       browserinitialize.getWebDriverInstance();
       browserinitialize.browserInfo();    
@@ -305,7 +309,7 @@ public class BaseClass {
     //Prepare the test date
     //create a excel sheet with header and close the workbook
     testcaseCreation.createExcelFile(true);
-    testcaseCreation.setExcelSheet("Report");
+    testcaseCreation.setExcelSheet("Sheet1");
     //Excel header name
     testcaseCreation.setCreateRow(0);
     for (TestCreation creation : TestCreation.values()) {
