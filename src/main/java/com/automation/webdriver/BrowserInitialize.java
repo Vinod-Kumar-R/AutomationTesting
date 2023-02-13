@@ -63,6 +63,7 @@ public final class BrowserInitialize {
     DriverManagerType driverManagerType = DriverManagerType
                     .valueOf(browserExecutionType.binaryBrower.toUpperCase());
     webDriverManager = WebDriverManager.getInstance(driverManagerType).avoidTmpFolder();
+    webDriverManager.clearDriverCache();
     
     //checking the condition whether browser driver for system or Docker.
     if (properties.isDocker()) {
@@ -90,7 +91,7 @@ public final class BrowserInitialize {
         break;
 
       case OPERA:
-        driver = webDriverManager.capabilities(desired.operaDesired()).create();
+       // driver = webDriverManager.capabilities(desired.operaDesired()).create();
         break;
 
       case EDGE:

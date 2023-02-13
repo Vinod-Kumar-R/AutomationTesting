@@ -11,7 +11,7 @@ import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerOptions;
-import org.openqa.selenium.opera.OperaOptions;
+//import org.openqa.selenium.opera.OperaOptions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariOptions;
@@ -42,7 +42,7 @@ public class Desired {
     chrome.setHeadless(properties.getHeadlessBrowser());
     chrome.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
     chrome.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
-    chrome.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+    //chrome.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
     chrome.addExtensions(new File(properties.getChromeextension()));
     
     //chrome.add_argument("--enable-javascript");
@@ -115,12 +115,14 @@ public class Desired {
    * This method is used to set Opera capability.
    * @return the Operation Options for Opera browser
    */
+  @Deprecated
+  /**
   public OperaOptions operaDesired() {
     OperaOptions oo = new OperaOptions();
     oo.setCapability(headless, properties.getHeadlessBrowser());
     return oo;
   }
-
+**/
   /**
    * This method is used to set Edge capability.
    * @return EdgeOptions for edge browser
